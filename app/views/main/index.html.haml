@@ -12,9 +12,9 @@
     = submit_tag t("buttons.find", :thing => t("defaults.thing").pluralize)
   #logos
     = image_tag "logos/cfa.png", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa")
-    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")
+    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")  # FIXME: chicago logo
   #feedback
-    %a{:href => "mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} #{t("links.feedback").titleize}"}
+    %a{:href => "mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} #{t("links.feedback").titleize}"}  # FIXME
       = t("links.feedback")
   = image_tag "hydrant-in-snow.jpg", :id => "hydrant-in-snow"
 #map_canvas
