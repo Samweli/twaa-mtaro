@@ -21,10 +21,10 @@ en:
     public: "(may be visible to other users)"
   defaults:
     address: "address"
-    city: "Boston, MA"  # FIXME 
-    thing: "hydrant"    # FIXME
+    city: "Chicago, IL"
+    thing: "sidewalk"
     this_thing: "This %{thing}"
-    tagline: "Claim responsibility for shoveling out a fire hydrant after it snows."  # FIXME
+    tagline: "Claim responsibility for shoveling out a sidewalk after it snows."
     tos: "By signing up, you agree to the %{tos}."
   errors:
     password: "You need to sign in or sign up before continuing."
