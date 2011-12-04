@@ -21,10 +21,10 @@ en:
     public: "(may be visible to other users)"
   defaults:
     address: "address"
-    city: "Boston, MA"
-    thing: "hydrant"
+    city: "Boston, MA"  # FIXME 
+    thing: "hydrant"    # FIXME
     this_thing: "This %{thing}"
-    tagline: "Claim responsibility for shoveling out a fire hydrant after it snows."
+    tagline: "Claim responsibility for shoveling out a fire hydrant after it snows."  # FIXME
     tos: "By signing up, you agree to the %{tos}."
   errors:
     password: "You need to sign in or sign up before continuing."
@@ -68,5 +68,5 @@ en:
     thank_you: "Thank you for adopting this %{thing}!"
     tos: "Terms of Service"
   sponsors:
-    cfa: "Code for America"
-    city: "City of Boston"
+    cfa: "Code for America"   # FIXME
+    city: "City of Boston"    # FIXME
