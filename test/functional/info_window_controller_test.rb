@@ -1,5 +1,7 @@
 require 'test_helper'
 
+# FIXME
+
 class InfoWindowControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   setup do
@@ -15,7 +17,7 @@ class InfoWindowControllerTest < ActionController::TestCase
     assert_not_nil assigns :thing
     assert_response :success
     assert_template 'users/thank_you'
-    assert_select 'h2', 'Thank you for adopting this hydrant!'
+    assert_select 'h2', 'Thank you for adopting this hydrant!' # FIXME
     assert_select 'form#edit_profile_form' do
       assert_select '[action=?]', '/users/edit'
       assert_select '[method=?]', 'get'
@@ -53,7 +55,7 @@ class InfoWindowControllerTest < ActionController::TestCase
     assert_not_nil assigns :thing
     assert_response :success
     assert_template 'users/profile'
-    assert_select 'h2', /This hydrant has been adopted\s+by #{@user.name}\s+of #{@user.organization}/
+    assert_select 'h2', /This hydrant has been adopted\s+by #{@user.name}\s+of #{@user.organization}/ # FIXME
   end
 
   test 'should show adoption form if hydrant is not adopted' do

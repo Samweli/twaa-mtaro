@@ -1,11 +1,13 @@
 require 'test_helper'
 
+#FIXME
+
 class MainControllerTest < ActionController::TestCase
   test 'should return the home page' do
     get :index
     assert_response :success
     assert_select 'title', 'Adopt a Hydrant'
-    assert_select 'p#tagline', 'Claim responsibility for shoveling out a fire hydrant after it snows.'
+    assert_select 'p#tagline', 'Claim responsibility for shoveling out a fire hydrant after it snows.'  # FIXME
     assert_select 'form' do
       assert_select '[action=?]', '/'
       assert_select '[method=?]', 'post'
