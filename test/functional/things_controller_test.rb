@@ -1,5 +1,7 @@
 require 'test_helper'
 
+# FIXME
+
 class ThingsControllerTest < ActionController::TestCase
   setup do
     @thing = things(:thing_1)

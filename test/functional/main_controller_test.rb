@@ -1,5 +1,7 @@
 require 'test_helper'
 
+#FIXME
+
 class MainControllerTest < ActionController::TestCase
   test 'should return the home page' do
     get :index

@@ -1,5 +1,7 @@
 require 'test_helper'
 
+# FIXME
+
 class InfoWindowControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   setup do
