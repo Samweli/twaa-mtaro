@@ -8,7 +8,8 @@ en:
     change_password: "Change my password"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
-    find: "Find %{thing}"
+    find: "See my street"
+    register: "Register now"
     send_reminder: "Send reminder to shovel"
     sign_in: "Sign in"
     sign_out: "Sign out"
@@ -30,7 +31,7 @@ en:
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
   labels:
-    address: "Address, Neighborhood"
+    address: "Street"
     city_state: "City"
     email: "Email address"
     name: "Name"
@@ -46,9 +47,10 @@ en:
     user_new: "I haven't signed up yet"
     voice_number: "Home phone number"
   links:
-    feedback: "Feedback"
+    accessibility: "Accessibility"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
+    terms: "Terms of Service"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"

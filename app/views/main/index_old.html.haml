@@ -1,0 +1,22 @@
+#sidebar
+  %h1
+    = image_tag "logos/adopt-a-hydrant.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  %p#tagline
+    = t("defaults.tagline")
+  = form_for :address, :html => {:id => "address_form"} do |f|
+    = label_tag "city_state", t("labels.city_state"), :id => "city_state_label"
+    = select_tag "city_state", "<option value=\"#{t("defaults.city")}\" selected=\"selected\">#{t("defaults.city")}</option>".html_safe
+    = label_tag "address", t("labels.address"), :id => "address_label"
+    = text_field_tag "address", params[:address]
+    = hidden_field_tag "limit", params[:limit] || 40
+    = submit_tag t("buttons.find", :thing => t("defaults.thing").pluralize)
+  #logos
+    = image_tag "logos/cfa.png", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa")
+    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")  
+    -# FIXME: chicago logo
+  #feedback
+    -# FIXME
+    %a{:href => "mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} #{t("links.feedback").titleize}"}  
+      = t("links.feedback")
+  = image_tag "hydrant-in-snow.jpg", :id => "hydrant-in-snow"
+#map_canvas

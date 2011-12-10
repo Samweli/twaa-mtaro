@@ -1,22 +1,34 @@
 #sidebar
   %h1
-    = image_tag "logos/adopt-a-hydrant.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  %p#tagline
-    = t("defaults.tagline")
+    = image_tag "logos/sidebar-header.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  #social
+    facebook, twitter, google+ links
   = form_for :address, :html => {:id => "address_form"} do |f|
-    = label_tag "city_state", t("labels.city_state"), :id => "city_state_label"
-    = select_tag "city_state", "<option value=\"#{t("defaults.city")}\" selected=\"selected\">#{t("defaults.city")}</option>".html_safe
     = label_tag "address", t("labels.address"), :id => "address_label"
     = text_field_tag "address", params[:address]
     = hidden_field_tag "limit", params[:limit] || 40
-    = submit_tag t("buttons.find", :thing => t("defaults.thing").pluralize)
+    = submit_tag t("buttons.find")
+  #register
+    %p#register-text
+      "Adopt-a-sidewalk" near your home by "claiming" it on a map. By doing this, you let neighbors know you can help clear snow.
+      %br
+      %br
+      You can see at-a-glance which sidewalks are claimed and connect with your less-abled neighbors to help keep their sidewalks clear.
+      %br
+      %br
+      You can enlist your friends to help on Facebook and Twitter.
+    = button_tag t("buttons.register"), :type => "button"
+    = button_tag t("buttons.sign_in"), :type => "button"
+  #messaging
+    %p#messaging-text
+      To sign up for our text messaging service, text the word "Chicago" to "311311" for all major cell phone carriers. Message and data rates may apply.
+  #feedback
+    %a{:href => "#"}
+      = t("links.accessibility")
+    %a{:href => "#"}
+      = t("links.terms")
   #logos
     = image_tag "logos/cfa.png", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa")
-    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")  
+    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")
     -# FIXME: chicago logo
-  #feedback
-    -# FIXME
-    %a{:href => "mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} #{t("links.feedback").titleize}"}  
-      = t("links.feedback")
-  = image_tag "hydrant-in-snow.jpg", :id => "hydrant-in-snow"
 #map_canvas
