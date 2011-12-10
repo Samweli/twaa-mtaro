@@ -19,8 +19,30 @@
       You can enlist your friends to help on Facebook and Twitter.
     = button_tag t("buttons.register"), :type => "button"
     = button_tag t("buttons.sign_in"), :type => "button"
-  #messaging
-    %p#messaging-text
+    #register-dialog{:class => "dialog"}
+      = form_for :user, :html => {:id => "register_form"} do |f|
+        = label_tag "first_name", "First name"
+        = text_field_tag "first_name", params[:first_name]
+        = label_tag "last_name", "Last name"
+        = text_field_tag "last_name", params[:last_name]
+        = label_tag "email", "Email address"
+        = text_field_tag "email", params[:email]
+        = label_tag "password", "Password"
+        = text_field_tag "password", params[:password]
+        = submit_tag t("buttons.register")
+      #register-fb
+        %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
+    #login-dialog{:class => "dialog"}
+      = form_for :user, :html => {:id => "login_form"} do |f|
+        = label_tag "email", "Email address"
+        = text_field_tag "email", params[:email]
+        = label_tag "password", "Password"
+        = text_field_tag "password", params[:password]
+        = submit_tag t("buttons.sign_in")
+      #login-fb
+        %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
+  #messaging-text
+    %p
       To sign up for our text messaging service, text the word "Chicago" to "311311" for all major cell phone carriers. Message and data rates may apply.
   #feedback
     %a{:href => "#"}

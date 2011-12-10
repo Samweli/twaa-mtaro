@@ -1,5 +1,5 @@
 !!! 5
-%html
+%html{"xmlns:fb" => "http://www.facebook.com/2008/fbml"}
   %head
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
@@ -14,4 +14,22 @@
       -# FIXME: update the domain.
       var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-2412440-12"]),_gaq.push(["_setDomainName",".adoptahydrant.org"]),_gaq.push(["_trackPageview"]),function(){var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)}();
   %body
+    #fb-root
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId   : '',
+          status  : true,
+          cookie  : true,
+          xfbml   : true
+        });
+      }
+
+      // Load the SDK Asynchronously
+      (function(d){
+         var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         d.getElementsByTagName('head')[0].appendChild(js);
+      }(document));
     = yield
