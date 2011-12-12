@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <Style id="linestyle_red">
+      <LineStyle>
+        <color>7f0000ff</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>
+    
+    <% for thing in @things %>
+    <Placemark>
+      <name><%= thing.address %></name>
+      <styleUrl>#linestyle_red</styleUrl>
+      <%= raw(thing.kml) %>
+    </Placemark>
+    <% end %>
+</Document>
+</kml>
