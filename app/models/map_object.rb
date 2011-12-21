@@ -1,4 +1,4 @@
-class Thing < ActiveRecord::Base
+class MapObject < ActiveRecord::Base
   set_table_name 'chicagosidewalks'
   
   include Geokit::Geocoders
@@ -8,10 +8,10 @@ class Thing < ActiveRecord::Base
 
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.05)
     query = %Q(
-    SELECT s.*, ST_AsKML(wkb_geometry) AS "kml"
+    SELECT s.*, ST_AsKML(the_geom) AS "kml"
     FROM chicagosidewalks s 
     WHERE ST_Intersects(
-      wkb_geometry, 
+      the_geom, 
       ST_Transform( 
         ST_Buffer( 
           ST_Transform( 
@@ -23,7 +23,7 @@ class Thing < ActiveRecord::Base
         4326
       )
     )
-    LIMIT ?)      
+    LIMIT ?)
     
     find_by_sql([query, lng.to_f, lat.to_f, geo_buffer_size.to_f, limit.to_i])
   end

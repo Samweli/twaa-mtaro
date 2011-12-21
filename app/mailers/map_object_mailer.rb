@@ -1,13 +1,13 @@
-class ThingMailer < ActionMailer::Base
+class MapObjectMailer < ActionMailer::Base
   default :from => "winter@cityofchicago.org"
 
-  def reminder(thing)
-    @thing = thing
-    @user = thing.user
+  def reminder(map_object)
+    @map_object = map_object
+    @user = map_object.user
     mail(
       {
-        :to => thing.user.email,
-        :subject => ["Remember to shovel", thing.name].compact.join(' '),
+        :to => map_object.user.email,
+        :subject => ["Remember to shovel", map_object.name].compact.join(' '),
       }
     )
   end
