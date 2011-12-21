@@ -4,7 +4,9 @@ class ThingsController < ApplicationController
   def show
     @things = Thing.find_closest(params[:lat], params[:lng], params[:limit] || 40)
     unless @things.blank?
-      respond_with @things
+      respond_with(@things) do |format|
+        format.kml { render }
+      end
     else
       render(:json => {"errors" => {"address" => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404)
     end

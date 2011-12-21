@@ -1,17 +1,31 @@
 class Thing < ActiveRecord::Base
+  set_table_name 'chicagosidewalks'
+  
   include Geokit::Geocoders
   validates_presence_of :lat, :lng
   belongs_to :user
   has_many :reminders
 
-  def self.find_closest(lat, lng, limit=40)
-    query = <<-SQL
-      SELECT *, (3959 * ACOS(COS(RADIANS(?)) * COS(RADIANS(lat)) * COS(radians(lng) - RADIANS(?)) + SIN(RADIANS(?)) * SIN(RADIANS(lat)))) AS distance
-      FROM things
-      ORDER BY distance
-      LIMIT ?
-      SQL
-    find_by_sql([query, lat.to_f, lng.to_f, lat.to_f, limit.to_i])
+  def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.05)
+    query = %Q(
+    SELECT s.*, ST_AsKML(wkb_geometry) AS "kml"
+    FROM chicagosidewalks s 
+    WHERE ST_Intersects(
+      wkb_geometry, 
+      ST_Transform( 
+        ST_Buffer( 
+          ST_Transform( 
+            ST_GeomFromEWKT('SRID=4326;POINT(? ?)'),
+            3395
+          ),
+          ? * 5280 * 0.3048
+        ),
+        4326
+      )
+    )
+    LIMIT ?)      
+    
+    find_by_sql([query, lng.to_f, lat.to_f, geo_buffer_size.to_f, limit.to_i])
   end
 
   def reverse_geocode
