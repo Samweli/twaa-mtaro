@@ -13,6 +13,22 @@
 
 ActiveRecord::Schema.define(:version => 4) do
 
+  create_table "map_objects", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.decimal  "lat",         :precision => 16, :scale => 14, :null => false
+    t.decimal  "lng",         :precision => 17, :scale => 14, :null => false
+    t.integer  "source_id"
+    t.integer  "source_type"
+    t.integer  "object_type"
+    t.integer  "gid"
+    t.integer  "status"
+  end
+
+  add_index "map_objects", ["gid"], :name => "index_map_objects_on_gid"
+  add_index "map_objects", ["source_id"], :name => "index_map_objects_on_source_id"
+
   create_table "rails_admin_histories", :force => true do |t|
     t.string   "message"
     t.string   "username"
@@ -39,18 +55,6 @@ ActiveRecord::Schema.define(:version => 4) do
   add_index "reminders", ["sent"], :name => "index_reminders_on_sent"
   add_index "reminders", ["thing_id"], :name => "index_reminders_on_thing_id"
   add_index "reminders", ["to_user_id"], :name => "index_reminders_on_to_user_id"
-
-  create_table "things", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.decimal  "lat",        :precision => 16, :scale => 14, :null => false
-    t.decimal  "lng",        :precision => 17, :scale => 14, :null => false
-    t.integer  "city_id"
-    t.integer  "user_id"
-  end
-
-  add_index "things", ["city_id"], :name => "index_things_on_city_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"

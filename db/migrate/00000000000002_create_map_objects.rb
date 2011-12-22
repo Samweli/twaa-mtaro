@@ -1,6 +1,6 @@
-class CreateMapObject < ActiveRecord::Migration
+class CreateMapObjects < ActiveRecord::Migration
   def change
-    create_table :mapobjects do |t|
+    create_table :map_objects do |t|
       t.timestamps
       t.string :name
       t.decimal :lat, :null => false, :precision => 16, :scale => 14
@@ -12,7 +12,7 @@ class CreateMapObject < ActiveRecord::Migration
       t.integer :status
     end
 
-    add_index :mapobjects, :gid
-    add_index :mapobjects, :source_id
+    add_index :map_objects, :gid
+    add_index :map_objects, :source_id
   end
 end

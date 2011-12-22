@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
   validates_presence_of :name
   has_many :reminders_to, :class_name => "Reminder", :foreign_key => "to_user_id"
   has_many :reminders_from, :class_name => "Reminder", :foreign_key => "from_user_id"
-  has_many :things
+  has_many :map_objects
 end

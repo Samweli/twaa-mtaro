@@ -1,15 +1,15 @@
 class InfoWindowController < ApplicationController
   def index
-    @thing = Thing.find_by_id(params[:thing_id])
-    if @thing.adopted?
-      if user_signed_in? && current_user.id == @thing.user_id
+    @map_object = MapObject.find_by_id(params[:map_object_id])
+    if @map_object.adopted?
+      if user_signed_in? && current_user.id == @map_object.user_id
         render("users/thank_you")
       else
         render("users/profile")
       end
     else
       if user_signed_in?
-        render("things/adopt")
+        render("map_objects/adopt")
       else
         render("sessions/new")
       end
