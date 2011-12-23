@@ -7,12 +7,14 @@
     = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
+    = javascript_include_tag "http://www.ohsowe.com/assets/map_widget.js"
     = javascript_include_tag "application"
     = csrf_meta_tag
     %meta{:name => "viewport", :content => "initial-scale=1.0, user-scalable=no"}
     %script{:type => "text/javascript"}
       -# FIXME: update the domain.
       var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-2412440-12"]),_gaq.push(["_setDomainName",".adoptahydrant.org"]),_gaq.push(["_trackPageview"]),function(){var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)}();
+  
   %body
     #fb-root
     :javascript
@@ -32,4 +34,17 @@
          js.src = "//connect.facebook.net/en_US/all.js";
          d.getElementsByTagName('head')[0].appendChild(js);
       }(document));
+      
+    :javascript
+      //initialize widget
+      widget = new OhSoWe.MapWidget({
+        version: "0.1",
+        partnerId: "snowflake",
+        container: "osw_widget"
+      }).render();
+      
+      //set the google maps listener
+      google.maps.event.addListener(window.map, 'bounds_changed', function() {
+        widget.boundsChanged(window.map.getBounds().toUrlValue());
+      });
     = yield

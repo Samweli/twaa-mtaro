@@ -10,112 +10,43 @@ $(function() {
   };
   
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-  var activeThingId;
-  var activeMarker;
-  var activeInfoWindow;
   var isWindowOpen = false;
-  var thingIds = [];
+  var activeObjectId;
+  var activeMarker;
+  var activeInfoWindow = new google.maps.InfoWindow({
+    maxWidth: 350
+  });
   
-  function addMarker(thingId, point, image_path) {
-    var image = new google.maps.MarkerImage(image_path,
-      new google.maps.Size(27.0, 37.0),
-      new google.maps.Point(0, 0),
-      new google.maps.Point(13.0, 18.0)
-    );
-    var shadow = new google.maps.MarkerImage('<%= image_path 'markers/shadow.png' %>',
-      new google.maps.Size(46.0, 37.0),
-      new google.maps.Point(0, 0),
-      new google.maps.Point(13.0, 18.0)
-    );
-    var marker = new google.maps.Marker({
-      animation: google.maps.Animation.DROP,
-      icon: image,
-      map: map,
-      position: point,
-      shadow: shadow
+  google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
+    isWindowOpen = false;
+  });
+  
+  function renderKML(lat, lng) {
+    console.log("attempting to find sidewalks around %s and %s", lat, lng);
+    var url = 'http://167.165.233.18/map_objects.kml?lat=' + lat + '&lng=' + lng;
+    var sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
+
+    google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
+      showInfoWindow(e);
     });
-    
-    google.maps.event.addListener(marker, 'click', function() {
-      if(activeInfoWindow) {
-        activeInfoWindow.close();
-      }
-      var infoWindow = new google.maps.InfoWindow({
-        maxWidth: 350
-      });
-      google.maps.event.addListener(infoWindow, 'closeclick', function() {
-        isWindowOpen = false;
-      });
-      activeInfoWindow = infoWindow;
-      activeThingId = thingId;
-      activeMarker = marker;
-      $.ajax({
-        type: 'GET',
-        url: '/info_window',
-        data: {
-          'thing_id': thingId
-        },
-        success: function(data) {
-          // Prevent race condition, which could lead to multiple windows being open at the same time.
-          if(infoWindow == activeInfoWindow) {
-            infoWindow.setContent(data);
-            infoWindow.open(map, marker);
-            isWindowOpen = true;
-          }
-        }
-      });
+  }
+
+  function showInfoWindow(e) {
+    activeInfoWindow.setOptions({
+      content: "<div class='infowindow'><b>" + e.featureData.name + "<\/b><p>chicago<\/p><\/div>",
+      position: e.latLng,
+      pixelOffset: e.pixelOffset
     });
-    thingIds.push(thingId);
+    activeInfoWindow.open(map);
+    showActiveInfoWindow();
   }
   
-  function addMarkersAround(lat, lng) {
-    console.log("attempting to find sidewalks around %s and %s", lat, lng);
-    var sidewalks_kml = new google.maps.KmlLayer('http://my07wil01.cityofchicago.org/map_objects.kml?lat=' + lat + '&lng=' + lng);
-    sidewalks_kml.setMap(map);
-/*
-     $.ajax({
-       type: 'GET',
-       url: '/map_objects.json',
-       data: {
-         'commit': $('#address_form input[type="submit"]').val(),
-         'utf8': '✓',
-         'authenticity_token': $('#address_form input[name="authenticity_token"]').val(),
-         'lat': lat,
-         'lng': lng,
-         'limit': $('#address_form input[name="limit"]').val()
-       },
-       success: function(data) {
-         if(data.errors) {
-           $('#address_label').addClass('error', 500);
-           $('#address').addClass('error', 500);
-           $('#address').focus();
-         } else {
-           $('#address_label').removeClass('error', 500);
-           $('#address').removeClass('error', 500);
-           var i = -1;
-           $(data).each(function(index, thing) {
-             if($.inArray(thing.id, thingIds) == -1) {
-               i += 1;
-             } else {
-               // continue
-               return true;
-             }
-             setTimeout(function() {
-               point = new google.maps.LatLng(thing.lat, thing.lng);
-               if(thing.user_id) {
-                 image_path = '<%= image_path 'markers/green.png' %>';
-               } else {
-                 image_path = '<%= image_path 'markers/red.png' %>';
-               }
-               addMarker(thing.id, point, image_path);
-             }, i * 100);
-           });
-           //center = new google.maps.LatLng(lat, lng);
-           //map.setCenter(center);
-           //map.setZoom(18);
-         }
-       }
-     });
-*/
+  function showActiveInfoWindow() {
+    $('#info_window').show();
+  }
+  
+  function hideActiveInfoWindow() {
+    $('#info_window').hide();
   }
   
   google.maps.event.addListener(map, 'dragend', function() {
@@ -123,7 +54,7 @@ $(function() {
       return;
     }
     center = map.getCenter();
-    addMarkersAround(center.lat(), center.lng());
+    renderKML(center.lat(), center.lng());
   });
   
   $('#address_form').submit(function() {
@@ -158,7 +89,7 @@ $(function() {
             $('#address').focus();
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
-            addMarkersAround(data[0], data[1]);
+            renderKML(data[0], data[1]);
           }
         }
       });
@@ -204,6 +135,7 @@ $(function() {
       $('#user_email_label').removeClass('error');
       $('#user_email').removeClass('error');
     }
+    
     if(!$(this).data('state') || $(this).data('state') === 'user_sign_up') {
       if($('#user_name').val() === '') {
         errors.push($('#user_name'));
@@ -221,6 +153,7 @@ $(function() {
         $('#user_password_confirmation_label').removeClass('error');
         $('#user_password_confirmation').removeClass('error');
       }
+      
       if(errors.length > 0) {
         $(submitButton).attr("disabled", false);
         errors[0].focus();
@@ -288,7 +221,7 @@ $(function() {
               type: 'GET',
               url: '/info_window',
               data: {
-                'thing_id': activeThingId,
+                'thing_id': activeObjectId,
                 'flash': {
                   'notice': "<%= I18n.t("notices.signed_up") %>"
                 }
@@ -343,7 +276,7 @@ $(function() {
               type: 'GET',
               url: '/info_window',
               data: {
-                'thing_id': activeThingId,
+                'thing_id': activeObjectId,
                 'flash': {
                   'notice': "<%= I18n.t("notices.signed_in") %>"
                 }
@@ -438,7 +371,7 @@ $(function() {
           type: 'GET',
           url: '/info_window',
           data: {
-            'thing_id': activeThingId,
+            'thing_id': activeObjectId,
             'flash': {
               'notice': "<%= I18n.t("notices.adopted", :thing => I18n.t("defaults.thing")) %>"
             }
@@ -492,7 +425,7 @@ $(function() {
             type: 'GET',
             url: '/info_window',
             data: {
-              'thing_id': activeThingId,
+              'thing_id': activeObjectId,
               'flash': {
                 'notice': "<%= I18n.t("notices.abandoned", :thing => I18n.t("defaults.thing").capitalize) %>"
               }
@@ -586,7 +519,7 @@ $(function() {
         url: '/users.json',
         data: {
           'id': $('#id').val(),
-          'thing_id': activeThingId,
+          'thing_id': activeObjectId,
           'commit': submitButton.val(),
           'utf8': '✓',
           'authenticity_token': $('#edit_form input[name="authenticity_token"]').val(),
@@ -681,7 +614,7 @@ $(function() {
           type: 'GET',
           url: '/info_window',
           data: {
-            'thing_id': activeThingId,
+            'thing_id': activeObjectId,
             'flash': {
               'notice': "<%= I18n.t("notices.signed_out") %>"
             }
@@ -732,7 +665,7 @@ $(function() {
         'commit': submitButton.val(),
         'utf8': '✓',
         'authenticity_token': $('#back_form input[name="authenticity_token"]').val(),
-        'thing_id': activeThingId
+        'thing_id': activeObjectId
       },
       beforeSend: function() {
         $('#info_window').hide();
@@ -763,7 +696,7 @@ $(function() {
         'reminder': {
           'from_user_id': $('#reminder_from_user_id').val(),
           'to_user_id': $('#reminder_to_user_id').val(),
-          'thing_id': activeThingId
+          'thing_id': activeObjectId
         }
       },
       beforeSend: function() {
@@ -780,7 +713,7 @@ $(function() {
           type: 'GET',
           url: '/info_window',
           data: {
-            'thing_id': activeThingId,
+            'thing_id': activeObjectId,
             'flash': {
               'notice': "<%= I18n.t("notices.reminder_sent") %>"
             }
