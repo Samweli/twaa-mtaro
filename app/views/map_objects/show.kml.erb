@@ -8,11 +8,11 @@
       </LineStyle>
     </Style>
     
-    <% for thing in @things %>
+    <% for sidewalk in @sidewalks %>
     <Placemark>
-      <name><%= thing.address %></name>
+      <name><%= sidewalk.address %></name>
       <styleUrl>#linestyle_red</styleUrl>
-      <%= raw(thing.kml) %>
+      <%= raw(sidewalk.kml) %>
     </Placemark>
     <% end %>
 </Document>

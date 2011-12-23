@@ -2,9 +2,9 @@ class MapObjectsController < ApplicationController
   respond_to :json
 
   def show
-    @map_objects = MapObject.find_closest(params[:lat], params[:lng], params[:limit] || 40)
-    unless @map_objects.blank?
-      respond_with(@map_objects) do |format|
+    @sidewalks = MapObject.find_closest(params[:lat], params[:lng], params[:limit] || 40)
+    unless @sidewalks.blank?
+      respond_with(@sidewalks) do |format|
         format.kml { render }
       end
     else

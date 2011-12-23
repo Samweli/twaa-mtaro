@@ -8,12 +8,14 @@ $(function() {
     panControl: true,
     zoom: zoomLevel
   };
+  
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var activeThingId;
   var activeMarker;
   var activeInfoWindow;
   var isWindowOpen = false;
   var thingIds = [];
+  
   function addMarker(thingId, point, image_path) {
     var image = new google.maps.MarkerImage(image_path,
       new google.maps.Size(27.0, 37.0),
@@ -32,6 +34,7 @@ $(function() {
       position: point,
       shadow: shadow
     });
+    
     google.maps.event.addListener(marker, 'click', function() {
       if(activeInfoWindow) {
         activeInfoWindow.close();
@@ -66,7 +69,7 @@ $(function() {
   
   function addMarkersAround(lat, lng) {
     console.log("attempting to find sidewalks around %s and %s", lat, lng);
-    var sidewalks_kml = new google.maps.KmlLayer("http://dl.dropbox.com/u/19098/things.kml");  //('http://localhost:8082/things.kml?lat=' + lat + '&lng=' + lng);
+    var sidewalks_kml = new google.maps.KmlLayer('http://my07wil01.cityofchicago.org/map_objects.kml?lat=' + lat + '&lng=' + lng);
     sidewalks_kml.setMap(map);
 /*
      $.ajax({
@@ -122,6 +125,7 @@ $(function() {
     center = map.getCenter();
     addMarkersAround(center.lat(), center.lng());
   });
+  
   $('#address_form').submit(function() {
     var submitButton = $("#address_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -161,6 +165,7 @@ $(function() {
     }
     return false;
   });
+  
   $('#combo_form input[type="radio"]').live('click', function() {
     var self = $(this);
     if('new' == self.val()) {
@@ -186,6 +191,7 @@ $(function() {
       });
     }
   });
+  
   $('#combo_form').live('submit', function() {
     var submitButton = $("#combo_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -400,6 +406,7 @@ $(function() {
     }
     return false;
   });
+  
   $('#adoption_form').live('submit', function() {
     var submitButton = $("#adoption_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -451,6 +458,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#abandon_form').live('submit', function() {
     var answer = window.confirm("Are you sure you want to abandon this <%= I18n.t("defaults.thing") %>?")
     if(answer) {
@@ -505,6 +513,7 @@ $(function() {
     }
     return false;
   });
+  
   $('#edit_profile_form').live('submit', function() {
     var submitButton = $("#edit_profile_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -531,6 +540,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#edit_form').live('submit', function() {
     var submitButton = $("#edit_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -645,6 +655,7 @@ $(function() {
     }
     return false;
   });
+  
   $('#sign_out_form').live('submit', function() {
     var submitButton = $("#sign_out_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -683,6 +694,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#sign_in_form').live('submit', function() {
     var submitButton = $("#sign_in_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -709,6 +721,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#back_form').live('submit', function() {
     var submitButton = $("#back_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -736,6 +749,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#reminder_form').live('submit', function() {
     var submitButton = $("#reminder_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -779,6 +793,7 @@ $(function() {
     });
     return false;
   });
+  
   $('#tos_link').live('click', function() {
     $.ajax({
       type: 'GET',
@@ -797,9 +812,11 @@ $(function() {
     });
     return false;
   });
+  
   $('#notice').live('click', function() {
     $(this).fadeOut('slow');
   });
+  
   $('#error').live('click', function() {
     $(this).fadeOut('slow');
   });
