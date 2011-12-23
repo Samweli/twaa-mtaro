@@ -1,8 +1,9 @@
 #sidebar
   %h1
-    = image_tag "logos/sidebar-header.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+    = image_tag "logos/ChicagoShovels_logo300x100.gif", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
   #social
-    facebook, twitter, google+ links
+    FB, TW, G+
+    
   = form_for :address, :html => {:id => "address_form"} do |f|
     = label_tag "address", t("labels.address"), :id => "address_label"
     = text_field_tag "address", params[:address]

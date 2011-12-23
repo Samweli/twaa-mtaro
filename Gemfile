@@ -7,7 +7,7 @@ gem 'devise'
 gem 'geokit'
 gem 'haml', '~> 3.2.0.alpha'
 gem 'pg'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'rack-contrib'
 
 platforms :jruby do
@@ -24,11 +24,11 @@ group :assets do
 end
 
 group :production do
-  gem 'thin'
+  gem 'passenger'
 end
 
 group :test do
   gem 'simplecov'
-  gem 'sqlite3'
+#  gem 'sqlite3'
   gem 'webmock'
 end

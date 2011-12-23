@@ -31,7 +31,7 @@ en:
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
   labels:
-    address: "Street"
+    address: "Street address"
     city_state: "City"
     email: "Email address"
     name: "Name"

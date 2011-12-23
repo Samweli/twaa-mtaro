@@ -9,7 +9,7 @@ AdoptAThing::Application.routes.draw do
   get 'sitemap' => 'sitemaps#index', :as => 'sitemap'
   get 'tos' => 'info_window#tos', :as => 'tos'
   resource :reminders
-  resource :things
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  resource :map_objects
+  #mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   root :to => 'main#index'
 end

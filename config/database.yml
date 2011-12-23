@@ -1,7 +1,16 @@
 development: &DEVELOPMENT
   adapter: postgresql
-  database: adopt_a_thing_development
+  database: adopt_a_sidewalk_development
   host: localhost
+  port: 5432
+  password: postgres
+  username: postgres
+
+production: &PRODUCTION
+  adapter: postgresql
+  database: adopt_a_sidewalk_production
+  host: my07orl01
+  port: 5432
   password: postgres
   username: postgres
 
@@ -10,4 +19,4 @@ development: &DEVELOPMENT
 # Do not set this db to the same as development or production.
 test:
   <<: *DEVELOPMENT
-  database: adopt_a_thing_test
+  database: adopt_a_sidewalk_test
