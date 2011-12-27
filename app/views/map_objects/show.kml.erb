@@ -2,18 +2,20 @@
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
   <Style id="linestyle_red">
-      <LineStyle>
-        <color>7f0000ff</color>
-        <width>4</width>
-      </LineStyle>
-    </Style>
-    
-    <% for sidewalk in @sidewalks %>
+    <LineStyle>
+      <color>7f0000ff</color>
+      <width>4</width>
+    </LineStyle>
+  </Style>
+
+  <% for sidewalk in @sidewalks %>
     <Placemark>
+      <id><%= sidewalk.gid %></id>
+      <description><%= sidewalk.gid %></description>
       <name><%= sidewalk.address %></name>
       <styleUrl>#linestyle_red</styleUrl>
       <%= raw(sidewalk.kml) %>
     </Placemark>
-    <% end %>
+  <% end %>
 </Document>
 </kml>

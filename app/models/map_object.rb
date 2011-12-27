@@ -69,6 +69,7 @@ class MapObject < ActiveRecord::Base
   end
 
   def adopted?
-    !user_id.nil?
+    false
+    #!user_id.nil?
   end
 end

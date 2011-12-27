@@ -27,25 +27,43 @@ $(function() {
     var sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
-      showInfoWindow(e);
+      activeObjectId = e.featureData.description;
+      fetchSidewalkInfo(e);
     });
   }
 
-  function showInfoWindow(e) {
-    activeInfoWindow.setOptions({
-      content: "<div class='infowindow'><b>" + e.featureData.name + "<\/b><p>chicago<\/p><\/div>",
-      position: e.latLng,
-      pixelOffset: e.pixelOffset
+  function fetchSidewalkInfo(e) {
+    $.ajax({
+      type: 'GET',
+      url: '/info_window.json',
+      data: {
+        'id': activeObjectId
+      },
+      beforeSend: function() {
+        hideInfoWindow();
+        $('#loader').show();
+      },
+      error: function(jqXHR) {
+        $('#loader').hide();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setOptions({
+          content: data,
+          position: e.latLng,
+          pixelOffset: e.pixelOffset
+        });
+        activeInfoWindow.open(map);
+        showInfoWindow();
+      }
     });
-    activeInfoWindow.open(map);
-    showActiveInfoWindow();
   }
   
-  function showActiveInfoWindow() {
+  function showInfoWindow() {
     $('#info_window').show();
   }
   
-  function hideActiveInfoWindow() {
+  function hideInfoWindow() {
     $('#info_window').hide();
   }
   

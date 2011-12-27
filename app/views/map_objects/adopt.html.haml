@@ -1,4 +1,4 @@
-= form_for :thing, :url => things_path, :method => :put, :html => {:id => "adoption_form"} do |f|
+= form_for :map_object, :url => things_path, :method => :put, :html => {:id => "adoption_form"} do |f|
   %h2
     = t("titles.adopt", :thing => t("defaults.thing").titleize)
   = f.hidden_field "id"
