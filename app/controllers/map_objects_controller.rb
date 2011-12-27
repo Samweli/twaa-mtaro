@@ -1,10 +1,27 @@
 class MapObjectsController < ApplicationController
   respond_to :html, :json
 
-  def show
-    @map_object = MapObject.find_by_gid(params[:id])
+  def index
+  end
 
-    respond_with @map_object    
+  def new
+    find_object
+    
+    if user_signed_in?
+      if @map_object.is_source_a? :user &&
+        current_user.id == @map_object.source_id
+        # trying to adopt an object that I already adopted
+      else
+        # adopt this object now
+      end
+    else
+      render 'sessions/new'
+    end
+  end
+
+  def show
+    find_object
+    respond_with @map_object
     #if @map_object.adopted?
     #  if user_signed_in? && current_user.id == @map_object.user_id
     #    render("users/thank_you")
@@ -28,5 +45,11 @@ class MapObjectsController < ApplicationController
     else
       render(:json => {"errors" => @map_object.errors}, :status => 500)
     end
+  end
+  
+  private
+  
+  def find_object
+    @map_object = MapObject.find_by_gid(params[:id])
   end
 end

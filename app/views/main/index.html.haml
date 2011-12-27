@@ -18,8 +18,13 @@
       %br
       %br
       You can enlist your friends to help on Facebook and Twitter.
-    = button_tag t("buttons.register"), :type => "button"
-    = button_tag t("buttons.sign_in"), :type => "button"
+      
+    - if user_signed_in?
+      Welcome citizen!
+    - else
+      = button_tag t("buttons.register"), :type => "button"
+      = button_tag t("buttons.sign_in"), :type => "button"
+    
     #register-dialog{:class => "dialog"}
       = form_for :user, :html => {:id => "register_form"} do |f|
         = label_tag "first_name", "First name"

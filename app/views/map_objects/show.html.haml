@@ -1,1 +1,9 @@
+%h1.actions_label
+  = 'Can you take care of this sidewalk?'
+
+%ul.actions_menu
+  %li= link_to 'Yes, I will adopt this sidewalk', '#', :id => 'adopt_link', 'data-id' => get_safe_id(@map_object)
+  %li= link_to 'No, I will need help keeping this sidewalk clean', '#', :id => 'need_help_link', 'data-id' => get_safe_id(@map_object)
+
+
 = @map_object.inspect

@@ -17,6 +17,8 @@ $(function() {
     maxWidth: 350
   });
   
+  bindInfoWindowLink('adopt_link', '/map_objects/new');
+  
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
   });
@@ -35,16 +37,16 @@ $(function() {
   function fetchSidewalkInfo(e) {
     $.ajax({
       type: 'GET',
-      url: '/map_object',
+      url: '/map_objects/' + activeObjectId,
       data: {
-        'id': activeObjectId
+        //'id': activeObjectId
       },
       beforeSend: function() {
         hideInfoWindow();
-        $('#loader').show();
+        showSpinner();
       },
       error: function(jqXHR) {
-        $('#loader').hide();
+        hideSpinner();
         showInfoWindow;
       },
       success: function(data) {
@@ -65,6 +67,14 @@ $(function() {
   
   function hideInfoWindow() {
     $('#info_window').hide();
+  }
+  
+  function showSpinner() {
+    $('#spinner').show();
+  }
+  
+  function hideSpinner() {
+    $('#spinner').hide();
   }
   
   google.maps.event.addListener(map, 'dragend', function() {
@@ -744,6 +754,33 @@ $(function() {
     });
     return false;
   });
+  
+  
+  
+  function bindInfoWindowLink(id, url) {
+    $('#'+id).live('click', function() {
+      $.ajax({
+        type: 'GET',
+        url: url,
+        beforeSend: function() {
+          hideInfoWindow();
+          showSpinner();
+        },
+        error: function(jqXHR) {
+          hideSpinner();
+          showInfoWindow;
+        },
+        success: function(data) {
+          activeInfoWindow.setContent(data);
+        }
+      });
+      return false;
+    });
+  }
+  
+  
+  
+  
   
   $('#tos_link').live('click', function() {
     $.ajax({
