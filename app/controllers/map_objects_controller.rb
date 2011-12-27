@@ -1,15 +1,24 @@
 class MapObjectsController < ApplicationController
-  respond_to :json
+  respond_to :html, :json
 
   def show
-    @sidewalks = MapObject.find_closest(params[:lat], params[:lng], params[:limit] || 40)
-    unless @sidewalks.blank?
-      respond_with(@sidewalks) do |format|
-        format.kml { render }
-      end
-    else
-      render(:json => {"errors" => {"address" => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404)
-    end
+    @map_object = MapObject.find_by_gid(params[:id])
+
+    respond_with @map_object    
+    #if @map_object.adopted?
+    #  if user_signed_in? && current_user.id == @map_object.user_id
+    #    render("users/thank_you")
+    #  else
+    #    render("users/profile")
+    #  end
+    #else
+    #  if user_signed_in?
+    #    render("map_objects/adopt")
+    #  else
+    #    render("sessions/new")
+    #  end
+    #end
+
   end
 
   def update

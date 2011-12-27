@@ -22,8 +22,8 @@ $(function() {
   });
   
   function renderKML(lat, lng) {
-    console.log("attempting to find sidewalks around %s and %s", lat, lng);
-    var url = 'http://167.165.233.18/map_objects.kml?lat=' + lat + '&lng=' + lng;
+    console.log("Rendering sidewalks of [%s, %s]", lat, lng);
+    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
     var sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
@@ -35,7 +35,7 @@ $(function() {
   function fetchSidewalkInfo(e) {
     $.ajax({
       type: 'GET',
-      url: '/info_window.json',
+      url: '/map_object',
       data: {
         'id': activeObjectId
       },
