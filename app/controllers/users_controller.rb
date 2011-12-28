@@ -1,4 +1,6 @@
 class UsersController < Devise::RegistrationsController
+  #respond_to :html, :json
+
   def edit
     render("edit", :layout => "info_window")
   end
@@ -17,7 +19,7 @@ class UsersController < Devise::RegistrationsController
   def create
     build_resource
     if resource.save
-      sign_in(resource_name, resource)
+      sign_in resource
       render(:json => resource)
     else
       clean_up_passwords(resource)

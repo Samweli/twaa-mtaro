@@ -15,7 +15,7 @@ class MapObjectsController < ApplicationController
         # adopt this object now
       end
     else
-      render 'sessions/new'
+      render 'users/new'
     end
   end
 

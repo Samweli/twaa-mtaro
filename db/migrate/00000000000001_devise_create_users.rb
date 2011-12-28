@@ -2,10 +2,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
       t.timestamps
-      t.string :name, :null => false
+      t.string :first_name, :null => false
+      t.string :last_name, :null => false
       t.string :organization
       t.string :email, :null => false
-      t.string :voice_number
       t.string :sms_number
       t.boolean :admin, :default => false
       t.database_authenticatable :null => false

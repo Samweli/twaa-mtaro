@@ -9,6 +9,7 @@ en:
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "See my street"
+    continue: "Continue"
     register: "Register now"
     send_reminder: "Send reminder to shovel"
     sign_in: "Sign in"
@@ -34,7 +35,8 @@ en:
     address: "Street address"
     city_state: "City"
     email: "Email address"
-    name: "Name"
+    first_name: "First name"
+    last_name: "Last name"
     name_thing: "Give this %{thing} a name"
     organization: "Organization"
     password: "Password"
@@ -43,14 +45,16 @@ en:
     password_new: "New password"
     remember_me: "Stay signed in"
     sms_number: "Mobile phone number"
-    user_existing: "I've already signed up"
+    user_existing: "Already have an account?"
     user_new: "I haven't signed up yet"
     voice_number: "Home phone number"
+    facebook_sign_in: "Get started using your Facebook account"
   links:
     accessibility: "Accessibility"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
     terms: "Terms of Service"
+    sign_in: "Sign in to your account now"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
@@ -68,7 +72,8 @@ en:
     main: "Adopt a %{thing}"
     ofline: "of %{organization}"
     thank_you: "Thank you for adopting this %{thing}!"
-    tos: "Terms of Service"
+    register_now: "Register Now!"
+    sign_in: "Sign In"
   sponsors:
     cfa: "Code for America"   # FIXME
     city: "City of Boston"    # FIXME
