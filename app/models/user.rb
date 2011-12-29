@@ -5,4 +5,9 @@ class User < ActiveRecord::Base
   has_many :reminders_to, :class_name => "Reminder", :foreign_key => "to_user_id"
   has_many :reminders_from, :class_name => "Reminder", :foreign_key => "from_user_id"
   has_many :map_objects
+
+  def fullname
+    first_name + ' ' + last_name
+  end
+
 end

@@ -9,6 +9,14 @@
     = text_field_tag "address", params[:address]
     = hidden_field_tag "limit", params[:limit] || 40
     = submit_tag t("buttons.find")
+
+  - if user_signed_in?
+    Welcome
+    = current_user.fullname
+  - else
+    = link_to t("links.sign_up_short"), '#', :id => 'sign_up_link_main'
+    = link_to t("links.sign_in_short"), '#', :id => 'sign_in_link_main'
+    
   #register
     %p#register-text
       "Adopt-a-sidewalk" near your home by "claiming" it on a map. By doing this, you let neighbors know you can help clear snow.
@@ -19,12 +27,6 @@
       %br
       You can enlist your friends to help on Facebook and Twitter.
       
-    - if user_signed_in?
-      Welcome citizen!
-    - else
-      = button_tag t("buttons.register"), :type => "button"
-      = button_tag t("buttons.sign_in"), :type => "button"
-    
     #register-dialog{:class => "dialog"}
       = form_for :user, :html => {:id => "register_form"} do |f|
         = label_tag "first_name", "First name"

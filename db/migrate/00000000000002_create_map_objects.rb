@@ -10,6 +10,10 @@ class CreateMapObjects < ActiveRecord::Migration
       t.integer :object_type
       t.integer :gid
       t.integer :status
+      t.boolean :claimed
+      t.boolean :cleared
+      t.boolean :need_help
+      t.string :notes
     end
 
     add_index :map_objects, :gid

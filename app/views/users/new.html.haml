@@ -1,5 +1,5 @@
 = form_for :user, :html => {:id => "sign_up_form"} do |f|
-  %h2= t "titles.register_now"
+  %h2= t("titles.register_now")
 
   = f.label :first_name, t("labels.first_name")
   %em= t("captions.public")
@@ -21,4 +21,9 @@
   
   = f.submit t("buttons.register")
 
+  %p
+    = t("labels.user_existing")
+    %br
+    = link_to t("links.sign_in"), '#', :id => "sign_in_link"
+  
   %p= t("defaults.tos", :tos => link_to(t("links.terms"), tos_path, :id => "tos_link")).html_safe

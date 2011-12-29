@@ -1,6 +1,8 @@
 class Sidewalk < ActiveRecord::Base
   set_table_name 'chicagosidewalks'
   
+  has_many :map_objects, :primary_key => "gid"
+  
   include Geokit::Geocoders
   validates_presence_of :lat, :lng
   

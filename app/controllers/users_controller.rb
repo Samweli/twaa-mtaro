@@ -1,6 +1,10 @@
 class UsersController < Devise::RegistrationsController
   #respond_to :html, :json
 
+  def new
+    puts 'gid!!' unless params[:gid].nil?
+  end
+
   def edit
     render("edit", :layout => "info_window")
   end

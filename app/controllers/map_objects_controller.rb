@@ -4,17 +4,32 @@ class MapObjectsController < ApplicationController
   def index
   end
 
-  def new
+  def create
     find_object
     
     if user_signed_in?
-      if @map_object.is_source_a? :user &&
-        current_user.id == @map_object.source_id
+      puts 'user logged in'
+      if @map_object.try :belongs_to_me?
+        puts 'already claimed!'
         # trying to adopt an object that I already adopted
       else
-        # adopt this object now
+        @map_object = MapObject.new do |o|
+          o.object_type = MapObject::OBJECT_TYPES[:sidewalk]
+          o.source_type = MapObject::SOURCE_TYPES[:user]
+          o.source_id = current_user.id
+          o.gid = params[:id]
+          o.claimed = true
+        end
+        
+        if @map_object.save
+          puts 'object saved'
+          respond_with @map_object
+        else
+          render(:json => {"errors" => @map_object.errors}, :status => 500)
+        end
       end
     else
+      puts "user is not logged in"
       render 'users/new'
     end
   end
@@ -50,6 +65,7 @@ class MapObjectsController < ApplicationController
   private
   
   def find_object
-    @map_object = MapObject.find_by_gid(params[:id])
+    @gid = params[:id]
+    @map_object = MapObject.find_by_gid(@gid)
   end
 end

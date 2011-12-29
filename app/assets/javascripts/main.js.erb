@@ -17,7 +17,17 @@ $(function() {
     maxWidth: 350
   });
   
-  bindInfoWindowLink('adopt_link', '/map_objects/new');
+  var defOptions = {
+    data: {},
+    type: 'GET',
+    showIW: false
+  };
+  
+  bindInfoWindowLink( 'adopt_link', '/map_objects', {type: 'POST', data: {'id' : activeObjectId}, showIW: false} );
+  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', {type: 'GET', data: {'gid' : activeObjectId}, showIW: false} );
+  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', {type: 'GET', data: {'gid' : activeObjectId}, showIW: false} );
+  bindInfoWindowLink( 'sign_in_link_main', '/users/sign_in', {type: 'GET', data: {}, showIW: true} );
+  bindInfoWindowLink( 'sign_up_link_main', '/users/sign_up', {type: 'GET', data: {}, showIW: true} );
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
@@ -87,7 +97,7 @@ $(function() {
   });
   
   $('#address_form').submit(function() {
-    var submitButton = $("#address_form input[type='submit']");
+    var submitButton = $("input[type='submit']", this);
     $(submitButton).attr("disabled", true);
     var submitButtonText = $(submitButton).attr("value");
     $(submitButton).attr("value", "Please Wait...");
@@ -126,43 +136,18 @@ $(function() {
     return false;
   });
   
-  $('#combo_form input[type="radio"]').live('click', function() {
-    var self = $(this);
-    if('new' == self.val()) {
-      $('#user_forgot_password_fields').slideUp();
-      $('#user_sign_in_fields').slideUp();
-      $('#user_sign_up_fields').slideDown();
-      $('#combo_form').data('state', 'user_sign_up');
-    } else if('existing' == self.val()) {
-      $('#user_sign_up_fields').slideUp();
-      $('#user_sign_in_fields').slideDown(function() {
-      $('#combo_form').data('state', 'user_sign_in');
-        $('#user_forgot_password_link').click(function() {
-          $('#user_sign_in_fields').slideUp();
-          $('#user_forgot_password_fields').slideDown(function() {
-            $('#user_remembered_password_link').click(function() {
-              $('#user_forgot_password_fields').slideUp();
-              $('#user_sign_in_fields').slideDown();
-              $('#combo_form').data('state', 'user_sign_in');
-            });
-          });
-          $('#combo_form').data('state', 'user_forgot_password');
-        });
-      });
-    }
-  });
   
 
 
 
 
   $('#sign_up_form').live('submit', function() {
-    var submitButton = $("input[type='submit']", $(this));
+    var submitButton = $("input[type='submit']", this);
     var uemail = $('#user_email');
     var ufname = $('#user_first_name');
     var ulname = $('#user_last_name');
     var upwd = $('#user_password');
-    var errors = []
+    var errors = [];
     
     $(submitButton).attr("disabled", true);
     if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
@@ -195,7 +180,7 @@ $(function() {
         data: {
           'commit': submitButton.val(),
           'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', $(this)).val(),
+          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
           'user': {
             'email': uemail.val(),
             'first_name': ufname.val(),
@@ -247,130 +232,140 @@ $(function() {
         }
       });
     }
+    return false;
+  });
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    if($(this).data('state') === 'user_sign_in') {
-      if($('#user_password').val().length < 6 || $('#user_password').val().length > 20) {
-        errors.push($('#user_password'));
-        $('#user_password_label').addClass('error', 500);
-        $('#user_password').addClass('error', 500);
-      } else {
-        $('#user_password_label').removeClass('error');
-        $('#user_password').removeClass('error');
-      }
-      if(errors.length > 0) {
-        $(submitButton).attr("disabled", false);
-        errors[0].focus();
-      } else {
-        $.ajax({
-          type: 'POST',
-          url: '/users/sign_in.json',
-          data: {
-            'commit': submitButton.val(),
-            'utf8': '✓',
-            'authenticity_token': $('#combo_form input[name="authenticity_token"]').val(),
-            'user': {
-              'email': $('#user_email').val(),
-              'password': $('#user_password').val(),
-              'remember_me': $('#user_remember_me').val()
-            }
-          },
-          beforeSend: function() {
-            $('#info_window').hide();
-            $('#loader').show();
-          },
-          error: function(jqXHR) {
-            $('#loader').hide();
-            $('#info_window').show();
-            $(submitButton).attr("disabled", false);
-            $('#user_password_label').addClass('error', 500);
-            $('#user_password').addClass('error', 500);
-            $('#user_password').focus();
-          },
-          success: function(data) {
-            $.ajax({
-              type: 'GET',
-              url: '/info_window',
-              data: {
-                'thing_id': activeObjectId,
-                'flash': {
-                  'notice': "<%= I18n.t("notices.signed_in") %>"
-                }
-              },
-              success: function(data) {
-                activeInfoWindow.setContent(data);
-              }
-            });
-          }
-        });
-      }
+  $('#sign_in_form').live('submit', function() {
+    var submitButton = $("input[type='submit']", this);
+    var uemail = $('#user_email');
+    var upwd = $('#user_password');
+    var errors = [];
+
+    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+      markError(uemail, errors);
+    } else {
+      unmarkError(uemail);
     }
-    
-    if($(this).data('state') === 'user_forgot_password') {
-      if(errors.length > 0) {
-        $(submitButton).attr("disabled", false);
-        errors[0].focus();
-      } else {
-        $.ajax({
-          type: 'POST',
-          url: '/users/password.json',
-          data: {
-            'commit': submitButton.val(),
-            'utf8': '✓',
-            'authenticity_token': $('#combo_form input[name="authenticity_token"]').val(),
-            'user': {
-              'email': $('#user_email').val()
-            }
-          },
-          beforeSend: function() {
-            $('#info_window').hide();
-            $('#loader').show();
-          },
-          error: function(jqXHR) {
-            $('#loader').hide();
-            $('#info_window').show();
-            $(submitButton).attr("disabled", false);
-            $('#user_email_label').addClass('error', 500);
-            $('#user_email').addClass('error', 500);
-            $('#user_email').focus();
-          },
-          success: function() {
-            $.ajax({
-              type: 'GET',
-              url: '/users/sign_in',
-              data: {
-                'user': {
-                  'email': $('#user_email').val()
-                },
-                'flash': {
-                  'notice': "<%= I18n.t("notices.password_reset") %>"
-                }
-              },
-              success: function(data) {
-                activeInfoWindow.setContent(data);
-                $('#user_existing').click();
-              }
-            });
+    if(upwd.val().length < 6 || upwd.val().length > 20) {
+      markError(upwd, errors);
+    } else {
+      unmarkError(upwd);
+    }
+    if(errors.length > 0) {
+      $(submitButton).attr("disabled", false);
+      errors[0].focus();
+    } else {
+      console.debug("here works");
+      $.ajax({
+        type: 'POST',
+        url: '/users/sign_in.json',
+        data: {
+          'commit': submitButton.val(),
+          'utf8': '✓',
+          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+          'user': {
+            'email': uemail.val(),
+            'password': upwd.val(),
+            'remember_me': $('#user_remember_me').val()
           }
-        });
-      }
+        },
+        beforeSend: function() {
+          hideInfoWindow();
+          showSpinner();
+        },
+        error: function(jqXHR) {
+          hideSpinner();
+          showInfoWindow();
+          $(submitButton).attr("disabled", false);
+          markError(upwd, errors);
+          upwd.focus();
+        },
+        success: function(data) {
+          console.debug("works 2");
+          //$.ajax({
+          //  type: 'GET',
+          //  url: '/info_window',
+          //  data: {
+          //    'thing_id': activeObjectId,
+          //    'flash': {
+          //      'notice': "<%= I18n.t("notices.signed_in") %>"
+          //    }
+          //  },
+          //  success: function(data) {
+          //    activeInfoWindow.setContent(data);
+          //  }
+          //});
+        }
+      });
     }
     return false;
   });
+    
+    
+    
+    
+    
+    
+  $('#user_forgot_password_link').live('submit', function() {
+    var submitButton = $("input[type='submit']", this);
+
+    if(errors.length > 0) {
+      $(submitButton).attr("disabled", false);
+      errors[0].focus();
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: '/users/password.json',
+        data: {
+          'commit': submitButton.val(),
+          'utf8': '✓',
+          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+          'user': {
+            'email': $('#user_email').val()
+          }
+        },
+        beforeSend: function() {
+          $('#info_window').hide();
+          $('#loader').show();
+        },
+        error: function(jqXHR) {
+          $('#loader').hide();
+          $('#info_window').show();
+          $(submitButton).attr("disabled", false);
+          $('#user_email_label').addClass('error', 500);
+          $('#user_email').addClass('error', 500);
+          $('#user_email').focus();
+        },
+        success: function() {
+          $.ajax({
+            type: 'GET',
+            url: '/users/sign_in',
+            data: {
+              'user': {
+                'email': $('#user_email').val()
+              },
+              'flash': {
+                'notice': "<%= I18n.t("notices.password_reset") %>"
+              }
+            },
+            success: function(data) {
+              activeInfoWindow.setContent(data);
+              $('#user_existing').click();
+            }
+          });
+        }
+      });
+    }
+    return false;
+  });
+  
+  
+  
+  
+  
+  
+  
+  
   
   $('#adoption_form').live('submit', function() {
     var submitButton = $("#adoption_form input[type='submit']");
@@ -660,33 +655,6 @@ $(function() {
     return false;
   });
   
-  $('#sign_in_form').live('submit', function() {
-    var submitButton = $("#sign_in_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'GET',
-      url: '/users/sign_in',
-      data: {
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#sign_in_form input[name="authenticity_token"]').val(),
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        activeInfoWindow.setContent(data);
-      }
-    });
-    return false;
-  });
-  
   $('#back_form').live('submit', function() {
     var submitButton = $("#back_form input[type='submit']");
     $(submitButton).attr("disabled", true);
@@ -761,14 +729,21 @@ $(function() {
   
   
   
-  function bindInfoWindowLink(id, url) {
+  function bindInfoWindowLink(id, url, options) {
     $('#'+id).live('click', function() {
       $.ajax({
-        type: 'GET',
+        type: options['type'],
         url: url,
+        data: options['data'],
         beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
+          if (options['showIW'] == true) {
+            isWindowOpen = true;
+            activeInfoWindow.open(map);
+            showInfoWindow();
+          } else {
+            hideInfoWindow();
+            showSpinner();
+          }
         },
         error: function(jqXHR) {
           hideSpinner();
