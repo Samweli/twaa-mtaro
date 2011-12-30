@@ -1,5 +1,7 @@
 class MapObjectsController < ApplicationController
   respond_to :html, :json
+  
+  layout 'info_window'
 
   def index
   end
