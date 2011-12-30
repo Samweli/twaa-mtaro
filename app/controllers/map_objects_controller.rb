@@ -33,7 +33,7 @@ class MapObjectsController < ApplicationController
         end
       end
     else
-      render 'users/new'
+      render :template => 'users/new'
     end
   end
 
