@@ -5,5 +5,8 @@
   %li= link_to 'Yes, I will adopt this sidewalk', '#', :id => 'adopt_link'
   %li= link_to 'No, I will need help keeping this sidewalk clean', '#', :id => 'need_help_link'
 
-
-= @map_object.inspect
+- if @map_object
+  %h1= 'Current status of the sidewalk'
+  %p= "Adopted by: #{@map_object.user.fullname}"
+  %p= "Cleared: #{yesno(@map_object.cleared)}"
+  %p= "Need Help: #{yesno(@map_object.need_help)}"

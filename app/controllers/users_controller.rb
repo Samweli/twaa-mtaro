@@ -24,7 +24,8 @@ class UsersController < Devise::RegistrationsController
     build_resource
     if resource.save
       sign_in resource
-      render(:json => resource)
+      puts "created: #{resource.class} #{resource.inspect}"
+      render :inline => "You have been registered!" #(:json => resource)
     else
       clean_up_passwords(resource)
       render(:json => {"errors" => resource.errors}, :status => 500)

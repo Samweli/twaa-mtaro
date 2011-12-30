@@ -3,6 +3,27 @@
 <Document>
   <Style id="linestyle_red">
     <LineStyle>
+      <color>7fff0000</color>
+      <width>4</width>
+    </LineStyle>
+  </Style>
+
+  <Style id="linestyle_white">
+    <LineStyle>
+      <color>7fffffff</color>
+      <width>4</width>
+    </LineStyle>
+  </Style>
+
+  <Style id="linestyle_yellow">
+    <LineStyle>
+      <color>7fffff00</color>
+      <width>4</width>
+    </LineStyle>
+  </Style>
+
+  <Style id="linestyle_blue">
+    <LineStyle>
       <color>7f0000ff</color>
       <width>4</width>
     </LineStyle>
@@ -12,8 +33,8 @@
     <Placemark>
       <id><%= sidewalk.gid %></id>
       <description><%= sidewalk.gid %></description>
-      <name><%= sidewalk.address %></name>
-      <styleUrl>#linestyle_red</styleUrl>
+      <name><%= sidewalk.address %>xxx</name>
+      <styleUrl><%= format_color(sidewalk) %></styleUrl>
       <%= raw(sidewalk.kml) %>
     </Placemark>
   <% end %>

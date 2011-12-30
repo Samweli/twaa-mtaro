@@ -17,17 +17,11 @@ $(function() {
     maxWidth: 350
   });
   
-  var defOptions = {
-    data: {},
-    type: 'GET',
-    showIW: false
-  };
-  
-  bindInfoWindowLink( 'adopt_link', '/map_objects', {type: 'POST', data: {'id' : activeObjectId}, showIW: false} );
-  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', {type: 'GET', data: {'gid' : activeObjectId}, showIW: false} );
-  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', {type: 'GET', data: {'gid' : activeObjectId}, showIW: false} );
-  bindInfoWindowLink( 'sign_in_link_main', '/users/sign_in', {type: 'GET', data: {}, showIW: true} );
-  bindInfoWindowLink( 'sign_up_link_main', '/users/sign_up', {type: 'GET', data: {}, showIW: true} );
+  bindInfoWindowLink( 'adopt_link', '/map_objects.json', 'POST', {}, {showIW: false} );
+  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {}, {showIW: false} );
+  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {}, {showIW: false} );
+  bindInfoWindowLink( 'sign_in_link_main', '/users/sign_in', 'GET', {}, {showIW: true} );
+  bindInfoWindowLink( 'sign_up_link_main', '/users/sign_up', 'GET', {}, {showIW: true} );
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
@@ -41,6 +35,7 @@ $(function() {
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
+      console.log("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(e);
     });
   }
@@ -216,19 +211,20 @@ $(function() {
           errors[0].focus();
         },
         success: function(data) {
-          $.ajax({
-            type: 'GET',
-            url: '/info_window',
-            data: {
-              'thing_id': activeObjectId,
-              'flash': {
-                'notice': "<%= I18n.t("notices.signed_up") %>"
-              }
-            },
-            success: function(data) {
-              activeInfoWindow.setContent(data);
-            }
-          });
+          activeInfoWindow.setContent(data);
+          //$.ajax({
+          //  type: 'GET',
+          //  url: '/info_window',
+          //  data: {
+          //    'thing_id': activeObjectId,
+          //    'flash': {
+          //      'notice': "<%= I18n.t("notices.signed_up") %>"
+          //    }
+          //  },
+          //  success: function(data) {
+          //    activeInfoWindow.setContent(data);
+          //  }
+          //});
         }
       });
     }
@@ -729,12 +725,15 @@ $(function() {
   
   
   
-  function bindInfoWindowLink(id, url, options) {
+  function bindInfoWindowLink(id, url, type, data, options) {
     $('#'+id).live('click', function() {
       $.ajax({
-        type: options['type'],
+        type: type,
         url: url,
-        data: options['data'],
+        data: $.extend(true, {'id': activeObjectId,
+                              'utf8': '✓',
+                              'authenticity_token': AUTH_TOKEN},
+                              data),
         beforeSend: function() {
           if (options['showIW'] == true) {
             isWindowOpen = true;

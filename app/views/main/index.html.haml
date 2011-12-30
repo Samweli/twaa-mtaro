@@ -5,14 +5,16 @@
     FB, TW, G+
     
   = form_for :address, :html => {:id => "address_form"} do |f|
-    = label_tag "address", t("labels.address"), :id => "address_label"
-    = text_field_tag "address", params[:address]
-    = hidden_field_tag "limit", params[:limit] || 40
+    = label_tag :address, t("labels.address"), :id => "address_label"
+    = text_field_tag :address, params[:address]
+    = hidden_field_tag :city_state, "Chicago, IL"
+    = hidden_field_tag :limit, params[:limit] || 40
     = submit_tag t("buttons.find")
 
   - if user_signed_in?
     Welcome
     = current_user.fullname
+    = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
   - else
     = link_to t("links.sign_up_short"), '#', :id => 'sign_up_link_main'
     = link_to t("links.sign_in_short"), '#', :id => 'sign_in_link_main'

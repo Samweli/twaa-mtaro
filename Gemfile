@@ -6,11 +6,12 @@ gem 'arel'
 gem 'devise'
 gem 'geokit'
 gem 'haml', '~> 3.2.0.alpha'
+gem 'haml-rails'
 gem 'pg'
-#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'rack-contrib'
 gem 'execjs'
 gem 'therubyracer'
+gem 'jquery-rails'
 
 platforms :jruby do
   gem 'jruby-openssl'

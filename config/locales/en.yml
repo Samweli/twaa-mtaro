@@ -78,6 +78,7 @@ en:
     thank_you: "Thank you for adopting this %{thing}!"
     register_now: "Register Now!"
     sign_in: "Sign In"
+    registered: "You have been registered!"
   sponsors:
     cfa: "Code for America"   # FIXME
     city: "City of Boston"    # FIXME
