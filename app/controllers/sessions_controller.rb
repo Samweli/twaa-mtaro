@@ -4,13 +4,15 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    puts "SessionsController::create"
-    resource = warden.authenticate(:scope => resource_name)
-    if resource
+    if (resource = warden.authenticate(:scope => resource_name))
       sign_in(resource_name, resource)
-      render(:json => resource)
-    else
-      render(:json => {"errors" => {:password => [t("errors.password")]}}, :status => 401)
+      puts "resource: #{resource}"
+    end
+    
+    respond_with(resource) do |format|
+      format.html { redirect_to '/' }
+      format.json { render :json => resource ? resource :
+                      {"errors" => {:password => [t("errors.password")]}}, :status => 401 }
     end
   end
 

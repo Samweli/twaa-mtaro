@@ -20,8 +20,8 @@ $(function() {
   bindInfoWindowLink( 'adopt_link', '/map_objects', 'POST', {}, {showIW: false} );
   bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {}, {showIW: false} );
   bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {}, {showIW: false} );
-  bindInfoWindowLink( 'sign_in_link_main', '/users/sign_in', 'GET', {}, {showIW: true} );
-  bindInfoWindowLink( 'sign_up_link_main', '/users/sign_up', 'GET', {}, {showIW: true} );
+  //bindInfoWindowLink( 'sign_in_link_main', '/users/sign_in', 'GET', {}, {showIW: true} );
+  //bindInfoWindowLink( 'sign_up_link_main', '/users/sign_up', 'GET', {}, {showIW: true} );
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
@@ -29,7 +29,8 @@ $(function() {
   
   function renderKML(lat, lng) {
     console.log("Rendering sidewalks of [%s, %s]", lat, lng);
-    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
+    //var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
+    var url = 'http://205.178.80.23:8087/sidewalks.kml?lat=' + lat + '&lng=' + lng;
     var sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {

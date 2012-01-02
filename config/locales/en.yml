@@ -16,6 +16,7 @@ en:
     sign_out: "Sign out"
     sign_up: "Sign up"
     update: "Update"
+    go: "Go"
   captions:
     current_password: "(we need your current password to confirm your changes)"
     password: "(leave blank if you don't want to change it)"
@@ -34,7 +35,7 @@ en:
   labels:
     address: "Street address"
     city_state: "City"
-    email: "Email address"
+    email: "Email"
     first_name: "First name"
     last_name: "Last name"
     name_thing: "Give this %{thing} a name"
@@ -44,6 +45,7 @@ en:
     password_current: "Current password"
     password_new: "New password"
     remember_me: "Remember me on this computer"
+    remember_me_short: "Remember me"
     sms_number: "Mobile phone number"
     user_existing: "Already have an account?"
     user_new: "Don't have an account here or on Facebook?"

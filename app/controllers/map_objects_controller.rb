@@ -70,6 +70,7 @@ class MapObjectsController < ApplicationController
   def find_object
     @gid = params[:id]
     @map_object = MapObject.find_by_gid(@gid)
+    @sidewalk = Sidewalk.find_by_gid(@gid)
     puts ">>> Found adopted sidewalk [#{@map_object.gid}]" if @map_object
   end
 end

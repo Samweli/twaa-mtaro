@@ -1,6 +1,6 @@
 #sidebar
   %h1
-    = image_tag "logos/ChicagoShovels_logo300x100.gif", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+    = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
   #social
     FB, TW, G+
     
@@ -11,23 +11,36 @@
     = hidden_field_tag :limit, params[:limit] || 40
     = submit_tag t("buttons.find")
 
-  - if user_signed_in?
-    Welcome
-    = current_user.fullname
-    = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
-  - else
-    = link_to t("links.sign_up_short"), '#', :id => 'sign_up_link_main'
-    = link_to t("links.sign_in_short"), '#', :id => 'sign_in_link_main'
+  #user_badge.font_1.link_1
+    - if user_signed_in?
+      Welcome
+      = current_user.fullname
+      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+    - else
+      = render :partial => 'sessions/sign_in'
+
+  #scrollup.font_1
+    %div.headline
+      "Adopt-a-sidewalk" near your home by "claiming" it on a map.
+      %br
+      %br
+      By doing this, you let neighbors know you can help clear snow.
+    %div.headline
+      You can see at-a-glance which sidewalks are claimed and connect with your less-abled neighbors to help keep their sidewalks clear.
+    %div.headline
+      You can enlist your friends to help on Facebook and Twitter.
+    %div.headline
+      To sign up for our text messaging service, text the word "Chicago" to "311311" for all major cell phone carriers.
+      %br
+      %br
+      Message and data rates may apply.
+    %div.headline
+      = image_tag "logos/ChicagoShovelsHOME.jpg"
+    %div.headline
+      = image_tag "logos/SignUpSMSAlerts.jpg"
     
   #register
     %p#register-text
-      "Adopt-a-sidewalk" near your home by "claiming" it on a map. By doing this, you let neighbors know you can help clear snow.
-      %br
-      %br
-      You can see at-a-glance which sidewalks are claimed and connect with your less-abled neighbors to help keep their sidewalks clear.
-      %br
-      %br
-      You can enlist your friends to help on Facebook and Twitter.
       
     #register-dialog{:class => "dialog"}
       = form_for :user, :html => {:id => "register_form"} do |f|
@@ -51,19 +64,13 @@
         = submit_tag t("buttons.sign_in")
       #login-fb
         %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
-  #messaging-text
-    %p
-      To sign up for our text messaging service, text the word "Chicago" to "311311" for all major cell phone carriers. Message and data rates may apply.
+  #osw_widget
   #feedback
     %a{:href => "#"}
       = t("links.accessibility")
     %a{:href => "#"}
       = t("links.terms")
-  #logos
-    = image_tag "logos/cfa.png", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa")
-    = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")
-    -# FIXME: chicago logo
+
 #map_canvas
 
 
-#osw_widget
