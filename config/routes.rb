@@ -1,8 +1,8 @@
 AdoptAThing::Application.routes.draw do
   devise_for :users, :controllers => {
-    :passwords => 'passwords',
-    :registrations => 'users',
-    :sessions => 'sessions',
+      :passwords => 'passwords',
+      :registrations => 'users',
+      :sessions => 'sessions',
   }
   get 'address' => 'addresses#show', :as => 'address'
   get 'info_window' => 'info_window#index', :as => 'info_window'
@@ -11,6 +11,5 @@ AdoptAThing::Application.routes.draw do
   resource :reminders
   resource :sidewalks
   resources :map_objects
-  #mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   root :to => 'main#index'
 end
