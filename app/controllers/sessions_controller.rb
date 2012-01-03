@@ -6,7 +6,6 @@ class SessionsController < Devise::SessionsController
   def create
     if (resource = warden.authenticate(:scope => resource_name))
       sign_in(resource_name, resource)
-      puts "resource: #{resource}"
     end
     
     respond_with(resource) do |format|
@@ -19,6 +18,6 @@ class SessionsController < Devise::SessionsController
   def destroy
     signed_in = signed_in?(resource_name)
     sign_out(resource_name) if signed_in
-    render(:json => {"success" => signed_in})
+    redirect_to '/'
   end
 end

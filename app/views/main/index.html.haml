@@ -1,15 +1,11 @@
 #sidebar
-  %h1
-    = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  #social
-    FB, TW, G+
-    
-  = form_for :address, :html => {:id => "address_form"} do |f|
-    = label_tag :address, t("labels.address"), :id => "address_label"
-    = text_field_tag :address, params[:address]
-    = hidden_field_tag :city_state, "Chicago, IL"
-    = hidden_field_tag :limit, params[:limit] || 40
-    = submit_tag t("buttons.find")
+  %h1= image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  = render :partial => 'address_form'
+
+  #info_box
+    - flash.each do |key, message|
+      %div{:id => key}
+        = message
 
   #user_badge.font_1.link_1
     - if user_signed_in?
@@ -64,12 +60,14 @@
         = submit_tag t("buttons.sign_in")
       #login-fb
         %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
+  #social
+    = render :partial => 'facebook_button'
+    = render :partial => 'gplus_button'
+    = render :partial => 'twitter_button'
+    
   #osw_widget
   #feedback
-    %a{:href => "#"}
-      = t("links.accessibility")
-    %a{:href => "#"}
-      = t("links.terms")
+    = link_to t("links.terms"), '/tos'
 
 #map_canvas
 

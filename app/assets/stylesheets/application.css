@@ -99,10 +99,9 @@ label, input {
 }
 
 input, select, option, button, input[type="submit"] {
-  display: block;
-  margin-bottom: 10px;
+  display: inline;
+  margin-bottom: 5px;
   font-size: 1.0em;
-  width: 100%;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -112,8 +111,8 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 button, input[type="submit"] {
-  width: 100%;
   text-align: center;
+  width: auto;
 }
 
 label.error {
@@ -193,27 +192,31 @@ ul.actions_menu {
   font-size: 14px;
   color: #444;
 }
-
- #scrollup {
-   position: relative;
-   overflow: hidden;
-   height: 150px;
-   width: auto;
- }
- .headline {
-   position: absolute;
-   top: 160px;
-   left: 5px;
-   height: 145px;
-   width:auto;
- }
- .clearfix:after {
-	content: ".";
-	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
-	height: 0;
+#address_form label {
+  font-family:"Trebuchet MS",Arial,Helvetica,Sans-Serif;
+  font-size: 16px;
+  color: #600;
+}
+#scrollup {
+  position: relative;
+  overflow: hidden;
+  height: 150px;
+  width: auto;
+}
+.headline {
+  position: absolute;
+  top: 160px;
+  left: 5px;
+  height: 145px;
+  width:auto;
+}
+.clearfix:after {
+ content: ".";
+ display: block;
+ clear: both;
+ visibility: hidden;
+ line-height: 0;
+ height: 0;
 }
  
 .clearfix {
@@ -258,4 +261,8 @@ ul.signin {
 }
 .signin input[type="submit"] {
   width: 80px;
+}
+.social_button {
+  float: left;
+  margin: 10px 0 10px 10px;
 }
