@@ -1,7 +1,7 @@
 #address_box
-  = form_for :address, :html => {:id => "address_form"} do |f|
+  = form_for :address, :html => {:id => "address_form", :class => 'form narrow'} do |f|
     = hidden_field_tag :city_state, "Chicago, IL"
     = hidden_field_tag :limit, params[:limit] || 40
     = label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address]
-    = submit_tag t("buttons.go")
+    = submit_tag t("buttons.find")
