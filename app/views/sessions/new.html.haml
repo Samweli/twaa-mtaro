@@ -1,18 +1,20 @@
-= form_for :user, :html => {:id => "sign_in_form"} do |f|
-  %h2= t("titles.sign_in")
-
-  = f.label :email, t("labels.email")
-  = f.text_field :email
+#sign_in_box
+  = form_for :user, :html => {:id => "sign_in_form", :class => 'form'} do |f|
+    %h2= t("titles.sign_in")
   
-  = f.label "password", t("labels.password")
-  = f.password_field "password"
-  
-  = f.submit t("buttons.sign_in")
-
-  = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me")
-  %p= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
-
-  %p
-    = t("labels.user_new")
-    %br
-    = link_to t("links.sign_up"), '#', :id => "sign_up_link"
+    .signin
+      %dl
+        %dt= f.label :email, t("labels.email")
+        %dd= f.text_field :email
+      %dl  
+        %dt= f.label "password", t("labels.password")
+        %dd= f.password_field "password"
+      
+      = f.submit t("buttons.sign_in")
+      = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'font_1 font_12'
+      
+      %p.font_1.link_1.center= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
+      
+      %p.font_1.link_1.center
+        = t("labels.user_new")
+        %br= link_to t("links.sign_up"), '#', :id => "sign_up_link"

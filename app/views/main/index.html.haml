@@ -1,19 +1,20 @@
 #sidebar
-  %h1= image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  
+  - if user_signed_in?
+    #user_badge.font_1.link_1
+      Welcome
+      = current_user.fullname
+      [
+      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+      ]
+      
   = render :partial => 'address_form'
 
   #info_box
     - flash.each do |key, message|
       %div{:id => key}
         = message
-
-  #user_badge.font_1.link_1
-    - if user_signed_in?
-      Welcome
-      = current_user.fullname
-      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
-    - else
-      = render :partial => 'sessions/sign_in'
 
   #scrollup.font_1
     %div.headline

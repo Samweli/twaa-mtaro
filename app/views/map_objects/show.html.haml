@@ -1,55 +1,57 @@
-%h2.address
-  = @sidewalk.address
-
-%h1.actions_label
-  = 'Can you take care of this sidewalk?'
-
-- if user_signed_in?
-  %ul.actions_menu
-    - if true
-      %li.adopt
-        %a{:href => "#", :id => "adopt_link"}
-          %h1 Adopt
+#actions_box
+  %h2.address
+    = @sidewalk.address
+  
+  %h1.actions_label
+    Can you take care of
+    %br this sidewalk?
+  
+  - if user_signed_in?
+    %ul.actions_menu
+      - if true
+        %li.adopt
+          %a{:href => "#", :id => "adopt_link"}
+            %h1 Adopt
+            .btn_image
+            .label Yes, I will adopt this sidewalk.
+      - else
+        %li.abandon
+          %a{:href => "#", :id => "abandon_link"}
+            %h1 Abandon
+            .btn_image
+            .label Create the place where your commits will be stored.
+      %li.need_help
+        %a{:href => "#", :id => "need_help_link"}
+          %h1 Need Help
           .btn_image
-          .label Yes, I will adopt this sidewalk.
-    - else
-      %li.abandon
-        %a{:href => "#", :id => "abandon_link"}
-          %h1 Abandon
+          .label I need help to keep this sidewalk clean.
+      %li.need_supplies
+        %a{:href => "#", :id => "need_supplies_link"}
+          %h1 Need Supplies
           .btn_image
-          .label Create the place where your commits will be stored.
-    %li.need_help
-      %a{:href => "#", :id => "need_help_link"}
-        %h1 Need Help
-        .btn_image
-        .label I need help to keep this sidewalk clean.
-    %li.need_supplies
-      %a{:href => "#", :id => "need_supplies_link"}
-        %h1 Need Supplies
-        .btn_image
-        .label I need supplies or have some to share.
-
-- else
-  #need_register.link_1
-    Please
-    = link_to t("links.login"), '#', :id => 'sign_in_link'
-    or
-    = link_to t("links.register"), '#', :id => 'sign_up_link'
-    %br
-    to see what you can do for this sidewalk!
-
-- if @map_object
-  #current_status.font_1.center
-    %h1= 'Current Status'
-    %ul.horizontal_list
-      %li
-        Cleared? 
-        %span{:class => "color_#{yesno(@map_object.cleared)}"}
-          = yesno(@map_object.cleared).upcase
-      %li
-        Need Help? 
-        %span{:class => "color_#{yesno(@map_object.need_help)}"}
-          = yesno(@map_object.need_help).upcase
-    %h1= 'Adopted by'
-    #people_list
-      = @map_object.user.fullname
+          .label I need supplies or have some to share.
+  
+  - else
+    #need_register.link_1
+      Please
+      = link_to t("links.login"), '#', :id => 'sign_in_link'
+      or
+      = link_to t("links.register"), '#', :id => 'sign_up_link'
+      %br
+      to see what you can do for this sidewalk!
+  
+  - if @map_object
+    #current_status.font_1.font_20.center
+      %h1= 'Current Status'
+      %ul.horizontal_list
+        %li
+          Cleared? 
+          %span{:class => "color_#{yesno(@map_object.cleared)}"}
+            = yesno(@map_object.cleared).upcase
+        %li
+          Need Help? 
+          %span{:class => "color_#{yesno(@map_object.need_help)}"}
+            = yesno(@map_object.need_help).upcase
+      %h1= 'Adopted by'
+      #people_list
+        = @map_object.user.fullname

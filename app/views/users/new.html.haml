@@ -1,29 +1,34 @@
-= form_for @user, :html => {:id => "sign_up_form"} do |f|
-  %h2= t("titles.register_now")
-
-  = f.label :first_name, t("labels.first_name")
-  %em= t("captions.public")
-  = f.text_field :first_name
-
-  = f.label :last_name, t("labels.last_name")
-  %em= t("captions.public")
-  = f.text_field :last_name
-
-  =# f.label "organization", t("labels.organization"), :id => "user_organization_label"
-  %em=# t("captions.public")
-  =# f.text_field "organization"
+#sign_up_box
+  = form_for :user, :html => {:id => "sign_up_form", :class => 'form'} do |f|
+    %h2= t("titles.register_now")
   
-  = f.label :email, t("labels.email")#, :id => "user_email_label"
-  = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
-  
-  = f.label "password", t("labels.password"), :id => "user_password_label"
-  = f.password_field "password"
-  
-  = f.submit t("buttons.register")
+    .signup
+      %dl
+        %dt
+          = f.label :first_name, t("labels.first_name")
+          %em= t("captions.public")
+        %dd= f.text_field :first_name
+      %dl  
+        %dt
+          = f.label :last_name, t("labels.last_name")
+          %em= t("captions.public")
+        %dd= f.text_field :last_name
+      %dl  
+        =# f.label "organization", t("labels.organization"), :id => "user_organization_label"
+        %em=# t("captions.public")
+        =# f.text_field "organization"
+      %dl
+        %dt= f.label :email, t("labels.email")
+        %dd= f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
+      %dl    
+        %dt= f.label "password", t("labels.password"), :id => "user_password_label"
+        %dd= f.password_field "password"
+      
+      = f.submit t("buttons.register")
 
-  %p
-    = t("labels.user_existing")
-    %br
-    = link_to t("links.sign_in"), '#', :id => "sign_in_link"
-  
-  %p= t("defaults.tos", :tos => link_to(t("links.terms"), tos_path, :id => "tos_link")).html_safe
+      .center
+        %p.font_1.link_1
+          = t("labels.user_existing")
+          = link_to t("links.sign_in"), '#', :id => "sign_in_link"
+        %p.font_1.font_12
+          = t("defaults.tos", :tos => link_to(t("links.terms"), tos_path, :id => "tos_link")).html_safe

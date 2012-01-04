@@ -17,6 +17,20 @@ $(function() {
     maxWidth: 350
   });
   
+  var fetchMapObject = function () {
+    $.ajax({
+      type: 'GET',
+      url: '/map_objects/' + activeObjectId,
+      data: {
+        //'id': activeObjectId
+        //'flash': {'notice': "<%= I18n.t("notices.signed_in") %>" }
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+  }
+  
   bindInfoWindowLink( 'adopt_link', '/map_objects', 'POST', {}, {showIW: false} );
   bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {}, {showIW: false} );
   bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {}, {showIW: false} );
@@ -124,13 +138,8 @@ $(function() {
     }
     return false;
   });
-  
-  
 
-
-
-
-  $('#sign_up_formx').live('submit', function() {
+  $('#sign_up_form').live('submit', function() {
     var submitButton = $("input[type='submit']", this);
     var uemail = $('#user_email');
     var ufname = $('#user_first_name');
@@ -205,20 +214,7 @@ $(function() {
           errors[0].focus();
         },
         success: function(data) {
-          activeInfoWindow.setContent(data);
-          //$.ajax({
-          //  type: 'GET',
-          //  url: '/info_window',
-          //  data: {
-          //    'thing_id': activeObjectId,
-          //    'flash': {
-          //      'notice': "<%= I18n.t("notices.signed_up") %>"
-          //    }
-          //  },
-          //  success: function(data) {
-          //    activeInfoWindow.setContent(data);
-          //  }
-          //});
+          fetchMapObject();
         }
       });
     }
@@ -270,17 +266,7 @@ $(function() {
           upwd.focus();
         },
         success: function(data) {
-          $.ajax({
-            type: 'GET',
-            url: '/map_objects/' + activeObjectId,
-            data: {
-              //'id': activeObjectId
-              //'flash': {'notice': "<%= I18n.t("notices.signed_in") %>" }
-            },
-            success: function(data) {
-              activeInfoWindow.setContent(data);
-            }
-          });
+          fetchMapObject();
         }
       });
     }
