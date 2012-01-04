@@ -1,4 +1,4 @@
-= form_for :user, :html => {:id => "sign_up_form"} do |f|
+= form_for @user, :html => {:id => "sign_up_form"} do |f|
   %h2= t("titles.register_now")
 
   = f.label :first_name, t("labels.first_name")

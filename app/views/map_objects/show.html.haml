@@ -1,16 +1,55 @@
-%h1.actions_label
-  = 'Can you take care of this sidewalk?'
-
 %h2.address
   = @sidewalk.address
 
-%ul.actions_menu
-  %li= link_to 'Yes, I will adopt this sidewalk', '#', :id => 'adopt_link'
-  %li= link_to 'No, I will need help keeping this sidewalk clean', '#', :id => 'need_help_link'
-  %li= link_to 'Need supplies or have some to share?', '#', :id => 'need_supplies_link'
+%h1.actions_label
+  = 'Can you take care of this sidewalk?'
+
+- if user_signed_in?
+  %ul.actions_menu
+    - if true
+      %li.adopt
+        %a{:href => "#", :id => "adopt_link"}
+          %h1 Adopt
+          .btn_image
+          .label Yes, I will adopt this sidewalk.
+    - else
+      %li.abandon
+        %a{:href => "#", :id => "abandon_link"}
+          %h1 Abandon
+          .btn_image
+          .label Create the place where your commits will be stored.
+    %li.need_help
+      %a{:href => "#", :id => "need_help_link"}
+        %h1 Need Help
+        .btn_image
+        .label I need help to keep this sidewalk clean.
+    %li.need_supplies
+      %a{:href => "#", :id => "need_supplies_link"}
+        %h1 Need Supplies
+        .btn_image
+        .label I need supplies or have some to share.
+
+- else
+  #need_register.link_1
+    Please
+    = link_to t("links.login"), '#', :id => 'sign_in_link'
+    or
+    = link_to t("links.register"), '#', :id => 'sign_up_link'
+    %br
+    to see what you can do for this sidewalk!
 
 - if @map_object
-  %h1= 'Current status of the sidewalk'
-  %p= "Adopted by: #{@map_object.user.fullname}"
-  %p= "Cleared: #{yesno(@map_object.cleared)}"
-  %p= "Need Help: #{yesno(@map_object.need_help)}"
+  #current_status.font_1.center
+    %h1= 'Current Status'
+    %ul.horizontal_list
+      %li
+        Cleared? 
+        %span{:class => "color_#{yesno(@map_object.cleared)}"}
+          = yesno(@map_object.cleared).upcase
+      %li
+        Need Help? 
+        %span{:class => "color_#{yesno(@map_object.need_help)}"}
+          = yesno(@map_object.need_help).upcase
+    %h1= 'Adopted by'
+    #people_list
+      = @map_object.user.fullname

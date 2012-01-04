@@ -1,15 +1,13 @@
 class MapObjectsController < ApplicationController
   respond_to :html, :json
+  before_filter :authenticate_user!, :except => [:show]
   
   layout 'info_window'
-
-  def index
-  end
 
   def create
     find_object
     
-    if user_signed_in?
+    #if user_signed_in?
       if @map_object.try :belongs_to_me?
         puts 'already claimed!'
         # trying to adopt an object that I already adopted
@@ -32,28 +30,13 @@ class MapObjectsController < ApplicationController
           render(:json => {"errors" => @map_object.errors}, :status => 500)
         end
       end
-    else
-      render :template => 'users/new'
-    end
+    #else
+    #  render :template => 'users/new'
+    #end
   end
 
   def show
-    find_object
-    respond_with @map_object
-    #if @map_object.adopted?
-    #  if user_signed_in? && current_user.id == @map_object.user_id
-    #    render("users/thank_you")
-    #  else
-    #    render("users/profile")
-    #  end
-    #else
-    #  if user_signed_in?
-    #    render("map_objects/adopt")
-    #  else
-    #    render("sessions/new")
-    #  end
-    #end
-
+    respond_with find_object
   end
 
   def update
@@ -72,5 +55,6 @@ class MapObjectsController < ApplicationController
     @map_object = MapObject.find_by_gid(@gid)
     @sidewalk = Sidewalk.find_by_gid(@gid)
     puts ">>> Found adopted sidewalk [#{@map_object.gid}]" if @map_object
+    @map_object
   end
 end

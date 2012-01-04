@@ -1,13 +1,13 @@
 = form_for :user, :url => user_session_path, :html => {:id => "sign_in_form_main"} do |f|
   %ul.signin
     %li
-      = f.label :email, t("labels.email")
-      = f.text_field :email
+      = f.label :email_main, t("labels.email")
+      = f.text_field :email_main
     %li  
-      = f.label :password, t("labels.password")
-      = f.password_field :password
+      = f.label :password_main, t("labels.password")
+      = f.password_field :password_main
     %li.remember
-      = f.check_box :remember, :checked => true
+      = f.check_box :remember_main, :checked => true
       = t("labels.remember_me_short")
     %li.button
       = f.submit t("buttons.sign_in")

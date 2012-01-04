@@ -55,6 +55,7 @@ $(function() {
       },
       success: function(data) {
         activeInfoWindow.setOptions({
+          maxWidth: '500',
           content: data,
           position: e.latLng,
           pixelOffset: e.pixelOffset
@@ -129,7 +130,7 @@ $(function() {
 
 
 
-  $('#sign_up_form').live('submit', function() {
+  $('#sign_up_formx').live('submit', function() {
     var submitButton = $("input[type='submit']", this);
     var uemail = $('#user_email');
     var ufname = $('#user_first_name');
@@ -244,7 +245,6 @@ $(function() {
       $(submitButton).attr("disabled", false);
       errors[0].focus();
     } else {
-      console.debug("here works");
       $.ajax({
         type: 'POST',
         url: '/users/sign_in.json',
@@ -270,20 +270,17 @@ $(function() {
           upwd.focus();
         },
         success: function(data) {
-          console.debug("works 2");
-          //$.ajax({
-          //  type: 'GET',
-          //  url: '/info_window',
-          //  data: {
-          //    'thing_id': activeObjectId,
-          //    'flash': {
-          //      'notice': "<%= I18n.t("notices.signed_in") %>"
-          //    }
-          //  },
-          //  success: function(data) {
-          //    activeInfoWindow.setContent(data);
-          //  }
-          //});
+          $.ajax({
+            type: 'GET',
+            url: '/map_objects/' + activeObjectId,
+            data: {
+              //'id': activeObjectId
+              //'flash': {'notice': "<%= I18n.t("notices.signed_in") %>" }
+            },
+            success: function(data) {
+              activeInfoWindow.setContent(data);
+            }
+          });
         }
       });
     }

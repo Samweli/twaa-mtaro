@@ -2,7 +2,7 @@
   %h2= t("titles.sign_in")
 
   = f.label :email, t("labels.email")
-  = f.text_field :email#, :value => params[:user] ? params[:user][:email] : nil
+  = f.text_field :email
   
   = f.label "password", t("labels.password")
   = f.password_field "password"

@@ -1,8 +1,10 @@
 class UsersController < Devise::RegistrationsController
   #respond_to :html, :json
+  #before_filter :authenticate_user!
 
   def new
-    puts 'gid!!' unless params[:gid].nil?
+    @user = User.new
+    puts "NEW!! #{@user.inspect}"
   end
 
   def edit

@@ -61,6 +61,8 @@ en:
     sign_out: "Sign Out"
     sign_in_short: "Sign In"
     sign_up_short: "Sign Up"
+    login: "Login"
+    register: "Register"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
