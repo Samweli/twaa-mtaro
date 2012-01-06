@@ -31,24 +31,19 @@ $(function() {
     });
   }
   
-  bindUpdateSidewalkLink( 'abandon_link', '/map_objects', 'POST', {'abandon': true} );
-  bindInfoWindowLink( 'adopt_link', '/map_objects', 'POST', {} );
-  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {} );
-  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {} );
-  
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
   });
   
   function renderKML(lat, lng) {
-    console.log("Rendering sidewalks of [%s, %s]", lat, lng);
+    console.debug("Rendering sidewalks of [%s, %s]", lat, lng);
     var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
     var sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
-      console.log("Fetched KML: %s", JSON.stringify(e.featureData));
+      console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(e);
     });
   }
@@ -70,7 +65,7 @@ $(function() {
       },
       success: function(data) {
         activeInfoWindow.setOptions({
-          maxWidth: '500',
+          maxWidth: '600',
           content: data,
           position: e.latLng,
           pixelOffset: e.pixelOffset
@@ -124,7 +119,7 @@ $(function() {
           'address': $('#address').val()
         },
         success: function(data) {
-          console.log("returned address data: %o", data)
+          console.debug("returned address data: %o", data)
           $(submitButton).attr("disabled", false);
           if(data.errors) {
             $('#address_label').addClass('error', 500);
@@ -275,10 +270,6 @@ $(function() {
   });
     
     
-    
-    
-    
-    
   $('#user_forgot_password_link').live('submit', function() {
     var submitButton = $("input[type='submit']", this);
 
@@ -332,385 +323,16 @@ $(function() {
     return false;
   });
   
-  
-  
-  
-  
-  
-  
-  
-  
-  $('#adoption_form').live('submit', function() {
-    var submitButton = $("#adoption_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'POST',
-      url: '/things.json',
-      data: {
-        'id': $('#thing_id').val(),
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#adoption_form input[name="authenticity_token"]').val(),
-        '_method': 'put',
-        'thing': {
-          'user_id': $('#thing_user_id').val(),
-          'name': $('#thing_name').val()
-        }
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        $.ajax({
-          type: 'GET',
-          url: '/info_window',
-          data: {
-            'thing_id': activeObjectId,
-            'flash': {
-              'notice': "<%= I18n.t("notices.adopted", :thing => I18n.t("defaults.thing")) %>"
-            }
-          },
-          success: function(data) {
-            activeInfoWindow.setContent(data);
-            image = new google.maps.MarkerImage('<%= image_path 'markers/green.png' %>',
-              new google.maps.Size(27.0, 37.0),
-              new google.maps.Point(0, 0),
-              new google.maps.Point(13.0, 18.0)
-            );
-            activeMarker.setIcon(image);
-            activeMarker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-        });
-      }
-    });
-    return false;
-  });
-  
-  $('#abandon_form').live('submit', function() {
-    var answer = window.confirm("Are you sure you want to abandon this <%= I18n.t("defaults.thing") %>?")
-    if(answer) {
-      var submitButton = $("#abandon_form input[type='submit']");
-      $(submitButton).attr("disabled", true);
+  $('#abandon_link').live('click', function() {
+    if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {    
       $.ajax({
         type: 'POST',
-        url: '/things.json',
-        data: {
-          'id': $('#thing_id').val(),
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'authenticity_token': $('#abandon_form input[name="authenticity_token"]').val(),
-          '_method': 'put',
-          'thing': {
-            'user_id': $('#thing_user_id').val(),
-            'name': $('#thing_name').val()
-          }
-        },
-        beforeSend: function() {
-          $('#info_window').hide();
-          $('#loader').show();
-        },
-        error: function(jqXHR) {
-          $('#loader').hide();
-          $('#info_window').show();
-          $(submitButton).attr("disabled", false);
-        },
-        success: function(data) {
-          $.ajax({
-            type: 'GET',
-            url: '/info_window',
-            data: {
-              'thing_id': activeObjectId,
-              'flash': {
-                'notice': "<%= I18n.t("notices.abandoned", :thing => I18n.t("defaults.thing").capitalize) %>"
-              }
-            },
-            success: function(data) {
-              activeInfoWindow.setContent(data);
-              image = new google.maps.MarkerImage('<%= image_path 'markers/red.png' %>',
-                new google.maps.Size(27.0, 37.0),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(13.0, 18.0)
-              );
-              activeMarker.setIcon(image);
-              activeMarker.setAnimation(null);
-            }
-          });
-        }
-      });
-    }
-    return false;
-  });
-  
-  $('#edit_profile_form').live('submit', function() {
-    var submitButton = $("#edit_profile_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'GET',
-      url: '/users/edit',
-      data: {
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#edit_profile_form input[name="authenticity_token"]').val()
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        activeInfoWindow.setContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('#edit_form').live('submit', function() {
-    var submitButton = $("#edit_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    var errors = []
-    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test($('#user_email').val())) {
-      errors.push($('#user_email'));
-      $('#user_email_label').addClass('error', 500);
-      $('#user_email').addClass('error', 500);
-    } else {
-      $('#user_email_label').removeClass('error');
-      $('#user_email').removeClass('error');
-    }
-    if($('#user_name').val() === '') {
-      errors.push($('#user_name'));
-      $('#user_name_label').addClass('error', 500);
-      $('#user_name').addClass('error', 500);
-    } else {
-      $('#user_name_label').removeClass('error');
-      $('#user_name').removeClass('error');
-    }
-    if($('#user_password').val() && ($('#user_password').val().length < 6 || $('#user_password').val().length > 20)) {
-      errors.push($('#user_password'));
-      $('#user_password_label').addClass('error', 500);
-      $('#user_password').addClass('error', 500);
-    } else {
-      $('#user_password_label').removeClass('error');
-      $('#user_password').removeClass('error');
-    }
-    if($('#user_current_password').val().length < 6 || $('#user_current_password').val().length > 20) {
-      errors.push($('#user_current_password'));
-      $('#user_current_password_label').addClass('error', 500);
-      $('#user_current_password').addClass('error', 500);
-    } else {
-      $('#user_current_password_label').removeClass('error');
-      $('#user_current_password').removeClass('error');
-    }
-    if(errors.length > 0) {
-      $(submitButton).attr("disabled", false);
-      errors[0].focus();
-    } else {
-      $.ajax({
-        type: 'POST',
-        url: '/users.json',
-        data: {
-          'id': $('#id').val(),
-          'thing_id': activeObjectId,
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'authenticity_token': $('#edit_form input[name="authenticity_token"]').val(),
-          '_method': 'put',
-          'user': {
-            'email': $('#user_email').val(),
-            'name': $('#user_name').val(),
-            'organization': $('#user_organization').val(),
-            'voice_number': $('#user_voice_number').val(),
-            'sms_number': $('#user_sms_number').val(),
-            'password': $('#user_password').val(),
-            'password_confirmation': $('#user_password').val(),
-            'current_password': $('#user_current_password').val()
-          }
-        },
-        beforeSend: function() {
-          $('#info_window').hide();
-          $('#loader').show();
-        },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          $('#loader').hide();
-          $('#info_window').show();
-          $(submitButton).attr("disabled", false);
-          if(data.errors.email) {
-            errors.push($('#user_email'));
-            $('#user_email_label').addClass('error', 500);
-            $('#user_email').addClass('error', 500);
-          }
-          if(data.errors.name) {
-            errors.push($('#user_name'));
-            $('#user_name_label').addClass('error', 500);
-            $('#user_name').addClass('error', 500);
-          }
-          if(data.errors.organization) {
-            errors.push($('#user_organization'));
-            $('#user_organization_label').addClass('error', 500);
-            $('#user_organization').addClass('error', 500);
-          }
-          if(data.errors.voice_number) {
-            errors.push($('#user_voice_number'));
-            $('#user_voice_number_label').addClass('error', 500);
-            $('#user_voice_number').addClass('error', 500);
-          }
-          if(data.errors.sms_number) {
-            errors.push($('#user_sms_number'));
-            $('#user_sms_number_label').addClass('error', 500);
-            $('#user_sms_number').addClass('error', 500);
-          }
-          if(data.errors.password) {
-            errors.push($('#user_password'));
-            $('#user_password_label').addClass('error', 500);
-            $('#user_password').addClass('error', 500);
-          }
-          if(data.errors.current_password) {
-            errors.push($('#user_current_password'));
-            $('#user_current_password_label').addClass('error', 500);
-            $('#user_current_password').addClass('error', 500);
-          }
-          errors[0].focus();
-        },
-        success: function(data) {
-          activeInfoWindow.setContent(data);
-        }
-      });
-    }
-    return false;
-  });
-  
-  $('#sign_out_form').live('submit', function() {
-    var submitButton = $("#sign_out_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'GET',
-      url: '/users/sign_out.json',
-      data: {
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#sign_out_form input[name="authenticity_token"]').val()
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        $.ajax({
-          type: 'GET',
-          url: '/info_window',
-          data: {
-            'thing_id': activeObjectId,
-            'flash': {
-              'notice': "<%= I18n.t("notices.signed_out") %>"
-            }
-          },
-          success: function(data) {
-            activeInfoWindow.setContent(data);
-          }
-        });
-      }
-    });
-    return false;
-  });
-  
-  $('#back_form').live('submit', function() {
-    var submitButton = $("#back_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'GET',
-      url: '/info_window',
-      data: {
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#back_form input[name="authenticity_token"]').val(),
-        'thing_id': activeObjectId
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        activeInfoWindow.setContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('#reminder_form').live('submit', function() {
-    var submitButton = $("#reminder_form input[type='submit']");
-    $(submitButton).attr("disabled", true);
-    $.ajax({
-      type: 'POST',
-      url: '/reminders.json',
-      data: {
-        'commit': submitButton.val(),
-        'utf8': '✓',
-        'authenticity_token': $('#sign_out_form input[name="authenticity_token"]').val(),
-        'reminder': {
-          'from_user_id': $('#reminder_from_user_id').val(),
-          'to_user_id': $('#reminder_to_user_id').val(),
-          'thing_id': activeObjectId
-        }
-      },
-      beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
-      },
-      error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
-        $(submitButton).attr("disabled", false);
-      },
-      success: function(data) {
-        $.ajax({
-          type: 'GET',
-          url: '/info_window',
-          data: {
-            'thing_id': activeObjectId,
-            'flash': {
-              'notice': "<%= I18n.t("notices.reminder_sent") %>"
-            }
-          },
-          success: function(data) {
-            activeInfoWindow.setContent(data);
-          }
-        });
-      }
-    });
-    return false;
-  });
-  
-  
-  
-  function bindInfoWindowLink(id, url, type, data) {
-    $('#'+id).live('click', function() {
-      $.ajax({
-        type: type,
-        url: url,
-        data: $.extend(true, {'id': activeObjectId,
-                              'utf8': '✓',
-                              'authenticity_token': AUTH_TOKEN},
-                              data),
+        url: '/map_objects/' + $(this).attr('data-moid'),
+        data: { 'gid': activeObjectId,
+                'utf8': '✓',
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'claimed': false },
         beforeSend: function() {
           hideInfoWindow();
           showSpinner();
@@ -723,50 +345,164 @@ $(function() {
           activeInfoWindow.setContent(data);
         }
       });
-      return false;
-    });
-  }
+    }
+    return false;
+  });
   
-  function bindUpdateSidewalkLink(id, url, type, data) {
-    $('#'+id).live('click', function() {
-      $.ajax({
-        type: 'POST',
-        url: 'map_objects/' + $(this).attr('data-moid'),
-        data: $.extend(true, {'gid': activeObjectId,
-                              'utf8': '✓',
-                              'authenticity_token': AUTH_TOKEN,
-                              '_method': 'put'},
-                              data),
-        beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
-        },
-        error: function(jqXHR) {
-          hideSpinner();
-          showInfoWindow;
-        },
-        success: function(data) {
-          activeInfoWindow.setContent(data);
-        }
-      });
-      return false;
-    });
-  } 
-  
-  
-  
-  
-  $('#tos_link').live('click', function() {
+  $('#adopt_link').live('click', function() {
     $.ajax({
-      type: 'GET',
-      url: '/tos',
+      type: 'POST',
+      url: '/map_objects',
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN },
       beforeSend: function() {
-        $('#info_window').hide();
-        $('#loader').show();
+        hideInfoWindow();
+        showSpinner();
       },
       error: function(jqXHR) {
-        $('#loader').hide();
-        $('#info_window').show();
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#re_adopt_link').live('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: '/map_objects/' + $(this).attr('data-moid'),
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN,
+              '_method': 'put',
+              'claimed': true },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#get_help_link').live('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: '/map_objects/' + $(this).attr('data-moid'),
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN,
+              '_method': 'put',
+              'need_help': true },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#shoveled_link').live('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: '/map_objects/' + $(this).attr('data-moid'),
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN,
+              '_method': 'put',
+              'cleared': true },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#snowed_link').live('click', function() {
+    $.ajax({
+      type: 'POST',
+      url: '/map_objects/' + $(this).attr('data-moid'),
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN,
+              '_method': 'put',
+              'cleared': false },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#sign_in_link').live('click', function() {
+    $.ajax({
+      type: 'GET',
+      url: '/users/sign_in',
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
+      },
+      success: function(data) {
+        activeInfoWindow.setContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#sign_up_link').live('click', function() {
+    $.ajax({
+      type: 'GET',
+      url: '/users/sign_up',
+      data: { 'gid': activeObjectId,
+              'utf8': '✓',
+              'authenticity_token': AUTH_TOKEN },
+      beforeSend: function() {
+        hideInfoWindow();
+        showSpinner();
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        showInfoWindow;
       },
       success: function(data) {
         activeInfoWindow.setContent(data);

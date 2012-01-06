@@ -164,6 +164,8 @@ img.lock {
 #user_badge {
   background-color: #f9f9f9;
   border: 1px solid #dedede;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0 1px 0 #FFFFFF;
   padding: 5px;
   margin: 15px 0 15px 0;
   color: #666;
@@ -326,9 +328,8 @@ ul.actions_menu li {
   color: #666666;
   display: block;
   float: left;
-  font-size: 13px;
   font-weight: normal;
-  height: 150px;
+  height: 160px;
   margin: 0 4px 0 4px;
   position: relative;
   width: 120px;
@@ -345,10 +346,16 @@ ul.actions_menu li:hover {
 .actions_menu .abandon .btn_image {
   background-image: url("btn_abandon.png");
 }
+.actions_menu .snowed .btn_image {
+  background-image: url("btn_abandon.png");
+}
 .actions_menu .need_help .btn_image {
   background-image: url("btn_need_help.png");
 }
 .actions_menu .need_supplies .btn_image {
+  background-image: url("btn_need_supplies.png");
+}
+.actions_menu .shoveled .btn_image {
   background-image: url("btn_need_supplies.png");
 }
 .actions_menu .btn_image {
@@ -362,7 +369,7 @@ ul.actions_menu li:hover {
   background-repeat: no-repeat;
   border-top: 1px solid #f0f0f0;
   display: block;
-  height: 36px;
+  height: 50px;
   overflow: hidden;
   margin: 0;
   padding: 5px 3px 5px 3px;

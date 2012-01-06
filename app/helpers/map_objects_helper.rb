@@ -23,4 +23,5 @@ module MapObjectsHelper
       '#linestyle_white'
     end
   end
+  
 end
