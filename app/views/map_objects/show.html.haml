@@ -3,31 +3,30 @@
     = @sidewalk.address
   
   %h1.actions_label
-    Can you take care of
-    %br this sidewalk?
+    Can you shovel this sidewalk?
   
   - if user_signed_in?
     %ul.actions_menu
-      - if true
+      - if @sidewalk_status[:adopted_by_me]
+        %li.abandon
+          %a{:href => "#", :id => "abandon_link", :data => {:moid => @sidewalk_status[:my_sidewalk].id}}
+            %h1 Abandon
+            .btn_image
+            .label No longer adopt this sidewalk.
+      - else
         %li.adopt
           %a{:href => "#", :id => "adopt_link"}
             %h1 Adopt
             .btn_image
             .label Yes, I will adopt this sidewalk.
-      - else
-        %li.abandon
-          %a{:href => "#", :id => "abandon_link"}
-            %h1 Abandon
-            .btn_image
-            .label Create the place where your commits will be stored.
       %li.need_help
-        %a{:href => "#", :id => "need_help_link"}
-          %h1 Need Help
+        %a{:href => "#", :id => "get_help_link"}
+          %h1 Get Help
           .btn_image
           .label I need help to keep this sidewalk clean.
       %li.need_supplies
-        %a{:href => "#", :id => "need_supplies_link"}
-          %h1 Need Supplies
+        %a{:href => "#", :id => "share_link"}
+          %h1 Share
           .btn_image
           .label I need supplies or have some to share.
   
@@ -38,20 +37,23 @@
       or
       = link_to t("links.register"), '#', :id => 'sign_up_link'
       %br
-      to see what you can do for this sidewalk!
+      to see what you can do for this sidewalk.
   
-  - if @map_object
+  - if @map_objects.empty?
+    %p.font_18.color_warn.center
+      Nobody has adopted this sidewalk yet.
+  - else
     #current_status.font_1.font_20.center
       %h1= 'Current Status'
       %ul.horizontal_list
         %li
           Cleared? 
-          %span{:class => "color_#{yesno(@map_object.cleared)}"}
-            = yesno(@map_object.cleared).upcase
+          %span{:class => "color_#{yesno(@sidewalk_status[:cleared])}"}
+            = yesno(@sidewalk_status[:cleared]).upcase
         %li
           Need Help? 
-          %span{:class => "color_#{yesno(@map_object.need_help)}"}
-            = yesno(@map_object.need_help).upcase
+          %span{:class => "color_#{yesno(@sidewalk_status[:need_help])}"}
+            = yesno(@sidewalk_status[:need_help]).upcase
       %h1= 'Adopted by'
       #people_list
-        = @map_object.user.fullname
+        = @map_objects.map {|mo| mo.user.fullname}.join(', ')

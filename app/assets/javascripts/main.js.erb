@@ -4,7 +4,7 @@ $(function() {
   var mapOptions = {
     center: center,
     mapTypeControl: true,
-    mapTypeId: google.maps.MapTypeId.HYBRID,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
     panControl: true,
     zoom: zoomLevel
   };
@@ -31,9 +31,10 @@ $(function() {
     });
   }
   
-  bindInfoWindowLink( 'adopt_link', '/map_objects', 'POST', {}, {showIW: false} );
-  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {}, {showIW: false} );
-  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {}, {showIW: false} );
+  bindUpdateSidewalkLink( 'abandon_link', '/map_objects', 'POST', {'abandon': true} );
+  bindInfoWindowLink( 'adopt_link', '/map_objects', 'POST', {} );
+  bindInfoWindowLink( 'sign_in_link', '/users/sign_in', 'GET', {} );
+  bindInfoWindowLink( 'sign_up_link', '/users/sign_up', 'GET', {} );
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
@@ -701,7 +702,7 @@ $(function() {
   
   
   
-  function bindInfoWindowLink(id, url, type, data, options) {
+  function bindInfoWindowLink(id, url, type, data) {
     $('#'+id).live('click', function() {
       $.ajax({
         type: type,
@@ -711,14 +712,8 @@ $(function() {
                               'authenticity_token': AUTH_TOKEN},
                               data),
         beforeSend: function() {
-          if (options['showIW'] == true) {
-            isWindowOpen = true;
-            activeInfoWindow.open(map);
-            showInfoWindow();
-          } else {
-            hideInfoWindow();
-            showSpinner();
-          }
+          hideInfoWindow();
+          showSpinner();
         },
         error: function(jqXHR) {
           hideSpinner();
@@ -732,6 +727,31 @@ $(function() {
     });
   }
   
+  function bindUpdateSidewalkLink(id, url, type, data) {
+    $('#'+id).live('click', function() {
+      $.ajax({
+        type: 'POST',
+        url: 'map_objects/' + $(this).attr('data-moid'),
+        data: $.extend(true, {'gid': activeObjectId,
+                              'utf8': '✓',
+                              'authenticity_token': AUTH_TOKEN,
+                              '_method': 'put'},
+                              data),
+        beforeSend: function() {
+          hideInfoWindow();
+          showSpinner();
+        },
+        error: function(jqXHR) {
+          hideSpinner();
+          showInfoWindow;
+        },
+        success: function(data) {
+          activeInfoWindow.setContent(data);
+        }
+      });
+      return false;
+    });
+  } 
   
   
   

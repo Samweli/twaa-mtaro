@@ -29,16 +29,16 @@
 
     :javascript
       //initialize widget
-      widget = new OhSoWe.MapWidget({
-        version: "0.1",
-        partnerId: "snowflake",
-        container: "osw_widget"
-      }).render();
-      console.debug('OhSoWe Widget initialized');
+      //widget = new OhSoWe.MapWidget({
+      //  version: "0.1",
+      //  partnerId: "snowflake",
+      //  container: "osw_widget"
+      //}).render();
+      //console.debug('OhSoWe Widget initialized');
       
       //set the google maps listener
-      google.maps.event.addListener(window.map, 'bounds_changed', function() {
-        console.debug('bounds_changed');
-        widget.boundsChanged(window.map.getBounds().toUrlValue());
-      });
+      //google.maps.event.addListener(window.map, 'bounds_changed', function() {
+      //  console.debug('bounds_changed');
+      //  widget.boundsChanged(window.map.getBounds().toUrlValue());
+      //});
     = yield

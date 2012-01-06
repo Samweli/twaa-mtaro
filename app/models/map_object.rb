@@ -1,6 +1,6 @@
 class MapObject < ActiveRecord::Base
   belongs_to :user, :foreign_key => "source_id" #K: source_type filter here
-  belongs_to :sidewalk, :foreign_key => "gid"
+  belongs_to :sidewalk#, :foreign_key => "gid"
   has_many :reminders
 
   validates_presence_of :object_type, :source_type, :source_id, :gid

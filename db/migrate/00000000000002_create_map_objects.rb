@@ -9,7 +9,6 @@ class CreateMapObjects < ActiveRecord::Migration
       t.integer :source_type
       t.integer :object_type
       t.integer :gid
-      t.integer :status
       t.boolean :claimed
       t.boolean :cleared
       t.boolean :need_help

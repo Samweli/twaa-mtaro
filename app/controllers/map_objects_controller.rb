@@ -5,40 +5,45 @@ class MapObjectsController < ApplicationController
   layout 'info_window'
 
   def create
-    find_object
+    @sidewalk = Sidewalk.find_by_gid(params[:id])
+    @map_object =
+      MapObject.find_or_initialize_by_gid_and_claimed_and_object_type_and_source_type_and_source_id(
+        params[:id],
+        true,
+        MapObject::OBJECT_TYPES[:sidewalk],
+        MapObject::SOURCE_TYPES[:user],
+        current_user.id
+    )
     
-    if @map_object.try :belongs_to_me?
-      puts 'already claimed!'
-      # trying to adopt an object that I already adopted
+    success = true
+    if @map_object.new_record?
+      loc = Address.geocode("#{@sidewalk.address}, Chicago, IL")
+      @map_object.lat = loc[0]
+      @map_object.lng = loc[1]
+      success = @map_object.save
+    end
+    
+    if success
+      redirect_to :action => :show, :id => params[:id]
     else
-      @map_object = MapObject.new do |o|
-        if sidewalk = Sidewalk.find_by_gid(@gid)
-          loc = Address.geocode("#{sidewalk.address}, Chicago, IL")
-          o.lat, o.lng = loc[0], loc[1]
-          o.object_type = MapObject::OBJECT_TYPES[:sidewalk]
-          o.source_type = MapObject::SOURCE_TYPES[:user]
-          o.source_id = current_user.id
-          o.gid = params[:id]
-          o.claimed = true
-        end
-      end
-      
-      if @map_object.save
-        respond_with @map_object
-      else
-        render(:json => {"errors" => @map_object.errors}, :status => 500)
-      end
+      render(:json => {"errors" => @map_object.errors}, :status => 500)
     end
   end
 
   def show
-    respond_with find_object
+    @sidewalk = Sidewalk.find_by_gid(params[:id])
+    @map_objects = @sidewalk.user_map_objects.all
+    populate_sidewalk_status
   end
 
   def update
-    @map_object = MapObject.find(params[:id])
-    if @map_object.update_attributes(params[:thing])
-      respond_with @map_object
+    @map_object = current_user.user_map_objects.find_by_id(params[:id])
+    puts "Update MOID: #{@map_object.id}"
+    
+    success = true
+    
+    if success
+      redirect_to :action => :show, :id => params[:id]
     else
       render(:json => {"errors" => @map_object.errors}, :status => 500)
     end
@@ -46,11 +51,17 @@ class MapObjectsController < ApplicationController
   
   private
   
-  def find_object
-    @gid = params[:id]
-    @map_object = MapObject.find_by_gid(@gid)
-    @sidewalk = Sidewalk.find_by_gid(@gid)
-    puts ">>> Found adopted sidewalk [#{@map_object.gid}]" if @map_object
-    @map_object
+  def populate_sidewalk_status
+    @sidewalk_status = {}
+    @map_objects.each do |mo|
+      @sidewalk_status[:cleared] = true if mo.cleared
+      @sidewalk_status[:need_help] = true if mo.need_help
+      
+      if mo.claimed && mo.source_id == current_user.id
+        @sidewalk_status[:adopted_by_me] = true
+        @sidewalk_status[:my_sidewalk] = mo
+      end
+    end
   end
+  
 end

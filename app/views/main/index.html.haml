@@ -61,9 +61,9 @@
         = submit_tag t("buttons.sign_in")
       #login-fb
         %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
-  #social
-    = render :partial => 'facebook_button'
+  %ul.horizontal_items
     = render :partial => 'gplus_button'
+    = render :partial => 'facebook_button'
     = render :partial => 'twitter_button'
     
   #osw_widget
