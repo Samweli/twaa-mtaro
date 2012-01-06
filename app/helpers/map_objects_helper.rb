@@ -9,19 +9,21 @@ module MapObjectsHelper
   
   def format_color(s)
     #K: temp hack, 1-n issue make it efficient
-    if o = MapObject.find_by_gid(s.gid)
+    line_style = '#linestyle_white'
+    
+    MapObject.where(:gid => s.gid).all.each do |o|
       if o.cleared
-        '#linestyle_blue'
+        return '#linestyle_blue'
       elsif o.claimed
-        '#linestyle_yellow'
+        line_style = '#linestyle_yellow'
       elsif o.need_help
-        '#linestyle_red'
+        line_style = '#linestyle_red'
       else
-        '#linestyle_white'
+        line_style = '#linestyle_white'
       end
-    else
-      '#linestyle_white'
     end
+    
+    return line_style
   end
   
 end

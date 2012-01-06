@@ -30,6 +30,21 @@ $(function() {
       }
     });
   }
+
+  //code to initialize OhSoWe widget
+  //initialize widget
+  widget = new OhSoWe.MapWidget({
+    version: "0.1",
+    partnerId: "snowflake",
+    container: "osw_widget"
+  }).render();
+  console.debug('OhSoWe Widget initialized');
+  
+  //set the google maps listener
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+    console.debug('bounds_changed');
+    widget.boundsChanged(map.getBounds().toUrlValue());
+  });
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
