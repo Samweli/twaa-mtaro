@@ -8,10 +8,12 @@ module MapObjectsHelper
   end
   
   def format_color(s)
+    puts "FORMAT COLOR #{s.gid}"
     #K: temp hack, 1-n issue make it efficient
     line_style = '#linestyle_white'
     
     MapObject.where(:gid => s.gid).all.each do |o|
+      puts o.inspect
       if o.cleared
         return '#linestyle_blue'
       elsif o.claimed
