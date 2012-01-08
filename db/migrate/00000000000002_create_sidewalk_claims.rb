@@ -4,6 +4,7 @@ class CreateSidewalkClaims < ActiveRecord::Migration
       t.timestamps
       t.integer :user_id
       t.integer :gid
+      t.boolean :shoveled
       t.string :notes
       t.index :gid
       t.index :user_id

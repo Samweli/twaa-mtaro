@@ -1,0 +1,73 @@
+#actions_box
+  %h2.address
+    = @sidewalk.address
+  
+  %h1.actions_label
+    - if @shoveled_by_me
+      You have shoveled this sidewalk
+    - elsif @sidewalk.cleared
+      This sidewalk is cleared
+    - elsif @sidewalk.need_help
+      This sidewalk needs help
+    - else
+      - unless @my_sidewalk.nil?
+        You have adopted this sidewalk
+      - else
+        Can you shovel this sidewalk?
+  
+  - if user_signed_in?
+    %ul.actions_menu
+      - if @my_sidewalk
+        %li.adopt
+          %a{:href => "#", :id => "adopt_link"}
+            %h1 Adopt
+            .btn_image
+            .label Yes, I will adopt this sidewalk.
+      - else
+        %li.abandon
+          %a{:href => "#", :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
+            %h1 Abandon
+            .btn_image
+            .label No longer adopt this sidewalk.
+      
+      - if @my_sidewalk
+        - if @shoveled_by_me
+          %li.snowed
+            %a{:href => "#", :id => "snowed_link", :data => {:moid => @my_sidewalk.id}}
+              %h1 Snowed?
+              .btn_image
+              .label It snowed again, this sidewalk needs to be shoveled.
+        - else
+          %li.shoveled
+            %a{:href => "#", :id => "shoveled_link", :data => {:moid => @my_sidewalk.id}}
+              %h1 Shoveled?
+              .btn_image
+              .label I shoveled this sidewalk.
+      - else
+        %li.need_help
+          %a{:href => "#", :id => "get_help_link", :data => {:moid => @my_sidewalk.id}}
+            %h1 Get Help
+            .btn_image
+            .label I need help to keep this sidewalk clean.
+      %li.need_supplies
+        %a{:href => "#", :id => "share_link"}
+          %h1 Share
+          .btn_image
+          .label I need supplies or have some to share.
+  
+  - else
+    #need_register.link_1
+      Please
+      = link_to t("links.login"), '#', :id => 'sign_in_link'
+      or
+      = link_to t("links.register"), '#', :id => 'sign_up_link'
+      %br
+      to see what you can do for this sidewalk.
+  
+  - if @claims.empty?
+    %p.font_18.color_warn.center
+      Nobody has adopted this sidewalk yet.
+  - else
+    %h1= 'Adopted by'
+    #people_list
+      = @claims.user.map(&:fullname).join(', ')
