@@ -4,7 +4,7 @@
   
   %h1.actions_label
     - if @shoveled_by_me
-      .adopted= 'You have shoveled this sidewalk'
+      .cleared= 'You have shoveled this sidewalk'
     - elsif @sidewalk.cleared
       .cleared= 'This sidewalk is cleared'
     - elsif @sidewalk.need_help

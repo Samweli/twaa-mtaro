@@ -111,12 +111,16 @@ $(function() {
     $('#spinner').hide();
   }
   
+  function refreshMap() {
+    var new_center = map.getCenter();
+    renderKML(new_center.lat(), new_center.lng());
+  }
+  
   google.maps.event.addListener(map, 'dragend', function() {
     if(isWindowOpen == true) {
       return;
     }
-    var new_center = map.getCenter();
-    renderKML(new_center.lat(), new_center.lng());
+    refreshMap();
   });
   
   $('#address_form').submit(function() {
@@ -138,7 +142,7 @@ $(function() {
           'address': $('#address').val()
         },
         success: function(data) {
-          console.debug("returned address data: %o", data)
+          console.log("returned address data: %o", data)
           $(submitButton).attr("disabled", false);
           if(data.errors) {
             $('#address_label').addClass('error', 500);
@@ -383,6 +387,7 @@ $(function() {
         showInfoWindow;
       },
       success: function(data) {
+        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -406,6 +411,7 @@ $(function() {
         showInfoWindow;
       },
       success: function(data) {
+        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -430,6 +436,7 @@ $(function() {
         showInfoWindow;
       },
       success: function(data) {
+        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -454,6 +461,7 @@ $(function() {
         showInfoWindow;
       },
       success: function(data) {
+        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
