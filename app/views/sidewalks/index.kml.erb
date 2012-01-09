@@ -3,48 +3,52 @@
 <Document>
   <Style id="needs_help">
     <LineStyle>
-      <width>4</width>
+      <width>1</width>
+      <color>7f000000</color>
     </LineStyle>
     <PolyStyle>
-      <color>7f0000ff</color>
+      <color>ff0000ff</color>
     </PolyStyle>
   </Style>
 
   <Style id="unclear">
     <LineStyle>
-      <width>4</width>
+      <width>1</width>
+      <color>7f000000</color>
     </LineStyle>
     <PolyStyle>
-      <color>7fffffff</color>
+      <color>ffffffff</color>
     </PolyStyle>
   </Style>
 
   <Style id="adopted">
     <LineStyle>
-      <width>4</width>
+      <width>1</width>
+      <color>7f000000</color>
     </LineStyle>
     <PolyStyle>
-      <color>7f00ffff</color>
+      <color>ff00ffff</color>
     </PolyStyle>
   </Style>
 
   <Style id="cleared">
     <LineStyle>
-      <width>4</width>
+      <width>1</width>
+      <color>7f000000</color>
     </LineStyle>
     <PolyStyle>
-      <color>7fff0000</color>
+      <color>ffff0000</color>
     </PolyStyle>
   </Style>
 
   <% for sidewalk in @sidewalks %>
-    <Placemark>
-      <id><%= sidewalk.gid %></id>
-      <description><%= sidewalk.gid %></description>
-      <name><%= sidewalk.address %></name>
-      <styleUrl><%= format_color(sidewalk) %></styleUrl>
-      <%= raw(sidewalk.kml) %>
-    </Placemark>
+  <Placemark>
+    <id><%= sidewalk.gid %></id>
+    <description><%= sidewalk.gid %></description>
+    <name><%= sidewalk.address %></name>
+    <styleUrl><%= format_color(sidewalk) %></styleUrl>
+    <%= raw(sidewalk.kml) %>
+  </Placemark>
   <% end %>
 </Document>
 </kml>
