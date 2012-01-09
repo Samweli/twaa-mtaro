@@ -448,8 +448,7 @@ div.legend {
   width: 50px;
   height: 15px;
 }
-.red    {color: #bb0000;}
-.blue   {color: #0000bb;}
-.green  {color: #00bb00;}
-.yellow {color: #bbbb00;}
-.white  {color: #bbbbbb;}
+.needs_help {color: #bb0000;}
+.cleared    {color: #0000bb;}
+.adopted    {color: #bbbb00;}
+.unclear    {color: #bbbbbb;}

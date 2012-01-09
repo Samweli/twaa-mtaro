@@ -7,7 +7,7 @@ class AddSidewalkAttributes < ActiveRecord::Migration
       t.boolean :need_help
       t.string :zipcode
       t.index :cleared
-      t.integer :num_adopted, :default => 0
+      t.integer :claims_count, :default => 0
     end
   end
 
