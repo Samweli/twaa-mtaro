@@ -1,7 +1,7 @@
 class Sidewalk < ActiveRecord::Base
   set_table_name 'chicagosidewalks'
   
-  has_many :claims, :class => 'sidewalk_claims', :foreign_key => "gid"
+  has_many :claims, :class_name => 'sidewalk_claims', :foreign_key => "gid"
   validates_presence_of :lat, :lon
   
   include Geokit::Geocoders

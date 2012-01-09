@@ -5,8 +5,9 @@ class SidewalkClaimsController < ApplicationController
   layout 'info_window'
 
   def create
-    render :json => {:errors => 'Sidewalk not found'}, :status => 500 and return
-      unless @sidewalk = Sidewalk.find_by_gid(params[:gid])
+    unless (@sidewalk = Sidewalk.find_by_gid(params[:gid]))
+      render :json => {:errors => 'Sidewalk not found'}, :status => 500 and return
+    end
     
     if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, current_user.id)).new_record?
       if @sidewalk.lat.nil?
