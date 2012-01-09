@@ -444,3 +444,12 @@ ul.actions_menu li:hover {
 	position:relative;
 	top:1px;
 }
+div.legend {
+  width: 50px;
+  height: 15px;
+}
+.red    {color: #bb0000;}
+.blue   {color: #0000bb;}
+.green  {color: #00bb00;}
+.yellow {color: #bbbb00;}
+.white  {color: #bbbbbb;}

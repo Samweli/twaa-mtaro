@@ -16,25 +16,33 @@
       %div{:id => key}
         = message
 
-  #scrollup.font_1
-    %div.headline
-      "Adopt-a-sidewalk" near your home by "claiming" it on a map.
-      %br
-      %br
-      By doing this, you let neighbors know you can help clear snow.
-    %div.headline
-      You can see at-a-glance which sidewalks are claimed and connect with your less-abled neighbors to help keep their sidewalks clear.
-    %div.headline
-      You can enlist your friends to help on Facebook and Twitter.
-    %div.headline
-      To sign up for our text messaging service, text the word "Chicago" to "311311" for all major cell phone carriers.
-      %br
-      %br
-      Message and data rates may apply.
-    %div.headline
-      = image_tag "logos/ChicagoShovelsHOME.jpg"
-    %div.headline
-      = image_tag "logos/SignUpSMSAlerts.jpg"
+  .font_1
+    %p
+      Welcome to Chicago Shovel's Adopt-a-Sidewalk!
+    %p
+      You may know that you're required to shovel the sidewalk in front of your home or business,
+      but how about helping others out?
+    %p
+      Claim the sidewalks that you'll shovel this winter.
+      Share supplies like snowblowers, shovels and salt with your neighbors.
+      Ask for help if you need an extra hand this winter.
+      Let everyone know you've cleared your sidewalk.
+    %p
+      Don't see your sidewalk on this map?
+      Help add your sidewalk by letting us know here.
+    
+    %p
+      Sidewalk colors
+    %p
+      .red= 'Needs help'
+      .blue= 'Cleared'
+      .yellow= 'Adopted'
+      .white= 'Uncleared'
+    
+  = image_tag "logos/ChicagoShovelsHOME.jpg"
+  = image_tag "logos/SignUpSMSAlerts.jpg"
+  = image_tag "logos/SignUpSMSAlerts.jpg"
+  = image_tag "logos/SignUpSMSAlerts.jpg"
     
   #register
     %p#register-text
@@ -66,7 +74,7 @@
     = render :partial => 'facebook_button'
     = render :partial => 'twitter_button'
     
-  #osw_widget{:style => "position: absolute; left: 20px; bottom: 0px; z-index: 9999"}
+  #xosw_widget{:style => "position: absolute; left: 20px; bottom: 0px; z-index: 9999"}
   
   #feedback
     = link_to t("links.terms"), '/tos'

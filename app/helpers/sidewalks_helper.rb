@@ -1,13 +1,13 @@
 module SidewalksHelper
   def format_color(s)
     if s.cleared
-      '#linestyle_blue'
+      "#cleared"
     elsif s.num_adopted > 0
-      '#linestyle_yellow'
+      "#adopted"
     elsif s.need_help
-      '#linestyle_red'
+      "#needs_help"
     else
-      '#linestyle_white'
+      "#unclear"
     end
   end
 end

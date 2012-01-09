@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name
   has_many :sidewalk_claims
 
+  def short_name
+    "#{first_name} #{last_name.chr}."
+  end
+
   def fullname
     first_name + ' ' + last_name
   end
