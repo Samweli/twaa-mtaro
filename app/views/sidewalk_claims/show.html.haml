@@ -45,7 +45,7 @@
               .label I shoveled this sidewalk.
       - else
         %li.need_help
-          %a{:href => "#", :id => "get_help_link", :data => {:moid => @my_sidewalk.id}}
+          %a{:href => "#", :id => "get_help_link"}
             %h1 Get Help
             .btn_image
             .label I need help to keep this sidewalk clean.
@@ -70,4 +70,4 @@
   - else
     %h1= 'Adopted by'
     #people_list
-      = @claims.user.map(&:fullname).join(', ')
+      = @claims.map{|c| c.user.fullname}.join(', ')

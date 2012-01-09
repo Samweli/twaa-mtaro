@@ -388,9 +388,8 @@ $(function() {
   $('#get_help_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/map_objects/' + $(this).attr('data-moid'),
-      data: { 'gid': activeObjectId,
-              'utf8': '✓',
+      url: '/sidewalks/' + activeObjectId,
+      data: { 'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
               'need_help': true },
@@ -412,8 +411,8 @@ $(function() {
   $('#shoveled_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/sidewalk_claims/' + $(this).attr('data-moid'),
-      data: { 'gid': activeObjectId,
+      url: '/sidewalks/' + activeObjectId,
+      data: { 'moid': $(this).attr('data-moid'),
               'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
@@ -436,8 +435,8 @@ $(function() {
   $('#snowed_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/sidewalk_claims/' + $(this).attr('data-moid'),
-      data: { 'gid': activeObjectId,
+      url: '/sidewalks/' + activeObjectId,
+      data: { 'moid': $(this).attr('data-moid'),
               'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',

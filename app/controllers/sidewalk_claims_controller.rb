@@ -25,19 +25,11 @@ class SidewalkClaimsController < ApplicationController
   def show
     @sidewalk = Sidewalk.find_by_gid(params[:id])
     claims = @sidewalk.claims.includes(:user)
-    @my_sidewalk = claims.find_by_user_id(current_user.id)
+    @my_sidewalk = user_signed_in? ? claims.find_by_user_id(current_user.id) : nil
     @shoveled_by_me = @sidewalk.cleared && @my_sidewalk && @my_sidewalk.shoveled
     @claims = claims.all
   end
 
-  def update
-    @claim = current_user.sidewalk_claims.find_by_id(params[:id])
-    shoveled = (params.fetch(:shoveled) == 'true' ? true : false)
-    @claim.sidewalk.update_attributes(:cleared => true, :need_help => false) if shoveled
-    @claim.update_attribute(:shoveled, shoveled)
-    redirect_to :action => :show, :id => params[:gid]
-  end
-  
   def destroy
     @claim = SidewalkClaim.find(params[:id])
     @claim.destroy if @claim
