@@ -10,7 +10,7 @@
     - elsif @sidewalk.need_help
       This sidewalk needs help
     - else
-      - unless @my_sidewalk.nil?
+      - if @my_sidewalk
         You have adopted this sidewalk
       - else
         Can you shovel this sidewalk?
@@ -18,17 +18,17 @@
   - if user_signed_in?
     %ul.actions_menu
       - if @my_sidewalk
-        %li.adopt
-          %a{:href => "#", :id => "adopt_link"}
-            %h1 Adopt
-            .btn_image
-            .label Yes, I will adopt this sidewalk.
-      - else
         %li.abandon
           %a{:href => "#", :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
             %h1 Abandon
             .btn_image
             .label No longer adopt this sidewalk.
+      - else
+        %li.adopt
+          %a{:href => "#", :id => "adopt_link"}
+            %h1 Adopt
+            .btn_image
+            .label Yes, I will adopt this sidewalk.
       
       - if @my_sidewalk
         - if @shoveled_by_me

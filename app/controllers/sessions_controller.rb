@@ -1,6 +1,6 @@
 class SessionsController < Devise::SessionsController
   def new
-    render("new", :layout => "info_window")
+    render :new, :layout => "info_window"
   end
 
   def create

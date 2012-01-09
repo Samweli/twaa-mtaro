@@ -11,58 +11,53 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 20120108164400) do
 
-  create_table "map_objects", :force => true do |t|
+# Could not dump table "chicagosidewalks" because of following StandardError
+#   Unknown type 'geometry' for column 'the_geom'
+
+  create_table "geometry_columns", :id => false, :force => true do |t|
+    t.string  "f_table_catalog",   :limit => 256, :null => false
+    t.string  "f_table_schema",    :limit => 256, :null => false
+    t.string  "f_table_name",      :limit => 256, :null => false
+    t.string  "f_geometry_column", :limit => 256, :null => false
+    t.integer "coord_dimension",                  :null => false
+    t.integer "srid",                             :null => false
+    t.string  "type",              :limit => 30,  :null => false
+  end
+
+  create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.decimal  "lat",         :precision => 16, :scale => 14, :null => false
-    t.decimal  "lng",         :precision => 17, :scale => 14, :null => false
-    t.integer  "source_id"
-    t.integer  "source_type"
-    t.integer  "object_type"
+    t.integer  "user_id"
     t.integer  "gid"
-    t.integer  "status"
+    t.boolean  "shoveled"
+    t.string   "notes"
   end
 
-  add_index "map_objects", ["gid"], :name => "index_map_objects_on_gid"
-  add_index "map_objects", ["source_id"], :name => "index_map_objects_on_source_id"
+  add_index "sidewalk_claims", ["gid"], :name => "index_sidewalk_claims_on_gid"
+  add_index "sidewalk_claims", ["user_id"], :name => "index_sidewalk_claims_on_user_id"
 
-  create_table "rails_admin_histories", :force => true do |t|
-    t.string   "message"
-    t.string   "username"
-    t.integer  "item"
-    t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+  create_table "sidewalks", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
-
-  create_table "reminders", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "from_user_id",                    :null => false
-    t.integer  "to_user_id",                      :null => false
-    t.integer  "thing_id",                        :null => false
-    t.boolean  "sent",         :default => false
+  create_table "spatial_ref_sys", :id => false, :force => true do |t|
+    t.integer "srid",                      :null => false
+    t.string  "auth_name", :limit => 256
+    t.integer "auth_srid"
+    t.string  "srtext",    :limit => 2048
+    t.string  "proj4text", :limit => 2048
   end
-
-  add_index "reminders", ["from_user_id"], :name => "index_reminders_on_from_user_id"
-  add_index "reminders", ["sent"], :name => "index_reminders_on_sent"
-  add_index "reminders", ["thing_id"], :name => "index_reminders_on_thing_id"
-  add_index "reminders", ["to_user_id"], :name => "index_reminders_on_to_user_id"
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                                                   :null => false
+    t.string   "first_name",                                             :null => false
+    t.string   "last_name",                                              :null => false
     t.string   "organization"
     t.string   "email",                               :default => "",    :null => false
-    t.string   "voice_number"
     t.string   "sms_number"
     t.boolean  "admin",                               :default => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false

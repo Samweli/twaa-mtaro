@@ -44,22 +44,14 @@ class SidewalkClaimsController < ApplicationController
     end
   end
   
-  private
-  
-  def analyze_sidewalk_status(claims)
-    s = { :people_adopted => [], :people_cleared => [] }
-    
-    claims.each do |mo|
-      if mo.source_id == current_user.id
-        s[mo.claimed ? :adopted_by_me : :abandoned_by_me] = true
-        s[:shoveled_by_me] = true if mo.claimed && mo.cleared
-        s[:my_sidewalk] = mo
-        s[:moid] = mo.id
-      end
+  def destroy
+    @claim = SidewalkClaim.find(params[:id])
+    @claim.destroy if @claim
       
-    end
-    s
+    redirect_to :action => :show, :id => @claim.gid
   end
+  
+  private
   
   def update_bool_field(name)
     if params.has_key?(name)

@@ -4,11 +4,10 @@ class UsersController < Devise::RegistrationsController
 
   def new
     @user = User.new
-    puts "NEW!! #{@user.inspect}"
   end
 
   def edit
-    render("edit", :layout => "info_window")
+    render :edit, :layout => "info_window"
   end
 
   def update
@@ -27,7 +26,7 @@ class UsersController < Devise::RegistrationsController
     if resource.save
       sign_in resource
       puts "created: #{resource.class} #{resource.inspect}"
-      render :inline => "You have been registered!" #(:json => resource)
+      render :inline => "You have been registered!"
     else
       clean_up_passwords(resource)
       render(:json => {"errors" => resource.errors}, :status => 500)

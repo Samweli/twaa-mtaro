@@ -6,9 +6,9 @@ class CreateSidewalkClaims < ActiveRecord::Migration
       t.integer :gid
       t.boolean :shoveled
       t.string :notes
-      t.index :gid
-      t.index :user_id
     end
-
+    
+    add_index :sidewalk_claims, :gid
+    add_index :sidewalk_claims, :user_id
   end
 end

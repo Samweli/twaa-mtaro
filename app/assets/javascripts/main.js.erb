@@ -66,7 +66,7 @@ $(function() {
   function fetchSidewalkInfo(e) {
     $.ajax({
       type: 'GET',
-      url: '/map_objects/' + activeObjectId,
+      url: '/sidewalk_claims/' + activeObjectId,
       data: {
         //'id': activeObjectId
       },
@@ -342,12 +342,11 @@ $(function() {
     if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {    
       $.ajax({
         type: 'POST',
-        url: '/map_objects/' + $(this).attr('data-moid'),
+        url: '/sidewalk_claims/' + $(this).attr('data-moid'),
         data: { 'gid': activeObjectId,
                 'utf8': '✓',
                 'authenticity_token': AUTH_TOKEN,
-                '_method': 'put',
-                'claimed': false },
+                '_method': 'delete' },
         beforeSend: function() {
           hideInfoWindow();
           showSpinner();
@@ -367,34 +366,10 @@ $(function() {
   $('#adopt_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/map_objects',
+      url: '/sidewalk_claims',
       data: { 'gid': activeObjectId,
               'utf8': '✓',
               'authenticity_token': AUTH_TOKEN },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
-      error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
-      },
-      success: function(data) {
-        activeInfoWindow.setContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('#re_adopt_link').live('click', function() {
-    $.ajax({
-      type: 'POST',
-      url: '/map_objects/' + $(this).attr('data-moid'),
-      data: { 'gid': activeObjectId,
-              'utf8': '✓',
-              'authenticity_token': AUTH_TOKEN,
-              '_method': 'put',
-              'claimed': true },
       beforeSend: function() {
         hideInfoWindow();
         showSpinner();
@@ -437,7 +412,7 @@ $(function() {
   $('#shoveled_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/map_objects/' + $(this).attr('data-moid'),
+      url: '/sidewalk_claims/' + $(this).attr('data-moid'),
       data: { 'gid': activeObjectId,
               'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
@@ -461,7 +436,7 @@ $(function() {
   $('#snowed_link').live('click', function() {
     $.ajax({
       type: 'POST',
-      url: '/map_objects/' + $(this).attr('data-moid'),
+      url: '/sidewalk_claims/' + $(this).attr('data-moid'),
       data: { 'gid': activeObjectId,
               'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
