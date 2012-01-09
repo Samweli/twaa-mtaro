@@ -1,6 +1,6 @@
 class SidewalksController < ApplicationController
   respond_to :json
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:index]
 
   def index
     @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 40)
