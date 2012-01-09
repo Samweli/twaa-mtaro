@@ -2,7 +2,7 @@ class SidewalksController < ApplicationController
   respond_to :json
   before_filter :authenticate_user!, :except => [:show]
 
-  def show
+  def index
     @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 40)
     unless @sidewalks.blank?
       respond_with(@sidewalks) do |format|
