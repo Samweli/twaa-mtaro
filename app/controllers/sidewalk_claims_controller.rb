@@ -30,33 +30,17 @@ class SidewalkClaimsController < ApplicationController
   end
 
   def update
-    @map_object = current_user.user_map_objects.find_by_id(params[:id])
-    update_bool_field :claimed
-    update_bool_field :need_help
-    update_bool_field :cleared
-    
-    MapObject.where(:gid => @map_object.gid).update_all(:need_help => false)
-    
-    if @map_object.save
-      redirect_to :action => :show, :id => params[:gid]
-    else
-      render :json => {"errors" => @map_object.errors}, :status => 500
-    end
+    @claim = current_user.sidewalk_claims.find_by_id(params[:id])
+    shoveled = (params.fetch(:shoveled) == 'true' ? true : false)
+    @claim.sidewalk.update_attributes(:cleared => true, :need_help => false) if shoveled
+    @claim.update_attribute(:shoveled, shoveled)
+    redirect_to :action => :show, :id => params[:gid]
   end
   
   def destroy
     @claim = SidewalkClaim.find(params[:id])
     @claim.destroy if @claim
-      
     redirect_to :action => :show, :id => @claim.gid
   end
   
-  private
-  
-  def update_bool_field(name)
-    if params.has_key?(name)
-      @map_object[name] = true if params[name] == 'true'
-      @map_object[name] = false if params[name] == 'false'
-    end
-  end
 end

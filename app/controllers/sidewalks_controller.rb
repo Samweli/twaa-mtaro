@@ -8,7 +8,7 @@ class SidewalksController < ApplicationController
         format.kml { render }
       end
     else
-      render(:json => {"errors" => {"address" => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404)
+      render :json => {"errors" => {"address" => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
     end
   end
 
