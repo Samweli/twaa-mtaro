@@ -10,12 +10,13 @@ $(function() {
   };
   
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  var oswWidget;
   var isWindowOpen = false;
   var sidewalks_kml;
   var activeObjectId;
   var activeMarker;
   var activeInfoWindow = new google.maps.InfoWindow({
-    maxWidth: 350
+    maxWidth: 950
   });
   
   var fetchMapObject = function () {
@@ -32,24 +33,29 @@ $(function() {
     });
   }
 
-  //code to initialize OhSoWe widget
-  //initialize widget
-  widget = new OhSoWe.MapWidget({
-    version: "0.1",
-    partnerId: "snowflake",
-    container: "osw_widget"
-  }).render();
-  console.debug('OhSoWe Widget initialized');
-  
-  //set the google maps listener
-  google.maps.event.addListener(map, 'bounds_changed', function() {
-    console.debug('bounds_changed');
-    widget.boundsChanged(map.getBounds().toUrlValue());
-  });
-  
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
   });
+  
+  initOSW();
+  
+  function initOSW() {
+    console.info("init osw");
+    if (oswWidget == undefined) {
+      oswWidget = new OhSoWe.MapWidget({
+        version: "0.1",
+        partnerId: "snowflake",
+        container: "osw_widget"
+      }).render();
+      console.debug('OhSoWe Widget initialized');
+      
+      //set the google maps listener
+      google.maps.event.addListener(map, 'bounds_changed', function() {
+        console.debug('bounds_changed');
+        oswWidget.boundsChanged(map.getBounds().toUrlValue());
+      });
+    }
+  }
   
   function renderKML(lat, lng) {
     console.info("Rendering sidewalks of [%s, %s]", lat, lng);
@@ -496,8 +502,7 @@ $(function() {
       type: 'GET',
       url: '/users/sign_up',
       data: { 'gid': activeObjectId,
-              'utf8': '✓',
-              'authenticity_token': AUTH_TOKEN },
+              'utf8': '✓' },
       beforeSend: function() {
         hideInfoWindow();
         showSpinner();
@@ -513,6 +518,14 @@ $(function() {
     return false;
   });
   
+  $('#share_link').live('click', function() {
+    var widget_html = '<div id="osw_widget"></div>';
+    activeInfoWindow.setContent(widget_html);
+    //setTimeout(initOSW, 3000);
+    initOSW();
+    return false;
+  });
+
   $('#notice').live('click', function() {
     $(this).fadeOut('slow');
   });

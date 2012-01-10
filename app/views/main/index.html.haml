@@ -1,6 +1,5 @@
 #sidebar
   = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  
   - if user_signed_in?
     #user_badge.font_1.link_1.center
       Welcome
@@ -9,35 +8,32 @@
       = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main', :class => 'font_12'
       ]
       
+  %ul.social_items.clearfix
+    = render :partial => 'gplus_button'
+    = render :partial => 'facebook_button'
+    = render :partial => 'twitter_button'
+
   = render :partial => 'address_form'
-
-  #info_box
-    - flash.each do |key, message|
-      %div{:id => key}
-        = message
-
-  .font_1
-    %p
-      Welcome to Chicago Shovel's Adopt-a-Sidewalk!
+ 
+  #info_box.round_box.center
+    %p.font_16.font_bold
+      Welcome to Chicago Shovel's
+      %br
+        Adopt-a-Sidewalk!
     %p
       You may know that you're required to shovel the sidewalk in front of your home or business,
-      but how about helping others out?
-    %p
-      Claim the sidewalks that you'll shovel this winter.
-      Share supplies like snowblowers, shovels and salt with your neighbors.
-      Ask for help if you need an extra hand this winter.
-      Let everyone know you've cleared your sidewalk.
-    %p
-      Don't see your sidewalk on this map?
-      Help add your sidewalk by letting us know here.
+      %br
+        but how about helping others out?
     
-    %p
-      Sidewalk colors
-    %p
-      .needs_help= 'Needs help'
-      .cleared= 'Cleared'
-      .adopted= 'Adopted'
-      .unclear= 'Uncleared'
+    %ul.features
+      %li= "Claim the sidewalks that you'll shovel this winter."
+      %li= "Share supplies like snowblowers, shovels and salt with your neighbors."
+      %li= "Ask for help if you need an extra hand this winter."
+      %li= "Let everyone know you've cleared your sidewalk."
+      
+    = link_to "Don't see your sidewalk on this map?", '/address_report', :id => 'address_report_link'
+    %br
+      Help add your sidewalk by letting us know here.
     
   = image_tag "logos/ChicagoShovelsHOME.jpg"
   = image_tag "logos/SignUpSMSAlerts.jpg"
@@ -69,12 +65,8 @@
         = submit_tag t("buttons.sign_in")
       #login-fb
         %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
-  %ul.horizontal_items
-    = render :partial => 'gplus_button'
-    = render :partial => 'facebook_button'
-    = render :partial => 'twitter_button'
-    
-  #xosw_widget{:style => "position: absolute; left: 20px; bottom: 0px; z-index: 9999"}
+  
+  #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
   
   #feedback
     = link_to t("links.terms"), '/tos'

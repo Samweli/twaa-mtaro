@@ -1,4 +1,13 @@
 #actions_box
+  #legend.round_box.center
+    %h3
+      Sidewalk colors
+    %ul.horizontal_items
+      %li.needs_help= 'Needs help'
+      %li.cleared= 'Shoveled'
+      %li.adopted= 'Adopted'
+      %li.unclear= 'Uncleared'
+
   %h2.address
     = @sidewalk.address
   
@@ -54,7 +63,7 @@
           %h1 Share
           .btn_image
           .label I need supplies or can share.
-  
+
   - else
     #need_register.link_1
       Please

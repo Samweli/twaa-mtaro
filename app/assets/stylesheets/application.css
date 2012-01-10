@@ -20,10 +20,14 @@ h1 {
   font-size: 26px;
   color: #444;
 }
-
 h2.address {
   font-size: 22px;
-  color: #43c457;
+  color: #666;
+}
+h3 {
+  font-size: 18px;
+  color: #888;
+  margin: 0;
 }
 
 #map_canvas {
@@ -156,19 +160,23 @@ img.lock {
   color:#3164d2;
 }
 
-#osw_widget {
-  position: relative;
-  margin: 5px 0 0 5px;
-}
-
 #user_badge {
+  padding: 5px;
+  margin: 10px 0 0px 0;
+  color: #666;
+}
+.round_box {
   background-color: #f9f9f9;
   border: 1px solid #dedede;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 5px;
-  margin: 15px 0 15px 0;
-  color: #666;
+  margin: 5px 0 0px 0;
+}
+#info_box {
+  margin: 10px 0 0px 0;
+  color: #555;
+  font-size: 12px;
 }
 .color_warn {
   color: #dd3131 !important;
@@ -182,6 +190,9 @@ img.lock {
 .font_16 {font-size: 16px;}
 .font_18 {font-size: 18px;}
 .font_20 {font-size: 20px;}
+.font_22 {font-size: 22px;}
+.font_bold {font-weight: bold;}
+
 #address_form label {
   font-size: 16px;
   color: #447aa0;
@@ -239,14 +250,30 @@ div.signup {
   font-weight: normal;
   color: #aaa;
 }
+ul.features {
+  padding: 0 5px 0 20px;
+  text-align: left;
+}
 ul.horizontal_items {
   padding: 0;
+  margin: 5px 0 0 0;
 }
 ul.horizontal_items > li {
   list-style-type: none;
   display: inline;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+ul.social_items {
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+ul.social_items > li {
+  list-style-type: none;
+  float: left;
   margin: 0;
   padding: 0;
+  width: 95px;
 }
 #need_register {
   text-align: center;
@@ -300,7 +327,7 @@ ul.horizontal_items > li {
   border: 1px solid #b4cdde;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
-  margin-top: 10px;
+  margin: 0px;
   padding: 10px;
 }
 #actions_box {
@@ -448,7 +475,11 @@ div.legend {
   width: 50px;
   height: 15px;
 }
-.needs_help {color: #bb0000;}
-.cleared    {color: #0000bb;}
-.adopted    {color: #bbbb00;}
-.unclear    {color: #bbbbbb;}
+.pen_gray   {color: #777;}
+.pen_darkgray   {color: #444;}
+.pen_lightgray   {color: #aaa;}
+
+.needs_help {color: #cc0000;}
+.cleared    {color: #aaaaaa;}
+.adopted    {color: #0000cc;}
+.unclear    {color: #cccccc;}
