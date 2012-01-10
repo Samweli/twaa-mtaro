@@ -15,30 +15,46 @@
 
   = render :partial => 'address_form'
  
-  #info_box.round_box.center
-    %p.font_16.font_bold
-      Welcome to Chicago Shovel's
-      %br
-        Adopt-a-Sidewalk!
-    %p
-      You may know that you're required to shovel the sidewalk in front of your home or business,
-      %br
-        but how about helping others out?
-    
-    %ul.features
-      %li= "Claim the sidewalks that you'll shovel this winter."
-      %li= "Share supplies like snowblowers, shovels and salt with your neighbors."
-      %li= "Ask for help if you need an extra hand this winter."
-      %li= "Let everyone know you've cleared your sidewalk."
+  - if user_signed_in?
+    #my_sidewalks
+      - if @my_sidewalks
+        %table.font_12.pen_gray.link_1
+          %caption= "Sidewalks I adopted"
+          %thead
+            %tr
+              %th= "Address"
+              %th= "Cleared?"
+              %th= "Need help?"
+              %th= ""
+          %tbody
+          - @my_sidewalks.each do |s|
+            %tr
+              %td.address= s.sidewalk.address
+              %td= link_to yesno(s.sidewalk.cleared), '#', :id => 'shoveled_link', :title => 'Shovel this sidewalk'
+              %td= link_to yesno(s.sidewalk.need_help), '#', :id => 'need_help_link', :title => 'Request help for this sidewalk'
+              %td= link_to '', '#', :id => 'abandon_link', :class => 'delete_button', :title => 'Abandon this sidewalk'
+  - else
+    #info_box.round_box.center
+      %p.font_16.font_bold
+        Welcome to Chicago Shovel's
+        %br
+          Adopt-a-Sidewalk!
+      %p
+        You may know that you're required to shovel the sidewalk in front of your home or business,
+        %br
+          but how about helping others out?
       
-    = link_to "Don't see your sidewalk on this map?", '/address_report', :id => 'address_report_link'
-    %br
-      Help add your sidewalk by letting us know here.
-    
-  = image_tag "logos/ChicagoShovelsHOME.jpg"
-  = image_tag "logos/SignUpSMSAlerts.jpg"
-  = image_tag "logos/SignUpSMSAlerts.jpg"
-  = image_tag "logos/SignUpSMSAlerts.jpg"
+      %ul.features
+        %li= "Claim the sidewalks that you'll shovel this winter."
+        %li= "Share supplies like snowblowers, shovels and salt with your neighbors."
+        %li= "Ask for help if you need an extra hand this winter."
+        %li= "Let everyone know you've cleared your sidewalk."
+
+  #service_logos
+    = image_tag "logos/ChicagoShovelsHOME.jpg"
+    = image_tag "logos/SignUpSMSAlerts.jpg"
+    = image_tag "logos/SignUpSMSAlerts.jpg"
+    = image_tag "logos/SignUpSMSAlerts.jpg"
     
   #register
     %p#register-text
@@ -66,11 +82,11 @@
       #login-fb
         %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
   
-  #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
-  
-  #feedback
+  #feedback.font_12.link_1
     = link_to t("links.terms"), '/tos'
 
+#osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
+  
 #map_canvas
 
 

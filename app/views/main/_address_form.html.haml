@@ -5,3 +5,8 @@
     = label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address]
     = submit_tag t("buttons.find")
+
+  .font_12.link_1
+    = link_to "Don't see your sidewalk on the map?", '/address_report', :id => 'address_report_link'
+    %br
+      Help add your sidewalk by letting us know here.
