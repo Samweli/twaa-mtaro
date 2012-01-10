@@ -364,6 +364,7 @@ $(function() {
           showInfoWindow;
         },
         success: function(data) {
+          refreshMap();
           activeInfoWindow.setContent(data);
         }
       });
