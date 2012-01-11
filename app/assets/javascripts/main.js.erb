@@ -13,16 +13,16 @@ $(function() {
   var oswWidget;
   var isWindowOpen = false;
   var sidewalks_kml;
+  var autoIWObjectId;
   var activeObjectId;
-  var activeMarker;
   var activeInfoWindow = new google.maps.InfoWindow({
     maxWidth: 950
   });
   
-  var fetchMapObject = function () {
+  var fetchMapObject = function(gid) {
     $.ajax({
       type: 'GET',
-      url: '/sidewalk_claims/' + activeObjectId,
+      url: '/sidewalk_claims/' + gid,
       data: {
         //'id': activeObjectId
         //'flash': {'notice': "<%= I18n.t("notices.signed_in") %>" }
@@ -69,14 +69,15 @@ $(function() {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
       console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
-      fetchSidewalkInfo(e);
+      fetchSidewalkInfo(e, activeObjectId);
     });
   }
 
-  function fetchSidewalkInfo(e) {
+  function fetchSidewalkInfo(e, gid) {
+    console.info(e.latLng);
     $.ajax({
       type: 'GET',
-      url: '/sidewalk_claims/' + activeObjectId,
+      url: '/sidewalk_claims/' + gid,
       data: {
         //'id': activeObjectId
       },
@@ -157,6 +158,11 @@ $(function() {
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
             renderKML(data[0], data[1]);
+            if (autoIWObjectId) {
+              fetchSidewalkInfo({latLng: map.getCenter()}, autoIWObjectId);
+              isWindowOpen = true;
+              autoIWObjectId = null;
+            }
           }
         }
       });
@@ -239,7 +245,7 @@ $(function() {
           errors[0].focus();
         },
         success: function(data) {
-          fetchMapObject();
+          fetchMapObject(activeObjectId);
         }
       });
     }
@@ -302,7 +308,7 @@ $(function() {
               console.info(data);
               $('#username').replaceWith(data['user_badge']);
               $('#sidewalk_list').replaceWith(data['sidewalk_list']);
-              fetchMapObject();
+              fetchMapObject(activeObjectId);
             }
           });
         }
@@ -528,6 +534,13 @@ $(function() {
         activeInfoWindow.setContent(data);
       }
     });
+    return false;
+  });
+  
+  $('a.view_sidewalk').live('click', function() {
+    autoIWObjectId = $(this).attr('data-gid');
+    $('#address').val($(this).text());
+    $('#address_button').trigger('click');
     return false;
   });
   

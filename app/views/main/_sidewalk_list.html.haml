@@ -13,7 +13,7 @@
           %tbody
           - @my_sidewalks.each do |s|
             %tr
-              %td.address= s.sidewalk.address
+              %td.address= link_to s.sidewalk.address, '#', :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid
               %td= link_to yesno(s.sidewalk.cleared), '#', :id => 'shoveled_link', :title => 'Shovel this sidewalk'
               %td= link_to yesno(s.sidewalk.need_help), '#', :id => 'need_help_link', :title => 'Request help for this sidewalk'
               %td= link_to '', '#', :id => 'abandon_link', :class => 'delete_button', :title => 'Abandon this sidewalk'
