@@ -1,0 +1,8 @@
+#username
+  - if user_signed_in?
+    #user_badge.font_1.link_1.center
+      Welcome
+      = current_user.fullname
+      [
+      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main', :class => 'font_12'
+      ]

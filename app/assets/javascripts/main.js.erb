@@ -280,18 +280,31 @@ $(function() {
           }
         },
         beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
+          //hideInfoWindow();
+          //showSpinner();
         },
         error: function(jqXHR) {
-          hideSpinner();
-          showInfoWindow();
+          //hideSpinner();
+          //showInfoWindow();
           $(submitButton).attr("disabled", false);
           markError(upwd, errors);
           upwd.focus();
         },
         success: function(data) {
-          fetchMapObject();
+          $.ajax({
+            type: 'GET',
+            url: '/',
+            dataType: 'json',
+            error: function(jqXHR) {
+              console.error(jqXHR);
+            },
+            success: function(data) {
+              console.info(data);
+              $('#username').replaceWith(data['user_badge']);
+              $('#sidewalk_list').replaceWith(data['sidewalk_list']);
+              fetchMapObject();
+            }
+          });
         }
       });
     }
