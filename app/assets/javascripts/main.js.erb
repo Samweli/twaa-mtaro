@@ -40,7 +40,6 @@ $(function() {
   initOSW();
   
   function initOSW() {
-    console.info("init osw");
     if (oswWidget == undefined) {
       oswWidget = new OhSoWe.MapWidget({
         version: "0.1",
@@ -51,14 +50,14 @@ $(function() {
       
       //set the google maps listener
       google.maps.event.addListener(map, 'bounds_changed', function() {
-        console.debug('bounds_changed');
+        //console.debug('bounds_changed');
         oswWidget.boundsChanged(map.getBounds().toUrlValue());
       });
     }
   }
   
   function renderKML(lat, lng) {
-    console.info("Rendering sidewalks of [%s, %s]", lat, lng);
+    console.log("Rendering sidewalks of [%s, %s]", lat, lng);
     var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
@@ -68,7 +67,7 @@ $(function() {
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
-      console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
+      //console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(e, activeObjectId);
     });
   }
@@ -377,18 +376,13 @@ $(function() {
         type: 'POST',
         url: '/sidewalk_claims/' + $(this).attr('data-moid'),
         data: { 'gid': activeObjectId,
-                'utf8': '✓',
                 'authenticity_token': AUTH_TOKEN,
                 '_method': 'delete' },
-        beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
-        },
         error: function(jqXHR) {
-          hideSpinner();
-          showInfoWindow;
+          console.error(jqXHR);
         },
         success: function(data) {
+          console.info("abandoned");
           refreshMap();
           activeInfoWindow.setContent(data);
         }
@@ -402,17 +396,12 @@ $(function() {
       type: 'POST',
       url: '/sidewalk_claims',
       data: { 'gid': activeObjectId,
-              'utf8': '✓',
               'authenticity_token': AUTH_TOKEN },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
       error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
+        console.error(jqXHR);
       },
       success: function(data) {
+        console.info("adopted");
         refreshMap();
         activeInfoWindow.setContent(data);
       }
@@ -424,17 +413,11 @@ $(function() {
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
-      data: { 'utf8': '✓',
-              'authenticity_token': AUTH_TOKEN,
+      data: { 'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
               'need_help': true },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
       error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
+        console.error(jqXHR);
       },
       success: function(data) {
         refreshMap();
@@ -449,17 +432,11 @@ $(function() {
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'moid': $(this).attr('data-moid'),
-              'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
               'shoveled': true },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
       error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
+        console.error(jqXHR);
       },
       success: function(data) {
         refreshMap();
@@ -474,17 +451,11 @@ $(function() {
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'moid': $(this).attr('data-moid'),
-              'utf8': '✓',
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
               'shoveled': false },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
       error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
+        console.error(jqXHR);
       },
       success: function(data) {
         refreshMap();
