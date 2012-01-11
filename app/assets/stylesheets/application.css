@@ -494,7 +494,7 @@ div.legend {
   padding: 3px 2px;
 }
 #my_sidewalks table {
-  margin: 5px 0 5px 0;
+  margin: 10px 0 5px 0;
   border-collapse: collapse;
 }
 #my_sidewalks td {
@@ -504,7 +504,7 @@ div.legend {
   text-align: center;
 }
 #my_sidewalks td.address {
-  width: 160px;
+  width: 170px;
   text-align: left;
 }
 a.delete_button {

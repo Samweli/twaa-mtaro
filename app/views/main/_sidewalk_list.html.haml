@@ -3,20 +3,17 @@
     #my_sidewalks
       - if @my_sidewalks
         %table.font_12.pen_gray.link_1
-          %caption= "Sidewalks I adopted"
           %thead
             %tr
-              %th= "Address"
+              %th{:style => "text-align: left"}= "Sidewalks I Adopted"
               %th= "Cleared?"
               %th= "Need help?"
-              %th= ""
           %tbody
           - @my_sidewalks.each do |s|
             %tr
               %td.address= link_to s.sidewalk.address, '#', :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid
-              %td= link_to yesno(s.sidewalk.cleared), '#', :id => 'shoveled_link', :title => 'Shovel this sidewalk'
-              %td= link_to yesno(s.sidewalk.need_help), '#', :id => 'need_help_link', :title => 'Request help for this sidewalk'
-              %td= link_to '', '#', :id => 'abandon_link', :class => 'delete_button', :title => 'Abandon this sidewalk'
+              %td= yesno(s.sidewalk.cleared)
+              %td= yesno(s.sidewalk.need_help)
   - else
     #info_box.round_box.center
       %p.font_16.font_bold
