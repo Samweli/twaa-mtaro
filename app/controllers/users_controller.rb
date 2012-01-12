@@ -22,14 +22,18 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
-    build_resource
-    if resource.save
-      sign_in resource
-      puts "created: #{resource.class} #{resource.inspect}"
-      render :inline => "You have been registered!"
-    else
-      clean_up_passwords(resource)
-      render(:json => {"errors" => resource.errors}, :status => 500)
+    if true #verify_recaptcha
+      build_resource
+      if resource.save
+        sign_in resource
+        #puts "created: #{resource.class} #{resource.inspect}"
+        render :inline => "You have been registered!" and return
+      end
     end
+
+    clean_up_passwords(resource)
+    render(:json => {"errors" => resource.errors,
+                    :html => render_to_string(:template => 'users/new.html.haml')},
+                    :status => 500)
   end
 end

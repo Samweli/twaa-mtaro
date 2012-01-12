@@ -118,7 +118,7 @@ label.error {
 }
 
 input.error {
-  background-color: #ffc;
+  background-color: #fe7575;
 }
 
 .upcase {
@@ -474,17 +474,16 @@ ul.actions_menu li:hover {
 	position:relative;
 	top:1px;
 }
-div.legend {
-  width: 50px;
-  height: 15px;
+#legend {
+  background: none;
 }
 .pen_gray   {color: #777;}
 .pen_darkgray   {color: #444;}
 .pen_lightgray   {color: #aaa;}
 
-.needs_help {color: #ff9292;}
-.cleared    {color: #aaaaaa;}
-.adopted    {color: #a1d0f1;}
+.needs_help {color: #de6060;}
+.cleared    {color: #8e8e8e;}
+.adopted    {color: #73acd5;}
 .unclear    {color: #cccccc;}
 
 #my_sidewalks caption {

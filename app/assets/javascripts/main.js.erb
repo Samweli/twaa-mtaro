@@ -147,12 +147,15 @@ $(function() {
   
   $('#address_form').submit(function() {
     var submitButton = $("input[type='submit']", this);
+    var errors = [];
+    var uaddress = $('#address');
+    
+    $('#missing_address').hide();
     $(submitButton).attr("disabled", true);
-    if($('#address').val() === '') {
+    if(uaddress.val() === '') {
       $(submitButton).attr("disabled", false);
-      $('#address_label').addClass('error', 500);
-      $('#address').addClass('error', 500);
-      $('#address').focus();
+      markError(uaddress, errors);
+      uaddress.focus();
     } else {
       $.ajax({
         type: 'GET',
@@ -161,15 +164,15 @@ $(function() {
           'commit': submitButton.val(),
           'utf8': '✓',
           'city_state': $('#city_state').val(),
-          'address': $('#address').val()
+          'address': uaddress.val()
         },
         success: function(data) {
           console.log("returned address data: %o", data)
           $(submitButton).attr("disabled", false);
           if(data.errors) {
-            $('#address_label').addClass('error', 500);
-            $('#address').addClass('error', 500);
-            $('#address').focus();
+            markError(uaddress, errors);
+            uaddress.focus();
+            $('#missing_address').show();
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
             renderKML(data[0], data[1]);
@@ -194,11 +197,6 @@ $(function() {
     var errors = [];
     
     $(submitButton).attr("disabled", true);
-    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-      markError(uemail, errors);
-    } else {
-      unmarkError(uemail);
-    }
     if(ufname.val() === '') {
       markError(ufname, errors);
     } else {
@@ -208,6 +206,11 @@ $(function() {
       markError(ulname, errors);
     } else {
       unmarkError(ulname);
+    }
+    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+      markError(uemail, errors);
+    } else {
+      unmarkError(uemail);
     }
     if(upwd.val().length < 6 || upwd.val().length > 20) {
       markError(upwd, errors);
@@ -242,22 +245,7 @@ $(function() {
           hideSpinner();
           showInfoWindow();
           $(submitButton).attr("disabled", false);
-          
-          if(data.errors.email) {
-            markError(uemail, errors);
-          }
-          if(data.errors.fname) {
-            markError(ufname, errors);
-          }
-          if(data.errors.lname) {
-            markError(ulname, errors);
-          }
-          if(data.errors.organization) {
-          }
-          if(data.errors.password) {
-            markError(upwd, errors);
-          }
-          errors[0].focus();
+          if (data.html) activeInfoWindow.setContent(data.html);
         },
         success: function(data) {
           fetchMapObject(activeObjectId);
@@ -322,6 +310,14 @@ $(function() {
     
   $('#user_forgot_password_link').live('submit', function() {
     var submitButton = $("input[type='submit']", this);
+    var uemail = $('#user_email');
+    var errors = [];
+
+    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+      markError(uemail, errors);
+    } else {
+      unmarkError(uemail);
+    }
 
     if(errors.length > 0) {
       $(submitButton).attr("disabled", false);
@@ -335,20 +331,19 @@ $(function() {
           'utf8': '✓',
           'authenticity_token': $('input[name="authenticity_token"]', this).val(),
           'user': {
-            'email': $('#user_email').val()
+            'email': uemail.val()
           }
         },
         beforeSend: function() {
-          $('#info_window').hide();
-          $('#loader').show();
+          hideInfoWindow();
+          showSpinner();
         },
         error: function(jqXHR) {
-          $('#loader').hide();
-          $('#info_window').show();
+          hideSpinner();
+          showInfoWindow();
           $(submitButton).attr("disabled", false);
-          $('#user_email_label').addClass('error', 500);
-          $('#user_email').addClass('error', 500);
-          $('#user_email').focus();
+          markError(uemail, errors);
+          uemail.focus();
         },
         success: function() {
           $.ajax({
@@ -356,7 +351,7 @@ $(function() {
             url: '/users/sign_in',
             data: {
               'user': {
-                'email': $('#user_email').val()
+                'email': uemail.val()
               },
               'flash': {
                 'notice': "<%= I18n.t("notices.password_reset") %>"
@@ -364,7 +359,6 @@ $(function() {
             },
             success: function(data) {
               activeInfoWindow.setContent(data);
-              $('#user_existing').click();
             }
           });
         }

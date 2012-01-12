@@ -26,3 +26,4 @@ test/tmp
 test/version_tmp
 tmp/
 vendor/bundle
+./config/initializers/recaptcha.rb

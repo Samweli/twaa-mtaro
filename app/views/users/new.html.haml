@@ -1,7 +1,10 @@
 #sign_up_box
   = form_for :user, :html => {:id => "sign_up_form", :class => 'form'} do |f|
     %h2= t("titles.register_now")
-  
+
+    #error
+      = devise_error_messages!
+          
     .signup
       %dl
         %dt

@@ -5,8 +5,8 @@
     = label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address]
     = submit_tag t("buttons.find"), :id => 'address_button'
-
-  .font_12.link_1
+  
+  #missing_address.font_12.link_1{:style => 'display: none'}
     = link_to "Don't see your sidewalk on the map?",
         'http://webapps.cityofchicago.org/eforms/org/cityofchicago/adoptsidewalk/adopt.jsp',
         :target => '_blank'
