@@ -37,37 +37,38 @@ $(function() {
     isWindowOpen = false;
   });
   
-  window.osw_widget = new OhSoWe.MapWidget({
-    version: "0.1",
-    partnerId: "snowflake",
-    container: "osw_widget",
-    miniWidgetStyle: 'noText', //'default' or 'noText'
-    onReady: function(widget) {
-      //set the initial bounds
-      widget.boundsChanged(map.getBounds().toUrlValue());
-      //set the google maps listener
-      google.maps.event.addListener(map, 'bounds_changed', function() {
-        //console.debug('bounds_changed');
-        widget.boundsChanged(map.getBounds().toUrlValue());
-      });
-    }
-  }).render();
+  //window.osw_widget = new OhSoWe.MapWidget({
+  //  version: "0.1",
+  //  partnerId: "snowflake",
+  //  container: "osw_widget",
+  //  miniWidgetStyle: 'noText', //'default' or 'noText'
+  //  onReady: function(widget) {
+  //    //set the initial bounds
+  //    widget.boundsChanged(map.getBounds().toUrlValue());
+  //    //set the google maps listener
+  //    google.maps.event.addListener(map, 'bounds_changed', function() {
+  //      //console.debug('bounds_changed');
+  //      widget.boundsChanged(map.getBounds().toUrlValue());
+  //    });
+  //  }
+  //}).render();
   
   function renderKML(lat, lng) {
     console.log("Rendering sidewalks of [%s, %s]", lat, lng);
-    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + lat + '&lng=' + lng;
+    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + lat + '&lng=' + lng;
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
     }
     sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true,
-                                                   suppressMapPan: false, map: map});
+                                                   map: map});
+                                                   //suppressMapPan: true, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
       //console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(e, activeObjectId);
-      map.setZoom(19);
+      //map.setZoom(19);
     });
   }
 
