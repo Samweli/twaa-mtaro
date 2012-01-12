@@ -280,6 +280,7 @@ ul.social_items > li {
   padding: 10px;
   background-color: #eee;
   border: 1px solid #aaa;
+  border-radius: 5px 5px 5px 5px;
 }
 #current_status {
   margin-top: 10px;
@@ -321,6 +322,9 @@ ul.social_items > li {
 }
 #address_box {
   background: -moz-linear-gradient(center top , #f5feff, #b4daf5) repeat scroll 0 0 transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f5feff), color-stop(1, #b4daf5) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5feff', endColorstr='#b4daf5');
+  background-image: -o-linear-gradient(top, #f5feff, #b4daf5);
   border: 1px solid #b4cdde;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -344,6 +348,7 @@ ul.actions_menu li {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f5feff), color-stop(1, #b4daf5) );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5feff', endColorstr='#b4daf5');
   background: -moz-linear-gradient(center top , #f5feff, #b4daf5) repeat scroll 0 0 transparent;
+  background-image: -o-linear-gradient(top, #f5feff, #b4daf5);
   border: 1px solid #b4cdde;
   border-radius: 5px 5px 5px 5px;
   -moz-box-shadow: 0 1px 0 #FFFFFF;
@@ -362,13 +367,14 @@ ul.actions_menu li:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f5feff), color-stop(1, #73c3fc) );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5feff', endColorstr='#73c3fc');
   background: -moz-linear-gradient(center top , #f5feff, #73c3fc) repeat scroll 0 0 transparent;
+  background-image: -o-linear-gradient(top, #f5feff, #73c3fc);
   border: 1px solid #6cb4e7
 }
 .actions_menu .adopt .btn_image {
   background-image: url("btn_adopt.png");
 }
 .actions_menu .abandon .btn_image {
-  background-image: url("btn_abandon.png");
+  background-image: url("btn_abandon.gif");
 }
 .actions_menu .snowed .btn_image {
   background-image: url("btn_abandon.png");
@@ -377,7 +383,7 @@ ul.actions_menu li:hover {
   background-image: url("btn_need_help.png");
 }
 .actions_menu .need_supplies .btn_image {
-  background-image: url("btn_need_supplies.png");
+  background-image: url("btn_share.gif");
 }
 .actions_menu .shoveled .btn_image {
   background-image: url("btn_need_supplies.png");
@@ -476,9 +482,9 @@ div.legend {
 .pen_darkgray   {color: #444;}
 .pen_lightgray   {color: #aaa;}
 
-.needs_help {color: #cc0000;}
+.needs_help {color: #ff9292;}
 .cleared    {color: #aaaaaa;}
-.adopted    {color: #0000cc;}
+.adopted    {color: #a1d0f1;}
 .unclear    {color: #cccccc;}
 
 #my_sidewalks caption {

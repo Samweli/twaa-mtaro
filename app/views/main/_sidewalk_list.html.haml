@@ -1,7 +1,7 @@
 #sidewalk_list
   - if user_signed_in?
     #my_sidewalks
-      - if @my_sidewalks
+      - if @my_sidewalks.size > 0
         %table.font_12.pen_gray.link_1
           %thead
             %tr

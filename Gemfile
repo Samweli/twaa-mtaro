@@ -12,6 +12,7 @@ gem 'rack-contrib'
 gem 'execjs'
 gem 'therubyracer'
 gem 'jquery-rails'
+gem 'recaptcha', :require => 'recaptcha/rails'
 
 platforms :jruby do
   gem 'jruby-openssl'

@@ -41,7 +41,7 @@ $(function() {
     version: "0.1",
     partnerId: "snowflake",
     container: "osw_widget",
-    miniWidgetStyle: 'default', //'default' or 'noText'
+    miniWidgetStyle: 'noText', //'default' or 'noText'
     onReady: function(widget) {
       //set the initial bounds
       widget.boundsChanged(map.getBounds().toUrlValue());
@@ -59,13 +59,15 @@ $(function() {
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
     }
-    sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true, map: map});
+    sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true,
+                                                   suppressMapPan: false, map: map});
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
       //console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(e, activeObjectId);
+      map.setZoom(19);
     });
   }
 
@@ -523,10 +525,13 @@ $(function() {
   });
   
   $('#share_link').live('click', function() {
-    if (widgetStatus == 0)
+    if (widgetStatus == 0) {
       window.osw_widget.showDetails();
-    else
+      widgetStatus = 1;
+    } else {
       window.osw_widget.minimize();
+      widgetStatus = 0;
+    }
     return false;
   });
 
