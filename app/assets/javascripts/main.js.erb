@@ -10,7 +10,7 @@ $(function() {
   };
   
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-  var oswWidget;
+  var widgetStatus = 0;
   var isWindowOpen = false;
   var sidewalks_kml;
   var autoIWObjectId;
@@ -37,24 +37,21 @@ $(function() {
     isWindowOpen = false;
   });
   
-  initOSW();
-  
-  function initOSW() {
-    if (oswWidget == undefined) {
-      oswWidget = new OhSoWe.MapWidget({
-        version: "0.1",
-        partnerId: "snowflake",
-        container: "osw_widget"
-      }).render();
-      console.debug('OhSoWe Widget initialized');
-      
+  window.osw_widget = new OhSoWe.MapWidget({
+    version: "0.1",
+    partnerId: "snowflake",
+    container: "osw_widget",
+    miniWidgetStyle: 'default', //'default' or 'noText'
+    onReady: function(widget) {
+      //set the initial bounds
+      widget.boundsChanged(map.getBounds().toUrlValue());
       //set the google maps listener
       google.maps.event.addListener(map, 'bounds_changed', function() {
         //console.debug('bounds_changed');
-        oswWidget.boundsChanged(map.getBounds().toUrlValue());
+        widget.boundsChanged(map.getBounds().toUrlValue());
       });
     }
-  }
+  }).render();
   
   function renderKML(lat, lng) {
     console.log("Rendering sidewalks of [%s, %s]", lat, lng);
@@ -97,6 +94,23 @@ $(function() {
         });
         activeInfoWindow.open(map);
         showInfoWindow();
+      }
+    });
+  }
+  
+  function updateSidebar() {
+    $.ajax({
+      type: 'GET',
+      url: '/',
+      dataType: 'json',
+      error: function(jqXHR) {
+        console.error(jqXHR);
+      },
+      success: function(data) {
+        //console.info(data);
+        $('#username').replaceWith(data['user_badge']);
+        $('#sidewalk_list').replaceWith(data['sidewalk_list']);
+        fetchMapObject(activeObjectId);
       }
     });
   }
@@ -296,20 +310,7 @@ $(function() {
           upwd.focus();
         },
         success: function(data) {
-          $.ajax({
-            type: 'GET',
-            url: '/',
-            dataType: 'json',
-            error: function(jqXHR) {
-              console.error(jqXHR);
-            },
-            success: function(data) {
-              console.info(data);
-              $('#username').replaceWith(data['user_badge']);
-              $('#sidewalk_list').replaceWith(data['sidewalk_list']);
-              fetchMapObject(activeObjectId);
-            }
-          });
+          updateSidebar();
         }
       });
     }
@@ -383,6 +384,7 @@ $(function() {
         },
         success: function(data) {
           console.info("abandoned");
+          updateSidebar();
           refreshMap();
           activeInfoWindow.setContent(data);
         }
@@ -402,6 +404,7 @@ $(function() {
       },
       success: function(data) {
         console.info("adopted");
+        updateSidebar();
         refreshMap();
         activeInfoWindow.setContent(data);
       }
@@ -420,6 +423,7 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        updateSidebar();
         refreshMap();
         activeInfoWindow.setContent(data);
       }
@@ -439,6 +443,7 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        updateSidebar();
         refreshMap();
         activeInfoWindow.setContent(data);
       }
@@ -458,6 +463,7 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        updateSidebar();
         refreshMap();
         activeInfoWindow.setContent(data);
       }
@@ -510,16 +516,17 @@ $(function() {
   
   $('a.view_sidewalk').live('click', function() {
     autoIWObjectId = $(this).attr('data-gid');
+    activeObjectId = $(this).attr('data-gid');
     $('#address').val($(this).text());
     $('#address_button').trigger('click');
     return false;
   });
   
   $('#share_link').live('click', function() {
-    var widget_html = '<div id="osw_widget"></div>';
-    activeInfoWindow.setContent(widget_html);
-    //setTimeout(initOSW, 3000);
-    initOSW();
+    if (widgetStatus == 0)
+      window.osw_widget.showDetails();
+    else
+      window.osw_widget.minimize();
     return false;
   });
 
