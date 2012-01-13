@@ -60,8 +60,10 @@ $(function() {
       sidewalks_kml.setMap(null);
     }
     sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true,
+                                                   suppressMapPan: false,
+                                                   preserveViewport: true,
                                                    map: map});
-                                                   //suppressMapPan: true, map: map});
+    map.setZoom(19);
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
@@ -176,7 +178,7 @@ $(function() {
             $('#missing_address').show();
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
-            renderKML(data[0], data[1]);
+            refreshMap();
             if (autoIWObjectId) {
               fetchSidewalkInfo({latLng: map.getCenter()}, autoIWObjectId);
               isWindowOpen = true;
@@ -400,7 +402,7 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
-        console.info("adopted");
+        //console.info("adopted");
         updateSidebar();
         refreshMap();
         activeInfoWindow.setContent(data);

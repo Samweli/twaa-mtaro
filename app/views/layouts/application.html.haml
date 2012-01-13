@@ -1,5 +1,5 @@
 !!! 5
-%html{"xmlns:fb" => "http://www.facebook.com/2008/fbml"}
+%html{"xmlns:fb" => "http://www.facebook.com/2008/fbml", :itemscope => "", :itemtype => "http://schema.org/Organization"}
   %head
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
@@ -11,6 +11,11 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     %meta{:name => "viewport", :content => "initial-scale=1.0, user-scalable=no"}
+
+    %meta{:content => "Chicagoshovels.org", :itemprop => "name"}
+    %meta{:content => "Adopt a sidewalk by claiming it on an interactive map", :itemprop => "description"}
+    %meta{:content => "http://www.cityofchicago.org/content/dam/city/depts/mayor/Chicago%20Shovels/FireHydrant.png", :itemprop => "image"}/
+
     %script{:type => "text/javascript"}
       -# FIXME: update the domain.
       var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-2412440-12"]),_gaq.push(["_setDomainName",".adoptahydrant.org"]),_gaq.push(["_trackPageview"]),function(){var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)}();

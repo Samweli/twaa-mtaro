@@ -6,7 +6,7 @@ class Sidewalk < ActiveRecord::Base
   
   include Geokit::Geocoders
 
-  def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.05)
+  def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"
     FROM chicagosidewalks s 
