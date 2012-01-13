@@ -6,7 +6,7 @@ AdoptAThing::Application.routes.draw do
   }
   get 'address' => 'addresses#show', :as => 'address'
   get 'address_report' => 'addresses#report', :as => 'address_report'
-  get 'tos' => 'info_window#tos', :as => 'tos'
+  get 'tos' => 'main#tos', :as => 'tos'
   resources :sidewalks
   resources :sidewalk_claims
   root :to => 'main#index'

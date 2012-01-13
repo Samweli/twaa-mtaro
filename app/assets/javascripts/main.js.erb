@@ -129,7 +129,6 @@ $(function() {
     var errors = [];
     var uaddress = $('#address');
     
-    $('#missing_address').hide();
     $(submitButton).attr("disabled", true);
     if(uaddress.val() === '') {
       $(submitButton).attr("disabled", false);
@@ -151,7 +150,6 @@ $(function() {
           if(data.errors) {
             markError(uaddress, errors);
             uaddress.focus();
-            $('#missing_address').show();
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
             refreshKML();
