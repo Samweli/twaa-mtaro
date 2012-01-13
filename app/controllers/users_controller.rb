@@ -22,7 +22,7 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
-    if true #verify_recaptcha
+    if verify_recaptcha
       build_resource
       if resource.save
         sign_in resource

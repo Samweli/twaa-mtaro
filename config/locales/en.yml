@@ -51,6 +51,7 @@ en:
     user_new: "Don't have an account here or on Facebook?"
     voice_number: "Home phone number"
     facebook_sign_in: "Get started using your Facebook account"
+    recaptcha: "Please verify the code below"
   links:
     accessibility: "Accessibility"
     forgot_password: "Forgot your password?"

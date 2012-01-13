@@ -26,6 +26,9 @@
       %dl    
         %dt= f.label "password", t("labels.password"), :id => "user_password_label"
         %dd= f.password_field "password"
+      %dl    
+        %dt= f.label "verify", t("labels.recaptcha"), :id => "user_verify_label"
+        %dd= recaptcha_tags
       
       = f.submit t("buttons.register")
 
