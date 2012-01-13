@@ -7,6 +7,7 @@
       %li.cleared= 'Shoveled'
       %li.adopted= 'Adopted'
       %li.unclear= 'Uncleared'
+      %li.unclear= link_to 'Refresh', '#', :id => 'refresh_link'
 
   %h2.address
     = @sidewalk.address

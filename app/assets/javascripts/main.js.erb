@@ -19,86 +19,73 @@ $(function() {
     maxWidth: 950
   });
   
-  var fetchMapObject = function(gid) {
-    $.ajax({
-      type: 'GET',
-      url: '/sidewalk_claims/' + gid,
-      data: {
-        //'id': activeObjectId
-        //'flash': {'notice': "<%= I18n.t("notices.signed_in") %>" }
-      },
-      success: function(data) {
-        activeInfoWindow.setContent(data);
-      }
-    });
-  }
-
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
   });
   
-  //window.osw_widget = new OhSoWe.MapWidget({
-  //  version: "0.1",
-  //  partnerId: "snowflake",
-  //  container: "osw_widget",
-  //  miniWidgetStyle: 'noText', //'default' or 'noText'
-  //  onReady: function(widget) {
-  //    //set the initial bounds
-  //    widget.boundsChanged(map.getBounds().toUrlValue());
-  //    //set the google maps listener
-  //    google.maps.event.addListener(map, 'bounds_changed', function() {
-  //      //console.debug('bounds_changed');
-  //      widget.boundsChanged(map.getBounds().toUrlValue());
-  //    });
-  //  }
-  //}).render();
+  window.osw_widget = new OhSoWe.MapWidget({
+    version: "0.1",
+    partnerId: "snowflake",
+    container: "osw_widget",
+    miniWidgetStyle: 'noText', //'default' or 'noText'
+    onReady: function(widget) {
+      //set the initial bounds
+      widget.boundsChanged(map.getBounds().toUrlValue());
+      //set the google maps listener
+      google.maps.event.addListener(map, 'bounds_changed', function() {
+        //console.debug('bounds_changed');
+        widget.boundsChanged(map.getBounds().toUrlValue());
+      });
+    }
+  }).render();
   
-  function renderKML(lat, lng) {
-    console.log("Rendering sidewalks of [%s, %s]", lat, lng);
-    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + lat + '&lng=' + lng;
+  google.maps.event.addListener(map, 'dragend', function() {
+    if(isWindowOpen == true) {
+      return;
+    }
+    refreshKML();
+  });
+  
+  function refreshKML() {
+    var c = map.getCenter();
+    console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
+    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
     }
-    sidewalks_kml = new google.maps.KmlLayer(url, {suppressInfoWindows: true,
-                                                   suppressMapPan: false,
-                                                   preserveViewport: true,
-                                                   map: map});
+    sidewalks_kml = new google.maps.KmlLayer(url,
+                                             {suppressInfoWindows: true,
+                                              suppressMapPan: false,
+                                              preserveViewport: true,
+                                              map: map});
     map.setZoom(19);
 
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       isWindowOpen = true;
       activeObjectId = e.featureData.description;
       //console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
-      fetchSidewalkInfo(e, activeObjectId);
-      //map.setZoom(19);
+      fetchSidewalkInfo(activeObjectId, e.latLng);
     });
   }
 
-  function fetchSidewalkInfo(e, gid) {
-    console.info(e.latLng);
+  function fetchSidewalkInfo(gid, pos) {
+    if (pos == undefined)
+      pos = map.getCenter();
+    //console.info(e.latLng);
     $.ajax({
       type: 'GET',
       url: '/sidewalk_claims/' + gid,
       data: {
         //'id': activeObjectId
       },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
       error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
       },
       success: function(data) {
         activeInfoWindow.setOptions({
-          maxWidth: '600',
           content: data,
-          position: e.latLng,
-          pixelOffset: e.pixelOffset
+          position: pos,
         });
         activeInfoWindow.open(map);
-        showInfoWindow();
       }
     });
   }
@@ -115,7 +102,6 @@ $(function() {
         //console.info(data);
         $('#username').replaceWith(data['user_badge']);
         $('#sidewalk_list').replaceWith(data['sidewalk_list']);
-        fetchMapObject(activeObjectId);
       }
     });
   }
@@ -135,18 +121,6 @@ $(function() {
   function hideSpinner() {
     $('#spinner').hide();
   }
-  
-  function refreshMap() {
-    var new_center = map.getCenter();
-    renderKML(new_center.lat(), new_center.lng());
-  }
-  
-  google.maps.event.addListener(map, 'dragend', function() {
-    if(isWindowOpen == true) {
-      return;
-    }
-    refreshMap();
-  });
   
   $('#address_form').submit(function() {
     var submitButton = $("input[type='submit']", this);
@@ -178,9 +152,9 @@ $(function() {
             $('#missing_address').show();
           } else {
             map.setCenter(new google.maps.LatLng(data[0], data[1]));
-            refreshMap();
+            refreshKML();
             if (autoIWObjectId) {
-              fetchSidewalkInfo({latLng: map.getCenter()}, autoIWObjectId);
+              fetchSidewalkInfo(autoIWObjectId);
               isWindowOpen = true;
               autoIWObjectId = null;
             }
@@ -251,7 +225,7 @@ $(function() {
           if (data.html) activeInfoWindow.setContent(data.html);
         },
         success: function(data) {
-          fetchMapObject(activeObjectId);
+          fetchSidewalkInfo(activeObjectId);
         }
       });
     }
@@ -304,6 +278,7 @@ $(function() {
         },
         success: function(data) {
           updateSidebar();
+          fetchSidewalkInfo(activeObjectId);
         }
       });
     }
@@ -382,9 +357,9 @@ $(function() {
           console.error(jqXHR);
         },
         success: function(data) {
-          console.info("abandoned");
+          //console.info("abandoned");
+          refreshKML();
           updateSidebar();
-          refreshMap();
           activeInfoWindow.setContent(data);
         }
       });
@@ -403,8 +378,8 @@ $(function() {
       },
       success: function(data) {
         //console.info("adopted");
+        refreshKML();
         updateSidebar();
-        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -422,8 +397,8 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        refreshKML();
         updateSidebar();
-        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -442,8 +417,8 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        refreshKML();
         updateSidebar();
-        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -462,8 +437,8 @@ $(function() {
         console.error(jqXHR);
       },
       success: function(data) {
+        refreshKML();
         updateSidebar();
-        refreshMap();
         activeInfoWindow.setContent(data);
       }
     });
@@ -474,17 +449,6 @@ $(function() {
     $.ajax({
       type: 'GET',
       url: '/users/sign_in',
-      data: { 'gid': activeObjectId,
-              'utf8': '✓',
-              'authenticity_token': AUTH_TOKEN },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
-      error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
-      },
       success: function(data) {
         activeInfoWindow.setContent(data);
       }
@@ -496,16 +460,6 @@ $(function() {
     $.ajax({
       type: 'GET',
       url: '/users/sign_up',
-      data: { 'gid': activeObjectId,
-              'utf8': '✓' },
-      beforeSend: function() {
-        hideInfoWindow();
-        showSpinner();
-      },
-      error: function(jqXHR) {
-        hideSpinner();
-        showInfoWindow;
-      },
       success: function(data) {
         activeInfoWindow.setContent(data);
       }
@@ -529,6 +483,11 @@ $(function() {
       window.osw_widget.minimize();
       widgetStatus = 0;
     }
+    return false;
+  });
+
+  $('#refresh_link').live('click', function() {
+    refreshKML();
     return false;
   });
 

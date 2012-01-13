@@ -4,7 +4,7 @@ class SidewalksController < ApplicationController
 
   def index
     @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 40)
-    puts "#{@sidewalks.size} sidewalks found!"
+    puts "#{@sidewalks.size} sidewalks found for [#{params[:lat]}, #{params[:lng]}]"
     unless @sidewalks.blank?
       respond_with(@sidewalks) do |format|
         format.kml { render }
