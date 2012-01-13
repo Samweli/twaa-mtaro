@@ -3,7 +3,7 @@ class SidewalksController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
 
   def index
-    @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 40)
+    @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 100)
     puts "#{@sidewalks.size} sidewalks found for [#{params[:lat]}, #{params[:lng]}]"
     unless @sidewalks.blank?
       respond_with(@sidewalks) do |format|

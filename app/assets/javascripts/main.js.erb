@@ -49,7 +49,9 @@ $(function() {
   function refreshKML() {
     var c = map.getCenter();
     console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    //var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    var url = 'http://205.178.80.23:3000/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
     }
