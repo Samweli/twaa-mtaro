@@ -26,10 +26,13 @@
       %dl    
         %dt= f.label "password", t("labels.password"), :id => "user_password_label"
         %dd= f.password_field "password"
-      %dl    
+      %dl
         %dt= f.label "verify", t("labels.recaptcha"), :id => "user_verify_label"
-        %dd= recaptcha_tags
-      
+        %dd=# recaptcha_tags :ajax => true
+      %dl
+        %dt= f.label "verify", t("labels.facebook_sign_in"), :id => "user_verify_label"
+        %dd= recaptcha_tags :ajax => true
+
       = f.submit t("buttons.register")
 
       .center
