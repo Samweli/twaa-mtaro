@@ -1,6 +1,7 @@
 #sidebar
   = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
   = render :partial => 'user_badge'
+  =# render :partial => 'register'
   
   %ul.social_items.clearfix
     = render :partial => 'gplus_button'
@@ -13,32 +14,6 @@
   #service_logos.center
     = link_to image_tag("logos/ChicagoShovelsHOME.jpg"), 'http://www.chicagoshovels.org', :title => 'Chicago Shovels Home'
     
-  #register
-    %p#register-text
-      
-    #register-dialog{:class => "dialog"}
-      = form_for :user, :html => {:id => "register_form"} do |f|
-        = label_tag "first_name", "First name"
-        = text_field_tag "first_name", params[:first_name]
-        = label_tag "last_name", "Last name"
-        = text_field_tag "last_name", params[:last_name]
-        = label_tag "email", "Email address"
-        = text_field_tag "email", params[:email]
-        = label_tag "password", "Password"
-        = text_field_tag "password", params[:password]
-        = submit_tag t("buttons.register")
-      #register-fb
-        %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
-    #login-dialog{:class => "dialog"}
-      = form_for :user, :html => {:id => "login_form"} do |f|
-        = label_tag "email", "Email address"
-        = text_field_tag "email", params[:email]
-        = label_tag "password", "Password"
-        = text_field_tag "password", params[:password]
-        = submit_tag t("buttons.sign_in")
-      #login-fb
-        %fb:login-button{:length => "long", :perms => "email", :onlogin => ""}
-  
   #feedback.font_12.link_1
     = link_to t("links.terms"), tos_path, :target => '_blank'
 

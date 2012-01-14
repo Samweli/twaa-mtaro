@@ -1,10 +1,8 @@
 class UsersController < Devise::RegistrationsController
-  #respond_to :html, :json
-  #before_filter :authenticate_user!
   layout 'info_window'
 
   def new
-    @user = User.new
+    respond_with (@user = User.new)
   end
 
   def edit

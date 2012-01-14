@@ -28,12 +28,13 @@
         %dd= f.password_field "password"
       %dl
         %dt= f.label "verify", t("labels.recaptcha"), :id => "user_verify_label"
-        %dd=# recaptcha_tags :ajax => true
-      %dl
-        %dt= f.label "verify", t("labels.facebook_sign_in"), :id => "user_verify_label"
-        %dd= recaptcha_tags :ajax => true
-
-      = f.submit t("buttons.register")
+        %dd= recaptcha_tags# :ajax => true
+      %ul.horizontal_items
+        %li= f.submit t("buttons.register")
+        %li= 'Or'
+        %li
+          .fb-login-button{:scope => 'publish_stream'}
+            Login with Facebook
 
       .center
         %p.font_1.link_1

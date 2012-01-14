@@ -23,22 +23,6 @@ $(function() {
     isWindowOpen = false;
   });
   
-  window.osw_widget = new OhSoWe.MapWidget({
-    version: "0.1",
-    partnerId: "snowflake",
-    container: "osw_widget",
-    miniWidgetStyle: 'noText', //'default' or 'noText'
-    onReady: function(widget) {
-      //set the initial bounds
-      widget.boundsChanged(map.getBounds().toUrlValue());
-      //set the google maps listener
-      google.maps.event.addListener(map, 'bounds_changed', function() {
-        //console.debug('bounds_changed');
-        widget.boundsChanged(map.getBounds().toUrlValue());
-      });
-    }
-  }).render();
-  
   google.maps.event.addListener(map, 'dragend', function() {
     if(isWindowOpen == true) {
       return;
@@ -49,7 +33,7 @@ $(function() {
   function refreshKML() {
     var c = map.getCenter();
     console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
 
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
@@ -460,8 +444,10 @@ $(function() {
       type: 'GET',
       url: '/users/sign_up',
       success: function(data) {
-        $('#info_box').replaceWith(data);
-        //activeInfoWindow.setContent(data);
+        //$('#info_box').replaceWith(data);
+        activeInfoWindow.setContent(data);
+        FB.XFBML.parse();
+        Recaptcha.reload();
       }
     });
     return false;
