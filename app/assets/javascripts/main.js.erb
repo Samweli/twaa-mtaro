@@ -33,7 +33,7 @@ $(function() {
   function refreshKML() {
     var c = map.getCenter();
     console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    var url = 'http://adopt.chicagoshovels.org/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
 
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
@@ -205,7 +205,10 @@ $(function() {
           hideSpinner();
           showInfoWindow();
           $(submitButton).attr("disabled", false);
-          if (data.html) activeInfoWindow.setContent(data.html);
+          if (data.html) {
+            activeInfoWindow.setContent(data.html);
+            $.globalEval($(data.html)[3].text);
+          }
         },
         success: function(data) {
           fetchSidewalkInfo(activeObjectId);
@@ -443,11 +446,20 @@ $(function() {
     $.ajax({
       type: 'GET',
       url: '/users/sign_up',
+      dataType: 'html',
       success: function(data) {
-        //$('#info_box').replaceWith(data);
         activeInfoWindow.setContent(data);
-        FB.XFBML.parse();
-        Recaptcha.reload();
+        $.globalEval($(data)[3].text);
+
+        //var rc_script_tag = document.createElement('script'),
+        //rc_init_func = function(){Recaptcha.create("6LeZSMwSAAAAALMVlIQ_qokbeNtO7njeGiCVf2OD", document.getElementById("dynamic_recaptcha"));}
+        //rc_script_tag.src = "http://www.google.com/recaptcha/api/js/recaptcha_ajax.js";
+        //rc_script_tag.type = 'text/javascript';
+        //rc_script_tag.onload = function(){rc_init_func.call();};
+        //rc_script_tag.onreadystatechange = function(){
+        //  if (rc_script_tag.readyState == 'loaded' || rc_script_tag.readyState == 'complete') {rc_init_func.call();}
+        //};
+        //(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(rc_script_tag);
       }
     });
     return false;

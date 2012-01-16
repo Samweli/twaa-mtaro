@@ -81,6 +81,10 @@ form {
   border: 1px solid #c07373;
 }
 
+#error_msg {
+  color: #ff7373;
+}
+
 #notice {
   background-color: #8fe38f;
   border: 1px solid #82b082;
@@ -525,4 +529,9 @@ a.delete_button {
 }
 #tos {
   padding: 30px;
+}
+#recaptcha_box {
+  display: block;
+  width: 400px;
+  height: 130px;
 }

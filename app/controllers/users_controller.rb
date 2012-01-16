@@ -21,17 +21,28 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
+    build_resource
     if verify_recaptcha
-      build_resource
+      puts 'passed!!!'
       if resource.save
+        puts 'saved!!!'
         sign_in resource
         #puts "created: #{resource.class} #{resource.inspect}"
         render :inline => "You have been registered!" and return
+      else
+        puts 'not saved!!!'
+        errors = resource.errors
       end
+    else
+      errors = "reCaptcha code is invalid"
     end
 
+    #set_flash_message :notice, :inactive_signed_up, :reason => errors if is_navigational_format?
+    flash.now[:error] = errors
+    flash.delete(:recaptcha_error)
+    
     clean_up_passwords(resource)
-    render(:json => {"errors" => resource.errors,
+    render(:json => {"errors" => errors,
                     :html => render_to_string(:template => 'users/new.html.haml')},
                     :status => 500)
   end

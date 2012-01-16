@@ -1,10 +1,11 @@
+- if resource && resource.errors
+  #error_msg
+    = devise_error_messages!
+
 #sign_up_box
   = form_for :user, :html => {:id => "sign_up_form", :class => 'form'} do |f|
     %h2= t("titles.register_now")
 
-    #error
-      = devise_error_messages!
-          
     .signup
       %dl
         %dt
@@ -28,13 +29,16 @@
         %dd= f.password_field "password"
       %dl
         %dt= f.label "verify", t("labels.recaptcha"), :id => "user_verify_label"
-        %dd= recaptcha_tags# :ajax => true
-      %ul.horizontal_items
+        %dd
+          #recaptcha_box
+            = recaptcha_tags :ajax => true
+            
+      %ul.horizontal_items.font_12
         %li= f.submit t("buttons.register")
         %li= 'Or'
         %li
           .fb-login-button{:scope => 'publish_stream'}
-            Login with Facebook
+            Sign up with Facebook
 
       .center
         %p.font_1.link_1
