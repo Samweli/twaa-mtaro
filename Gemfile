@@ -13,6 +13,7 @@ gem 'execjs'
 gem 'therubyracer'
 gem 'jquery-rails'
 gem 'recaptcha', :require => 'recaptcha/rails'
+gem 'kaminari'
 
 platforms :jruby do
   gem 'jruby-openssl'

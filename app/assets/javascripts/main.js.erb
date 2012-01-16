@@ -81,7 +81,7 @@ $(function() {
       url: '/',
       dataType: 'json',
       error: function(jqXHR) {
-        console.error(jqXHR);
+        //console.error(jqXHR);
       },
       success: function(data) {
         //console.info(data);
@@ -450,16 +450,7 @@ $(function() {
       success: function(data) {
         activeInfoWindow.setContent(data);
         $.globalEval($(data)[3].text);
-
-        //var rc_script_tag = document.createElement('script'),
-        //rc_init_func = function(){Recaptcha.create("6LeZSMwSAAAAALMVlIQ_qokbeNtO7njeGiCVf2OD", document.getElementById("dynamic_recaptcha"));}
-        //rc_script_tag.src = "http://www.google.com/recaptcha/api/js/recaptcha_ajax.js";
-        //rc_script_tag.type = 'text/javascript';
-        //rc_script_tag.onload = function(){rc_init_func.call();};
-        //rc_script_tag.onreadystatechange = function(){
-        //  if (rc_script_tag.readyState == 'loaded' || rc_script_tag.readyState == 'complete') {rc_init_func.call();}
-        //};
-        //(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(rc_script_tag);
+        FB.XFBML.parse();
       }
     });
     return false;
