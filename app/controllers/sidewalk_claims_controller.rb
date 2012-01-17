@@ -9,6 +9,10 @@ class SidewalkClaimsController < ApplicationController
       render :json => {:errors => 'Sidewalk not found'}, :status => 500 and return
     end
     
+    if current_user.sidewalk_claims.count >= 100
+      render :json => {:errors => 'You can adopt max 100 sidewalks'}, :status => 500 and return
+    end
+    
     if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, current_user.id)).new_record?
       if @sidewalk.lat.nil?
         loc = Address.geocode("#{@sidewalk.address}, Chicago, IL")
