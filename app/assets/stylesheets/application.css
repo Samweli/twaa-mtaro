@@ -528,10 +528,15 @@ a.delete_button {
 #facebook_button{
 	margin: 0px 0px;
 	padding-top: 3px;
-	background:transparent url('FacebookRegisterButton.png') no-repeat scroll 0%;
 	display:block;
 	width:154px;
 	height:22px;
+}
+#facebook_button.login {
+	background:transparent url('FacebookLoginButton.png') no-repeat scroll 0%;
+}
+#facebook_button.register {
+	background:transparent url('FacebookRegisterButton.png') no-repeat scroll 0%;
 }
 #service_logos {
   margin: 15px 0 0 0;

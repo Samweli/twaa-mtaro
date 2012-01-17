@@ -213,8 +213,8 @@ $(function() {
           }
         },
         beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
+          //hideInfoWindow();
+          //showSpinner();
         },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
@@ -371,11 +371,13 @@ $(function() {
   });
   
   $('#adopt_link').live('click', function() {
+    var publish = window.confirm('Would you also like to publish that you have adopted sidewalk as your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalk_claims',
       data: { 'gid': activeObjectId,
-              'authenticity_token': AUTH_TOKEN },
+              'authenticity_token': AUTH_TOKEN,
+              'fb_publish': publish },
       error: function(jqXHR) {
         console.error(jqXHR);
       },
@@ -390,12 +392,14 @@ $(function() {
   });
   
   $('#get_help_link').live('click', function() {
+    var publish = window.confirm('Would you also like to inform that this sidewalk needs help on your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
-              'need_help': true },
+              'need_help': true,
+              'fb_publish': publish },
       error: function(jqXHR) {
         console.error(jqXHR);
       },
@@ -409,13 +413,15 @@ $(function() {
   });
   
   $('#shoveled_link').live('click', function() {
+    var publish = window.confirm('Would you also like to publish that you have shoveled this sidewalk as your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'moid': $(this).attr('data-moid'),
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
-              'shoveled': true },
+              'shoveled': true,
+              'fb_publish': publish },
       error: function(jqXHR) {
         console.error(jqXHR);
       },
@@ -473,19 +479,20 @@ $(function() {
     return false;
   });
   
-  $('#facebook_button').live('click', function() {
-    $.ajax({
-      type: 'GET',
-      url: '/auth/facebook',
-      error: function(jqXHR) {
-      },
-      success: function(data) {
-        updateSidebar();
-        fetchSidewalkInfo(activeObjectId);
-      }
-    });
-    return false;
-  });
+  //$('#facebook_button').live('click', function() {
+  //  $.ajax({
+  //    type: 'GET',
+  //    url: '/auth/facebook',
+  //    error: function(jqXHR) {
+  //      console.error($.parseJSON(jqXHR.responseText));
+  //    },
+  //    success: function(data) {
+  //      updateSidebar();
+  //      fetchSidewalkInfo(activeObjectId);
+  //    }
+  //  });
+  //  return false;
+  //});
   
   $('a.view_sidewalk').live('click', function() {
     autoIWObjectId = $(this).attr('data-gid');

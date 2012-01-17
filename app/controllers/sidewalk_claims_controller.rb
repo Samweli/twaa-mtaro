@@ -19,6 +19,10 @@ class SidewalkClaimsController < ApplicationController
       render :json => {"errors" => @claim.errors}, :status => 500 and return unless @claim.save
     end
     
+    if params.fetch(:fb_publish, nil)
+      #
+    end
+    
     redirect_to :action => :show, :id => @sidewalk.gid
   end
 

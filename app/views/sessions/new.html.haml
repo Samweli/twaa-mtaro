@@ -10,7 +10,11 @@
         %dt= f.label "password", t("labels.password")
         %dd= f.password_field "password"
       
-      = f.submit t("buttons.sign_in")
+      %ul.horizontal_items.font_12
+        %li= f.submit t("buttons.sign_in")
+        %li= 'Or'
+        %li= link_to '', '/auth/facebook', :id => 'facebook_button', :class => 'login'
+
       = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'font_1 font_12'
       
       %p.font_1.link_1.center= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
