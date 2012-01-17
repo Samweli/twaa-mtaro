@@ -23,14 +23,11 @@ class UsersController < Devise::RegistrationsController
   def create
     build_resource
     if verify_recaptcha
-      puts 'passed!!!'
       if resource.save
-        puts 'saved!!!'
         sign_in resource
-        #puts "created: #{resource.class} #{resource.inspect}"
+        session[:omniauth] = nil unless @user.new_record?
         render :inline => "You have been registered!" and return
       else
-        puts 'not saved!!!'
         errors = resource.errors
       end
     else
@@ -46,4 +43,15 @@ class UsersController < Devise::RegistrationsController
                     :html => render_to_string(:template => 'users/new.html.haml')},
                     :status => 500)
   end
+  
+  private
+  
+  def build_resource(*args)
+    super
+    if session[:omniauth]
+      @user.apply_omniauth(session[:omniauth])
+      @user.valid?
+    end
+  end  
+  
 end

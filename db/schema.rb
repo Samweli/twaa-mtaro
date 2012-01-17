@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108164400) do
+ActiveRecord::Schema.define(:version => 20120116202050) do
+
+  create_table "authentications", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.string   "secret"
+    t.datetime "expires"
+    t.string   "nickname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 # Could not dump table "chicagosidewalks" because of following StandardError
 #   Unknown type 'geometry' for column 'the_geom'
@@ -37,11 +49,6 @@ ActiveRecord::Schema.define(:version => 20120108164400) do
 
   add_index "sidewalk_claims", ["gid"], :name => "index_sidewalk_claims_on_gid"
   add_index "sidewalk_claims", ["user_id"], :name => "index_sidewalk_claims_on_user_id"
-
-  create_table "sidewalks", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "spatial_ref_sys", :id => false, :force => true do |t|
     t.integer "srid",                      :null => false

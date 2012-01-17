@@ -36,9 +36,7 @@
       %ul.horizontal_items.font_12
         %li= f.submit t("buttons.register")
         %li= 'Or'
-        %li
-          .fb-login-button{:scope => 'publish_stream'}
-            Sign up with Facebook
+        %li= link_to '', '#', :id => 'facebook_button'
 
       .center
         %p.font_1.link_1

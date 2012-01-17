@@ -50,8 +50,6 @@ $(function() {
     var c = map.getCenter();
     console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
     var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
-    //var url = 'http://205.178.80.23:3000/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
-
 
     if (sidewalks_kml != undefined) {
       sidewalks_kml.setMap(null);
@@ -229,6 +227,7 @@ $(function() {
           }
         },
         success: function(data) {
+          updateSidebar();
           fetchSidewalkInfo(activeObjectId);
         }
       });
@@ -469,6 +468,20 @@ $(function() {
         activeInfoWindow.setContent(data);
         $.globalEval($(data)[3].text);
         FB.XFBML.parse();
+      }
+    });
+    return false;
+  });
+  
+  $('#facebook_button').live('click', function() {
+    $.ajax({
+      type: 'GET',
+      url: '/auth/facebook',
+      error: function(jqXHR) {
+      },
+      success: function(data) {
+        updateSidebar();
+        fetchSidewalkInfo(activeObjectId);
       }
     });
     return false;

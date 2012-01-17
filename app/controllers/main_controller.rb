@@ -2,7 +2,7 @@ class MainController < ApplicationController
   #respond_to :html, :json
   def index
     if user_signed_in?
-      @my_sidewalks = current_user.sidewalk_claims.includes(:sidewalk).page(params[:page]).per(3)
+      @my_sidewalks = current_user.sidewalk_claims.includes(:sidewalk).page(params[:page]).per(10)
     end
 
     sidewalk_list = render_to_string :partial => 'sidewalk_list.html.haml'
