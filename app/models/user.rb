@@ -14,10 +14,13 @@ class User < ActiveRecord::Base
   end
 
   def apply_omniauth(omniauth)
-    self.first_name = omniauth['info']['first_name'] if first_name.blank?
-    self.last_name = omniauth['info']['last_name'] if last_name.blank?
-    self.email = omniauth['info']['email'] if email.blank?
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    self.first_name = omniauth[:info][:first_name] if first_name.blank?
+    self.last_name = omniauth[:info][:last_name] if last_name.blank?
+    self.email = omniauth[:info][:email] if email.blank?
+    authentications.build(:provider => omniauth[:provider],
+                          :uid => omniauth[:uid],
+                          #:token => omniauth[:credentials][:token]
+                          )
   end
   
   def password_required?

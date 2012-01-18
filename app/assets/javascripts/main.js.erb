@@ -472,7 +472,8 @@ $(function() {
       dataType: 'html',
       success: function(data) {
         activeInfoWindow.setContent(data);
-        $.globalEval($(data)[3].text);
+        //$.globalEval($(data)[3].text);
+        eval($(data)[3].text);
         FB.XFBML.parse();
       }
     });
