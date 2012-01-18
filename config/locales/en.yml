@@ -30,6 +30,7 @@ en:
     tagline: "Claim responsibility for shoveling out a sidewalk after it snows."
     tos: "By signing up, you agree to the %{tos}."
   errors:
+    auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
   labels:

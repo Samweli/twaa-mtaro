@@ -1,6 +1,6 @@
-- if resource && resource.errors
+- if defined?(devise_error_messages!)
   #error_msg
-    = devise_error_messages!
+    = devise_error_messages! 
 
 #sign_up_box
   = form_for :user, :html => {:id => "sign_up_form", :class => 'form'} do |f|

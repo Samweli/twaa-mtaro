@@ -269,15 +269,12 @@ $(function() {
           }
         },
         beforeSend: function() {
-          //hideInfoWindow();
-          //showSpinner();
         },
         error: function(jqXHR) {
-          //hideSpinner();
-          //showInfoWindow();
+          data = $.parseJSON(jqXHR.responseText);
           $(submitButton).attr("disabled", false);
-          markError(upwd, errors);
-          upwd.focus();
+          $('#error_msg').html('<h2>'+data.errors.password+'</h2>');
+          uemail.focus();
         },
         success: function(data) {
           updateSidebar();

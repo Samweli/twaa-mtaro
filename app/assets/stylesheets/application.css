@@ -84,7 +84,9 @@ form {
 #error_msg {
   color: #ff7373;
 }
-
+#error_msg h2 {
+  font-size: 18px;
+}
 #notice {
   background-color: #8fe38f;
   border: 1px solid #82b082;
@@ -344,8 +346,9 @@ ul.social_items > li {
   width: 400px;
 }
 ul.actions_menu {
-  background-color: #eaf5ff;
+/*  background-color: #eaf5ff;
   border-radius: 5px 5px 5px 5px;
+*/
   overflow: hidden;
   padding: 10px;  
 }

@@ -130,6 +130,8 @@ GEM
     rdoc (3.11)
       json (~> 1.4)
     recaptcha (0.3.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
       simplecov-html (~> 0.5.3)
@@ -179,6 +181,7 @@ DEPENDENCIES
   rack-contrib
   rails (~> 3.1.0)
   recaptcha
+  rest-client
   simplecov
   therubyracer
   therubyrhino

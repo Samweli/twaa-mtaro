@@ -8,7 +8,7 @@ class SessionsController < Devise::SessionsController
       sign_in(resource_name, resource)
       render :json => resource
     else
-      render :json => {"errors" => {:password => [t("errors.password")]}}, :status => :unauthorized 
+      render :json => {"errors" => {:password => [t("errors.auth_failed")]}}, :status => :unauthorized 
     end
   end
 

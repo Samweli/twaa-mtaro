@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'kaminari'
 gem 'omniauth-facebook'
+gem 'rest-client'
 
 platforms :jruby do
   gem 'jruby-openssl'

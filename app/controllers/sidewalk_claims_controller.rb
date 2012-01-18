@@ -24,7 +24,13 @@ class SidewalkClaimsController < ApplicationController
     end
     
     if params.fetch(:fb_publish, nil)
-      #
+      message = <<-MSG
+          I've adopted a sidewalk to keep clear of snow this winter!
+          Join www.ChicagoShovels.org to lend a hand, track snow plows,
+          connect with neighbors and adopt-a-sidewalk in your community      
+      MSG
+      
+      publish_facebook_status(message)
     end
     
     redirect_to :action => :show, :id => @sidewalk.gid
