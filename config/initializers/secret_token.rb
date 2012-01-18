@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-AdoptAThing::Application.config.secret_token = '4dc0354d5050c89c7f151a0bae3d2a7506a7ca66435ae9e0eb6754cb4be808089c7726c65dc8ae9b49870507fbe0de1fa36fa703491078b2c7122897892d6f69'
+AdoptASidewalk::Application.config.secret_token = '1331a71784128fb9c0bfb47d54e78d974d6d97848d974523bdfd616081ff4ac11d0cf61a55d2dd205f81d1aeb1d471a54765f8974e69e12708443b7935571b53'

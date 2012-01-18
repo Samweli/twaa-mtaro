@@ -1,4 +1,4 @@
-AdoptAThing::Application.routes.draw do
+AdoptASidewalk::Application.routes.draw do
   resources :authentications
 
   devise_for :users, :controllers => {

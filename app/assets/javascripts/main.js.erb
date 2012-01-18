@@ -208,13 +208,10 @@ $(function() {
             'email': uemail.val(),
             'first_name': ufname.val(),
             'last_name': ulname.val(),
-            //'organization': $('#user_organization').val(),
             'password': upwd.val()
           }
         },
         beforeSend: function() {
-          //hideInfoWindow();
-          //showSpinner();
         },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
