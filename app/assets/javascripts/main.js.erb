@@ -204,6 +204,8 @@ $(function() {
           'commit': submitButton.val(),
           'utf8': '✓',
           'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+          'recaptcha_challenge_field':	$('#recaptcha_challenge_field').val(),
+          'recaptcha_response_field':	$('#recaptcha_response_field').val(),
           'user': {
             'email': uemail.val(),
             'first_name': ufname.val(),
