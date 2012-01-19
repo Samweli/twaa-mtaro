@@ -164,7 +164,7 @@ img.lock {
 
 #user_badge {
   padding: 5px;
-  margin: 10px 0 0px 0;
+  margin: 0px 0 0px 0;
   color: #666;
 }
 .round_box {
@@ -260,13 +260,24 @@ ul.features {
 ul.horizontal_items {
   padding: 0;
   margin: 5px 0 0 0;
+  clear: both;
 }
 ul.horizontal_items > li {
   list-style-type: none;
   display: inline-block;
-  margin: 0 5px 0 0;
+  margin: 0 5px 5px 0;
   padding: 0;
   vertical-align: middle;
+}
+ul.horizontal_items > li label {
+  display: inline-block;
+  width: 120px;
+}
+.horizontal_items input[type="text"],
+.horizontal_items input[type="password"],
+.horizontal_items textarea,
+.horizontal_items select {
+  width: 220px !important;
 }
 ul.social_items {
   padding: 0;
@@ -307,6 +318,7 @@ ul.social_items > li {
   list-style-type: none;
   margin: 0 5px 0 0;
 }
+
 .center {
   text-align: center;
 }
@@ -335,7 +347,18 @@ ul.social_items > li {
   border: 1px solid #b4cdde;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
-  margin: 0px;
+  margin: 10px 0 0 0;
+  padding: 10px;
+}
+#mini_profile {
+  background: -moz-linear-gradient(center top , #fff, #d0dce4) repeat scroll 0 0 transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fff), color-stop(1, #d0dce4) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#d0dce4');
+  background-image: -o-linear-gradient(top, #fff, #d0dce4);
+  border: 1px solid #dadada;
+  border-radius: 5px 5px 5px 5px;
+  box-shadow: 0 1px 0 #FFFFFF;
+  margin: 10px 0 0 0;
   padding: 10px;
 }
 #actions_box {
@@ -512,7 +535,7 @@ ul.actions_menu li:hover {
 }
 #my_sidewalks td {
   color: #678197;
-  background-color: #f4f8fa;
+  /*background-color: #f4f8fa;*/
   padding: 0;
   text-align: center;
 }

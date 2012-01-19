@@ -7,36 +7,27 @@
     %h2= t("titles.register_now")
 
     .signup
-      %dl
-        %dt
+      %ul.horizontal_items
+        %li
           = f.label :first_name, t("labels.first_name")
-          %em= t("captions.public")
-        %dd= f.text_field :first_name
-      %dl  
-        %dt
+          = f.text_field :first_name
+        %li
           = f.label :last_name, t("labels.last_name")
-          %em= t("captions.public")
-        %dd= f.text_field :last_name
-      %dl  
-        =# f.label "organization", t("labels.organization"), :id => "user_organization_label"
-        %em=# t("captions.public")
-        =# f.text_field "organization"
-      %dl
-        %dt= f.label :email, t("labels.email")
-        %dd= f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
-      %dl    
-        %dt= f.label "password", t("labels.password"), :id => "user_password_label"
-        %dd= f.password_field "password"
-      %dl
-        %dt= f.label "verify", t("labels.recaptcha"), :id => "user_verify_label"
-        %dd
-          #recaptcha_box
-            = recaptcha_tags :ajax => true
+          = f.text_field :last_name
+        %li
+          = f.label :email, t("labels.email")
+          = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
+        %li
+          = f.label "password", t("labels.password"), :id => "user_password_label"
+          = f.password_field "password"
+      
+      %h3{:style => 'margin-top: 15px;'}
+        = t("labels.recaptcha")
+      #recaptcha_box
+        = recaptcha_tags :ajax => true
             
-      %ul.horizontal_items.font_12
+      %ul.horizontal_items.font_12{:style => 'margin-top: 15px;'}
         %li= f.submit t("buttons.register")
-        %li= 'Or'
-        %li= link_to '', '/auth/facebook', :id => 'facebook_button', :class => 'register'
 
       .center
         %p.font_1.link_1

@@ -10,7 +10,6 @@ $(function() {
   };
   
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-  var widgetStatus = 0;
   var isWindowOpen = false;
   var sidewalks_kml;
   var autoIWObjectId;
@@ -87,6 +86,7 @@ $(function() {
           position: pos,
         });
         activeInfoWindow.open(map);
+        renderSocialButtons();
       }
     });
   }
@@ -128,7 +128,7 @@ $(function() {
     var errors = [];
     var uaddress = $('#address');
     
-    $(submitButton).attr("disabled", true);
+    submitButton.attr("disabled", true);
     if(uaddress.val() === '') {
       $(submitButton).attr("disabled", false);
       markError(uaddress, errors);
@@ -145,7 +145,7 @@ $(function() {
         },
         success: function(data) {
           console.log("returned address data: %o", data)
-          $(submitButton).attr("disabled", false);
+          submitButton.attr("disabled", false);
           if(data.errors) {
             markError(uaddress, errors);
             uaddress.focus();
@@ -310,8 +310,6 @@ $(function() {
           }
         },
         beforeSend: function() {
-          hideInfoWindow();
-          showSpinner();
         },
         error: function(jqXHR) {
           hideSpinner();
@@ -333,7 +331,7 @@ $(function() {
               }
             },
             success: function(data) {
-              activeInfoWindow.setContent(data);
+              setInfoWindowContent(data);
             }
           });
         }
@@ -351,13 +349,14 @@ $(function() {
                 'authenticity_token': AUTH_TOKEN,
                 '_method': 'delete' },
         error: function(jqXHR) {
-          console.error(jqXHR);
+          data = $.parseJSON(jqXHR.responseText);
+          console.error(data);
         },
         success: function(data) {
           //console.info("abandoned");
           refreshKML();
           updateSidebar();
-          activeInfoWindow.setContent(data);
+          setInfoWindowContent(data);
         }
       });
     }
@@ -365,64 +364,61 @@ $(function() {
   });
   
   $('#adopt_link').live('click', function() {
-    var publish = window.confirm('Would you also like to publish that you have adopted sidewalk as your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalk_claims',
       data: { 'gid': activeObjectId,
-              'authenticity_token': AUTH_TOKEN,
-              'fb_publish': publish },
+              'authenticity_token': AUTH_TOKEN },
       error: function(jqXHR) {
-        console.error(jqXHR);
+        data = $.parseJSON(jqXHR.responseText);
+        console.error(data);
       },
       success: function(data) {
         //console.info("adopted");
         refreshKML();
         updateSidebar();
-        activeInfoWindow.setContent(data);
+        setInfoWindowContent(data);
       }
     });
     return false;
   });
   
   $('#get_help_link').live('click', function() {
-    var publish = window.confirm('Would you also like to inform that this sidewalk needs help on your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
-              'need_help': true,
-              'fb_publish': publish },
+              'need_help': true },
       error: function(jqXHR) {
-        console.error(jqXHR);
+        data = $.parseJSON(jqXHR.responseText);
+        console.error(data);
       },
       success: function(data) {
         refreshKML();
         updateSidebar();
-        activeInfoWindow.setContent(data);
+        setInfoWindowContent(data);
       }
     });
     return false;
   });
   
   $('#shoveled_link').live('click', function() {
-    var publish = window.confirm('Would you also like to publish that you have shoveled this sidewalk as your Facebook status?')
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
       data: { 'moid': $(this).attr('data-moid'),
               'authenticity_token': AUTH_TOKEN,
               '_method': 'put',
-              'shoveled': true,
-              'fb_publish': publish },
+              'shoveled': true },
       error: function(jqXHR) {
-        console.error(jqXHR);
+        data = $.parseJSON(jqXHR.responseText);
+        console.error(data);
       },
       success: function(data) {
         refreshKML();
         updateSidebar();
-        activeInfoWindow.setContent(data);
+        setInfoWindowContent(data);
       }
     });
     return false;
@@ -437,12 +433,13 @@ $(function() {
               '_method': 'put',
               'shoveled': false },
       error: function(jqXHR) {
-        console.error(jqXHR);
+        data = $.parseJSON(jqXHR.responseText);
+        console.error(data);
       },
       success: function(data) {
         refreshKML();
         updateSidebar();
-        activeInfoWindow.setContent(data);
+        setInfoWindowContent(data);
       }
     });
     return false;
@@ -453,7 +450,7 @@ $(function() {
       type: 'GET',
       url: '/users/sign_in',
       success: function(data) {
-        activeInfoWindow.setContent(data);
+        setInfoWindowContent(data);
       }
     });
     return false;
@@ -465,29 +462,12 @@ $(function() {
       url: '/users/sign_up',
       dataType: 'html',
       success: function(data) {
-        activeInfoWindow.setContent(data);
-        //$.globalEval($(data)[3].text);
-        eval($(data)[3].text);
-        FB.XFBML.parse();
+        setInfoWindowContent(data);
+        evalJS(data);
       }
     });
     return false;
   });
-  
-  //$('#facebook_button').live('click', function() {
-  //  $.ajax({
-  //    type: 'GET',
-  //    url: '/auth/facebook',
-  //    error: function(jqXHR) {
-  //      console.error($.parseJSON(jqXHR.responseText));
-  //    },
-  //    success: function(data) {
-  //      updateSidebar();
-  //      fetchSidewalkInfo(activeObjectId);
-  //    }
-  //  });
-  //  return false;
-  //});
   
   $('a.view_sidewalk').live('click', function() {
     autoIWObjectId = $(this).attr('data-gid');
@@ -498,13 +478,15 @@ $(function() {
   });
   
   $('#share_link').live('click', function() {
-    if (widgetStatus == 0) {
-      window.osw_widget.showDetails();
-      widgetStatus = 1;
-    } else {
-      window.osw_widget.minimize();
-      widgetStatus = 0;
-    }
+    window.osw_widget.isMinimized(function(isMin) {
+        if (isMin) {
+          window.osw_widget.showDetails();
+        } else {
+          window.osw_widget.minimize();
+        }
+      }
+    );
+
     return false;
   });
 
@@ -529,6 +511,33 @@ $(function() {
   function unmarkError(i) {
     $(i).removeClass('error').prevAll('label:first').removeClass('error');
   }
+
+
+  function renderTwitterButton() {
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  }
+
+  function renderGPlusButton() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  }
+
+  function evalJS(data) {
+    $(data).filter('script').each(function(){
+        $.globalEval(this.text || this.textContent || this.innerHTML || '');
+    });
+  }
+
+  function renderSocialButtons() {
+    renderGPlusButton();
+    renderTwitterButton();        
+    FB.XFBML.parse();
+  }
   
+  function setInfoWindowContent(data) {
+    activeInfoWindow.setContent(data);
+    renderSocialButtons();
+  }
   
 });

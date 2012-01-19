@@ -9,6 +9,11 @@
       %li.unclear= 'Not adopted'
       %li.unclear.link_1= link_to 'Refresh', '#', :id => 'refresh_link'
 
+  %ul.social_items.center.clearfix{:style => 'margin-left: 80px'}
+    = render :partial => 'main/gplus_button', :locals => {:js_on => false}
+    = render :partial => 'main/facebook_button'
+    = render :partial => 'main/twitter_button', :locals => {:js_on => false}
+  
   %h2.address
     = @sidewalk.address
   
