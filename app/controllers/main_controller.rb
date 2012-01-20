@@ -21,7 +21,7 @@ class MainController < ApplicationController
   
   def get_my_sidewalks
     if user_signed_in?
-      @my_sidewalks = current_user.sidewalk_claims.includes(:sidewalk).page(params[:page]).per(2)
+      @my_sidewalks = current_user.sidewalk_claims.includes(:sidewalk).page(params[:page]).per(10)
     end
   end
 

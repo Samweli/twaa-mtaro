@@ -46,23 +46,30 @@ $(function() {
     }
   }).render();  
   
-  function refreshKML() {
+  function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
-    console.log("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
+    console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
     var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    console.info(url);
 
-    if (sidewalks_kml != undefined) {
+    if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
-    }
+
     sidewalks_kml = new google.maps.KmlLayer(url,
                                              {suppressInfoWindows: true,
                                               suppressMapPan: false,
-                                              preserveViewport: true,
-                                              map: map});
+                                              preserveViewport: true});
     map.setZoom(19);
-
+    sidewalks_kml.setMap(map);
+    console.info(sidewalks_kml);
+    
+    google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
+      console.info(sidewalks_kml.getMetadata());
+      if (auto_fetch_info)
+        fetchSidewalkInfo();
+    });
+    
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
-      isWindowOpen = true;
       activeObjectId = e.featureData.description;
       //console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(activeObjectId, e.latLng);
@@ -70,6 +77,8 @@ $(function() {
   }
 
   function fetchSidewalkInfo(gid, pos) {
+    if (gid == undefined)
+      gid = activeObjectId;
     if (pos == undefined)
       pos = map.getCenter();
     //console.info(e.latLng);
@@ -89,6 +98,7 @@ $(function() {
         activeInfoWindow.open(map);
         setInfoWindowContent(data);
         renderSocialButtons();
+        isWindowOpen = true;
       }
     });
   }
@@ -130,36 +140,32 @@ $(function() {
     var errors = [];
     var uaddress = $('#address');
     
-    submitButton.attr("disabled", true);
+    submitButton.attr('disabled', 'disabled');
     if(uaddress.val() === '') {
-      $(submitButton).attr("disabled", false);
+      submitButton.removeAttr('disabled');
       markError(uaddress, errors);
       uaddress.focus();
     } else {
       $.ajax({
         type: 'GET',
-        url: '/address.json',
+        url: '/sidewalks/find_closest.json',
         data: {
           'commit': submitButton.val(),
           'utf8': '✓',
           'city_state': $('#city_state').val(),
           'address': uaddress.val()
         },
+        error: function(jqXHR) {
+          data = $.parseJSON(jqXHR.responseText);
+          markError(uaddress, errors);
+          uaddress.focus();
+        },
         success: function(data) {
-          console.log("returned address data: %o", data)
-          submitButton.attr("disabled", false);
-          if(data.errors) {
-            markError(uaddress, errors);
-            uaddress.focus();
-          } else {
-            map.setCenter(new google.maps.LatLng(data[0], data[1]));
-            refreshKML();
-            if (autoIWObjectId) {
-              fetchSidewalkInfo(autoIWObjectId);
-              isWindowOpen = true;
-              autoIWObjectId = null;
-            }
-          }
+          console.info("Returned location: %o of [%s]", data, uaddress.val());
+          submitButton.removeAttr('disabled');
+          activeObjectId = data.gid;
+          map.setCenter(new google.maps.LatLng(data.lat, data.lng));
+          refreshKML(true);
         }
       });
     }
@@ -174,7 +180,7 @@ $(function() {
     var upwd = $('#user_password');
     var errors = [];
     
-    $(submitButton).attr("disabled", true);
+    submitButton.attr('disabled', 'disabled');
     if(ufname.val() === '') {
       markError(ufname, errors);
     } else {
@@ -196,7 +202,7 @@ $(function() {
       unmarkError(upwd);
     }
     if(errors.length > 0) {
-      $(submitButton).attr("disabled", false);
+      submitButton.removeAttr('disabled');
       errors[0].focus();
     } else {
       $.ajax({
@@ -221,7 +227,7 @@ $(function() {
           data = $.parseJSON(jqXHR.responseText);
           hideSpinner();
           showInfoWindow();
-          $(submitButton).attr("disabled", false);
+          submitButton.removeAttr('disabled');
           if (data.html) {
             setInfoWindowContent(data.html);
             evalJS(data.html);
@@ -229,7 +235,7 @@ $(function() {
         },
         success: function(data) {
           updateSidebar();
-          fetchSidewalkInfo(activeObjectId);
+          fetchSidewalkInfo();
         }
       });
     }
@@ -242,6 +248,7 @@ $(function() {
     var upwd = $('#user_password');
     var errors = [];
 
+    submitButton.attr('disabled', 'disabled');
     if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
       markError(uemail, errors);
     } else {
@@ -253,7 +260,7 @@ $(function() {
       unmarkError(upwd);
     }
     if(errors.length > 0) {
-      $(submitButton).attr("disabled", false);
+      submitButton.removeAttr('disabled');
       errors[0].focus();
     } else {
       $.ajax({
@@ -273,13 +280,13 @@ $(function() {
         },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
-          $(submitButton).attr("disabled", false);
+          submitButton.removeAttr('disabled');
           $('#error_msg').html('<h2>'+data.errors.password+'</h2>');
           uemail.focus();
         },
         success: function(data) {
           updateSidebar();
-          fetchSidewalkInfo(activeObjectId);
+          fetchSidewalkInfo();
         }
       });
     }
@@ -292,6 +299,7 @@ $(function() {
     var uemail = $('#user_email');
     var errors = [];
 
+    submitButton.attr('disabled', 'disabled');
     if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
       markError(uemail, errors);
     } else {
@@ -299,7 +307,7 @@ $(function() {
     }
 
     if(errors.length > 0) {
-      $(submitButton).attr("disabled", false);
+      submitButton.removeAttr('disabled');
       errors[0].focus();
     } else {
       $.ajax({
@@ -318,7 +326,7 @@ $(function() {
         error: function(jqXHR) {
           hideSpinner();
           showInfoWindow();
-          $(submitButton).attr("disabled", false);
+          submitButton.removeAttr('disabled');
           markError(uemail, errors);
           uemail.focus();
         },
@@ -375,7 +383,7 @@ $(function() {
               'authenticity_token': AUTH_TOKEN },
       error: function(jqXHR) {
         data = $.parseJSON(jqXHR.responseText);
-        console.error(data);
+        alert(data.errors);
       },
       success: function(data) {
         //console.info("adopted");
@@ -474,7 +482,6 @@ $(function() {
   });
   
   $('a.view_sidewalk').live('click', function() {
-    autoIWObjectId = $(this).attr('data-gid');
     activeObjectId = $(this).attr('data-gid');
     $('#address').val($(this).text());
     $('#address_button').trigger('click');

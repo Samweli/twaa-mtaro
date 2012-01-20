@@ -13,7 +13,9 @@ AdoptASidewalk::Application.routes.draw do
 
   match '/auth/:provider/callback' => 'authentications#create'
   
-  resources :sidewalks
+  resources :sidewalks do
+    get 'find_closest', :on => :collection
+  end
   resources :sidewalk_claims
   root :to => 'main#index'
 end
