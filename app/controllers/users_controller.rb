@@ -6,7 +6,7 @@ class UsersController < Devise::RegistrationsController
   end
 
   def edit
-    render :edit, :layout => "info_window"
+    render :edit
   end
 
   def update
@@ -31,7 +31,7 @@ class UsersController < Devise::RegistrationsController
         errors = resource.errors
       end
     else
-      errors = "reCaptcha code is invalid"
+      errors = "Invalid verification code."
     end
 
     #set_flash_message :notice, :inactive_signed_up, :reason => errors if is_navigational_format?

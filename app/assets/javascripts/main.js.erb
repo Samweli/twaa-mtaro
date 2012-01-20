@@ -15,7 +15,8 @@ $(function() {
   var autoIWObjectId;
   var activeObjectId;
   var activeInfoWindow = new google.maps.InfoWindow({
-    maxWidth: 950
+    maxWidth: 950,
+    content: '<div id="MapInfoWindow"></div>'
   });
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
@@ -82,10 +83,11 @@ $(function() {
       },
       success: function(data) {
         activeInfoWindow.setOptions({
-          content: data,
+          //content: data,
           position: pos,
         });
         activeInfoWindow.open(map);
+        setInfoWindowContent(data);
         renderSocialButtons();
       }
     });
@@ -94,7 +96,7 @@ $(function() {
   function updateSidebar() {
     $.ajax({
       type: 'GET',
-      url: '/',
+      url: '/sidebar',
       dataType: 'json',
       error: function(jqXHR) {
         //console.error(jqXHR);
@@ -221,8 +223,8 @@ $(function() {
           showInfoWindow();
           $(submitButton).attr("disabled", false);
           if (data.html) {
-            activeInfoWindow.setContent(data.html);
-            $.globalEval($(data.html)[3].text);
+            setInfoWindowContent(data.html);
+            evalJS(data.html);
           }
         },
         success: function(data) {
@@ -537,8 +539,12 @@ $(function() {
     FB.XFBML.parse();
   }
   
-  function setInfoWindowContent(data) {
-    activeInfoWindow.setContent(data);
+  function setInfoWindowContent(data, no_api) {
+    if (no_api)
+      $('#MapInfoWindow').html(data);
+    else {
+      activeInfoWindow.setContent(data);
+    }
     renderSocialButtons();
   }
   

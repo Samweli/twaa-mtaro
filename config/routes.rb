@@ -9,6 +9,7 @@ AdoptASidewalk::Application.routes.draw do
   get 'address' => 'addresses#show', :as => 'address'
   get 'address_report' => 'addresses#report', :as => 'address_report'
   get 'tos' => 'main#tos', :as => 'tos'
+  get 'sidebar' => 'main#sidebar', :as => 'sidebar'
 
   match '/auth/:provider/callback' => 'authentications#create'
   
