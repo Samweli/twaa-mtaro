@@ -38,7 +38,7 @@ h3 {
 }
 
 #sidebar {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 100%;
@@ -351,10 +351,10 @@ ul.social_items > li {
   padding: 10px;
 }
 #mini_profile {
-  background: -moz-linear-gradient(center top , #fff, #d0dce4) repeat scroll 0 0 transparent;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fff), color-stop(1, #d0dce4) );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#d0dce4');
-  background-image: -o-linear-gradient(top, #fff, #d0dce4);
+  background: -moz-linear-gradient(center top , #fff, #e0f2ff) repeat scroll 0 0 transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fff), color-stop(1, #e0f2ff) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#e0f2ff');
+  background-image: -o-linear-gradient(top, #fff, #e0f2ff);
   border: 1px solid #dadada;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -572,6 +572,6 @@ a.delete_button {
 }
 #recaptcha_box {
   display: block;
-  width: 400px;
+  width: 350px;
   height: 130px;
 }

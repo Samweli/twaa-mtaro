@@ -9,11 +9,13 @@ class SidewalkClaimsController < ApplicationController
       render :json => {:errors => 'Sidewalk not found'}, :status => 500 and return
     end
     
-    if (current_user.claims_count >= current_user.max_claims || 100)
+    if (current_user.claims_count && current_user.claims_count >= (current_user.max_claims || 100))
       err_msg = <<-MSG
         You have adopted a lot of sidewalks!
         If you would like to adopt more sidewalks,
-        please send your request to ChicagoShovels@cityofchicago.org.      
+        please send your request to
+        
+        ChicagoShovels@cityofchicago.org.      
       MSG
       
       render :json => {:errors => err_msg}, :status => 500 and return

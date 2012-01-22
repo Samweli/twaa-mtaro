@@ -27,6 +27,7 @@ $(function() {
     if(isWindowOpen == true) {
       return;
     }
+    console.info('dragged')
     refreshKML();
   });
   
@@ -57,16 +58,21 @@ $(function() {
 
     sidewalks_kml = new google.maps.KmlLayer(url,
                                              {suppressInfoWindows: true,
-                                              suppressMapPan: false,
-                                              preserveViewport: true});
-    map.setZoom(19);
-    sidewalks_kml.setMap(map);
+                                              suppressMapPan: true,
+                                              preserveViewport: true,
+                                              map: map});
     console.info(sidewalks_kml);
     
     google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
-      console.info(sidewalks_kml.getMetadata());
+      console.info('defaultviewport_changed');
       if (auto_fetch_info)
         fetchSidewalkInfo();
+    });
+    
+    google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
+      console.info(sidewalks_kml.getMetadata());
+      map.setZoom(19);
+      //map.fitBounds(sidewalks_kml.getDefaultViewport());      
     });
     
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
@@ -92,13 +98,12 @@ $(function() {
       },
       success: function(data) {
         activeInfoWindow.setOptions({
-          //content: data,
+          content: data,
           position: pos,
         });
         activeInfoWindow.open(map);
-        setInfoWindowContent(data);
-        renderSocialButtons();
         isWindowOpen = true;
+        //renderSocialButtons();
       }
     });
   }
@@ -294,7 +299,7 @@ $(function() {
   });
     
     
-  $('#user_forgot_password_link').live('submit', function() {
+  $('#user_forgot_password_link').live('click', function() {
     var submitButton = $("input[type='submit']", this);
     var uemail = $('#user_email');
     var errors = [];
@@ -324,8 +329,8 @@ $(function() {
         beforeSend: function() {
         },
         error: function(jqXHR) {
-          hideSpinner();
-          showInfoWindow();
+          //hideSpinner();
+          //showInfoWindow();
           submitButton.removeAttr('disabled');
           markError(uemail, errors);
           uemail.focus();
