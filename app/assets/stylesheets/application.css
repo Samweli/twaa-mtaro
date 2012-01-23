@@ -129,7 +129,9 @@ label.error {
 }
 
 input.error {
-  background-color: #fe7575;
+  background-color: #fe7575 !important;
+  border: 1px solid #000 !important;
+  color: #fff !important;
 }
 
 .upcase {

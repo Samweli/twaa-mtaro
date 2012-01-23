@@ -235,6 +235,7 @@ $(function() {
           submitButton.removeAttr('disabled');
           if (data.html) {
             setInfoWindowContent(data.html);
+            activeInfoWindow.setContent($('#IWCONTENT')[0]);
             evalJS(data.html);
           }
         },
@@ -247,11 +248,12 @@ $(function() {
     return false;
   });
     
-  $('.sign_in_form').on('submit', function(e) {
-    var submitButton = $("input[type='submit']", this);
-    var uemail = $('.user_email', this);
-    var upwd = $('.user_password', this);
-    var err_msg = $('.error_msg', this);
+  $('body').on('submit', '.sign_in_form', function(e) {
+    i = $(e.target);
+    var submitButton = $("input[type='submit']", i);
+    var uemail = $('.user_email', i);
+    var upwd = $('.user_password', i);
+    var err_msg = $('.error_msg', i);
     var errors = [];
 
     e.preventDefault();
@@ -276,11 +278,11 @@ $(function() {
         data: {
           'commit': submitButton.val(),
           'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+          'authenticity_token': $('input[name="authenticity_token"]', i).val(),
           'user': {
             'email': uemail.val(),
             'password': upwd.val(),
-            'remember_me': $('.user_remember_me', this).val()
+            'remember_me': $('.user_remember_me', i).val()
           }
         },
         beforeSend: function() {
@@ -289,6 +291,7 @@ $(function() {
           data = $.parseJSON(jqXHR.responseText);
           submitButton.removeAttr('disabled');
           err_msg.html('<h2>'+data.errors.password+'</h2>');
+          activeInfoWindow.setContent($('#IWCONTENT')[0]);
           uemail.focus();
         },
         success: function(data) {
@@ -300,7 +303,6 @@ $(function() {
     }
     return false;
   });
-    
     
   $('#user_forgot_password_link').live('click', function() {
     var submitButton = $("input[type='submit']", this);
@@ -524,11 +526,11 @@ $(function() {
   
   function markError(i, e) {
     e.push(i);
-    $(i).addClass('error', 500).prevAll('label:first').addClass('error', 500);
+    $(i).addClass('error');
   }
   
   function unmarkError(i) {
-    $(i).removeClass('error').prevAll('label:first').removeClass('error');
+    $(i).removeClass('error');
   }
 
 
