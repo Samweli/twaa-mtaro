@@ -56,7 +56,7 @@ form {
   text-align: center;
   padding: 10px;
   background: #c33;
-  color: #fff;
+  color: #ffffff;
 }
 
 #sidebar #logos {
@@ -131,7 +131,7 @@ label.error {
 input.error {
   background-color: #fe7575 !important;
   border: 1px solid #000 !important;
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .upcase {
@@ -370,10 +370,10 @@ ul.social_items > li {
   padding: 10px;
 }
 #mini_profile {
-  background: -moz-linear-gradient(center top , #fff, #e0f2ff) repeat scroll 0 0 transparent;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fff), color-stop(1, #e0f2ff) );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#e0f2ff');
-  background-image: -o-linear-gradient(top, #fff, #e0f2ff);
+  background: -moz-linear-gradient(center top , #ffffff, #e0f2ff) repeat scroll 0 0 transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #e0f2ff) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e0f2ff');
+  background-image: -o-linear-gradient(top, #ffffff, #e0f2ff);
   border: 1px solid #dadada;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -381,10 +381,10 @@ ul.social_items > li {
   padding: 5px;
 }
 #sidebar_login {
-  background: -moz-linear-gradient(center top , #fff, #ededed) repeat scroll 0 0 transparent;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fff), color-stop(1, #ededed) );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ededed');
-  background-image: -o-linear-gradient(top, #fff, #ededed);
+  background: -moz-linear-gradient(center top , #ffffff, #ededed) repeat scroll 0 0 transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ededed) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+  background-image: -o-linear-gradient(top, #ffffff, #ededed);
   border: 1px solid #dadada;
   border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -452,7 +452,7 @@ ul.actions_menu li:hover {
 .actions_menu .btn_image {
   background-position: center center;
   background-repeat: no-repeat;
-  border-top: 1px solid #fff;
+  border-top: 1px solid #ffffff;
   border-bottom: 1px solid #afc9f1;
   height: 70px;
 }

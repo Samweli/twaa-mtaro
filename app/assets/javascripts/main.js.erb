@@ -26,7 +26,7 @@ $(function() {
     if(isWindowOpen == true) {
       return;
     }
-    console.info('dragged')
+    console.info('dragged');
     refreshKML();
   });
   
@@ -240,6 +240,7 @@ $(function() {
           }
         },
         success: function(data) {
+          $('#sidebar_login').remove();
           updateSidebar();
           fetchSidewalkInfo();
         }
