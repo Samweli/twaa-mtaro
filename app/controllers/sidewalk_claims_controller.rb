@@ -10,13 +10,7 @@ class SidewalkClaimsController < ApplicationController
     end
     
     if (current_user.claims_count && current_user.claims_count >= (current_user.max_claims || 100))
-      err_msg = <<-MSG
-        You have adopted a lot of sidewalks!
-        If you would like to adopt more sidewalks,
-        please send your request to
-        
-        ChicagoShovels@cityofchicago.org
-      MSG
+      err_msg = 'You have adopted a lot of sidewalks! If you would like to adopt more sidewalks, please send your request to ChicagoShovels@cityofchicago.org'
       
       #K: sent an email to chicagoshovels@cityofchicago.org to report this 100 max attempt
       
