@@ -306,8 +306,9 @@ $(function() {
   });
     
   $('#user_forgot_password_link').live('click', function() {
-    var submitButton = $("input[type='submit']", this);
-    var uemail = $('#user_email');
+    var f = $(this).closest('form.sign_in_form');
+    var submitButton = $("input[type='submit']", f);
+    var uemail = $('.user_email', f);
     var errors = [];
 
     submitButton.attr('disabled', 'disabled');
@@ -327,7 +328,7 @@ $(function() {
         data: {
           'commit': submitButton.val(),
           'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+          'authenticity_token': $('input[name="authenticity_token"]', f).val(),
           'user': {
             'email': uemail.val()
           }
@@ -355,6 +356,7 @@ $(function() {
             },
             success: function(data) {
               setInfoWindowContent(data);
+              activeInfoWindow.setPosition(map.getCenter());
             }
           });
         }
@@ -561,6 +563,7 @@ $(function() {
     activeInfoWindow.close();
     activeInfoWindow.setContent(data);
     activeInfoWindow.open(map);
+    isWindowOpen = true;
   }
   
 });

@@ -7,9 +7,10 @@
     %li  
       = f.label :password, t("labels.password")
       = f.password_field :password, :class => 'user_password', :id => 'user_password_sidebar'
-    %li.remember.font_12.pen_lightgray
-      = f.check_box :remember, :checked => true, :class => 'user_remember_me', :id => 'user_remember_sidebar'
-      = t("labels.remember_me_short")
-    %li.button.small_gray{:style => 'margin-left: 77px'}
+    %li.remember.font_12.pen_lightgray.link_1
+      =# f.check_box :remember, :checked => true, :class => 'user_remember_me', :id => 'user_remember_sidebar'
+      =# t("labels.remember_me_short")
+      = link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
+    %li.button.small_gray{:style => 'margin-left: 60px'}
       = f.submit t("buttons.sign_in")
 

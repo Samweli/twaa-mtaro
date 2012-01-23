@@ -2,8 +2,8 @@
   #loader{:style => "display: none;"}
     = image_tag "ajax-loader.gif"
   #info_window
-    - unless defined?(devise_error_messages!)
-      - flash.each do |key, message|
-        %div{:id => key}
-          = message
+    =# devise_error_messages!.inspect
+    - flash.each do |key, message|
+      %div{:id => key}
+        = message
     = yield
