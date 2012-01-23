@@ -15,8 +15,7 @@ $(function() {
   var autoIWObjectId;
   var activeObjectId;
   var activeInfoWindow = new google.maps.InfoWindow({
-    maxWidth: 950,
-    content: '<div id="MapInfoWindow"></div>'
+    maxWidth: 950
   });
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
@@ -58,7 +57,7 @@ $(function() {
 
     sidewalks_kml = new google.maps.KmlLayer(url,
                                              {suppressInfoWindows: true,
-                                              suppressMapPan: true,
+                                              suppressMapPan: false,
                                               preserveViewport: true,
                                               map: map});
     console.info(sidewalks_kml);
@@ -67,11 +66,11 @@ $(function() {
       console.info('defaultviewport_changed');
       if (auto_fetch_info)
         fetchSidewalkInfo();
+      map.setZoom(19);
     });
     
     google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
       console.info(sidewalks_kml.getMetadata());
-      map.setZoom(19);
       //map.fitBounds(sidewalks_kml.getDefaultViewport());      
     });
     
@@ -234,8 +233,9 @@ $(function() {
           showInfoWindow();
           submitButton.removeAttr('disabled');
           if (data.html) {
+            //setInfoWindowContent(data.html);
+            //activeInfoWindow.setContent($('#IWCONTENT')[0]);
             setInfoWindowContent(data.html);
-            activeInfoWindow.setContent($('#IWCONTENT')[0]);
             evalJS(data.html);
           }
         },
@@ -556,13 +556,10 @@ $(function() {
     FB.XFBML.parse();
   }
   
-  function setInfoWindowContent(data, no_api) {
-    if (no_api)
-      $('#MapInfoWindow').html(data);
-    else {
-      activeInfoWindow.setContent(data);
-    }
-    renderSocialButtons();
+  function setInfoWindowContent(data) {
+    activeInfoWindow.close();
+    activeInfoWindow.setContent(data);
+    activeInfoWindow.open(map);
   }
   
 });

@@ -18,6 +18,8 @@ class SidewalkClaimsController < ApplicationController
         ChicagoShovels@cityofchicago.org.      
       MSG
       
+      #K: sent an email to chicagoshovels@cityofchicago.org to report this 100 max attempt
+      
       render :json => {:errors => err_msg}, :status => 500 and return
     end
     
