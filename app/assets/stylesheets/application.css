@@ -32,7 +32,7 @@ h3 {
 
 #map_canvas {
   height: 100%;
-  width: 76%;
+  width: auto;
   position: relative;
   margin-left: 325px;
 }
@@ -50,6 +50,10 @@ h3 {
 
 form {
   margin: auto;
+}
+
+img {
+  border: none;
 }
 
 #sidebar #tagline {
