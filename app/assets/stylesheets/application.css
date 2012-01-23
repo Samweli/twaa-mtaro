@@ -174,10 +174,14 @@ img.lock {
   margin: 0px 0 0px 0;
   color: #666;
 }
-.round_box {
+.radius_5 {
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+}
+.gray_box {
   background-color: #f9f9f9;
   border: 1px solid #dedede;
-  border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 5px;
   margin: 5px 0 0px 0;
@@ -317,7 +321,6 @@ ul.social_items > li {
   padding: 10px;
   background-color: #eee;
   border: 1px solid #aaa;
-  border-radius: 5px 5px 5px 5px;
 }
 #current_status {
   margin-top: 10px;
@@ -364,7 +367,6 @@ ul.social_items > li {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5feff', endColorstr='#b4daf5');
   background-image: -o-linear-gradient(top, #f5feff, #b4daf5);
   border: 1px solid #b4cdde;
-  border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
   padding: 10px;
@@ -375,7 +377,6 @@ ul.social_items > li {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e0f2ff');
   background-image: -o-linear-gradient(top, #ffffff, #e0f2ff);
   border: 1px solid #dadada;
-  border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
   padding: 5px;
@@ -386,7 +387,6 @@ ul.social_items > li {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
   background-image: -o-linear-gradient(top, #ffffff, #ededed);
   border: 1px solid #dadada;
-  border-radius: 5px 5px 5px 5px;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
   padding: 5px;
@@ -412,6 +412,8 @@ ul.actions_menu li {
   background-image: -o-linear-gradient(top, #f5feff, #b4daf5);
   border: 1px solid #b4cdde;
   border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
   -moz-box-shadow: 0 1px 0 #FFFFFF;
   -webkit-box-shadow: 0 1px 0 #FFFFFF;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -492,6 +494,8 @@ ul.actions_menu li:hover {
 .form select {
   border: 1px solid #ccc;
   border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
   color: #666;
   font: 13px/18px Helvetica Neue,Helvetica,Arial,sans-serif !important;
   margin: 0;

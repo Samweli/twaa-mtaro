@@ -15,7 +15,7 @@ class SidewalkClaimsController < ApplicationController
         If you would like to adopt more sidewalks,
         please send your request to
         
-        ChicagoShovels@cityofchicago.org.      
+        ChicagoShovels@cityofchicago.org
       MSG
       
       #K: sent an email to chicagoshovels@cityofchicago.org to report this 100 max attempt

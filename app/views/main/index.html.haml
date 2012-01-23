@@ -5,10 +5,10 @@
   = render :partial => 'address_form'
 
   - unless user_signed_in?
-    #sidebar_login
+    #sidebar_login.radius_5
       = render :partial => 'sessions/sign_in'
   
-  #mini_profile
+  #mini_profile.radius_5
     = render :partial => 'user_badge'
     = render :partial => 'sidewalk_list'
 
