@@ -4,6 +4,10 @@
   
   = render :partial => 'address_form'
 
+  - unless user_signed_in?
+    #sidebar_login
+      = render :partial => 'sessions/sign_in'
+  
   #mini_profile
     = render :partial => 'user_badge'
     = render :partial => 'sidewalk_list'

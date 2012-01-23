@@ -247,12 +247,14 @@ $(function() {
     return false;
   });
     
-  $('#sign_in_form').live('submit', function() {
+  $('.sign_in_form').on('submit', function(e) {
     var submitButton = $("input[type='submit']", this);
-    var uemail = $('#user_email');
-    var upwd = $('#user_password');
+    var uemail = $('.user_email', this);
+    var upwd = $('.user_password', this);
+    var err_msg = $('.error_msg', this);
     var errors = [];
 
+    e.preventDefault();
     submitButton.attr('disabled', 'disabled');
     if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
       markError(uemail, errors);
@@ -278,7 +280,7 @@ $(function() {
           'user': {
             'email': uemail.val(),
             'password': upwd.val(),
-            'remember_me': $('#user_remember_me').val()
+            'remember_me': $('.user_remember_me', this).val()
           }
         },
         beforeSend: function() {
@@ -286,10 +288,11 @@ $(function() {
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
           submitButton.removeAttr('disabled');
-          $('#error_msg').html('<h2>'+data.errors.password+'</h2>');
+          err_msg.html('<h2>'+data.errors.password+'</h2>');
           uemail.focus();
         },
         success: function(data) {
+          $('#sidebar_login').remove();
           updateSidebar();
           fetchSidewalkInfo();
         }

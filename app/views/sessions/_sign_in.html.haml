@@ -1,14 +1,15 @@
-= form_for :user, :url => user_session_path, :html => {:id => "sign_in_form_main"} do |f|
-  %ul.signin
+= form_for :user, :html => {:class => 'sign_in_form form'} do |f|
+  .error_msg
+  %ul.horizontal_items
     %li
-      = f.label :email_main, t("labels.email")
-      = f.text_field :email_main
+      = f.label :email, t("labels.email")
+      = f.text_field :email, :class => 'user_email', :id => 'user_email_sidebar'
     %li  
-      = f.label :password_main, t("labels.password")
-      = f.password_field :password_main
-    %li.remember
-      = f.check_box :remember_main, :checked => true
+      = f.label :password, t("labels.password")
+      = f.password_field :password, :class => 'user_password', :id => 'user_password_sidebar'
+    %li.remember.font_12.pen_lightgray
+      = f.check_box :remember, :checked => true, :class => 'user_remember_me', :id => 'user_remember_sidebar'
       = t("labels.remember_me_short")
-    %li.button
+    %li.button.small_gray{:style => 'margin-left: 77px'}
       = f.submit t("buttons.sign_in")
 

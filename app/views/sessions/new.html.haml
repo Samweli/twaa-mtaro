@@ -1,20 +1,19 @@
-#error_msg
-
 #sign_in_box
-  = form_for :user, :html => {:id => "sign_in_form", :class => 'form'} do |f|
+  = form_for :user, :html => {:class => 'sign_in_form form'} do |f|
+    .error_msg
     %h2= t("titles.sign_in")
   
     .signin
       %ul.horizontal_items
         %li
           = f.label :email, t("labels.email")
-          = f.text_field :email
+          = f.text_field :email, :class => 'user_email'
         %li  
           = f.label "password", t("labels.password")
-          = f.password_field "password"
+          = f.password_field "password", :class => 'user_email'
         %li{:style => 'margin-top: 15px;'}
-          = f.submit t("buttons.sign_in")
-          = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'font_1 font_12'
+          = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'user_remember_me font_1 font_12'
+          = f.submit t("buttons.sign_in"), :style => 'margin-left: 125px'
       
       %p.font_1.link_1.center= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
       
