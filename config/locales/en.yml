@@ -51,7 +51,7 @@ en:
     remember_me_short: "Remember me"
     sms_number: "Mobile phone number"
     user_existing: "Already have an account?"
-    user_new: "Don't have an account here or on Facebook?"
+    user_new: "Don't have an account here?"
     voice_number: "Home phone number"
     facebook_sign_in: "Get started using your Facebook account"
     recaptcha: "Please verify the code below"
