@@ -64,8 +64,8 @@ end
 ActionMailer::Base.smtp_settings = {
   :address        => "webappsmail.cityofchicago.org",
   :port           => "25",
-  :authentication => :plain,
-  :user_name      => ENV['MAILER_CS_USERNAME'] || '',
-  :password       => ENV['MAILER_CS_PASSWORD'] || '',
-  :domain         => ENV['MAILER_CS_DOMAIN'] || ''
+  #:authentication => :plain,
+  #:user_name      => ENV['MAILER_CS_USERNAME'] || '',
+  #:password       => ENV['MAILER_CS_PASSWORD'] || '',
+  #:domain         => ENV['MAILER_CS_DOMAIN'] || ''
 }

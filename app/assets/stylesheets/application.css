@@ -286,7 +286,7 @@ ul.horizontal_items > li {
 }
 ul.horizontal_items > li label {
   display: inline-block;
-  width: 120px;
+  width: 140px;
 }
 #sidebar ul.horizontal_items > li label {
   width: 85px;

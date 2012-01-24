@@ -1,12 +1,20 @@
 $(function() {
   var center = new google.maps.LatLng(41.88, -87.67);
-  var zoomLevel = 12;
   var mapOptions = {
     center: center,
     mapTypeControl: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     panControl: true,
-    zoom: zoomLevel
+    zoom: 12,
+    disableDoubleClickZoom: true,
+    keyboardShortcuts: false,
+    mapTypeControl: false,
+    panControl: false,
+    rotateControl: false,
+    scaleControl: false,
+    scrollwheel: false,
+    streetViewControl: true,
+    zoomControl: true
   };
   
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
@@ -182,6 +190,7 @@ $(function() {
     var ufname = $('#user_first_name');
     var ulname = $('#user_last_name');
     var upwd = $('#user_password');
+    var upwdc = $('#user_password_confirmation');
     var errors = [];
     
     submitButton.attr('disabled', 'disabled');
@@ -205,6 +214,11 @@ $(function() {
     } else {
       unmarkError(upwd);
     }
+    if(upwdc.val().length < 6 || upwdc.val().length > 20) {
+      markError(upwdc, errors);
+    } else {
+      unmarkError(upwdc);
+    }
     if(errors.length > 0) {
       submitButton.removeAttr('disabled');
       errors[0].focus();
@@ -222,7 +236,8 @@ $(function() {
             'email': uemail.val(),
             'first_name': ufname.val(),
             'last_name': ulname.val(),
-            'password': upwd.val()
+            'password': upwd.val(),
+            'password_confirmation': upwdc.val(),
           }
         },
         beforeSend: function() {
@@ -234,8 +249,8 @@ $(function() {
           submitButton.removeAttr('disabled');
           if (data.html) {
             //setInfoWindowContent(data.html);
-            //activeInfoWindow.setContent($('#IWCONTENT')[0]);
             setInfoWindowContent(data.html);
+            activeInfoWindow.setContent($('#IWCONTENT')[0]);
             evalJS(data.html);
           }
         },

@@ -18,8 +18,11 @@
           = f.label :email, t("labels.email")
           = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
         %li
-          = f.label "password", t("labels.password"), :id => "user_password_label"
-          = f.password_field "password"
+          = f.label :password_confirmation, t("labels.password")
+          = f.password_field :password
+        %li
+          = f.label :password_confirmation, t("labels.password_confirm")
+          = f.password_field :password_confirmation
       
       %h3{:style => 'margin-top: 15px;'}
         = t("labels.recaptcha")
