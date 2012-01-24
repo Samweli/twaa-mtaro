@@ -92,6 +92,10 @@ $(function() {
   function fetchSidewalkInfo(gid, pos) {
     if (gid == undefined)
       gid = activeObjectId;
+    if (gid == undefined) {
+      activeInfoWindow.close();
+      return false;
+    }
     if (pos == undefined)
       pos = map.getCenter();
     //if (!window.console) console.info(e.latLng);
