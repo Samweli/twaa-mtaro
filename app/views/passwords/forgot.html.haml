@@ -1,0 +1,11 @@
+#forgot_pw_box
+  = form_for :user, :html => {:class => 'forgot_pw_form form'} do |f|
+    .error_msg
+    %h2= t("titles.forgot_password")
+  
+    .forgot_pw
+      %ul.horizontal_items
+        %li
+          = f.label :email, t("labels.email")
+          = f.text_field :email, :class => 'user_email'
+      %div= f.submit t("buttons.send_request"), :style => 'margin-left: 145px', :class => 'button_forgot_password'

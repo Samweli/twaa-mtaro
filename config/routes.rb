@@ -5,11 +5,14 @@ AdoptASidewalk::Application.routes.draw do
       :passwords => 'passwords',
       :registrations => 'users',
       :sessions => 'sessions',
-  }
+  } do
+    get 'forgot_password' => 'passwords#forgot'
+  end
+  
   get 'address' => 'addresses#show', :as => 'address'
-  get 'address_report' => 'addresses#report', :as => 'address_report'
-  get 'tos' => 'main#tos', :as => 'tos'
-  get 'sidebar' => 'main#sidebar', :as => 'sidebar'
+  get 'address_report' => 'addresses#report'
+  get 'tos' => 'main#tos'
+  get 'sidebar' => 'main#sidebar'
 
   match '/auth/:provider/callback' => 'authentications#create'
   

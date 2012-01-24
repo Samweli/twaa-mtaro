@@ -34,7 +34,7 @@ h3 {
   height: 100%;
   width: auto;
   position: relative;
-  margin-left: 325px;
+  margin-left: 340px;
 }
 
 #sidebar {
@@ -42,7 +42,7 @@ h3 {
   left: 0;
   top: 0;
   height: 100%;
-  width: 300px;
+  width: 320px;
   overflow: hidden;
   padding: 10px;
   z-index: 20;
@@ -191,7 +191,7 @@ img.lock {
   margin: 5px 0 0px 0;
 }
 #info_box {
-  margin: 10px 0 0px 0;
+  margin: 0px 0 0px 0;
   color: #555;
   font-size: 12px;
 }
@@ -236,18 +236,7 @@ img.lock {
  line-height: 0;
  height: 0;
 }
- 
-.clearfix {
-	display: inline-block;
-}
- 
-html[xmlns] .clearfix {
-	display: block;
-}
- 
-* html .clearfix {
-	height: 1%;
-}
+div.forgot_pw,
 div.signin,
 div.signup {
   list-style-type: none;
@@ -271,6 +260,7 @@ div.signup {
 ul.features {
   padding: 0 5px 0 20px;
   text-align: left;
+  margin: 0;
 }
 ul.horizontal_items {
   padding: 0;
@@ -283,10 +273,14 @@ ul.horizontal_items > li {
   margin: 0 5px 5px 0;
   padding: 0;
   vertical-align: middle;
+  zoom: 1;
+  *display: inline;
 }
 ul.horizontal_items > li label {
   display: inline-block;
   width: 140px;
+  zoom: 1;
+  *display: inline;
 }
 #sidebar ul.horizontal_items > li label {
   width: 85px;
@@ -297,7 +291,7 @@ ul.horizontal_items > li label {
 #sidebar .horizontal_items input[type="password"],
 #sidebar .horizontal_items textarea,
 #sidebar .horizontal_items select {
-  width: 180px !important;
+  width: 170px !important;
   padding: 2px;
 }
 .horizontal_items input[type="text"],
@@ -383,7 +377,7 @@ ul.social_items > li {
   border: 1px solid #dadada;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
-  padding: 5px;
+  padding: 7px 3px;
 }
 #sidebar_login {
   background: -moz-linear-gradient(center top , #ffffff, #ededed) repeat scroll 0 0 transparent;
@@ -393,11 +387,12 @@ ul.social_items > li {
   border: 1px solid #dadada;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
-  padding: 5px;
+  padding: 5px 10px;
 }
 #actions_box {
   width: 410px;
 }
+#forgot_pw_box,
 #sign_in_box,
 #sign_up_box {
   width: 400px;
@@ -510,7 +505,7 @@ ul.actions_menu li:hover {
   width: 185px !important;
 }
 .form.narrow input[type="submit"] {
-	padding:3px 15px;
+	padding:3px 10px;
 }
 .form input[type="submit"] {
 	-moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
@@ -532,6 +527,8 @@ ul.actions_menu li:hover {
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #287ace;
+  zoom: 1;
+  *display: inline;
 }
 .form input[type="submit"]:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
@@ -563,6 +560,8 @@ ul.actions_menu li:hover {
 	padding:2px 10px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
+  zoom: 1;
+  *display: inline;
 }
 .small_gray input[type="submit"]:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
@@ -631,7 +630,7 @@ a.delete_button {
 	background:transparent url('FacebookRegisterButton.png') no-repeat scroll 0%;
 }
 #service_logos {
-  margin: 15px 0 0 0;
+  margin: 0px 0 0 0;
 }
 #tos {
   padding: 30px;
@@ -640,4 +639,15 @@ a.delete_button {
   display: block;
   width: 350px;
   height: 130px;
+}
+.clearfix {
+	display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+html[xmlns] .clearfix {
+	display: block;
+}
+* html .clearfix {
+	height: 1%;
 }

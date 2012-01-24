@@ -18,7 +18,7 @@
           = paginate @my_sidewalks, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
     #info_box.center
-      %p.font_16.font_bold
+      %p.font_16.font_bold{:style => 'margin: 0'}
         Welcome to Chicago Shovel's
         %br
           Adopt-a-Sidewalk!

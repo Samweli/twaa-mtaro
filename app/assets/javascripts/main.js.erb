@@ -320,8 +320,8 @@ $(function() {
     return false;
   });
     
-  $('#user_forgot_password_link').live('click', function() {
-    var f = $(this).closest('form.sign_in_form');
+  $('body').on('click', '.button_forgot_password', function() {
+    var f = $(this).closest('form.forgot_pw_form');
     var submitButton = $("input[type='submit']", f);
     var uemail = $('.user_email', f);
     var errors = [];
@@ -332,7 +332,6 @@ $(function() {
     } else {
       unmarkError(uemail);
     }
-
     if(errors.length > 0) {
       submitButton.removeAttr('disabled');
       errors[0].focus();
@@ -480,6 +479,18 @@ $(function() {
         refreshKML();
         updateSidebar();
         setInfoWindowContent(data);
+      }
+    });
+    return false;
+  });
+  
+  $('#user_forgot_password_link').live('click', function() {
+    $.ajax({
+      type: 'GET',
+      url: '/forgot_password',
+      success: function(data) {
+        setInfoWindowContent(data);
+        activeInfoWindow.setPosition(map.getCenter());
       }
     });
     return false;

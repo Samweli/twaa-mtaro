@@ -16,6 +16,7 @@ en:
     sign_out: "Sign out"
     sign_up: "Sign up"
     update: "Update"
+    send_request: "Send Request"
     go: "Go"
   captions:
     current_password: "(we need your current password to confirm your changes)"
@@ -85,6 +86,7 @@ en:
     thank_you: "Thank you for adopting this %{thing}!"
     register_now: "Register Now!"
     sign_in: "Sign In"
+    forgot_password: "Forgot Password"
     registered: "You have been registered!"
   sponsors:
     cfa: "Code for America"   # FIXME
