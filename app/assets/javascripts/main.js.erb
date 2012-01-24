@@ -370,7 +370,6 @@ $(function() {
             },
             success: function(data) {
               setInfoWindowContent(data);
-              activeInfoWindow.setPosition(map.getCenter());
             }
           });
         }
@@ -490,7 +489,6 @@ $(function() {
       url: '/forgot_password',
       success: function(data) {
         setInfoWindowContent(data);
-        activeInfoWindow.setPosition(map.getCenter());
       }
     });
     return false;
@@ -589,6 +587,9 @@ $(function() {
     activeInfoWindow.close();
     activeInfoWindow.setContent(data);
     activeInfoWindow.open(map);
+    if (!isWindowOpen)
+        activeInfoWindow.setPosition(map.getCenter());
+    
     isWindowOpen = true;
   }
   

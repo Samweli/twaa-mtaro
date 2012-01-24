@@ -2,11 +2,19 @@
   = form_for :address, :html => {:id => "address_form", :class => 'form narrow'} do |f|
     = hidden_field_tag :city_state, "Chicago, IL"
     =# hidden_field_tag :limit, params[:limit] || 40
-    = label_tag :address, t("labels.address"), :id => "address_label"
+    =# label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address]
     = submit_tag t("buttons.find"), :id => 'address_button'
   
-  #missing_address.font_12.link_1
-    = link_to "Don't see your sidewalk on the map?",
-        'http://webapps.cityofchicago.org/eforms/org/cityofchicago/adoptsidewalk/adopt.jsp',
-        :target => '_blank'
+  .font_12.link_1.center
+    #missing_address
+      = link_to "Don't see your sidewalk on the map?",
+          'http://webapps.cityofchicago.org/eforms/org/cityofchicago/adoptsidewalk/adopt.jsp',
+          :target => '_blank'
+
+    - unless user_signed_in?
+      #sidebar_login.font_14.radius_5
+        %ul.horizontal_items.item_separator.pen_lightgray
+          %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
+          |
+          %li= link_to t("links.register"), '#', :id => "sign_up_link"
