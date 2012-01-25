@@ -1,6 +1,7 @@
 class PasswordsController < Devise::PasswordsController
   
   def forgot
+    render :layout => 'info_window'
   end
   
   def create
