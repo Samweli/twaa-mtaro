@@ -15,11 +15,15 @@ class PasswordsController < Devise::PasswordsController
   def edit
     self.resource = resource_class.new
     resource.reset_password_token = params[:reset_password_token]
-    render("edit", :layout => "info_window")
+    render :edit#, :layout => 'info_window'
   end
 
   def update
     self.resource = resource_class.reset_password_by_token(params[resource_name])
-    redirect_to(:controller => "main", :action => "index")
+    if resource.errors.empty?
+      redirect_to :controller => "main", :action => "index"
+    else
+      render :edit
+    end
   end
 end
