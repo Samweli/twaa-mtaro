@@ -35,7 +35,7 @@ group :production do
 end
 
 group :development do
-  gem "nifty-generators"
+  gem 'nifty-generators'
 end
 
 group :test do

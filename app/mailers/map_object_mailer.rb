@@ -1,5 +1,5 @@
 class MapObjectMailer < ActionMailer::Base
-  default :from => "winter@cityofchicago.org"
+  default :from => "chicagoshovels@cityofchicago.org"
 
   def reminder(map_object)
     @map_object = map_object

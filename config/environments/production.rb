@@ -47,12 +47,13 @@ AdoptASidewalk::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = {:host => 'www.chicagoshovels.org'}
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
     :address        => "webappsmail.cityofchicago.org",
-    :port           => "25"
+    :port           => 25
     #:authentication => :plain,
     #:user_name      => ENV['MAILER_CS_USERNAME'] || '',
     #:password       => ENV['MAILER_CS_PASSWORD'] || '',
