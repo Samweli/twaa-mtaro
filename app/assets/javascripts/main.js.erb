@@ -17,6 +17,7 @@ $(function() {
     zoomControl: true
   };
   
+  var bDebug = false;
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var isWindowOpen = false;
   var sidewalks_kml;
@@ -34,7 +35,7 @@ $(function() {
     if(isWindowOpen == true) {
       return;
     }
-    if (!window.console) console.info('dragged');
+    if (bDebug) console.info('dragged');
     refreshKML();
   });
   
@@ -48,7 +49,7 @@ $(function() {
       widget.boundsChanged(map.getBounds().toUrlValue());
       //set the google maps listener
       google.maps.event.addListener(map, 'bounds_changed', function() {
-        //if (!window.console) console.debug('bounds_changed');
+        //if (bDebug) console.debug('bounds_changed');
         widget.boundsChanged(map.getBounds().toUrlValue());
       });
     }
@@ -56,9 +57,9 @@ $(function() {
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
-    if (!window.console) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
+    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
     var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
-    if (!window.console) console.info(url);
+    if (bDebug) console.info(url);
 
     if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
@@ -68,23 +69,23 @@ $(function() {
                                               suppressMapPan: false,
                                               preserveViewport: true,
                                               map: map});
-    if (!window.console) console.info(sidewalks_kml);
+    if (bDebug) console.info(sidewalks_kml);
     
     google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
-      if (!window.console) console.info('defaultviewport_changed');
+      if (bDebug) console.info('defaultviewport_changed');
       if (auto_fetch_info)
         fetchSidewalkInfo();
       map.setZoom(19);
     });
     
     google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
-      if (!window.console) console.info(sidewalks_kml.getMetadata());
+      if (bDebug) console.info(sidewalks_kml.getMetadata());
       //map.fitBounds(sidewalks_kml.getDefaultViewport());      
     });
     
     google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
       activeObjectId = e.featureData.description;
-      //if (!window.console) console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
+      //if (bDebug) console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
       fetchSidewalkInfo(activeObjectId, e.latLng);
     });
   }
@@ -98,7 +99,7 @@ $(function() {
     }
     if (pos == undefined)
       pos = map.getCenter();
-    //if (!window.console) console.info(e.latLng);
+    //if (bDebug) console.info(e.latLng);
     $.ajax({
       type: 'GET',
       url: '/sidewalk_claims/' + gid,
@@ -125,10 +126,10 @@ $(function() {
       url: '/sidebar',
       dataType: 'json',
       error: function(jqXHR) {
-        //if (!window.console) console.error(jqXHR);
+        //if (bDebug) console.error(jqXHR);
       },
       success: function(data) {
-        //if (!window.console) console.info(data);
+        //if (bDebug) console.info(data);
         $('#username').replaceWith(data['user_badge']);
         $('#sidewalk_list').replaceWith(data['sidewalk_list']);
       }
@@ -177,7 +178,7 @@ $(function() {
           uaddress.focus();
         },
         success: function(data) {
-          if (!window.console) console.info("Returned location: %o of [%s]", data, uaddress.val());
+          if (bDebug) console.info("Returned location: %o of [%s]", data, uaddress.val());
           submitButton.removeAttr('disabled');
           activeObjectId = data.gid;
           map.setCenter(new google.maps.LatLng(data.lat, data.lng));
@@ -392,10 +393,10 @@ $(function() {
                 '_method': 'delete' },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
-          if (!window.console) console.error(data);
+          if (bDebug) console.error(data);
         },
         success: function(data) {
-          //if (!window.console) console.info("abandoned");
+          //if (bDebug) console.info("abandoned");
           refreshKML();
           updateSidebar();
           setInfoWindowContent(data);
@@ -416,7 +417,7 @@ $(function() {
         alert(data.errors);
       },
       success: function(data) {
-        //if (!window.console) console.info("adopted");
+        //if (bDebug) console.info("adopted");
         refreshKML();
         updateSidebar();
         setInfoWindowContent(data);
@@ -434,7 +435,7 @@ $(function() {
               'need_help': true },
       error: function(jqXHR) {
         data = $.parseJSON(jqXHR.responseText);
-        if (!window.console) console.error(data);
+        if (bDebug) console.error(data);
       },
       success: function(data) {
         refreshKML();
@@ -455,7 +456,7 @@ $(function() {
               'shoveled': true },
       error: function(jqXHR) {
         data = $.parseJSON(jqXHR.responseText);
-        if (!window.console) console.error(data);
+        if (bDebug) console.error(data);
       },
       success: function(data) {
         refreshKML();
@@ -476,7 +477,7 @@ $(function() {
               'shoveled': false },
       error: function(jqXHR) {
         data = $.parseJSON(jqXHR.responseText);
-        if (!window.console) console.error(data);
+        if (bDebug) console.error(data);
       },
       success: function(data) {
         refreshKML();
