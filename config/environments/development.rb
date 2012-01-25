@@ -30,14 +30,4 @@ AdoptASidewalk::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.action_mailer.smtp_settings = {
-    :enable_starttls_auto => true,
-    :address => "smtp.gmail.com",
-    :port => 587,
-    :tls => true,
-    :domain => "gmail.com",
-    :authentication => :login,
-    :user_name => "",
-    :password => ""
-  }
 end
