@@ -38,22 +38,26 @@ $(function() {
     if (bDebug) console.info('dragged');
     refreshKML();
   });
-  
-  //window.osw_widget = new OhSoWe.MapWidget({
-  //  version: "0.1",
-  //  partnerId: "snowflake",
-  //  container: "osw_widget",
-  //  miniWidgetStyle: 'noText', //'default' or 'noText'
-  //  onReady: function(widget) {
-  //    //set the initial bounds
-  //    widget.boundsChanged(map.getBounds().toUrlValue());
-  //    //set the google maps listener
-  //    google.maps.event.addListener(map, 'bounds_changed', function() {
-  //      //if (bDebug) console.debug('bounds_changed');
-  //      widget.boundsChanged(map.getBounds().toUrlValue());
-  //    });
-  //  }
-  //}).render();  
+
+  if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
+    // IE7; 
+  } else {
+    window.osw_widget = new OhSoWe.MapWidget({
+      version: "0.1",
+      partnerId: "snowflake",
+      container: "osw_widget",
+      miniWidgetStyle: 'noText', //'default' or 'noText'
+      onReady: function(widget) {
+        //set the initial bounds
+        widget.boundsChanged(map.getBounds().toUrlValue());
+        //set the google maps listener
+        google.maps.event.addListener(map, 'bounds_changed', function() {
+          //if (bDebug) console.debug('bounds_changed');
+          widget.boundsChanged(map.getBounds().toUrlValue());
+        });
+      }
+    }).render();  
+  }
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();

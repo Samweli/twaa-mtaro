@@ -43,6 +43,7 @@ en:
     name_thing: "Give this %{thing} a name"
     organization: "Organization"
     password: "Password"
+    password_reg: "Password (Min 6)"
     password_confirm: "Confirm Password"
     password_choose: "Choose a password"
     password_current: "Current password"

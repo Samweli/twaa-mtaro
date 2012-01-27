@@ -59,10 +59,17 @@
             .btn_image
             .label I need help to keep this sidewalk clean.
       %li.need_supplies
-        %a{:href => "#", :id => "share_link"}
-          %h1 Share
-          .btn_image
-          .label I need supplies or can share.
+        - if browser.ie7?
+          %a{:href => "http://www.ohsowe.com", :target => "_blank"}
+            %h1 Share
+            .btn_image
+            .label I need supplies or can share.
+        - else
+          %a{:href => "#", :id => "share_link"}
+            %h1 Share
+            .btn_image
+            .label I need supplies or can share.
+
 
   - else
     #need_register.radius_5.link_1

@@ -1,5 +1,5 @@
 - if defined?(devise_error_messages!)
-  #error_msg
+  .error_msg
     = devise_error_messages! 
 
 #sign_up_box
@@ -18,7 +18,7 @@
           = f.label :email, t("labels.email")
           = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
         %li
-          = f.label :password_confirmation, t("labels.password")
+          = f.label :password, t("labels.password_reg")
           = f.password_field :password
         %li
           = f.label :password_confirmation, t("labels.password_confirm")

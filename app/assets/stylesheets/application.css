@@ -85,10 +85,10 @@ img {
   border: 1px solid #c07373;
 }
 
-#error_msg {
+.error_msg {
   color: #ff7373;
+  width: auto;
 }
-#error_msg h2,
 .error_msg h2 {
   font-size: 16px;
 }
