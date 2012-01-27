@@ -29,12 +29,12 @@
       #recaptcha_box
         = recaptcha_tags :ajax => true
             
-      %ul.horizontal_items.font_12{:style => 'margin-top: 15px;'}
+      %ul.horizontal_items.font_12.center{:style => 'margin-top: 15px;'}
         %li= f.submit t("buttons.register")
-
-      .center
-        %p.font_1.link_1
-          = t("labels.user_existing")
-          = link_to t("links.sign_in"), '#', :id => "sign_in_link"
-        %p.font_1.font_12
-          = t("defaults.tos", :tos => link_to(t("links.terms"), tos_path, :target => '_blank')).html_safe
+        %li
+          .font_1.link_1
+            = t("labels.user_existing")
+            %br
+            = link_to t("links.sign_in"), '#', :id => "sign_in_link"
+      .font_12.link_1.center
+        = t("defaults.tos", :tos => link_to(t("links.terms"), tos_path, :target => '_blank')).html_safe
