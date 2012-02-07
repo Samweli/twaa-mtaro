@@ -8,6 +8,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :email, :null => false
       t.string :sms_number
       t.boolean :admin, :default => false
+      t.integer :claims_count, :default => 0
+      t.integer :max_claims
       t.database_authenticatable :null => false
       t.recoverable
       t.rememberable
