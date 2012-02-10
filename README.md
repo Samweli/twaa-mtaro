@@ -11,7 +11,7 @@ Claim responsibility for shoveling out a sidewalk after it snows.
 
 ## <a name="demo">Demo</a>
 You can see a running version of the application at
-[http://adopt-a-hydrant.herokuapp.com/](http://adopt-a-hydrant.herokuapp.com/).
+[http://adopt.chicagoshovels.org/](http://adopt.chicagoshovels.org/).
 
 ## <a name="installation">Installation</a>
     git clone git://github.com/Chicago/adopt-a-sidewalk.git
@@ -62,6 +62,7 @@ Ruby implementations:
 
 * Ruby 1.8.7
 * Ruby 1.9.2
+* Ruby 1.9.3
 * [Ruby Enterprise Edition](http://www.rubyenterpriseedition.com/)
 
 If something doesn't work on one of these interpreters, it should be considered
