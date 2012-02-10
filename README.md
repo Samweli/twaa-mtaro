@@ -1,10 +1,10 @@
 FIXME
 
-# Adopt a Hydrant
-Claim responsibility for shoveling out a fire hydrant after it snows.
+# Adopt a Sidewalk
+Claim responsibility for shoveling out a sidewalk after it snows.
 
 ## <a name="screenshots">Screenshot</a>
-![Adopt a Hydrant](https://github.com/codeforamerica/adopt-a-hydrant/raw/master/screenshot.png "Adopt a Hydrant")
+![Adopt a Sidewalk](https://github.com/Chicago/adopt-a-sidewalk/raw/master/screenshot.png "Adopt a Sidewalk")
 
 ## <a name="ci">Continuous Integration</a>
 [![Build Status](https://secure.travis-ci.org/codeforamerica/adopt-a-hydrant.png)](http://travis-ci.org/codeforamerica/adopt-a-hydrant)
@@ -14,8 +14,8 @@ You can see a running version of the application at
 [http://adopt-a-hydrant.herokuapp.com/](http://adopt-a-hydrant.herokuapp.com/).
 
 ## <a name="installation">Installation</a>
-    git clone git://github.com/codeforamerica/adopt-a-hydrant.git
-    cd adopt-a-hydrant
+    git clone git://github.com/Chicago/adopt-a-sidewalk.git
+    cd adopt-a-sidewalk
     bundle install
 
 ## <a name="usage">Usage</a>
