@@ -17,7 +17,7 @@ class SidewalksController < ApplicationController
   def find_closest
     gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
     
-    render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 unless gc && gc.success
+    render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 unless (gc && gc.success && gc.street_address)
 
     unless (sidewalk = Sidewalk.find_by_address(gc.street_address.upcase))
       sidewalk = Sidewalk.find_closest(gc.lat, gc.lng, 1, 0.02).first

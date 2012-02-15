@@ -16,9 +16,14 @@
     %meta{:content => "Adopt a sidewalk by claiming it on an interactive map", :itemprop => "description"}
     %meta{:content => "http://www.cityofchicago.org/content/dam/city/depts/mayor/Chicago%20Shovels/FireHydrant.png", :itemprop => "image"}/
 
-    %script{:type => "text/javascript"}
-      -# FIXME: update the domain.
-      var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-2412440-12"]),_gaq.push(["_setDomainName",".adoptahydrant.org"]),_gaq.push(["_trackPageview"]),function(){var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)}();
+    :javascript
+      var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-29218311-1']);_gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
     
   %body
