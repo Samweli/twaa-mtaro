@@ -21,26 +21,16 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.string   "secret"
     t.datetime "expires"
     t.string   "nickname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 # Could not dump table "chicagosidewalks" because of following StandardError
-#   Unknown type 'geometry' for column 'the_geom'
-
-  create_table "geometry_columns", :id => false, :force => true do |t|
-    t.string  "f_table_catalog",   :limit => 256, :null => false
-    t.string  "f_table_schema",    :limit => 256, :null => false
-    t.string  "f_table_name",      :limit => 256, :null => false
-    t.string  "f_geometry_column", :limit => 256, :null => false
-    t.integer "coord_dimension",                  :null => false
-    t.integer "srid",                             :null => false
-    t.string  "type",              :limit => 30,  :null => false
-  end
+#   Unknown type 'geometry(MultiPolygon,4326)' for column 'the_geom'
 
   create_table "sidewalk_claims", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "user_id"
     t.integer  "gid"
     t.boolean  "shoveled"
@@ -59,19 +49,21 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
   end
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "first_name",                                             :null => false
-    t.string   "last_name",                                              :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "first_name",                                :null => false
+    t.string   "last_name",                                 :null => false
     t.string   "organization"
-    t.string   "email",                               :default => "",    :null => false
+    t.string   "email",                  :default => "",    :null => false
     t.string   "sms_number"
-    t.boolean  "admin",                               :default => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.boolean  "admin",                  :default => false
+    t.integer  "claims_count",           :default => 0
+    t.integer  "max_claims"
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
-    t.string   "remember_token"
+    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

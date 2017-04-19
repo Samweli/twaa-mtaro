@@ -38,30 +38,30 @@ $(function() {
     refreshKML();
   });
 
-  if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
-    // IE7; 
-  } else {
-    window.osw_widget = new OhSoWe.MapWidget({
-      version: "0.1",
-      partnerId: "snowflake",
-      container: "osw_widget",
-      miniWidgetStyle: 'noText', //'default' or 'noText'
-      onReady: function(widget) {
-        //set the initial bounds
-        widget.boundsChanged(map.getBounds().toUrlValue());
-        //set the google maps listener
-        google.maps.event.addListener(map, 'bounds_changed', function() {
-          //if (bDebug) console.debug('bounds_changed');
-          widget.boundsChanged(map.getBounds().toUrlValue());
-        });
-      }
-    }).render();  
-  }
+  // if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
+  //   // IE7; 
+  // } else {
+  //   window.osw_widget = new OhSoWe.MapWidget({
+  //     version: "0.1",
+  //     partnerId: "snowflake",
+  //     container: "osw_widget",
+  //     miniWidgetStyle: 'noText', //'default' or 'noText'
+  //     onReady: function(widget) {
+  //       //set the initial bounds
+  //       widget.boundsChanged(map.getBounds().toUrlValue());
+  //       //set the google maps listener
+  //       google.maps.event.addListener(map, 'bounds_changed', function() {
+  //         //if (bDebug) console.debug('bounds_changed');
+  //         widget.boundsChanged(map.getBounds().toUrlValue());
+  //       });
+  //     }
+  //   }).render();  
+  // }
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
-    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
+    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
     if (bDebug) console.info(url);
 
     if (sidewalks_kml != undefined || sidewalks_kml != null)
@@ -192,7 +192,7 @@ $(function() {
     return false;
   });
 
-  $('#sign_up_form').live('submit', function() {
+  $('body').on('submit', '#sign_up_form', function() {
     var submitButton = $("input[type='submit']", this);
     var uemail = $('#user_email');
     var ufname = $('#user_first_name');
@@ -386,7 +386,7 @@ $(function() {
     return false;
   });
   
-  $('#abandon_link').live('click', function() {
+  $('body').on('click', '#abandon_link', function() {
     if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {    
       $.ajax({
         type: 'POST',
@@ -409,7 +409,7 @@ $(function() {
     return false;
   });
   
-  $('#adopt_link').live('click', function() {
+  $('body').on('click', '#adopt_link', function() {
     $.ajax({
       type: 'POST',
       url: '/sidewalk_claims',
@@ -429,7 +429,7 @@ $(function() {
     return false;
   });
   
-  $('#get_help_link').live('click', function() {
+  $('body').on('click', '#get_help_link', function() {
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
@@ -449,7 +449,7 @@ $(function() {
     return false;
   });
   
-  $('#shoveled_link').live('click', function() {
+  $('body').on('click', '#shoveled_link', function() {
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
@@ -470,7 +470,7 @@ $(function() {
     return false;
   });
   
-  $('#snowed_link').live('click', function() {
+  $('body').on('click', '#snowed_link', function() {
     $.ajax({
       type: 'POST',
       url: '/sidewalks/' + activeObjectId,
@@ -491,7 +491,7 @@ $(function() {
     return false;
   });
   
-  $('#user_forgot_password_link').live('click', function() {
+  $('body').on('click', '#user_forgot_password_link', function() {
     $.ajax({
       type: 'GET',
       url: '/forgot_password',
@@ -502,7 +502,7 @@ $(function() {
     return false;
   });
   
-  $('#sign_in_link').live('click', function() {
+  $('body').on('click', '#sign_in_link', function() {
     $.ajax({
       type: 'GET',
       url: '/users/sign_in',
@@ -513,7 +513,7 @@ $(function() {
     return false;
   });
   
-  $('#sign_up_link').live('click', function() {
+  $('body').on('click', '#sign_up_link', function() {
     $.ajax({
       type: 'GET',
       url: '/users/sign_up',
@@ -526,14 +526,14 @@ $(function() {
     return false;
   });
   
-  $('a.view_sidewalk').live('click', function() {
+  $('body').on('click', 'a.view_sidewalk', function() {
     activeObjectId = $(this).attr('data-gid');
     $('#address').val($(this).text());
     $('#address_button').trigger('click');
     return false;
   });
   
-  $('#share_link').live('click', function() {
+  $('body').on('click', '#share_link', function() {
     window.osw_widget.isMinimized(function(isMin) {
         if (isMin) {
           window.osw_widget.showDetails();
@@ -546,16 +546,16 @@ $(function() {
     return false;
   });
 
-  $('#refresh_link').live('click', function() {
+  $('body').on('click', '#refresh_link', function() {
     refreshKML();
     return false;
   });
 
-  $('#notice').live('click', function() {
+  $('body').on('click', '#notice', function() {
     $(this).fadeOut('slow');
   });
   
-  $('#error').live('click', function() {
+  $('body').on('click', '#error', function() {
     $(this).fadeOut('slow');
   });
   
