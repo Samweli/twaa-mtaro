@@ -16,7 +16,7 @@ $(function() {
     zoomControl: true
   };
   
-  var bDebug = false;
+  var bDebug = true;
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var isWindowOpen = false;
   var sidewalks_kml;
@@ -60,18 +60,18 @@ $(function() {
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
-    console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
+    var url = 'https://twaa-mtaro2.herokuapp.com/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
     if (bDebug) console.info(url);
 
     if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
 
-    sidewalks_kml = new google.maps.KmlLayer(url,
-                                             {suppressInfoWindows: true,
-                                              suppressMapPan: false,
-                                              preserveViewport: true,
-                                              map: map});
+    sidewalks_kml = new google.maps.KmlLayer({
+      url: url,
+      map: map 
+    });
+    
     if (bDebug) console.info(sidewalks_kml);
     
     google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
@@ -82,7 +82,7 @@ $(function() {
     });
     
     google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
-      if (bDebug) console.info(sidewalks_kml.getMetadata());
+     // if (bDebug) console.info(sidewalks_kml.getMetadata());
       //map.fitBounds(sidewalks_kml.getDefaultViewport());      
     });
     
