@@ -1,5 +1,5 @@
 $(function() {
-  var center = new google.maps.LatLng(41.88, -87.67);
+  var center = new google.maps.LatLng(-6.7992, 39.2428);
   var mapOptions = {
     center: center,
     mapTypeControl: true,
@@ -16,7 +16,7 @@ $(function() {
     zoomControl: true
   };
   
-  var bDebug = false;
+  var bDebug = true;
   var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var isWindowOpen = false;
   var sidewalks_kml;
@@ -38,39 +38,36 @@ $(function() {
     refreshKML();
   });
 
-  if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
-    // IE7; 
-  } else {
-    window.osw_widget = new OhSoWe.MapWidget({
-      version: "0.1",
-      partnerId: "snowflake",
-      container: "osw_widget",
-      miniWidgetStyle: 'noText', //'default' or 'noText'
-      onReady: function(widget) {
-        //set the initial bounds
-        widget.boundsChanged(map.getBounds().toUrlValue());
-        //set the google maps listener
-        google.maps.event.addListener(map, 'bounds_changed', function() {
-          //if (bDebug) console.debug('bounds_changed');
-          widget.boundsChanged(map.getBounds().toUrlValue());
-        });
-      }
-    }).render();  
-  }
+  // if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
+  //   // IE7; 
+  // } else {
+  //   window.osw_widget = new OhSoWe.MapWidget({
+  //     version: "0.1",
+  //     partnerId: "snowflake",
+  //     container: "osw_widget",
+  //     miniWidgetStyle: 'noText', //'default' or 'noText'
+  //     onReady: function(widget) {
+  //       //set the initial bounds
+  //       widget.boundsChanged(map.getBounds().toUrlValue());
+  //       //set the google maps listener
+  //       google.maps.event.addListener(map, 'bounds_changed', function() {
+  //         //if (bDebug) console.debug('bounds_changed');
+  //         widget.boundsChanged(map.getBounds().toUrlValue());
+  //       });
+  //     }
+  //   }).render();  
+  // }
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
     if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'http://167.165.233.18/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
     if (bDebug) console.info(url);
 
     if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
 
-    sidewalks_kml = new google.maps.KmlLayer(url,
-                                             {suppressInfoWindows: true,
-                                              suppressMapPan: false,
-                                              preserveViewport: true,
+    sidewalks_kml = new google.maps.KmlLayer({url:url,
                                               map: map});
     if (bDebug) console.info(sidewalks_kml);
     
