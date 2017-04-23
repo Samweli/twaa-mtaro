@@ -1,4 +1,3 @@
-FIXME
 
 # Adopt a Sidewalk
 Claim responsibility for shoveling out a sidewalk after it snows.
@@ -14,6 +13,50 @@ You can see a running version of the application at
     git clone git://github.com/Chicago/adopt-a-sidewalk.git
     cd adopt-a-sidewalk
     bundle install
+    
+### Prerequisites
+
+* Git
+* PostgreSQL with PostGIS extensions enabled
+    * Requires geos, gdal and proj.4
+* Ruby 1.9.x
+* Rubygems
+* Bundler
+
+See [EC2 Setup](https://github.com/cfachicago/adopt-a-sidewalk/wiki/EC2-Setup) for a play-by-play setting up a fully-working Adopt-a-Sidewalk on EC2/Ubuntu 12.04.1 using Apache/passenger
+
+### Setting up the database
+
+1. Install PostgreSQL with the PostGIS extensions: e.g. `brew install postgis`
+2. Download the chicagosidewalks shape file from the City of Chicago Data Portal http://data.cityofchicago.org
+3. Convert the shapefile into PostGIS SQL: `shp2pgsql -s 3435:4326 -g the_geom -I chicagosidewalks.shp >chicagosidewalks.sql`
+    * `-s 3435:4326` This converts the geospatial data from the EPSG:3435 (NAD83 / Illinois East) project to ESPG:4326 (WGS84, lat/long)
+    * `-g the_geom` name the geocolumn `the_geom` to match what's in the Rails code
+    * `-I` generate a spatial index on the geocolumn.
+4. Create a database that will host your app: e.g. `createdb adoptasidewalk_dev`
+5. Add the PostGIS extensions to your database: e.g. `psql adoptasidewalk_dev -c "CREATE EXTENSION postgis;"`
+    * MAGIC
+6. Load in `chicagosidewalks.sql`: e.g. `psql adoptasidewalk_dev <chicagosidewalks.sql`
+7. Configure `database.yml` to point to your database
+8. Run Rails migrations: `rake db:migrate`
+
+### Google Maps KML Endpoint
+
+**tl;dr** Set the environment variable `GMAPS_KML_ENDPOINT` to the address of your publicly-exposed host
+
+This part is tricky. The Rails app is designed so that a client-side call to a Google Maps function loads up KML from HTTP endpoint in the app. What this means is that your running app has to be exposed to the Internet in order to load up the sidewalk KML on the map. This is fine in production, but in development (read: on your laptop, etc) you're likely behind a firewall and Google will be unable to load the KML.
+
+One solution to this problem is to use SSH Remote Forwarding.
+
+1. Have an Internet exposed Linux Server (e.g. AWS instance)
+2. Configure sshd to have "GatewayPorts yes"
+3. On development machine create a remote forward connection: ssh -nNTR *:3000:localhost:3000 your.remote.server.com
+4. Set `GMAPS_KML_ENDPOINT` to "your.remote.server.com:3000"
+    * `GMAPS_KML_ENDPOINT=your.remote.server.com:3000 rails s`
+    * `export GMAPS_KML_ENDPOINT=your.remote.server.com:3000; rails s`
+    * Use foremen and .env (http://ddollar.github.com/foreman/#ENVIRONMENT)
+
+In production, this is likely the hostname or IP of your production server.
 
 ## <a name="usage">Usage</a>
     rails server

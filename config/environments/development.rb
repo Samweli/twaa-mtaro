@@ -6,7 +6,7 @@ AdoptASidewalk::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true

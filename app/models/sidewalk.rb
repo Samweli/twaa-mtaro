@@ -18,7 +18,7 @@ class Sidewalk < ActiveRecord::Base
             ST_GeomFromEWKT('SRID=4326;POINT(? ?)'),
             3395
           ),
-          ? * 5280 * 0.3048
+          ? + 2000
         ),
         4326
       )
