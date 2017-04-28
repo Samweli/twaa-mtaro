@@ -1,5 +1,5 @@
 class Sidewalk < ActiveRecord::Base
-  set_table_name 'chicagosidewalks'
+  set_table_name 'drains_part'
   
   has_many :claims, :class_name => 'SidewalkClaim', :foreign_key => "gid"
   validates_presence_of :lat, :lon
@@ -9,7 +9,7 @@ class Sidewalk < ActiveRecord::Base
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"
-    FROM chicagosidewalks s 
+    FROM drains_part s 
     WHERE ST_Intersects(
       the_geom, 
       ST_Transform( 
@@ -18,7 +18,7 @@ class Sidewalk < ActiveRecord::Base
             ST_GeomFromEWKT('SRID=4326;POINT(? ?)'),
             3395
           ),
-          ? * 5280 * 0.3048
+          ? + 2000
         ),
         4326
       )

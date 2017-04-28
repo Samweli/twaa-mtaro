@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
+ruby "2.2.3"
 
-gem 'rails', '~> 3.1.0'
+gem 'rails', '~> 3.2.13'
 
 gem 'arel'
 gem 'devise'
