@@ -1,30 +1,56 @@
 $(function() {
-  var center = new google.maps.LatLng(-6.7992, 39.2428);
-  var mapOptions = {
-    center: center,
-    mapTypeControl: true,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    panControl: true,
-    zoom: 9,
-    disableDoubleClickZoom: true,
-    keyboardShortcuts: false,
-    panControl: false,
-    rotateControl: false,
-    scaleControl: false,
-    scrollwheel: false,
-    streetViewControl: true,
-    zoomControl: true
-  };
+
+
+  var initialLocation;
+ //var center = new google.maps.LatLng(-6.7984415, 39.260857);
+  var browserSupportFlag =  new Boolean();
+  var errorClass = 'has-error';
+  var current_user_id = $('#current_user_id').val() ? $('#current_user_id').val() : '';
+  // var mapOptions = {
+  //   center: center,
+  //   disableDoubleClickZoom: false,
+  //   keyboardShortcuts: false,
+  //   mapTypeControl: false,
+  //   mapTypeId: "OSM",
+  //   maxZoom: 21,
+  //   minZoom: 11,
+  //   panControl: false,
+  //   rotateControl: false,
+  //   scaleControl: false,
+  //   streetViewControl: true,
+  //   zoom: 13,
+  //   zoomControl: true,
+  //   styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
+  // };
+  // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  var map = L.map('map').setView([-6.793530792041458, 39.25864222753898], 12);
+  var layer = L.tileLayer('http://api.tiles.mapbox.com/v4/worldbank-education.cm9dlsor/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA').addTo(map);
+
+  // var center = new google.maps.LatLng(-6.793530792041458, 39.25864222753898);
+  // var mapOptions = {
+  //   center: center,
+  //   mapTypeControl: true,
+  //   mapTypeId: google.maps.MapTypeId.ROADMAP,
+  //   panControl: true,
+  //   zoom: 12,
+  //   keyboardShortcuts: false,
+  //   panControl: false,
+  //   rotateControl: false,
+  //   scaleControl: false,
+  //   scrollwheel: false,
+  //   streetViewControl: true,
+  //   zoomControl: true
+  // };
   
   var bDebug = true;
-  var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  //var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var isWindowOpen = false;
   var sidewalks_kml;
   var autoIWObjectId;
   var activeObjectId;
-  var activeInfoWindow = new google.maps.InfoWindow({
-    maxWidth: 950
-  });
+  // var activeInfoWindow = new google.maps.InfoWindow({
+  //   maxWidth: 950
+  // });
   
   google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
     isWindowOpen = false;
@@ -67,10 +93,18 @@ $(function() {
     if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
 
-    sidewalks_kml = new google.maps.KmlLayer({
-      url: url,
-      map: map 
-    });
+    var sidewalks_kml = new L.KML("/home/samweli/Downloads/sidewalks.kml", {async: true});
+                                                              
+    sidewalks_kml.on("loaded", function(e) { 
+            map.fitBounds(e.target.getBounds());
+         });
+                                                
+    map.addLayer(sidewalks_kml);
+
+    // sidewalks_kml = new google.maps.KmlLayer({
+    //   url: url,
+    //   map: map 
+    // });
     
     if (bDebug) console.info(sidewalks_kml);
     
@@ -78,7 +112,7 @@ $(function() {
       if (bDebug) console.info('defaultviewport_changed');
       if (auto_fetch_info)
         fetchSidewalkInfo();
-      map.setZoom(19);
+      // map.setZoom(19); dont zoom out
     });
     
     google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
