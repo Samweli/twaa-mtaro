@@ -28,45 +28,6 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
 # Could not dump table "chicagosidewalks" because of following StandardError
 #   Unknown type 'geometry(MultiPolygon,4326)' for column 'the_geom'
 
-  create_table "drains_part", :primary_key => "gid", :force => true do |t|
-    t.string  "the_geom",     :limit => 0
-    t.string  "full_id",      :limit => 254
-    t.string  "osm_id",       :limit => 254
-    t.string  "osm_type",     :limit => 254
-    t.string  "waterway",     :limit => 254
-    t.string  "name",         :limit => 254
-    t.string  "boat",         :limit => 254
-    t.string  "width",        :limit => 254
-    t.string  "depth",        :limit => 254
-    t.string  "covered",      :limit => 254
-    t.string  "tunnel",       :limit => 254
-    t.string  "layer",        :limit => 254
-    t.string  "blockage",     :limit => 254
-    t.string  "level",        :limit => 254
-    t.string  "canoe",        :limit => 254
-    t.string  "motorboat",    :limit => 254
-    t.string  "ship",         :limit => 254
-    t.string  "diameter",     :limit => 254
-    t.string  "intermitte",   :limit => 254
-    t.string  "ditch",        :limit => 254
-    t.string  "drain",        :limit => 254
-    t.string  "highway",      :limit => 254
-    t.string  "bridge",       :limit => 254
-    t.string  "no",           :limit => 254
-    t.string  "drainage",     :limit => 254
-    t.string  "height",       :limit => 254
-    t.string  "addr_stree",   :limit => 254
-    t.string  "surface",      :limit => 254
-    t.string  "smoothness",   :limit => 254
-    t.string  "bridge_mov",   :limit => 254
-    t.string  "bridge_str",   :limit => 254
-    t.string  "incline",      :limit => 254
-    t.string  "address",      :limit => 200
-    t.boolean "cleared"
-    t.integer "claims_count"
-    t.boolean "need_help"
-  end
-
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
