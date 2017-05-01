@@ -4,10 +4,9 @@
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
     = stylesheet_link_tag "application"
-    = javascript_include_tag "http://maps.google.com/maps/api/js?key=AIzaSyAna9fcrx8oYk0cQX9TVbjYa50HsYHJP-o"
+    = stylesheet_link_tag "leaflet"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
-    = javascript_include_tag "leaflet"
     = javascript_include_tag "application"
     = javascript_include_tag "jquery.browser"
 
@@ -40,3 +39,5 @@
       }(document, 'script', 'facebook-jssdk'));
 
     = yield
+
+

@@ -23,8 +23,15 @@ $(function() {
   //   styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
   // };
   // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  var map = L.map('map').setView([-6.793530792041458, 39.25864222753898], 12);
-  var layer = L.tileLayer('http://api.tiles.mapbox.com/v4/worldbank-education.cm9dlsor/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA').addTo(map);
+  var map = L.map( 'map_canvas', {
+         center: [-6.793530792041458, 39.25864222753898],
+         minZoom: 2,
+         zoom: 12
+  });
+  L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+         subdomains: ['a','b','c']
+    }).addTo( map );
 
   // var center = new google.maps.LatLng(-6.793530792041458, 39.25864222753898);
   // var mapOptions = {
@@ -52,17 +59,18 @@ $(function() {
   //   maxWidth: 950
   // });
   
-  google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
-    isWindowOpen = false;
-  });
+  // google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
+  //   isWindowOpen = false;
+  // });
   
-  google.maps.event.addListener(map, 'dragend', function() {
-    if(isWindowOpen == true) {
-      return;
-    }
-    if (bDebug) console.info('dragged');
-    refreshKML();
-  });
+  // google.maps.event.addListener(map, 'dragend', function() {
+  //   if(isWindowOpen == true) {
+  //     return;
+  //   }
+  //   if (bDebug) console.info('dragged');
+  //   refreshKML();
+  // });
+  refreshKML();
 
   // if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
   //   // IE7; 
@@ -86,54 +94,52 @@ $(function() {
   
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
-    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat(), c.lng());
-    var url = 'https://twaa-mtaro2.herokuapp.com/sidewalks.kml?lat=' + c.lat() + '&lng=' + c.lng() + '&r=' + (new Date()).valueOf();
+    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
+    var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
     if (bDebug) console.info(url);
 
     if (sidewalks_kml != undefined || sidewalks_kml != null)
       sidewalks_kml.setMap(null);
 
-    var sidewalks_kml = new L.KML("/home/samweli/Downloads/sidewalks.kml", {async: true});
-                                                              
-    sidewalks_kml.on("loaded", function(e) { 
-            map.fitBounds(e.target.getBounds());
-         });
-                                                
-    map.addLayer(sidewalks_kml);
-
-    // sidewalks_kml = new google.maps.KmlLayer({
+    var layer = omnivore.kml(url);
+    layer.addEventListener('click',function(e){
+      console.log(e);
+    }).addTo(map);
+    console.log(layer);
+    console.info(Object.prototype.toString.call(layer));
+        // sidewalks_kml = new google.maps.KmlLayer({
     //   url: url,
     //   map: map 
     // });
     
     if (bDebug) console.info(sidewalks_kml);
     
-    google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
-      if (bDebug) console.info('defaultviewport_changed');
-      if (auto_fetch_info)
-        fetchSidewalkInfo();
-      // map.setZoom(19); dont zoom out
-    });
+  //   google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
+  //     if (bDebug) console.info('defaultviewport_changed');
+  //     if (auto_fetch_info)
+  //       fetchSidewalkInfo();
+  //     // map.setZoom(19); dont zoom out
+  //   });
     
-    google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
-     // if (bDebug) console.info(sidewalks_kml.getMetadata());
-      //map.fitBounds(sidewalks_kml.getDefaultViewport());      
-    });
+  //   google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
+  //    // if (bDebug) console.info(sidewalks_kml.getMetadata());
+  //     //map.fitBounds(sidewalks_kml.getDefaultViewport());      
+  //   });
     
-    google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
-      activeObjectId = e.featureData.description;
-      //if (bDebug) console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
-      fetchSidewalkInfo(activeObjectId, e.latLng);
-    });
+  //   google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
+  //     activeObjectId = e.featureData.description;
+  //     //if (bDebug) console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
+  //     fetchSidewalkInfo(activeObjectId, e.latLng);
+  //   });
   }
 
   function fetchSidewalkInfo(gid, pos) {
     if (gid == undefined)
       gid = activeObjectId;
-    if (gid == undefined) {
-      activeInfoWindow.close();
-      return false;
-    }
+    // if (gid == undefined) {
+    //   activeInfoWindow.close();
+    //   return false;
+    //}
     if (pos == undefined)
       pos = map.getCenter();
     //if (bDebug) console.info(e.latLng);
@@ -146,12 +152,12 @@ $(function() {
       error: function(jqXHR) {
       },
       success: function(data) {
-        activeInfoWindow.setOptions({
-          content: data,
-          position: pos,
-        });
-        activeInfoWindow.open(map);
-        isWindowOpen = true;
+        // activeInfoWindow.setOptions({
+        //   content: data,
+        //   position: pos,
+        // });
+        // activeInfoWindow.open(map);
+        // isWindowOpen = true;
         //renderSocialButtons();
       }
     });
@@ -218,7 +224,7 @@ $(function() {
           if (bDebug) console.info("Returned location: %o of [%s]", data, uaddress.val());
           submitButton.removeAttr('disabled');
           activeObjectId = data.gid;
-          map.setCenter(new google.maps.LatLng(data.lat, data.lng));
+          // map.setCenter(new google.maps.LatLng(data.lat, data.lng));
           refreshKML(true);
         }
       });

@@ -37,6 +37,11 @@ h3 {
   margin-left: 340px;
 }
 
+#map {
+    height: 100%;
+    width: auto;
+}
+
 #sidebar {
   position: fixed;
   left: 0;
