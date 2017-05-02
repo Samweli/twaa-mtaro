@@ -1,15 +1,50 @@
+/*
 function init() {
-    var center = new L.LatLng(-6.7992, 39.2428);
-    var mapOptions = {
-        center: center,
-        zoom: 9
-    }
 
+
+
+    /!* creating and loading map *!/
     var map = L.map('map_canvas',mapOptions);
-
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         maxZoom: 18
     }).addTo(map);
+
+
+    map.on('zoomend',function (ev) {
+        console.info(ev);
+        }
+    );
+}
+*/
+
+function init() {
+
+    var center = new L.LatLng(-6.7992, 39.2428);
+    var mapOptions = {
+        center: center,
+        zoom: 9,
+        doubleClickZoom:false
+    }
+
+    var map = new L.Map('map_canvas',mapOptions);
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+    map.addLayer(osm);
+
+    map.on('zoomend',function (ev) {
+            console.info("starting to display kml layer");
+            refreshKML();
+        }
+    );
+
+    var refreshKML = function () {
+        var track = new L.KML("https://twaa-mtaro2.herokuapp.com/sidewalks.kml?lat=-6.789792329547285&lng=39.24612694973756&r=1493709868106", {async: true});
+        track.on("load", function(e) {
+            console.info("on load event fired");
+            map.fitBounds(e.target.getBounds());
+        });
+        map.addLayer(track);
+    }
+
 
 }
