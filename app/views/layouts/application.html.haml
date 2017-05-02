@@ -3,8 +3,9 @@
   %head
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
+    %link{:crossorigin => "", :href => "https://unpkg.com/leaflet@1.0.3/dist/leaflet.css", :integrity => "sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==", :rel => "stylesheet"}/
     = stylesheet_link_tag "application"
-    = javascript_include_tag "http://maps.google.com/maps/api/js?key=AIzaSyAna9fcrx8oYk0cQX9TVbjYa50HsYHJP-o"
+    %script{:crossorigin => "", :integrity => "sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==", :src => "https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"}
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
     = javascript_include_tag "application"
@@ -26,8 +27,8 @@
       })();
 
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
-    
-  %body
+
+  %body{:onload => "javascript:init();"}
     #fb-root
     :javascript
       (function(d, s, id) {
