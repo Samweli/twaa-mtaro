@@ -1,50 +1,58 @@
-/*
-function init() {
 
-
-
-    /!* creating and loading map *!/
-    var map = L.map('map_canvas',mapOptions);
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-        maxZoom: 18
-    }).addTo(map);
-
-
-    map.on('zoomend',function (ev) {
-        console.info(ev);
-        }
-    );
-}
-*/
 
 function init() {
 
     var center = new L.LatLng(-6.7992, 39.2428);
     var mapOptions = {
         center: center,
-        zoom: 9,
+        zoom: 12,
         doubleClickZoom:false
     }
 
+
+    /* Creating map*/
     var map = new L.Map('map_canvas',mapOptions);
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
     map.addLayer(osm);
 
+    /* load KML data when zoomed */
     map.on('zoomend',function (ev) {
-            console.info("starting to display kml layer");
             refreshKML();
         }
     );
 
     var refreshKML = function () {
-        var track = new L.KML("https://twaa-mtaro2.herokuapp.com/sidewalks.kml?lat=-6.789792329547285&lng=39.24612694973756&r=1493709868106", {async: true});
-        track.on("load", function(e) {
-            console.info("on load event fired");
-            map.fitBounds(e.target.getBounds());
+
+        /* Styling mitaro */
+        var customLayer= L.geoJson(null, {
+            style: function(feature) {
+                switch (feature.properties.styleUrl) {
+                    case '#unclear': return {color: "yellow"};
+                    case '#adopted': return {color:"red"};
+                }
+            }
         });
-        map.addLayer(track);
+
+                /* Loading KML*/
+        var kmlLayer = omnivore.kml("assets/sidewalks.kml",null,customLayer).addTo(map);
+
+          /* Listens to clicks on mitaro*/
+        kmlLayer.on('click', function (e) {
+
+            var mtaro = e.layer.feature.properties;
+            var msg = mtaro.name + '<br/>'+ mtaro.description;
+
+            /* popup Window for displaying details of Mtalo */
+                var popup = L.popup()
+                    .setLatLng(e.latlng)
+                    .setContent(msg)
+                    .openOn(map);
+        });
+
+        /*add KML layer to map*/
+        map.addLayer(kmlLayer);
     }
+
 
 
 }
