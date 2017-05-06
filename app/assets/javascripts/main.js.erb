@@ -27,8 +27,11 @@ function init() {
         var customLayer= L.geoJson(null, {
             style: function(feature) {
                 switch (feature.properties.styleUrl) {
-                    case '#unclear': return {color: "yellow"};
-                    case '#adopted': return {color:"red"};
+                    case '#unclear': return {color: "green"};
+                    case '#adopted': return {color:"blue"};
+                    case '#needs_help': return {color:"red"};
+                    case '#cleared': return {color:"yellow"};
+
                 }
             }
         });
