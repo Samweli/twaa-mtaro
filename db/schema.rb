@@ -25,8 +25,24 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.datetime "updated_at", :null => false
   end
 
-# Could not dump table "chicagosidewalks" because of following StandardError
-#   Unknown type 'geometry(MultiPolygon,4326)' for column 'the_geom'
+  create_table "mitarokigogo", :primary_key => "gid", :force => true do |t|
+    t.string  "the_geom",     :limit => 0
+    t.string  "full_id",      :limit => 254
+    t.string  "osm_id",       :limit => 254
+    t.string  "osm_type",     :limit => 254
+    t.string  "tunnel",       :limit => 254
+    t.string  "covered",      :limit => 254
+    t.string  "layer",        :limit => 254
+    t.string  "waterway",     :limit => 254
+    t.string  "blockage",     :limit => 254
+    t.string  "diameter",     :limit => 254
+    t.string  "depth",        :limit => 254
+    t.string  "width",        :limit => 254
+    t.string  "name",         :limit => 254
+    t.text    "address"
+    t.boolean "cleared"
+    t.integer "claims_count"
+  end
 
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false
