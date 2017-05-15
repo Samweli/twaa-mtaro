@@ -16,6 +16,7 @@ Session.vim
 _yardoc
 coverage
 db/*.sqlite3
+public/assets
 doc/
 lib/bundler/man
 log/*.log

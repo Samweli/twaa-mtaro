@@ -1,28 +1,10 @@
 $(function() {
 
-
   var initialLocation;
- //var center = new google.maps.LatLng(-6.7984415, 39.260857);
   var browserSupportFlag =  new Boolean();
   var errorClass = 'has-error';
   var current_user_id = $('#current_user_id').val() ? $('#current_user_id').val() : '';
-  // var mapOptions = {
-  //   center: center,
-  //   disableDoubleClickZoom: false,
-  //   keyboardShortcuts: false,
-  //   mapTypeControl: false,
-  //   mapTypeId: "OSM",
-  //   maxZoom: 21,
-  //   minZoom: 11,
-  //   panControl: false,
-  //   rotateControl: false,
-  //   scaleControl: false,
-  //   streetViewControl: true,
-  //   zoom: 13,
-  //   zoomControl: true,
-  //   styles: [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}]
-  // };
-  // var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
   var map = L.map( 'map_canvas', {
          center: [-6.793530792041458, 39.25864222753898],
          minZoom: 2,
@@ -33,65 +15,18 @@ $(function() {
          subdomains: ['a','b','c']
     }).addTo( map );
 
-  // var center = new google.maps.LatLng(-6.793530792041458, 39.25864222753898);
-  // var mapOptions = {
-  //   center: center,
-  //   mapTypeControl: true,
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP,
-  //   panControl: true,
-  //   zoom: 12,
-  //   keyboardShortcuts: false,
-  //   panControl: false,
-  //   rotateControl: false,
-  //   scaleControl: false,
-  //   scrollwheel: false,
-  //   streetViewControl: true,
-  //   zoomControl: true
-  // };
+  map.on('click', function(e){
+    refreshKML();    
+  });
   
   var bDebug = true;
-  //var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
   var isWindowOpen = false;
   var sidewalks_kml;
   var autoIWObjectId;
   var activeObjectId;
-  // var activeInfoWindow = new google.maps.InfoWindow({
-  //   maxWidth: 950
-  // });
   
-  // google.maps.event.addListener(activeInfoWindow, 'closeclick', function() {
-  //   isWindowOpen = false;
-  // });
-  
-  // google.maps.event.addListener(map, 'dragend', function() {
-  //   if(isWindowOpen == true) {
-  //     return;
-  //   }
-  //   if (bDebug) console.info('dragged');
-  //   refreshKML();
-  // });
   refreshKML();
 
-  // if ($.browser.msie && parseInt($.browser.version, 10) === 7) {
-  //   // IE7; 
-  // } else {
-  //   window.osw_widget = new OhSoWe.MapWidget({
-  //     version: "0.1",
-  //     partnerId: "snowflake",
-  //     container: "osw_widget",
-  //     miniWidgetStyle: 'noText', //'default' or 'noText'
-  //     onReady: function(widget) {
-  //       //set the initial bounds
-  //       widget.boundsChanged(map.getBounds().toUrlValue());
-  //       //set the google maps listener
-  //       google.maps.event.addListener(map, 'bounds_changed', function() {
-  //         //if (bDebug) console.debug('bounds_changed');
-  //         widget.boundsChanged(map.getBounds().toUrlValue());
-  //       });
-  //     }
-  //   }).render();  
-  // }
-  
   function refreshKML(auto_fetch_info) {
     var c = map.getCenter();
     if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
@@ -102,12 +37,17 @@ $(function() {
       sidewalks_kml.setMap(null);
 
     var layer = omnivore.kml(url);
+
     layer.addEventListener('click',function(e){
-      console.log(e);
+      activeObjectId = e.layer.feature.properties.description;
+      fetchSidewalkInfo(activeObjectId, e);
+      console.info(e);
+      console.info(e.layer.feature.properties.description);
     }).addTo(map);
+
     console.log(layer);
-    console.info(Object.prototype.toString.call(layer));
-        // sidewalks_kml = new google.maps.KmlLayer({
+
+    // sidewalks_kml = new google.maps.KmlLayer({
     //   url: url,
     //   map: map 
     // });
@@ -133,13 +73,14 @@ $(function() {
   //   });
   }
 
-  function fetchSidewalkInfo(gid, pos) {
+  function fetchSidewalkInfo(gid, e) {
     if (gid == undefined)
       gid = activeObjectId;
     // if (gid == undefined) {
     //   activeInfoWindow.close();
     //   return false;
     //}
+    pos = e.latLng;
     if (pos == undefined)
       pos = map.getCenter();
     //if (bDebug) console.info(e.latLng);
@@ -152,6 +93,7 @@ $(function() {
       error: function(jqXHR) {
       },
       success: function(data) {
+        e.bindPopup();
         // activeInfoWindow.setOptions({
         //   content: data,
         //   position: pos,
@@ -262,6 +204,8 @@ $(function() {
     } else {
       unmarkError(upwd);
     }
+
+
     if(upwdc.val().length < 6 || upwdc.val().length > 20) {
       markError(upwdc, errors);
     } else {

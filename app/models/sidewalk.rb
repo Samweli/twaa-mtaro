@@ -1,5 +1,5 @@
 class Sidewalk < ActiveRecord::Base
-  set_table_name 'drains_part'
+  set_table_name 'mitaro'
   
   has_many :claims, :class_name => 'SidewalkClaim', :foreign_key => "gid"
   validates_presence_of :lat, :lon
@@ -9,7 +9,7 @@ class Sidewalk < ActiveRecord::Base
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"
-    FROM drains_part s 
+    FROM mitaro s 
     WHERE ST_Intersects(
       the_geom, 
       ST_Transform( 
