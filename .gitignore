@@ -28,3 +28,4 @@ tmp/
 vendor/bundle
 ./config/initializers/recaptcha.rb
 ./config/database.yml
+config/database.yml
