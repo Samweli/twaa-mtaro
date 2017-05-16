@@ -1,588 +1,72 @@
 $(function() {
 
-  var initialLocation;
-  var browserSupportFlag =  new Boolean();
-  var errorClass = 'has-error';
-  var current_user_id = $('#current_user_id').val() ? $('#current_user_id').val() : '';
-
-  var map = L.map( 'map_canvas', {
-         center: [-6.793530792041458, 39.25864222753898],
-         minZoom: 2,
-         zoom: 12
-  });
-  L.tileLayer( 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-         subdomains: ['a','b','c']
-    }).addTo( map );
-
-  map.on('click', function(e){
-    refreshKML();    
-  });
-  
-  var bDebug = true;
-  var isWindowOpen = false;
-  var sidewalks_kml;
-  var autoIWObjectId;
-  var activeObjectId;
-  
-  refreshKML();
-
-  function refreshKML(auto_fetch_info) {
-    var c = map.getCenter();
-    if (bDebug) console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-    var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
-    if (bDebug) console.info(url);
-
-    if (sidewalks_kml != undefined || sidewalks_kml != null)
-      sidewalks_kml.setMap(null);
-
-    var layer = omnivore.kml(url);
-
-    layer.addEventListener('click',function(e){
-      activeObjectId = e.layer.feature.properties.description;
-      fetchSidewalkInfo(activeObjectId, e);
-      console.info(e);
-      console.info(e.layer.feature.properties.description);
-    }).addTo(map);
-
-    console.log(layer);
-
-    // sidewalks_kml = new google.maps.KmlLayer({
-    //   url: url,
-    //   map: map 
-    // });
-    
-    if (bDebug) console.info(sidewalks_kml);
-    
-  //   google.maps.event.addListener(sidewalks_kml, 'defaultviewport_changed', function() {
-  //     if (bDebug) console.info('defaultviewport_changed');
-  //     if (auto_fetch_info)
-  //       fetchSidewalkInfo();
-  //     // map.setZoom(19); dont zoom out
-  //   });
-    
-  //   google.maps.event.addListener(sidewalks_kml, 'metadata_changed', function() {
-  //    // if (bDebug) console.info(sidewalks_kml.getMetadata());
-  //     //map.fitBounds(sidewalks_kml.getDefaultViewport());      
-  //   });
-    
-  //   google.maps.event.addListener(sidewalks_kml, 'click', function(e) {
-  //     activeObjectId = e.featureData.description;
-  //     //if (bDebug) console.debug("Fetched KML: %s", JSON.stringify(e.featureData));
-  //     fetchSidewalkInfo(activeObjectId, e.latLng);
-  //   });
+  var center = new L.LatLng(-6.7992, 39.2428);
+  var mapOptions = {
+    center: center,
+    zoom: 12,
+    doubleClickZoom:false
   }
 
-  function fetchSidewalkInfo(gid, e) {
-    if (gid == undefined)
-      gid = activeObjectId;
-    // if (gid == undefined) {
-    //   activeInfoWindow.close();
-    //   return false;
-    //}
-    pos = e.latLng;
-    if (pos == undefined)
-      pos = map.getCenter();
-    //if (bDebug) console.info(e.latLng);
-    $.ajax({
-      type: 'GET',
-      url: '/sidewalk_claims/' + gid,
-      data: {
-        //'id': activeObjectId
-      },
-      error: function(jqXHR) {
-      },
-      success: function(data) {
-        e.bindPopup();
-        // activeInfoWindow.setOptions({
-        //   content: data,
-        //   position: pos,
-        // });
-        // activeInfoWindow.open(map);
-        // isWindowOpen = true;
-        //renderSocialButtons();
-      }
-    });
-  }
-  
-  function updateSidebar() {
-    $.ajax({
-      type: 'GET',
-      url: '/sidebar',
-      dataType: 'json',
-      error: function(jqXHR) {
-        //if (bDebug) console.error(jqXHR);
-      },
-      success: function(data) {
-        //if (bDebug) console.info(data);
-        $('#username').replaceWith(data['user_badge']);
-        $('#sidewalk_list').replaceWith(data['sidewalk_list']);
-      }
-    });
-  }
-  
-  function showInfoWindow() {
-    $('#info_window').show();
-  }
-  
-  function hideInfoWindow() {
-    $('#info_window').hide();
-  }
-  
-  function showSpinner() {
-    $('#spinner').show();
-  }
-  
-  function hideSpinner() {
-    $('#spinner').hide();
-  }
-  
-  $('#address_form').submit(function() {
-    var submitButton = $("input[type='submit']", this);
-    var errors = [];
-    var uaddress = $('#address');
-    
-    submitButton.attr('disabled', 'disabled');
-    if(uaddress.val() === '') {
-      submitButton.removeAttr('disabled');
-      markError(uaddress, errors);
-      uaddress.focus();
-    } else {
-      $.ajax({
-        type: 'GET',
-        url: '/sidewalks/find_closest.json',
-        data: {
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'city_state': $('#city_state').val(),
-          'address': uaddress.val()
-        },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          markError(uaddress, errors);
-          uaddress.focus();
-        },
-        success: function(data) {
-          if (bDebug) console.info("Returned location: %o of [%s]", data, uaddress.val());
-          submitButton.removeAttr('disabled');
-          activeObjectId = data.gid;
-          // map.setCenter(new google.maps.LatLng(data.lat, data.lng));
-          refreshKML(true);
-        }
-      });
-    }
-    return false;
-  });
 
-  $('body').on('submit', '#sign_up_form', function() {
-    var submitButton = $("input[type='submit']", this);
-    var uemail = $('#user_email');
-    var ufname = $('#user_first_name');
-    var ulname = $('#user_last_name');
-    var upwd = $('#user_password');
-    var upwdc = $('#user_password_confirmation');
-    var errors = [];
-    
-    submitButton.attr('disabled', 'disabled');
-    if(ufname.val() === '') {
-      markError(ufname, errors);
-    } else {
-      unmarkError(ufname);
-    }
-    if(ulname.val() === '') {
-      markError(ulname, errors);
-    } else {
-      unmarkError(ulname);
-    }
-    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-      markError(uemail, errors);
-    } else {
-      unmarkError(uemail);
-    }
-    if(upwd.val().length < 6 || upwd.val().length > 20) {
-      markError(upwd, errors);
-    } else {
-      unmarkError(upwd);
-    }
+  /* Creating map*/
+  var map = new L.Map('map_canvas',mapOptions);
+  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+  map.addLayer(osm);
 
+  /* load KML data when zoomed */
+  map.on('zoomend',function (ev) {
+        refreshKML();
+    }
+  );
 
-    if(upwdc.val().length < 6 || upwdc.val().length > 20) {
-      markError(upwdc, errors);
-    } else {
-      unmarkError(upwdc);
-    }
-    if(errors.length > 0) {
-      submitButton.removeAttr('disabled');
-      errors[0].focus();
-    } else {
-      $.ajax({
-        type: 'POST',
-        url: '/users.json',
-        data: {
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', this).val(),
-          'recaptcha_challenge_field':	$('#recaptcha_challenge_field').val(),
-          'recaptcha_response_field':	$('#recaptcha_response_field').val(),
-          'user': {
-            'email': uemail.val(),
-            'first_name': ufname.val(),
-            'last_name': ulname.val(),
-            'password': upwd.val(),
-            'password_confirmation': upwdc.val(),
-          }
-        },
-        beforeSend: function() {
-        },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          hideSpinner();
-          showInfoWindow();
-          submitButton.removeAttr('disabled');
-          if (data.html) {
-            //setInfoWindowContent(data.html);
-            setInfoWindowContent(data.html);
-            activeInfoWindow.setContent($('#IWCONTENT')[0]);
-            evalJS(data.html);
-          }
-        },
-        success: function(data) {
-          $('#sidebar_login').remove();
-          updateSidebar();
-          fetchSidewalkInfo();
-        }
-      });
-    }
-    return false;
-  });
-    
-  $('body').on('submit', '.sign_in_form', function(e) {
-    i = $(e.target);
-    var submitButton = $("input[type='submit']", i);
-    var uemail = $('.user_email', i);
-    var upwd = $('.user_password', i);
-    var err_msg = $('.error_msg', i);
-    var errors = [];
+  var refreshKML = function () {
 
-    e.preventDefault();
-    submitButton.attr('disabled', 'disabled');
-    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-      markError(uemail, errors);
-    } else {
-      unmarkError(uemail);
-    }
-    if(upwd.val().length < 6 || upwd.val().length > 20) {
-      markError(upwd, errors);
-    } else {
-      unmarkError(upwd);
-    }
-    if(errors.length > 0) {
-      submitButton.removeAttr('disabled');
-      errors[0].focus();
-    } else {
-      $.ajax({
-        type: 'POST',
-        url: '/users/sign_in.json',
-        data: {
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', i).val(),
-          'user': {
-            'email': uemail.val(),
-            'password': upwd.val(),
-            'remember_me': $('.user_remember_me', i).val()
-          }
-        },
-        beforeSend: function() {
-        },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          submitButton.removeAttr('disabled');
-          err_msg.html('<h2>'+data.errors.password+'</h2>');
-          activeInfoWindow.setContent($('#IWCONTENT')[0]);
-          uemail.focus();
-        },
-        success: function(data) {
-          $('#sidebar_login').remove();
-          updateSidebar();
-          fetchSidewalkInfo();
-        }
-      });
-    }
-    return false;
-  });
-    
-  $('body').on('click', '.button_forgot_password', function() {
-    var f = $(this).closest('form.forgot_pw_form');
-    var submitButton = $("input[type='submit']", f);
-    var uemail = $('.user_email', f);
-    var errors = [];
+    /* Styling mitaro */
+    var customLayer= L.geoJson(null, {
+        style: function(feature) {
+            switch (feature.properties.styleUrl) {
+                case '#unclear': return {color: "green"};
+                case '#adopted': return {color:"blue"};
+                case '#needs_help': return {color:"red"};
+                case '#cleared': return {color:"yellow"};
 
-    submitButton.attr('disabled', 'disabled');
-    if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-      markError(uemail, errors);
-    } else {
-      unmarkError(uemail);
-    }
-    if(errors.length > 0) {
-      submitButton.removeAttr('disabled');
-      errors[0].focus();
-    } else {
-      $.ajax({
-        type: 'POST',
-        url: '/users/password.json',
-        data: {
-          'commit': submitButton.val(),
-          'utf8': '✓',
-          'authenticity_token': $('input[name="authenticity_token"]', f).val(),
-          'user': {
-            'email': uemail.val()
-          }
-        },
-        beforeSend: function() {
-        },
-        error: function(jqXHR) {
-          //hideSpinner();
-          //showInfoWindow();
-          submitButton.removeAttr('disabled');
-          markError(uemail, errors);
-          uemail.focus();
-        },
-        success: function() {
-          $.ajax({
-            type: 'GET',
-            url: '/users/sign_in',
-            data: {
-              'user': {
-                'email': uemail.val()
-              },
-              'flash': {
-                'notice': "<%= I18n.t("notices.password_reset") %>"
-              }
-            },
-            success: function(data) {
-              setInfoWindowContent(data);
             }
-          });
         }
-      });
-    }
-    return false;
-  });
-  
-  $('body').on('click', '#abandon_link', function() {
-    if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {    
-      $.ajax({
-        type: 'POST',
-        url: '/sidewalk_claims/' + $(this).attr('data-moid'),
-        data: { 'gid': activeObjectId,
-                'authenticity_token': AUTH_TOKEN,
-                '_method': 'delete' },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          if (bDebug) console.error(data);
-        },
-        success: function(data) {
-          //if (bDebug) console.info("abandoned");
-          refreshKML();
-          updateSidebar();
-          setInfoWindowContent(data);
-        }
-      });
-    }
-    return false;
-  });
-  
-  $('body').on('click', '#adopt_link', function() {
-    $.ajax({
-      type: 'POST',
-      url: '/sidewalk_claims',
-      data: { 'gid': activeObjectId,
-              'authenticity_token': AUTH_TOKEN },
-      error: function(jqXHR) {
-        data = $.parseJSON(jqXHR.responseText);
-        alert(data.errors);
-      },
-      success: function(data) {
-        //if (bDebug) console.info("adopted");
-        refreshKML();
-        updateSidebar();
-        setInfoWindowContent(data);
-      }
     });
-    return false;
-  });
-  
-  $('body').on('click', '#get_help_link', function() {
-    $.ajax({
-      type: 'POST',
-      url: '/sidewalks/' + activeObjectId,
-      data: { 'authenticity_token': AUTH_TOKEN,
-              '_method': 'put',
-              'need_help': true },
-      error: function(jqXHR) {
-        data = $.parseJSON(jqXHR.responseText);
-        if (bDebug) console.error(data);
-      },
-      success: function(data) {
-        refreshKML();
-        updateSidebar();
-        setInfoWindowContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', '#shoveled_link', function() {
-    $.ajax({
-      type: 'POST',
-      url: '/sidewalks/' + activeObjectId,
-      data: { 'moid': $(this).attr('data-moid'),
-              'authenticity_token': AUTH_TOKEN,
-              '_method': 'put',
-              'shoveled': true },
-      error: function(jqXHR) {
-        data = $.parseJSON(jqXHR.responseText);
-        if (bDebug) console.error(data);
-      },
-      success: function(data) {
-        refreshKML();
-        updateSidebar();
-        setInfoWindowContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', '#snowed_link', function() {
-    $.ajax({
-      type: 'POST',
-      url: '/sidewalks/' + activeObjectId,
-      data: { 'moid': $(this).attr('data-moid'),
-              'authenticity_token': AUTH_TOKEN,
-              '_method': 'put',
-              'shoveled': false },
-      error: function(jqXHR) {
-        data = $.parseJSON(jqXHR.responseText);
-        if (bDebug) console.error(data);
-      },
-      success: function(data) {
-        refreshKML();
-        updateSidebar();
-        setInfoWindowContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', '#user_forgot_password_link', function() {
-    $.ajax({
-      type: 'GET',
-      url: '/forgot_password',
-      success: function(data) {
-        setInfoWindowContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', '#sign_in_link', function() {
-    $.ajax({
-      type: 'GET',
-      url: '/users/sign_in',
-      success: function(data) {
-        setInfoWindowContent(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', '#sign_up_link', function() {
-    $.ajax({
-      type: 'GET',
-      url: '/users/sign_up',
-      dataType: 'html',
-      success: function(data) {
-        setInfoWindowContent(data);
-        evalJS(data);
-      }
-    });
-    return false;
-  });
-  
-  $('body').on('click', 'a.view_sidewalk', function() {
-    activeObjectId = $(this).attr('data-gid');
-    $('#address').val($(this).text());
-    $('#address_button').trigger('click');
-    return false;
-  });
-  
-  $('body').on('click', '#share_link', function() {
-    window.osw_widget.isMinimized(function(isMin) {
-        if (isMin) {
-          window.osw_widget.showDetails();
-        } else {
-          window.osw_widget.minimize();
-        }
-      }
-    );
 
-    return false;
-  });
+    /* dyamically loading mitaro using the center coordinates */
+    var c = map.getCenter();
+    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
+    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
 
-  $('body').on('click', '#refresh_link', function() {
-    refreshKML();
-    return false;
-  });
+            /* Loading KML*/
+    var kmlLayer = omnivore.kml(url,null,customLayer).addTo(map);
 
-  $('body').on('click', '#notice', function() {
-    $(this).fadeOut('slow');
-  });
-  
-  $('body').on('click', '#error', function() {
-    $(this).fadeOut('slow');
-  });
-  
-  function markError(i, e) {
-    e.push(i);
-    $(i).addClass('error');
-  }
-  
-  function unmarkError(i) {
-    $(i).removeClass('error');
+      /* Listens to clicks on mitaro*/
+    kmlLayer.on('click', function (e) {
+
+        var mtaro = e.layer.feature.properties;
+        var msg = '<div class="card-unclean">' +
+                  '<div class="header-page">' +
+                  '<h1>Haujasafishwa</h1>' +
+                  '</div>' +
+                  '<div class="container">' +
+                      '<p>Mtaro huu wa '+ mtaro.name +
+                      ' haujafanyiwa usafi tafadhali ' +
+                      'mjulishe muhusika.Asante</p>' +
+                      '<button id="btn">Muhusika</button>' +
+                    '</div>' +
+                    '</div>' ; 
+
+        /* popup Window for displaying details of Mtalo */
+            var popup = L.popup()
+                .setLatLng(e.latlng)
+                .setContent(msg)
+                .openOn(map);
+    });
+
+    /*add KML layer to map*/
+    map.addLayer(kmlLayer);
   }
 
-
-  function renderTwitterButton() {
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-  }
-
-  function renderGPlusButton() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  }
-
-  function evalJS(data) {
-    $(data).filter('script').each(function(){
-        eval(this.text || this.textContent || this.innerHTML || '');
-    });
-  }
-
-  function renderSocialButtons() {
-    renderGPlusButton();
-    renderTwitterButton();        
-    FB.XFBML.parse();
-  }
-  
-  function setInfoWindowContent(data) {
-    activeInfoWindow.close();
-    activeInfoWindow.setContent(data);
-    activeInfoWindow.open(map);
-    if (!isWindowOpen)
-        activeInfoWindow.setPosition(map.getCenter());
-    
-    isWindowOpen = true;
-  }
-  
 });

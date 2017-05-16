@@ -9,7 +9,7 @@ class Sidewalk < ActiveRecord::Base
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"
-    FROM mitaro s 
+    FROM mitaro s
     WHERE ST_Intersects(
       the_geom, 
       ST_Transform( 

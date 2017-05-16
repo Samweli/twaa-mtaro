@@ -5,8 +5,10 @@
 .DS_Store
 .Spotlight-V100
 .Trashes
+.generators
 ._*
 .bundle
+.idea
 .config
 .sass-cache/
 .yardoc
