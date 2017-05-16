@@ -1,70 +1,72 @@
+$(function() {
+
+  var center = new L.LatLng(-6.7992, 39.2428);
+  var mapOptions = {
+    center: center,
+    zoom: 12,
+    doubleClickZoom:false
+  }
 
 
-function init() {
+  /* Creating map*/
+  var map = new L.Map('map_canvas',mapOptions);
+  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+  map.addLayer(osm);
 
-    var center = new L.LatLng(-6.7992, 39.2428);
-    var mapOptions = {
-        center: center,
-        zoom: 12,
-        doubleClickZoom:false
+  /* load KML data when zoomed */
+  map.on('zoomend',function (ev) {
+        refreshKML();
     }
+  );
 
+  var refreshKML = function () {
 
-    /* Creating map*/
-    var map = new L.Map('map_canvas',mapOptions);
-    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-    map.addLayer(osm);
+    /* Styling mitaro */
+    var customLayer= L.geoJson(null, {
+        style: function(feature) {
+            switch (feature.properties.styleUrl) {
+                case '#unclear': return {color: "green"};
+                case '#adopted': return {color:"blue"};
+                case '#needs_help': return {color:"red"};
+                case '#cleared': return {color:"yellow"};
 
-    /* load KML data when zoomed */
-    map.on('zoomend',function (ev) {
-            refreshKML();
-        }
-    );
-
-    var refreshKML = function () {
-
-        /* Styling mitaro */
-        var customLayer= L.geoJson(null, {
-            style: function(feature) {
-                switch (feature.properties.styleUrl) {
-                    case '#unclear': return {color: "green"};
-                    case '#adopted': return {color:"blue"};
-                    case '#needs_help': return {color:"red"};
-                    case '#cleared': return {color:"yellow"};
-
-                }
             }
-        });
+        }
+    });
 
+    /* dyamically loading mitaro using the center coordinates */
+    var c = map.getCenter();
+    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
+    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
 
-        /* dyamically loading mitaro using the center coordinates */
-        var c = map.getCenter();
-        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-        var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+            /* Loading KML*/
+    var kmlLayer = omnivore.kml(url,null,customLayer).addTo(map);
 
+      /* Listens to clicks on mitaro*/
+    kmlLayer.on('click', function (e) {
 
+        var mtaro = e.layer.feature.properties;
+        var msg = '<div class="card-unclean">' +
+                  '<div class="header-page">' +
+                  '<h1>Haujasafishwa</h1>' +
+                  '</div>' +
+                  '<div class="container">' +
+                      '<p>Mtaro huu wa '+ mtaro.name +
+                      ' haujafanyiwa usafi tafadhali ' +
+                      'mjulishe muhusika.Asante</p>' +
+                      '<button id="btn">Muhusika</button>' +
+                    '</div>' +
+                    '</div>' ; 
 
+        /* popup Window for displaying details of Mtalo */
+            var popup = L.popup()
+                .setLatLng(e.latlng)
+                .setContent(msg)
+                .openOn(map);
+    });
 
-                /* Loading KML*/
-        var kmlLayer = omnivore.kml(url,null,customLayer).addTo(map);
+    /*add KML layer to map*/
+    map.addLayer(kmlLayer);
+  }
 
-          /* Listens to clicks on mitaro*/
-        kmlLayer.on('click', function (e) {
-
-            var mtaro = e.layer.feature.properties;
-            var msg = mtaro.name + '<br/>'+ mtaro.description;
-
-            /* popup Window for displaying details of Mtalo */
-                var popup = L.popup()
-                    .setLatLng(e.latlng)
-                    .setContent(msg)
-                    .openOn(map);
-        });
-
-        /*add KML layer to map*/
-        map.addLayer(kmlLayer);
-    }
-
-
-
-}
+});

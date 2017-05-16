@@ -3,34 +3,25 @@
   %head
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
-    %link{:crossorigin => "", :href => "https://unpkg.com/leaflet@1.0.3/dist/leaflet.css", :integrity => "sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==", :rel => "stylesheet"}/
     = stylesheet_link_tag "application"
-    %script{:crossorigin => "", :integrity => "sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==", :src => "https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"}
+    = stylesheet_link_tag "leaflet"
+    = stylesheet_link_tag "drains"
+    
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
-    = javascript_include_tag "KML.js"
-    = javascript_include_tag "omnivore.js"
     = javascript_include_tag "application"
     = javascript_include_tag "jquery.browser"
 
     = csrf_meta_tags
     %meta{:name => "viewport", :content => "initial-scale=1.0, user-scalable=no"}
 
-    %meta{:content => "Chicagoshovels.org", :itemprop => "name"}
-    %meta{:content => "Adopt a sidewalk by claiming it on an interactive map", :itemprop => "description"}
-    %meta{:content => "http://www.cityofchicago.org/content/dam/city/depts/mayor/Chicago%20Shovels/FireHydrant.png", :itemprop => "image"}/
-
-    :javascript
-      var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-29218311-1']);_gaq.push(['_trackPageview']);
-      (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    %meta{:content => "twaamtaro.org", :itemprop => "name"}
+    %meta{:content => "Adopt a drain by claiming it on an interactive map", :itemprop => "description"}
+    %meta{:content => "http://www.twaamtaro.org/content/mtaro.png", :itemprop => "image"}
 
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
 
-  %body{:onload => "javascript:init();"}
+  %body
     #fb-root
     :javascript
       (function(d, s, id) {

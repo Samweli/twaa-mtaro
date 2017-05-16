@@ -1,0 +1,8 @@
+div.card-unclean {
+    width: 270px;
+    box-shadow: 0 4px 8px 0 rgba(46,138,138,1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    text-align: center;
+    margin-top: 90px;
+    border-bottom-left-radius: 1.2em;
+    border-bottom-right-radius: 1.2em;
+}

@@ -1,9 +1,9 @@
 development: &DEVELOPMENT
   adapter: postgresql
-  database: mitarokigogo
+  database: adoptasidewalk_dev
   host: localhost
-  username: postgres
-  password: mlowe
+  username: drainuser
+  password: workhard
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
