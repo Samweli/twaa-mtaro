@@ -2,8 +2,11 @@ html {
   height: 100%;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Aldrich');
+
 body {
-  font-family: Arial,Helvetica,sans-serif;
+  /*font-family: Arial,Helvetica,sans-serif;*/
+  font-family: 'Aldrich', sans-serif;
   height: 100%;
   margin: 0px;
   padding: 0px;

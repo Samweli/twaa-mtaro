@@ -1,6 +1,6 @@
 #address_box.radius_5
   = form_for :address, :html => {:id => "address_form", :class => 'form narrow'} do |f|
-    = hidden_field_tag :city_state, "Chicago, IL"
+    = hidden_field_tag :city_state, "Dar es salaam, TZ"
     =# hidden_field_tag :limit, params[:limit] || 40
     =# label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address]
@@ -9,7 +9,7 @@
   .font_12.link_1.center
     #missing_address
       = link_to "Don't see your sidewalk on the map?",
-          'http://webapps.cityofchicago.org/eforms/org/cityofchicago/adoptsidewalk/adopt.jsp',
+          'http://webapps.twaamtaro.org/adoptsidewalk/adopt.jsp',
           :target => '_blank'
 
     - unless user_signed_in?
