@@ -37,7 +37,7 @@ $(function() {
     /* dyamically loading mitaro using the center coordinates */
     var c = map.getCenter();
     console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-    var url = 'http://localhost:3000/sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+    var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
 
             /* Loading KML*/
     var kmlLayer = omnivore.kml(url,null,customLayer).addTo(map);
