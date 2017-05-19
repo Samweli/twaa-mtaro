@@ -1,8 +1,8 @@
 class SmsController < ApplicationController
 	def new
-		
+
 		twiml = Twilio::TwiML::Response.new do |response|
-	     response.Say "Asante"
+	     response.Message "Asante"
 	    end
 	    render xml: twiml.to_xml, content_type:'text/xml'
 
