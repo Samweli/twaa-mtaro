@@ -1,10 +1,10 @@
 class SmsController < ApplicationController
 	def new
-		puts params
+		
 		twiml = Twilio::TwiML::Response.new do |response|
 	     response.Say "Asante"
 	    end
-	    render xml: twiml.to_xml
+	    render xml: twiml.to_xml, content_type:'text/xml'
 
 		# sidewalk = Sidewalk.find_by_user_phone_number(from_number)
 
