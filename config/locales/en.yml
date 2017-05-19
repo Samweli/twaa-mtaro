@@ -10,7 +10,7 @@ en:
     email_password: "Email me my password"
     find: "Find Address"
     continue: "Continue"
-    send_reminder: "Send reminder to shovel"
+    send_reminder: "Send reminder to clean"
     register: "Register now"
     sign_in: "Sign in"
     sign_out: "Sign out"

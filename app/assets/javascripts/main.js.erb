@@ -7,7 +7,7 @@ $(function() {
     doubleClickZoom:false
   }
 
-
+ 
   /* Creating map*/
   var map = new L.Map('map_canvas',mapOptions);
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
@@ -51,7 +51,8 @@ $(function() {
                   '<h1>Haujasafishwa</h1>' +
                   '</div>' +
                   '<div class="container">' +
-                      '<p>Mtaro huu wa '+ mtaro.name +
+                      '<p>Mtaro huu wa '+ mtaro.description +
+                      + mtaro.name +
                       ' haujafanyiwa usafi tafadhali ' +
                       'mjulishe muhusika.Asante</p>' +
                       '<button id="btn">Muhusika</button>' +
