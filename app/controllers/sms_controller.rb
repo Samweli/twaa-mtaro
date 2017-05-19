@@ -1,6 +1,10 @@
 class SmsController < ApplicationController
 	def new
 		puts params
+		twiml = Twilio::TwiML::Response.new do |response|
+	     response.Say "Asante"
+	    end
+	    render xml: twiml.to_xml
 
 		# sidewalk = Sidewalk.find_by_user_phone_number(from_number)
 
@@ -11,6 +15,13 @@ class SmsController < ApplicationController
   #     		sidewalk.save(validate: false)	
   #     	end
 
-		render :json => params
 	end
+
+	# private 
+
+	# def get_new_sms_response()
+	# 	Twilio::TwiML::Response.new do |r|
+	# 	  r.Say 'Asante'
+	# 	end.text
+	# end
 end

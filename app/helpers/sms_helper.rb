@@ -22,4 +22,10 @@ module SmsHelper
 	end
   end
 
+  def get_new_sms_response()
+	Twilio::TwiML::Response.new do |r|
+	  r.Say 'Asante'
+	end.text
+   end
+
 end
