@@ -3,9 +3,11 @@
   %head
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
+    / = stylesheet_link_tag "bootstrap/bootstrap.min"
     = stylesheet_link_tag "application"
     = stylesheet_link_tag "leaflet"
     = stylesheet_link_tag "drains"
+
     
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
