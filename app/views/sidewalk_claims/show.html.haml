@@ -13,12 +13,11 @@
     %br
     %span.font12='Namba ya mtaro ni '
     = @sidewalk.gid
-  %hr
 
   %div
-    %a{:href => "#", :id => "adopt_link"}
-      %button.btn.warning Si Msafi
-    %a{:href => "#", :id => "adopt_link"}
+    %a{:href => "#", :id => "unclean", :name => @sidewalk.gid , :style => "text-decoration:none;"}
+      %button.btn.warning Sio Msafi
+    %a{:href => "#", :id => "shoveled_link", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
       %button.btn.success Msafi
   
   / %h1.actions_label

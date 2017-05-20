@@ -58,12 +58,17 @@ $(function() {
     map.addLayer(kmlLayer);
   }
 
+
   /* popup Window for displaying details of Mtaro */
   function createPopup(msg, pos){
+    if (pos == null){
+      pos = map.getCenter();
+    }
     var popup = L.popup({maxWidth : 960})
                 .setLatLng(pos)
                 .setContent(msg)
                 .openOn(map);
+    bind_shovel(pos);
   }
 
   function fetchSidewalkInfo(gid, pos) {
@@ -81,7 +86,6 @@ $(function() {
         //'id': activeObjectId
       },
       error: function(jqXHR) {
-        console.log('error'+jqXHR);
       },
       success: function(data) {
         //renderSocialButtons();
@@ -99,5 +103,60 @@ $(function() {
   function hideSpinner() {
     $('#spinner').hide();
   }
+
+  function bind(pos){
+
+    $("#clean").on('click', function(e){
+    console.log('CLicked')
+    var id = $(this).attr('name');
+    var clean = true;
+    showSpinner();
+
+    $.ajax({
+      type: 'GET',
+      url: '/sidewalks/update',
+      data: {
+        'id': id,
+        'shoveled' : clean,
+      },
+      error: function(jqXHR) {
+        hideSpinner();
+        createPopup('Problem, try later', pos);
+      },
+      success: function(data) {
+        //renderSocialButtons();
+        hideSpinner();
+        createPopup('Finish', pos);
+      }
+    });
+    
+  });
+}
+
+function bind_shovel(pos){
+
+  $('#shoveled_link').on('click', function() {
+    var id = $(this).attr('data-moid');
+
+    $.ajax({
+      type: 'POST',
+      url: '/sidewalks/' + id,
+      data: { 'moid': $(this).attr('data-moid'),
+              'authenticity_token': AUTH_TOKEN,
+              '_method': 'put',
+              'shoveled': true },
+      error: function(jqXHR) {
+        data = $.parseJSON(jqXHR.responseText);
+        if (bDebug) console.error(data);
+      },
+      success: function(data) {
+        refreshKML();
+        createPopup(data,pos);
+      }
+    });
+    return false;
+  });
+
+}
 
 });

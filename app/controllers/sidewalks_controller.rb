@@ -1,6 +1,7 @@
 class SidewalksController < ApplicationController
   respond_to :json
-  before_filter :authenticate_user!, :except => [:index, :find_closest]
+  # added :update in except for testing only, TO BE REMOVED
+  before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
 
   def index
     @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 100)
@@ -34,11 +35,11 @@ class SidewalksController < ApplicationController
     if params.has_key?(:shoveled)
       sidewalk.cleared = shoveled
       sidewalk.need_help = false if shoveled
-      sidewalk.save
+      sidewalk.save(validate:false)
       
-      if (claim = sidewalk.claims.find_by_user_id(current_user.id))
-        claim.update_attribute(:shoveled, shoveled)
-      end
+      # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
+      #   claim.update_attribute(:shoveled, shoveled)
+      # end
     elsif params.has_key?(:need_help)
       sidewalk.update_attribute(:need_help, need_help)
     end
