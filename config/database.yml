@@ -1,9 +1,9 @@
 development: &DEVELOPMENT
   adapter: postgresql
-  database: mitarokigogo
+  database: mitaroKigogo
   host: localhost
   username: postgres
-  password: mlowe
+  password: e27702770
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
