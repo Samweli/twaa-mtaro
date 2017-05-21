@@ -15,9 +15,9 @@
     = @sidewalk.gid
 
   %div
-    %a{:href => "#", :id => "unclean", :name => @sidewalk.gid , :style => "text-decoration:none;"}
+    %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
       %button.btn.warning Sio Msafi
-    %a{:href => "#", :id => "shoveled_link", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+    %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
       %button.btn.success Msafi
   
   / %h1.actions_label

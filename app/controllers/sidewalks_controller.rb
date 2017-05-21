@@ -31,11 +31,26 @@ class SidewalksController < ApplicationController
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
     
     sidewalk = Sidewalk.find_by_gid(params[:id])
+    sms_service = SmsService.new()
   
     if params.has_key?(:shoveled)
       sidewalk.cleared = shoveled
       sidewalk.need_help = false if shoveled
       sidewalk.save(validate:false)
+
+      status = (shoveled ? 'msafi' : 'sio msafi')
+      
+      reply_street_leader = 'Mtaro namba '+ sidewalk.gid + 
+                            'Umeuwekea alama kuwa ' + status
+      notify_user = 'Mtaro wako, namba' + sidewalk.gid +
+                    ' '+status
+
+      sms_service.send_sms(
+        reply_street_leader, 
+        sidewalk.street_leader_number);
+      sms_service.send_sms(
+        notify_user, 
+        sidewalk.user_phone_number);
       
       # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
       #   claim.update_attribute(:shoveled, shoveled)
