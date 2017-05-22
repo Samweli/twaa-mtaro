@@ -80,7 +80,7 @@ h3 {
   overflow: hidden;
   padding: 10px;
   z-index: 20;
-  margin-left: 30px
+  margin-left: 20px
 
 }
 #aside{
@@ -742,11 +742,11 @@ button {
     border: none;
     color: black;
     text-transform: uppercase;
-    padding: 10px 12px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 10px;
+    font-size: 13px;
     margin: 4px;
     cursor: pointer;
 }
