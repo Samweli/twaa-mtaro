@@ -10,16 +10,16 @@ class SidewalkClaimsController < ApplicationController
     end
     
     if (current_user.claims_count && current_user.claims_count == 1)
-      err_msg = 'You have adopted a lot of sidewalks! If you would like to adopt more sidewalks, please send your request to ChicagoShovels@cityofchicago.org'
+      err_msg = 'You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam'
       
-      #K: sent an email to chicagoshovels@cityofchicago.org to report this 100 max attempt
+      #K: sent an email to twaamtaro.org to report this 100 max attempt
       
       render :json => {:errors => err_msg}, :status => 500 and return
     end
     
     if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, current_user.id)).new_record?
       if @sidewalk.lat.nil?
-        gc = Address.geocode("#{@sidewalk.address}, Chicago, IL")
+        gc = Address.geocode("#{@sidewalk.address}, Dar es salaam")
         if gc && gc.success
           @sidewalk.lat = gc.lat
           @sidewalk.lon = gc.lng

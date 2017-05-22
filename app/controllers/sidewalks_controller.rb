@@ -38,19 +38,21 @@ class SidewalksController < ApplicationController
       sidewalk.need_help = false if shoveled
       sidewalk.save(validate:false)
 
-      status = (shoveled ? 'msafi' : 'sio msafi')
+      status = (shoveled ? 'ni msafi' : 'sio msafi')
       
-      reply_street_leader = 'Mtaro namba '+ sidewalk.gid + 
-                            'Umeuwekea alama kuwa ' + status
-      notify_user = 'Mtaro wako, namba' + sidewalk.gid +
-                    ' '+status
+      reply_street_leader = "Umeuwekea alama mtaro namba #{sidewalk.gid}", 
+                            "kuwa #{status}" 
+      notify_user = "Kiongozi wa mtaa abadilisha alama",
+                    "Mtaro wako, namba #{sidewalk.gid} #{status}"
+
+      puts reply_street_leader, notify_user
 
       sms_service.send_sms(
         reply_street_leader, 
-        sidewalk.street_leader_number);
+        '+255655899266');
       sms_service.send_sms(
         notify_user, 
-        sidewalk.user_phone_number);
+        '+255655899266');
       
       # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
       #   claim.update_attribute(:shoveled, shoveled)
