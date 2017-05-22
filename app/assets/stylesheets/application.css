@@ -60,24 +60,38 @@ h3 {
   height: 100%;
   width: auto;
   position: relative;
-  margin-left: 340px;
+  margin-left: 380px;
 }
 
 #map {
     height: 100%;
     width: auto;
 }
-
+/*#sibar-left{
+  width: 240;
+  background-color: blue;
+}*/
 #sidebar {
   position: fixed;
   left: 0;
   top: 0;
-  font-size:12px;
   height: 100%;
-  width: 320px;
+  width: 330px;
   overflow: hidden;
   padding: 10px;
   z-index: 20;
+  margin-left: 20px
+
+}
+#aside{
+  background-color: #6495ED;
+  height: 100%;
+  width: 5px;
+  overflow: hidden;
+  padding: 3px;
+  z-index: 20;
+  position: fixed;
+  left: 0;
 }
 
 form {
@@ -686,4 +700,56 @@ html[xmlns] .clearfix {
 }
 * html .clearfix {
 	height: 1%;
+}
+.main-header {
+    position: relative;
+    max-height: 100px;
+    z-index: 1030;
+}
+ 
+header{
+/*  background-color:  blue;
+*/}
+user agent stylesheet
+ aside, header,  main, nav, section {
+    display: block;
+}
+input.form-control{
+  margin-top: 15px;
+  margin-left: 10px;
+}
+p.font_16.font_bold{
+  text-align: justify;
+  margin-left: 2px;
+}
+button.button-1,button.button-3,button.button-2{
+
+border-radius: 12px
+
+}
+button.button-2{
+  background-color: red;
+}
+button.button-3{
+  background-color: #DAFF33;
+}
+button.button-1{
+  background-color: #BFECA3;
+
+}
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: black;
+    text-transform: uppercase;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px;
+    cursor: pointer;
+}
+input.form-control{
+  height: 30px;
 }
