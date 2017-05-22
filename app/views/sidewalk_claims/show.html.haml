@@ -1,28 +1,36 @@
 #actions_box
   #legend.gray_box.radius_5.font_14.center
     %h3
-      Sidewalk colors
+      Drains colors
     %ul.horizontal_items.font_bold
-      %li.needs_help= 'Needs help'
-      %li.cleared= 'Shoveled'
-      %li.adopted= 'Adopted'
-      %li.unclear= 'Not adopted'
+      %li.needs_help= 'Msaada unahitajika'
+      %li.cleared= 'Msafi'
+      %li.unclear= 'Si Msafi'
       %li.unclear.link_1= link_to 'Refresh', '#', :id => 'refresh_link'
 
-  %h2.address
+  %h4
     = @sidewalk.address
+    %br
+    %span.font12='Namba ya mtaro ni '
+    = @sidewalk.gid
+
+  %div
+    %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+      %button.btn.warning Sio Msafi
+    %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+      %button.btn.success Msafi
   
-  %h1.actions_label
-    - if @shoveled_by_me
-      .cleared= 'You have shoveled this sidewalk'
-    - elsif @my_sidewalk
-      .adopted= 'You have adopted this sidewalk'
-    - elsif @sidewalk.cleared
-      .cleared= 'This sidewalk is cleared'
-    - elsif @sidewalk.need_help
-      .needs_help= 'This sidewalk needs help'
-    - else
-      Can you shovel this sidewalk?
+  / %h1.actions_label
+  /   - if @shoveled_by_me
+  /     .cleared= 'You have shoveled this sidewalk'
+  /   - elsif @my_sidewalk
+  /     .adopted= 'You have adopted this sidewalk'
+  /   - elsif @sidewalk.cleared
+  /     .cleared= 'This sidewalk is cleared'
+  /   - elsif @sidewalk.need_help
+  /     .needs_help= 'This sidewalk needs help'
+  /   - else
+  /     Can you shovel this sidewalk?
   
   - if user_signed_in?
     %ul.actions_menu
@@ -70,20 +78,20 @@
             .btn_image
             .label I need supplies or can share.
 
-
   - else
-    #need_register.radius_5.link_1
-      Please
-      = link_to t("links.login"), '#', :id => 'sign_in_link'
-      or
-      = link_to t("links.register"), '#', :id => 'sign_up_link'
-      %br
-      to see what you can do for this sidewalk.
+    / #need_register.radius_5.link_1
+    /   Please
+    /   = link_to t("links.login"), '#', :id => 'sign_in_link'
+    /   or
+    /   = link_to t("links.register"), '#', :id => 'sign_up_link'
+    /   %br
+    /   to see what you can do for this sidewalk.
   
   - if @claims.empty?
     %p.font_18.color_warn.center
-      Nobody has adopted this sidewalk yet.
+      / Nobody has adopted this drain yet.
+      Huu mtaro hauna mhusika yoyote
   - else
-    %h1= 'Adopted by'
+    %h1= 'Umechukuliwa na'
     #people_list
       = @claims.map{|c| c.user.short_name}.join(', ')

@@ -1,5 +1,5 @@
 class MapObjectMailer < ActionMailer::Base
-  default :from => "chicagoshovels@cityofchicago.org"
+  default :from => "twaamtaro@gmail.com"
 
   def reminder(map_object)
     @map_object = map_object
@@ -7,7 +7,7 @@ class MapObjectMailer < ActionMailer::Base
     mail(
       {
         :to => map_object.user.email,
-        :subject => ["Remember to shovel", map_object.name].compact.join(' '),
+        :subject => ["Remember to clean", map_object.name].compact.join(' '),
       }
     )
   end

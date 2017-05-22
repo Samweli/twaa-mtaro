@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby "2.2.3"
 
 gem 'rails', '~> 3.2.13'
 
@@ -17,6 +18,7 @@ gem 'kaminari'
 gem 'omniauth-facebook'
 gem 'rest-client'
 gem 'browser'
+gem 'twilio-ruby'
 
 platforms :jruby do
   gem 'jruby-openssl'

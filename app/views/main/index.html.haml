@@ -1,24 +1,26 @@
 #sidebar
-  = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  =# render :partial => 'register'
-  = render :partial => 'address_form'
-  
-  -# unless user_signed_in?
-    #sidebar_login.radius_5
-      =# render :partial => 'sessions/sign_in'
+  = image_tag "logos/twaa-mtaro-mid-size-logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  %br
+  %br
+  / =# render :partial => 'register'
+  / = render :partial => 'address_form'
+
+  / -# unless user_signed_in?
+  /   #sidebar_login.radius_5
+  /     =# render :partial => 'sessions/sign_in'
 
   #mini_profile.radius_5
     = render :partial => 'user_badge'
     = render :partial => 'sidewalk_list'
 
-  %ul.social_items.clearfix
-    = render :partial => 'gplus_button'
-    = render :partial => 'facebook_button'
-    = render :partial => 'twitter_button'
+  / %ul.social_items.clearfix
+  /   = render :partial => 'gplus_button'
+  /   = render :partial => 'facebook_button'
+  /   = render :partial => 'twitter_button'
 
   #service_logos.center
-    = link_to image_tag("logos/ChicagoShovelsHOME.jpg"), 'http://www.chicagoshovels.org', :title => 'Chicago Shovels Home'
-    
+    = link_to 'Dar es salaam', 'http://www.twaamtaro.org', :target => '_blank'
+
   #feedback.font_12.link_1
     = link_to t("links.terms"), tos_path, :target => '_blank'
 

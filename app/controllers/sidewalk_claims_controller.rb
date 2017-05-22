@@ -6,10 +6,10 @@ class SidewalkClaimsController < ApplicationController
 
   def create
     unless (@sidewalk = Sidewalk.find_by_gid(params[:gid]))
-      render :json => {:errors => 'Sidewalk not found'}, :status => 500 and return
+      render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
     
-    if (current_user.claims_count && current_user.claims_count >= (current_user.max_claims || 100))
+    if (current_user.claims_count && current_user.claims_count == 1)
       err_msg = 'You have adopted a lot of sidewalks! If you would like to adopt more sidewalks, please send your request to ChicagoShovels@cityofchicago.org'
       
       #K: sent an email to chicagoshovels@cityofchicago.org to report this 100 max attempt

@@ -2,8 +2,34 @@ html {
   height: 100%;
 }
 
+//* vietnamese */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNOAHFN6BivSraYkjhveRHY.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlC2Q8seG17bfDXYR_jUsrzg.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNV_2ngZ8dMf8fLgjYEouxg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
 body {
-  font-family: Arial,Helvetica,sans-serif;
+
+  font-family: 'Source Sans Pro';
   height: 100%;
   margin: 0px;
   padding: 0px;
@@ -37,10 +63,16 @@ h3 {
   margin-left: 340px;
 }
 
+#map {
+    height: 100%;
+    width: auto;
+}
+
 #sidebar {
   position: fixed;
   left: 0;
   top: 0;
+  font-size:12px;
   height: 100%;
   width: 320px;
   overflow: hidden;
@@ -194,7 +226,8 @@ img.lock {
 #info_box {
   margin: 0px 0 0px 0;
   color: #555;
-  font-size: 12px;
+  font-size: 15px;
+  text-shadow:0 1px white;
 }
 .color_warn {
   color: #dd3131 !important;
@@ -364,20 +397,14 @@ ul.social_items > li {
   color:#3164d2;
 }
 #address_box {
-  background: -moz-linear-gradient(center top , #f5feff, #b4daf5) repeat scroll 0 0 transparent;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f5feff), color-stop(1, #b4daf5) );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5feff', endColorstr='#b4daf5');
-  background-image: -o-linear-gradient(top, #f5feff, #b4daf5);
+  background:rgba(141, 222, 92, 0.56);
   border: 1px solid #b4cdde;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
   padding: 10px;
 }
 #mini_profile {
-  background: -moz-linear-gradient(center top , #ffffff, #e0f2ff) repeat scroll 0 0 transparent;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #e0f2ff) );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e0f2ff');
-  background-image: -o-linear-gradient(top, #ffffff, #e0f2ff);
+  background:rgba(141, 222, 92, 0.56);
   border: 1px solid #dadada;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;

@@ -5,7 +5,7 @@
         %table.font_12.pen_gray.link_1
           %thead
             %tr
-              %th{:style => "text-align: left"}= "Sidewalks I Adopted"
+              %th{:style => "text-align: left"}= "Drains I Adopted"
               %th= "Shoveled?"
               %th= "Need help?"
           %tbody
@@ -18,17 +18,18 @@
           = paginate @my_sidewalks, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
     #info_box.center
-      %p.font_16.font_bold{:style => 'margin: 0'}
-        Welcome to Chicago Shovel's
+      %h2.font_bold{:style => 'margin: 0'}
+        Welcome to Dar es salaam
         %br
-          Adopt-a-Sidewalk!
+          Twaa mtaro (Adopt a drain)!
       %p
-        You may know that you're required to shovel the sidewalk in front of your home or business,
+        You may know that you're required to clean the drain near your home or business,
         %br
           but how about helping others out?
       
       %ul.features
-        %li= "Claim the sidewalks that you'll shovel this winter."
-        %li= "Share supplies like snowblowers, shovels and salt with your neighbors."
-        %li= "Ask for help if you need an extra hand this winter."
-        %li= "Let everyone know you've cleared your sidewalk."
+        %li= "Claim the drains that you'll clean this season."
+        %br
+        %li= "Ask for help if you need an extra hand this season."
+        %br
+        %li= "Let everyone know you've cleared your drain."

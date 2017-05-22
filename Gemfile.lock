@@ -166,6 +166,10 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    twilio-ruby (4.13.0)
+      builder (>= 2.1.2)
+      jwt (~> 1.0)
+      multi_json (>= 1.3.0)
     tzinfo (0.3.53)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
@@ -206,5 +210,9 @@ DEPENDENCIES
   simplecov
   therubyracer
   therubyrhino
+  twilio-ruby
   uglifier
   webmock
+
+BUNDLED WITH
+   1.11.2

@@ -1,6 +1,6 @@
 class AddSidewalkAttributes < ActiveRecord::Migration
   def change
-    change_table :chicagosidewalks do |t|
+    change_table :mitaro do |t|
       t.decimal :lat, :default => nil, :precision => 16, :scale => 14
       t.decimal :lon, :default => nil, :precision => 16, :scale => 14
       t.boolean :cleared
