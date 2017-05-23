@@ -66,7 +66,7 @@ Devise.setup do |config|
   # config.remember_across_browsers = true
 
   # recommended after removing config.remember_across_browsers = true
-  config.secret_key = '08e84778b0ecd5b3f767e2238aa62d543c128018ef6598f8a08a2b44b384547129f4c2da8e61f0af8e5ad201b49754c48944508e0ed39ae9c77f88545df2d5fc'
+  #config.secret_key = '08e84778b0ecd5b3f767e2238aa62d543c128018ef6598f8a08a2b44b384547129f4c2da8e61f0af8e5ad201b49754c48944508e0ed39ae9c77f88545df2d5fc'
 
   # If true, extends the user's remember period when remembered via cookie.
   config.extend_remember_period = false
@@ -129,6 +129,7 @@ Devise.setup do |config|
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists. Default is [:html]
   # config.navigational_formats = [:html, :iphone]
+  config.navigational_formats = ["*/*", :html, :json]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not (yet) supported by Devise,

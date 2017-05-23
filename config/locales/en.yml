@@ -92,3 +92,6 @@ en:
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME
+  welcome:
+    title: "Welcome to Dar es salaam Twaa mtaro (Adopt a drain)!"
+    body: "You may know that you're required to clean the drain near your home or business, but how about helping others out? "
