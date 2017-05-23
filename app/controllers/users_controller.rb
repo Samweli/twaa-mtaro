@@ -22,22 +22,19 @@ class UsersController < Devise::RegistrationsController
 
   def create
     build_resource
-    if verify_recaptcha
       if resource.save
         sign_in resource
         session[:omniauth] = nil unless @user.new_record?
         render :inline => "You have been registered!" and return
       else
         errors = resource.errors
+        puts errors.full_messages
       end
-    else
-      errors = "Invalid verification code."
-    end
 
     #set_flash_message :notice, :inactive_signed_up, :reason => errors if is_navigational_format?
     flash.now[:error] = errors
     flash.delete(:recaptcha_error)
-    
+
     clean_up_passwords(resource)
     render(:json => {"errors" => errors,
                     :html => render_to_string(:template => 'users/new.html.haml')},

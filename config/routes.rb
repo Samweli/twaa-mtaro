@@ -13,6 +13,7 @@ AdoptASidewalk::Application.routes.draw do
   get 'address_report' => 'addresses#report'
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
+  get '/sms/new' => 'sms#new'
 
   match '/auth/:provider/callback' => 'authentications#create'
 

@@ -1,4 +1,4 @@
-= form_for :user, :html => {:class => 'sign_in_form form'} do |f|
+= form_for :user, :html => {:class => 'sign_in_form form'}, remote:true do |f|
   .error_msg
   %ul.horizontal_items
     %li

@@ -10,7 +10,7 @@ en-US:
     email_password: "Email me my password"
     find: "Find Address"
     continue: "Continue"
-    send_reminder: "Send reminder to shovel"
+    send_reminder: "Send reminder to clean"
     register: "Register now"
     sign_in: "Sign in"
     sign_out: "Sign out"
@@ -25,10 +25,10 @@ en-US:
     public: "(may be visible to other users)"
   defaults:
     address: "address"
-    city: "Chicago, IL"
-    thing: "sidewalk"
+    city: "Dar es salaam, TZ"
+    thing: "Drain"
     this_thing: "This %{thing}"
-    tagline: "Claim responsibility for shoveling out a sidewalk after it snows."
+    tagline: "Claim responsibility for cleaning drains before it floods."
     tos: "By signing up, you agree to the %{tos}."
   errors:
     auth_failed: "Username or password is incorrect."
@@ -62,7 +62,7 @@ en-US:
     remembered_password: "Never mind. I remembered my password."
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
-    sign_up: "Register with Chicago Shovels now!"
+    sign_up: "Register with Dar es salaam drains now!"
     sign_out: "Sign Out"
     sign_in_short: "Sign In"
     sign_up_short: "Sign Up"
@@ -90,5 +90,5 @@ en-US:
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
   sponsors:
-    cfa: "Code for America"   # FIXME
-    city: "City of Boston"    # FIXME
+    cfa: "Tanzania Open data initiative"   # FIXME
+    city: "City of Dar es salaam"    # FIXME

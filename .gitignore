@@ -5,8 +5,10 @@
 .DS_Store
 .Spotlight-V100
 .Trashes
+.generators
 ._*
 .bundle
+.idea
 .config
 .sass-cache/
 .yardoc
@@ -16,6 +18,7 @@ Session.vim
 _yardoc
 coverage
 db/*.sqlite3
+public/assets
 doc/
 lib/bundler/man
 log/*.log
@@ -30,3 +33,4 @@ vendor/bundle
 ./config/database.yml
 config/database.yml
 .idea
+

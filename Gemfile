@@ -18,6 +18,7 @@ gem 'kaminari'
 gem 'omniauth-facebook'
 gem 'rest-client'
 gem 'browser'
+gem 'twilio-ruby'
 
 platforms :jruby do
   gem 'jruby-openssl'
