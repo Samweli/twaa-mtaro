@@ -1,13 +1,12 @@
 #aside 
 #sidebar
-  = image_tag "logos/twaa-mtaro.jpeg", :style => "width:340px; height: 90px;",  :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  = image_tag "logos/twaa-mtaro.jpeg", :style => "width:310px; height: 90px;",  :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
   =# render :partial => 'register'
   / = render :partial => 'address_form'
 
 
   -# unless user_signed_in?
   
-
     #sidebar_login.radius_5
       =# render :partial => 'sessions/sign_in'
 
@@ -18,11 +17,6 @@
   .input-group
   %input.form-control{:name => "q", :placeholder => "Tafuta mtaa wako...", :type => "sarch",}/
   
-
-
-
-
-
   %ul.social_items.clearfix
     = render :partial => 'gplus_button'
     = render :partial => 'facebook_button'
