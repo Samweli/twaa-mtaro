@@ -4,7 +4,11 @@ class SidewalksController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
 
   def index
-    @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 100)
+    if params.has_key?(:all)
+      @sidewalks = Sidewalk.find_all()
+    else
+
+    @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 10000)
     #puts "#{@sidewalks.size} sidewalks found for [#{params[:lat]}, #{params[:lng]}]"
     unless @sidewalks.blank?
       respond_with(@sidewalks) do |format|
@@ -40,10 +44,8 @@ class SidewalksController < ApplicationController
 
       status = (shoveled ? 'ni msafi' : 'sio msafi')
       
-      reply_street_leader = "Umeuwekea alama mtaro namba #{sidewalk.gid}", 
-                            "kuwa #{status}" 
-      notify_user = "Kiongozi wa mtaa abadilisha alama",
-                    "Mtaro wako, namba #{sidewalk.gid} #{status}"
+      reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}" 
+      notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"
 
       puts reply_street_leader, notify_user
 

@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.boolean "need_help"
     t.integer "claims_count"
     t.text    "user_phone_number"
+    t.text    "address"
   end
 
   create_table "sidewalk_claims", :force => true do |t|

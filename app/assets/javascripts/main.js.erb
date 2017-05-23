@@ -12,13 +12,19 @@ $(function() {
   var kmlLayer;
  
   /* Creating map*/
-  var map = new L.Map('map_canvas',mapOptions);
+  var map = new L.Map('map_canvas', mapOptions);
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
   map.addLayer(osm);
 
   /* load KML data when zoomed */
+  // map.on('zoomend moveend',function (ev) {
+  //         refreshKML();
+  //     }
+  // );
+
+  refreshKML("all");
   
-  var refreshKML = function () {
+  var refreshKML = function (limit) {
 
     /* Styling mitaro */
     var customLayer= L.geoJson(null, {
@@ -32,15 +38,21 @@ $(function() {
             }
         }
     });
+
     if(kmlLayer){
       map.removeLayer(kmlLayer);
     }
     
     /* dyamically loading mitaro using the center coordinates */
     var c = map.getCenter();
-    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-    var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
-
+    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng 
+    var url;
+    if (limit && limit == "all"){
+      url = 'sidewalks.kml?all=true;
+    }else{
+      url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+    }
+    
     /* Loading KML*/
     kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
 
