@@ -5,22 +5,21 @@ class SmsController < ApplicationController
 
 		message = 'ujumbe'
 
-
 		sidewalk = Sidewalk.find_by_user_phone_number(from_number)
-        unless sidewalk.blank?
-        	if (drain_status == 'msafi')
-        		sidewalk.cleared = true
-        		sidewalk.need_help = false
-        		if (sidewalk.save(validate: false))
-        			message = 'Asante, kwa kusafisha mtaro.'
-        		else
-        			message = 'Kuna tatizo kupokea taarifa za mtaro,'
-        			           'Jaribu tena baadae'
-        		end
-        	end
-        else
-        	message = 'Samahani hatukuweza kutambua mtaro wako'
-      	end
+	    unless sidewalk.blank?
+	    	if (drain_status == 'msafi')
+	    		sidewalk.cleared = true
+	    		sidewalk.need_help = false
+	    		if (sidewalk.save(validate: false))
+	    			message = 'Asante, kwa kusafisha mtaro.'
+	    		else
+	    			message = 'Kuna tatizo upokeaji taarifa za mtaro,'
+	    			           'Jaribu tena baadae'
+	    		end
+	    	end
+	    else
+	    	message = 'Samahani hatukuweza kutambua mtaro wako'
+	  	end
 
 		twiml = Twilio::TwiML::Response.new do |response|
 	     response.Message message

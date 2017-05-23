@@ -5,9 +5,11 @@ $(function() {
   var mapOptions = {
     center: center,
     zoom: 14,
-    doubleClickZoom:false
+    doubleClickZoom:true
   }
 
+  //kml layer with drains 
+  var kmlLayer;
  
   /* Creating map*/
   var map = new L.Map('map_canvas',mapOptions);
@@ -15,11 +17,7 @@ $(function() {
   map.addLayer(osm);
 
   /* load KML data when zoomed */
-  map.on('zoomend',function (ev) {
-        refreshKML();
-    }
-  );
-
+  
   var refreshKML = function () {
 
     /* Styling mitaro */
@@ -34,40 +32,46 @@ $(function() {
             }
         }
     });
-
+    if(kmlLayer){
+      map.removeLayer(kmlLayer);
+    }
+    
     /* dyamically loading mitaro using the center coordinates */
     var c = map.getCenter();
     console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
     var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
 
-    var drain_info;
+    /* Loading KML*/
+    kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
 
-            /* Loading KML*/
-    var kmlLayer = omnivore.kml(url,null,customLayer).addTo(map);
-
-      /* Listens to clicks on mitaro*/
+    /* Listens to clicks on drains*/
     kmlLayer.on('click', function (e) {
 
         var mtaro = e.layer.feature.properties;
-        // Fetching si
-        fetchSidewalkInfo(mtaro.description, e.latlng);
-
+        // Fetching drain info 
+        fetchDrainInfo(mtaro.description, e.latlng);
     });
 
     /*add KML layer to map*/
     map.addLayer(kmlLayer);
   }
+  refreshKML();
+
 
   /* popup Window for displaying details of Mtaro */
   function createPopup(msg, pos){
+    if (pos == null){
+      pos = map.getCenter();
+    }
     var popup = L.popup({maxWidth : 960})
                 .setLatLng(pos)
                 .setContent(msg)
                 .openOn(map);
+    bind(pos);
   }
 
-  function fetchSidewalkInfo(gid, pos) {
-    console.log(gid);
+  function fetchDrainInfo(gid, pos) {
+
     if (gid == undefined) {
       // do nothing
       return false;
@@ -81,7 +85,6 @@ $(function() {
         //'id': activeObjectId
       },
       error: function(jqXHR) {
-        console.log('error'+jqXHR);
       },
       success: function(data) {
         //renderSocialButtons();
@@ -91,7 +94,6 @@ $(function() {
 
   }
 
-
   function showSpinner() {
     $('#spinner').show();
   }
@@ -99,6 +101,7 @@ $(function() {
   function hideSpinner() {
     $('#spinner').hide();
   }
+
 
   /* executes javascript for recaptcha */
   function ajaxJS(data) {
@@ -241,5 +244,60 @@ $(function() {
         });
     }
 
-}); /* end of function */
 
+
+
+  function bind(pos){
+
+    $('#clean').on('click', function() {
+      var id = $(this).attr('data-moid');
+      showSpinner();
+
+      $.ajax({
+        type: 'POST',
+        url: '/sidewalks/' + id,
+        data: { 'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': true },
+        error: function(jqXHR) {
+          data = $.parseJSON(jqXHR.responseText);
+          if (bDebug) console.error(data);
+          hideSpinner();
+        },
+        success: function(data) {
+          refreshKML();
+          createPopup(data, pos);
+          hideSpinner();
+        }
+      });
+      return false;
+    });
+
+    $('#unclean').on('click', function() {
+      var id = $(this).attr('data-moid');
+      showSpinner();
+
+      $.ajax({
+        type: 'POST',
+        url: '/sidewalks/' + id,
+        data: { 'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': false },
+        error: function(jqXHR) {
+          data = $.parseJSON(jqXHR.responseText);
+          if (bDebug) console.error(data);
+        },
+        success: function(data) {
+          refreshKML();
+          createPopup(data, pos);
+          hideSpinner();
+        }
+      });
+      return false;
+    });
+
+  }
+
+});  /* end of function */

@@ -45,6 +45,30 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.boolean "need_help"
   end
 
+  create_table "mitaro_dar", :primary_key => "gid", :force => true do |t|
+    t.string  "the_geom",          :limit => 0
+    t.string  "full_id",           :limit => 254
+    t.string  "waterway",          :limit => 254
+    t.string  "covered",           :limit => 254
+    t.string  "depth",             :limit => 254
+    t.string  "width",             :limit => 254
+    t.string  "blockage",          :limit => 254
+    t.string  "tunnel",            :limit => 254
+    t.string  "diameter",          :limit => 254
+    t.string  "ditch",             :limit => 254
+    t.string  "drain",             :limit => 254
+    t.string  "name",              :limit => 254
+    t.string  "bridge",            :limit => 254
+    t.string  "height",            :limit => 254
+    t.string  "surface",           :limit => 254
+    t.string  "smoothness",        :limit => 254
+    t.string  "oneway",            :limit => 254
+    t.boolean "cleared"
+    t.boolean "need_help"
+    t.integer "claims_count"
+    t.text    "user_phone_number"
+  end
+
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

@@ -1,3 +1,4 @@
+#aside 
 #sidebar
   #nav
     Language
@@ -13,9 +14,20 @@
     = render :partial => 'user_badge'
     = render :partial => 'sidewalk_list'
 
+  %form.sidebar-form{:action => "#", :method => "get"}
+  .input-group
+  %input.form-control{:name => "q", :placeholder => "Tafuta mtaa wako...", :type => "sarch",}/
+  
+  %ul.social_items.clearfix
+    = render :partial => 'gplus_button'
+    = render :partial => 'facebook_button'
+    = render :partial => 'twitter_button'
+
+
   #service_logos.center
     = link_to 'Dar es salaam', 'http://www.twaamtaro.org', :target => '_blank'
   #feedback.font_12.link_1
     = link_to t("links.terms"), tos_path, :target => '_blank'
 #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
 #map_canvas
+

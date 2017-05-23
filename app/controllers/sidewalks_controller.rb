@@ -1,6 +1,7 @@
 class SidewalksController < ApplicationController
   respond_to :json
-  before_filter :authenticate_user!, :except => [:index, :find_closest]
+  # added :update in except for testing only, TO BE REMOVED
+  before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
 
   def index
     @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 100)
@@ -30,15 +31,32 @@ class SidewalksController < ApplicationController
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
     
     sidewalk = Sidewalk.find_by_gid(params[:id])
+    sms_service = SmsService.new()
   
     if params.has_key?(:shoveled)
       sidewalk.cleared = shoveled
       sidewalk.need_help = false if shoveled
-      sidewalk.save
+      sidewalk.save(validate:false)
+
+      status = (shoveled ? 'ni msafi' : 'sio msafi')
       
-      if (claim = sidewalk.claims.find_by_user_id(current_user.id))
-        claim.update_attribute(:shoveled, shoveled)
-      end
+      reply_street_leader = "Umeuwekea alama mtaro namba #{sidewalk.gid}", 
+                            "kuwa #{status}" 
+      notify_user = "Kiongozi wa mtaa abadilisha alama",
+                    "Mtaro wako, namba #{sidewalk.gid} #{status}"
+
+      puts reply_street_leader, notify_user
+
+      sms_service.send_sms(
+        reply_street_leader, 
+        '+255655899266');
+      sms_service.send_sms(
+        notify_user, 
+        '+255655899266');
+      
+      # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
+      #   claim.update_attribute(:shoveled, shoveled)
+      # end
     elsif params.has_key?(:need_help)
       sidewalk.update_attribute(:need_help, need_help)
     end
