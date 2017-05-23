@@ -1,6 +1,6 @@
 class Sidewalk < ActiveRecord::Base
   set_table_name 'mitaro_dar'
-  
+
   has_many :claims, :class_name => 'SidewalkClaim', :foreign_key => "gid"
   validates_presence_of :lat, :lon
   
