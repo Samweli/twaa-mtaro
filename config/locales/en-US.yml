@@ -1,25 +1,30 @@
 # Please maintain alphabetical order
-
 en-US:
   buttons:
     abandon: "Abandon this %{thing}"
     adopt: "Adopt!"
     back: "Back"
     change_password: "Change my password"
+    clean: "cleaned"
+    continue: "Continue"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
-    continue: "Continue"
+    help: "need help"
     send_reminder: "Send reminder to clean"
     register: "Register now"
     sign_in: "Sign in"
     sign_out: "Sign out"
     sign_up: "Sign up"
+    unclean: "uncleaned"
     update: "Update"
     send_request: "Send Request"
     go: "Go"
   captions:
+    adopted: "Claim the %{thing} that you'll clean this season"
+    clean: "Let everyone know you've cleared your %{thing}."
     current_password: "(we need your current password to confirm your changes)"
+    need_help: "Ask for help if you need an extra hand this season"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
@@ -58,6 +63,7 @@ en-US:
     recaptcha: "Please verify the code below"
   links:
     accessibility: "Accessibility"
+    city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
     terms: "Terms of Service"
@@ -76,11 +82,12 @@ en-US:
     signed_in: "Signed in!"
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
-    stolen: "%{thing} stolen!"
+    stolen: "%{thing} stolen!"     
   titles:
     adopt: "Adopt this %{thing}"
     adopted: "%{thing_name} has been adopted"
     byline: "by %{name}"
+    caption: "you may know that you're required to clean the drain near your home or business,but how about helping others out"
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
     ofline: "of %{organization}"
@@ -89,6 +96,12 @@ en-US:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
+    welcom: "welcom to Dar es salaam adopt a %{thing}"
+  terms:
+    list_one: "are not liable for any improper or incorrect use of the information on this site,"
+    list_two: "assume no responsibility for anyone's use of the information,"
+    list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
+    title: "The City of Dar es salaam, its agents, and its employees"  
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME
