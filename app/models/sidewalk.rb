@@ -7,9 +7,9 @@ class Sidewalk < ActiveRecord::Base
   include Geokit::Geocoders
 
   def self.find_all(limit=10000)
-    query = "%Q(
-    SELECT s.* from mitaro_dar LIMIT ?
-    )"
+    query = %Q(
+    SELECT s.*, ST_AsKML(the_geom) AS "kml" from mitaro_dar s LIMIT ?
+    )
 
     find_by_sql([query,limit.to_i])
   end

@@ -21,8 +21,6 @@ $(function() {
   //         refreshKML();
   //     }
   // );
-
-  refreshKML("all");
   
   var refreshKML = function (limit) {
 
@@ -48,7 +46,7 @@ $(function() {
     console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
     var url;
     if (limit && limit == "all"){
-      url = 'sidewalks.kml?all=true'
+      url = 'sidewalks.kml?all=true';
     }else{
       url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
     }
@@ -67,7 +65,7 @@ $(function() {
     /*add KML layer to map*/
     map.addLayer(kmlLayer);
   }
-  refreshKML();
+  refreshKML("all");
 
 
   /* popup Window for displaying details of Mtaro */

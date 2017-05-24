@@ -30,6 +30,13 @@ en:
     this_thing: "This %{thing}"
     tagline: "Claim responsibility for cleaning drains before it floods."
     tos: "By signing up, you agree to the %{tos}."
+    missing: "Don't see your sidewalk on the map?"
+    claim: "Claim the drains that you'll clean this season."
+    ask_help: "Ask for help if you need an extra hand this season."
+    notify_all: "Let everyone know you've cleared your drain."
+    welcome: "Welcome to Dar es salaam"
+    aware: "You may know that you're required to clean the drain near your home or business,"
+    help_question: "but how about helping others out?"
   errors:
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."

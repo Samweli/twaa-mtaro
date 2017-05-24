@@ -19,17 +19,18 @@
   - else
     #info_box.center
       %h2.font_bold{:style => 'margin: 0'}
-        Welcome to Dar es salaam
+        = t("defaults.welcome")
         %br
-          Twaa mtaro (Adopt a drain)!
+          = t("main.title")
       %p
-        You may know that you're required to clean the drain near your home or business,
+        = t("defaults.aware")
+       
         %br
-          but how about helping others out?
+          = t("defaults.help_question")
       
       %ul.features
-        %li= "Claim the drains that you'll clean this season."
+        %li= t("defaults.claim")
         %br
-        %li= "Ask for help if you need an extra hand this season."
+        %li= t("defaults.ask_help")
         %br
-        %li= "Let everyone know you've cleared your drain."
+        %li= t("defaults.notify_all")

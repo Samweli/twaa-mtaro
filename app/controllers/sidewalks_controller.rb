@@ -8,21 +8,21 @@ class SidewalksController < ApplicationController
       @sidewalks = Sidewalk.find_all()
       unless @sidewalks.blank?
         respond_with(@sidewalks) do |format|
-          format.kml { render }
-          end
-        else
-         render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
-       end
-    else
-
-    @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 10000)
-    #puts "#{@sidewalks.size} sidewalks found for [#{params[:lat]}, #{params[:lng]}]"
-    unless @sidewalks.blank?
-      respond_with(@sidewalks) do |format|
         format.kml { render }
       end
+      else
+        render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
+      end
     else
-      render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
+      @sidewalks = Sidewalk.find_closest(params[:lat], params[:lng], params[:limit] || 10000)
+      #puts "#{@sidewalks.size} sidewalks found for [#{params[:lat]}, #{params[:lng]}]"
+      unless @sidewalks.blank?
+        respond_with(@sidewalks) do |format|
+        format.kml { render }
+      end
+      else
+        render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
+      end
     end
   end
 
