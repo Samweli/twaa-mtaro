@@ -39,6 +39,7 @@ en-US:
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
+    error: "Have you adopted a lot of %{thing}! If you would like to adopt more %{thing}, please send your request to www.twaamtaro.org"
   labels:
     address: "Street address"
     city_state: "City"
@@ -82,7 +83,12 @@ en-US:
     signed_in: "Signed in!"
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
-    stolen: "%{thing} stolen!"     
+    stolen: "%{thing} stolen!"    
+  terms:
+    list_one: "are not liable for any improper or incorrect use of the information on this site,"
+    list_two: "assume no responsibility for anyone's use of the information,"
+    list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
+    title: "The City of Dar es salaam, its agents, and its employees" 
   titles:
     adopt: "Adopt this %{thing}"
     adopted: "%{thing_name} has been adopted"
@@ -96,12 +102,7 @@ en-US:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
-    welcom: "welcom to Dar es salaam adopt a %{thing}"
-  terms:
-    list_one: "are not liable for any improper or incorrect use of the information on this site,"
-    list_two: "assume no responsibility for anyone's use of the information,"
-    list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
-    title: "The City of Dar es salaam, its agents, and its employees"  
+    welcom: "welcom to Dar es salaam adopt a %{thing}"  
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME

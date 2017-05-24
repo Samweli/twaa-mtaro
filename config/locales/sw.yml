@@ -39,6 +39,7 @@ sw:
     auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Sijaweza Kupata %{thing}."
+    error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   labels:
     address: "Anwani ya mtaa"
     city_state: "Mji"
@@ -83,6 +84,11 @@ sw:
     signed_out: "Umetoka."
     signed_up: "Asante kwa kujisajili!"
     stolen: "%{thing} kimeibiwa!"
+  terms:
+    list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
+    list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
+    list_three: "Tovuti hii haipo tayari kwa uharibifu wa (aina yoyote, sababu yoyote, yoyote atakayesababisha, au chini ya nadharia yoyote) utakaotokea kwa njia yoyote nje na matumizi sahihi"
+    title: "Mji wa Dar es Salaam mawakala, na wafanyakazi wake"  
   titles:
     adopt: "chukua hii %{thing}"
     adopted: "%{thing_name} imechukuliwa"
