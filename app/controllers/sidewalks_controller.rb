@@ -4,8 +4,20 @@ class SidewalksController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
 
   def index
-    if params.has_key?(:all)
-      @sidewalks = Sidewalk.find_all()
+    # check for the type of drains to query
+    if params.has_key?(:type)
+      if params[:type] == 'all'
+        @sidewalks = Sidewalk.find_all()
+      else
+        if params[:type] == 'cleaned'
+          @sidewalks = Sidewalk.where(:cleared => true)
+        elsif params[:type] == 'uncleaned'
+          @sidewalks = Sidewalk.find_by_cleared(false)
+        elsif params[:type] == 'need_help'
+          @sidewalks = Sidewalk.find_by_need_help(true)
+        end
+      end
+
       unless @sidewalks.blank?
         respond_with(@sidewalks) do |format|
         format.kml { render }

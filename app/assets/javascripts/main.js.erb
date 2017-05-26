@@ -22,7 +22,7 @@ $(function() {
   //     }
   // );
   
-  var refreshKML = function (limit) {
+  var refreshKML = function (type) {
 
     /* Styling mitaro */
     var customLayer= L.geoJson(null, {
@@ -45,11 +45,12 @@ $(function() {
     var c = map.getCenter();
     console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
     var url;
-    if (limit && limit == "all"){
-      url = 'sidewalks.kml?all=true';
+    if (type){
+      url = 'sidewalks.kml?type='+type;
     }else{
       url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
     }
+    showSpinner();
     
     /* Loading KML*/
     kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
@@ -64,6 +65,8 @@ $(function() {
 
     /*add KML layer to map*/
     map.addLayer(kmlLayer);
+
+    hideSpinner();
   }
   refreshKML("all");
 
@@ -306,5 +309,13 @@ $(function() {
     });
 
   }
+
+  function get_clean(){
+
+    $('#cleaned').on('click', function() {
+      refreshKML("cleaned");
+    });
+  }
+  get_clean();
 
 });  /* end of function */
