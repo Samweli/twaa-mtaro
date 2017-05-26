@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
   end
 
   create_table "mitarokigogo", :primary_key => "gid", :force => true do |t|
+    t.string  "the_geom",     :limit => 0
     t.string  "full_id",      :limit => 254
     t.string  "osm_id",       :limit => 254
     t.string  "osm_type",     :limit => 254
@@ -38,17 +39,11 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.string  "depth",        :limit => 254
     t.string  "width",        :limit => 254
     t.string  "name",         :limit => 254
-    t.string  "the_geom",     :limit => 0
-    t.decimal "lat",                         :precision => 16, :scale => 14
-    t.decimal "lon",                         :precision => 16, :scale => 14
+    t.text    "address"
     t.boolean "cleared"
+    t.integer "claims_count"
     t.boolean "need_help"
-    t.string  "zipcode"
-    t.integer "claims_count",                                                :default => 0
   end
-
-  add_index "mitarokigogo", ["cleared"], :name => "index_mitarokigogo_on_cleared"
-  add_index "mitarokigogo", ["the_geom"], :name => "mitarokigogo_the_geom_idx"
 
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false

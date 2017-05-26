@@ -129,6 +129,7 @@ Devise.setup do |config|
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists. Default is [:html]
   # config.navigational_formats = [:html, :iphone]
+  config.navigational_formats = ["*/*", :html, :json]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not (yet) supported by Devise,
