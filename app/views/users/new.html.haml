@@ -3,7 +3,7 @@
     = devise_error_messages! 
 
 #sign_up_box
-  = form_for :user, :url => user_registration_path, :html => {:id => "sign_up_form", :class => 'form'},:format => :json,:remote => true do |f|
+  = form_for :user, :url => user_registration_path, :html => {:id => "sign_up_form", :class => 'form'} do |f|
     %h2= t("titles.register_now")
 
     .signup

@@ -1,131 +1,148 @@
-$(function() {
+$(function () {
 
-  //var center = new L.LatLng(-6.7992, 39.2428);
-  var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
-  var mapOptions = {
-    center: center,
-    zoom: 14,
-    doubleClickZoom:true
-  }
-
-  //kml layer with drains 
-  var kmlLayer;
- 
-  /* Creating map*/
-  var map = new L.Map('map_canvas',mapOptions);
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-  map.addLayer(osm);
-
-  /* load KML data when zoomed */
-  
-  var refreshKML = function () {
-
-    /* Styling mitaro */
-    var customLayer= L.geoJson(null, {
-        style: function(feature) {
-            switch (feature.properties.styleUrl) {
-                case '#unclear': return {color: "#dd9031"};
-                case '#adopted': return {color:"blue"};
-                case '#needs_help': return {color:"#de6060"};
-                case '#cleared': return {color:"green"};
-
-            }
-        }
-    });
-    if(kmlLayer){
-      map.removeLayer(kmlLayer);
+    //var center = new L.LatLng(-6.7992, 39.2428);
+    var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
+    var mapOptions = {
+        center: center,
+        zoom: 14,
+        doubleClickZoom: true
     }
-    
-    /* dyamically loading mitaro using the center coordinates */
-    var c = map.getCenter();
-    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-    var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
 
-    /* Loading KML*/
-    kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
+    //kml layer with drains
+    var kmlLayer;
+    var popup;
+    var bDebug = true;
 
-    /* Listens to clicks on drains*/
-    kmlLayer.on('click', function (e) {
+  /* Creating map*/
+    var map = new L.Map('map_canvas', mapOptions);
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+    map.addLayer(osm);
 
-        var mtaro = e.layer.feature.properties;
-        // Fetching drain info 
-        fetchDrainInfo(mtaro.description, e.latlng);
-    });
+    var refreshKML = function () {
 
-    /*add KML layer to map*/
-    map.addLayer(kmlLayer);
-  }
-  refreshKML();
+      /* Styling mitaro */
+        var customLayer = L.geoJson(null, {
+            style: function (feature) {
+                switch (feature.properties.styleUrl) {
+                    case '#unclear':
+                        return {color: "#dd9031"};
+                    case '#adopted':
+                        return {color: "blue"};
+                    case '#needs_help':
+                        return {color: "#de6060"};
+                    case '#cleared':
+                        return {color: "green"};
+
+                }
+            }
+        });
+        if (kmlLayer) {
+            map.removeLayer(kmlLayer);
+        }
+
+      /* dyamically loading mitaro using the center coordinates */
+        var c = map.getCenter();
+        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
+        var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+
+      /* Loading KML*/
+        kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
+
+      /* Listens to clicks on drains*/
+        kmlLayer.on('click', function (e) {
+
+            var mtaro = e.layer.feature.properties;
+            // Fetching drain info
+            fetchDrainInfo(mtaro.description, e.latlng);
+        });
+
+      /*add KML layer to map*/
+        map.addLayer(kmlLayer);
+    }
+    refreshKML();
 
 
   /* popup Window for displaying details of Mtaro */
-  function createPopup(msg, pos){
-    if (pos == null){
-      pos = map.getCenter();
+    function createPopup(msg, pos) {
+        if (pos == null) {
+            pos = map.getCenter();
+        }
+        popup = L.popup({maxWidth: 960})
+            .setLatLng(pos)
+            .setContent(msg)
+            .openOn(map);
+        bind(pos);
     }
-    var popup = L.popup({maxWidth : 960})
-                .setLatLng(pos)
-                .setContent(msg)
-                .openOn(map);
-    bind(pos);
-  }
 
-  function fetchDrainInfo(gid, pos) {
+    function fetchDrainInfo(gid, pos) {
 
-    if (gid == undefined) {
-      // do nothing
-      return false;
+        if (gid == undefined) {
+            // do nothing
+            map.closePopup();
+            return false;
+        }
+        var dataToReturn;
+        //if (bDebug) console.info(e.latLng);
+        $.ajax({
+            type: 'GET',
+            url: '/sidewalk_claims/' + gid,
+            data: {
+                //'id': activeObjectId
+            },
+            error: function (jqXHR) {
+            },
+            success: function (data) {
+                //renderSocialButtons();
+                createPopup(data, pos);
+            }
+        });
+
     }
-    var dataToReturn;
-    //if (bDebug) console.info(e.latLng);
-    $.ajax({
-      type: 'GET',
-      url: '/sidewalk_claims/' + gid,
-      data: {
-        //'id': activeObjectId
-      },
-      error: function(jqXHR) {
-      },
-      success: function(data) {
-        //renderSocialButtons();
-        createPopup(data, pos);
-      }
-    });
 
-  }
+    function showSpinner() {
+        $('#spinner').show();
+    }
 
-  function showSpinner() {
-    $('#spinner').show();
-  }
-  
-  function hideSpinner() {
-    $('#spinner').hide();
-  }
+    function hideSpinner() {
+        $('#spinner').hide();
+    }
+
+    function showInfoWindow() {
+        $('#info_window').show();
+    }
+
+    function unmarkError(i) {
+        $(i).removeClass('error');
+    }
+
+    function markError(i, e) {
+        e.push(i);
+        $(i).addClass('error');
+    }
 
 
   /* executes javascript for recaptcha */
-  function ajaxJS(data) {
+    function ajaxJS(data) {
 
-      $(data).find('script').each(function(){
-          $.ajax({
-              url: this.src,
-              dataType: "script",
-              success: function(){ console.log('success')}
-          });
-      });
-  }
+        $(data).find('script').each(function () {
+            $.ajax({
+                url: this.src,
+                dataType: "script",
+                success: function () {
+                    console.log('success')
+                }
+            });
+        });
+    }
 
-    /* displays sign_in form inside a popup */
-    $('body').on('click', '#sign_in_link',function() {
+  /* displays sign_in form inside a popup */
+    $('body').on('click', '#sign_in_link', function () {
+
         $.ajax({
             type: 'GET',
             url: '/users/sign_in',
-            success: function(msg) {
-
-                console.info(msg);
-
-                createPopup(msg,map.getCenter());
-
+            success: function (msg) {
+                createPopup(msg, map.getCenter());
             }
         });
         return false;
@@ -133,11 +150,11 @@ $(function() {
 
 
   /* displays sign_up form inside a popup */
-    $('body').on('click', '#sign_up_link',function() {
+    $('body').on('click', '#sign_up_link', function () {
         $.ajax({
             type: 'GET',
             url: '/users/sign_up',
-            success: function(msg) {
+            success: function (msg) {
                 createPopup(msg, map.getCenter());
                 ajaxJS(msg);
             }
@@ -145,8 +162,8 @@ $(function() {
         return false;
     });
 
-    /* signs in registered users */
-  /*  $('body').on('submit','#sign_in_form',function(e) {
+  /* signs in registered users */
+    $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
         var uemail = $('.user_email', i);
@@ -154,37 +171,62 @@ $(function() {
         var err_msg = $('.error_msg', i);
         var errors = [];
 
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '/users/sign_in.json',
-            data: {
-                'commit': submitButton.val(),
-                'utf8': '✓',
-                'authenticity_token': $('input[name="authenticity_token"]', i).val(),
-                'user': {
-                    'email': uemail.val(),
-                    'password': upwd.val(),
-                    'remember_me': $('.user_remember_me', i).val()
-                }
-            },
-            beforeSend: function() {
-            },
-            error: function(jqXHR) {
-                console.log('sign in returned an error');
-            },
-            success: function(data) {
-                console.log('sign in was successfull');
-                $('#sidebar_login').remove();
-                updateSidebar();
-                fetchSidewalkInfo();
-            }
-        });
-        return false;
-    });*/
 
-    /* collects data of a new user and submits to the backend*/
-    $('body').on('submit','#sign_up_form',function() {
+        e.preventDefault();
+        submitButton.attr('disabled', 'disabled');
+        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            markError(uemail, errors);
+        } else {
+            unmarkError(uemail);
+        }
+        if (upwd.val().length < 6 || upwd.val().length > 20) {
+            markError(upwd, errors);
+        } else {
+            unmarkError(upwd);
+        }
+        if (errors.length > 0) {
+            submitButton.removeAttr('disabled');
+            errors[0].focus();
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/users/sign_in.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', i).val(),
+                    'user': {
+                        'email': uemail.val(),
+                        'password': upwd.val(),
+                        'remember_me': $('.user_remember_me', i).val()
+                    }
+                },
+                beforeSend: function () {
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    submitButton.removeAttr('disabled');
+                    err_msg.html('<h2>' + data.errors.password + '</h2>');
+                    popup.setContent($('#IWCONTENT')[0]);
+                    uemail.focus();
+
+                },
+                success: function (data) {
+                    $('#sidebar_login.radius_5').remove();
+                    updateSidebar();
+                    fetchDrainInfo();
+
+                }
+            });
+        }
+
+        return false;
+    });
+
+
+  /* signs up new users */
+    $('body').on('submit', '#sign_up_form', function () {
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
         var ufname = $('#user_first_name');
@@ -192,38 +234,78 @@ $(function() {
         var upwd = $('#user_password');
         var upwdc = $('#user_password_confirmation');
         var errors = [];
-        $.ajax({
-            type: 'POST',
-            url: '/users.json',
-            data: {
-                'commit': submitButton.val(),
-                'utf8': '✓',
-                'authenticity_token': $('input[name="authenticity_token"]', this).val(),
-                'recaptcha_challenge_field':	$('#recaptcha_challenge_field').val(),
-                'recaptcha_response_field':	$('#recaptcha_response_field').val(),
-                'user': {
-                    'email': uemail.val(),
-                    'first_name': ufname.val(),
-                    'last_name': ulname.val(),
-                    'password': upwd.val(),
-                    'password_confirmation': upwdc.val(),
+
+
+        submitButton.attr('disabled', 'disabled');
+        if (ufname.val() === '') {
+            markError(ufname, errors);
+        } else {
+            unmarkError(ufname);
+        }
+        if (ulname.val() === '') {
+            markError(ulname, errors);
+        } else {
+            unmarkError(ulname);
+        }
+        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            markError(uemail, errors);
+        } else {
+            unmarkError(uemail);
+        }
+        if (upwd.val().length < 6 || upwd.val().length > 20) {
+            markError(upwd, errors);
+        } else {
+            unmarkError(upwd);
+        }
+        if (upwdc.val().length < 6 || upwdc.val().length > 20) {
+            markError(upwdc, errors);
+        } else {
+            unmarkError(upwdc);
+        }
+        if (errors.length > 0) {
+            submitButton.removeAttr('disabled');
+            errors[0].focus();
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/users.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                    'recaptcha_challenge_field': $('#recaptcha_challenge_field').val(),
+                    'recaptcha_response_field': $('#recaptcha_response_field').val(),
+                    'user': {
+                        'email': uemail.val(),
+                        'first_name': ufname.val(),
+                        'last_name': ulname.val(),
+                        'password': upwd.val(),
+                        'password_confirmation': upwdc.val(),
+                    }
+                },
+                beforeSend: function () {
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    hideSpinner();
+                    showInfoWindow();
+                    submitButton.removeAttr('disabled');
+                    if (data) {
+                        createPopup(data.html, map.getCenter());
+                        popup.setContent($('#IWCONTENT')[0]);
+                        ajaxJS(data.html);
+                    }
+
+                },
+                success: function (data) {
+                    $('#sidebar_login.radius_5').remove();
+                    updateSidebar();
+                    fetchDrainInfo();
                 }
-            },
-            beforeSend: function() {
-            },
-            error: function(jqXHR) {
-                console.log('sign up has returned an error');
-                data = $.parseJSON(jqXHR.responseText);
-               console.warn(data);
-            },
-            success: function(data) {
-                console.log('sign up was successful');
-                console.log(data);
-                $('#sidebar_login').remove();
-                updateSidebar();
-                fetchSidewalkInfo();
-            }
-        });
+            });
+
+        }
 
         return false;
     });
@@ -233,10 +315,10 @@ $(function() {
             type: 'GET',
             url: '/sidebar',
             dataType: 'json',
-            error: function(jqXHR) {
+            error: function (jqXHR) {
                 //if (bDebug) console.error(jqXHR);
             },
-            success: function(data) {
+            success: function (data) {
                 //if (bDebug) console.info(data);
                 $('#username').replaceWith(data['user_badge']);
                 $('#sidewalk_list').replaceWith(data['sidewalk_list']);
@@ -245,59 +327,61 @@ $(function() {
     }
 
 
+    function bind(pos) {
 
+        $('#clean').on('click', function () {
+            var id = $(this).attr('data-moid');
+            showSpinner();
 
-  function bind(pos){
+            $.ajax({
+                type: 'POST',
+                url: '/sidewalks/' + id,
+                data: {
+                    'moid': $(this).attr('data-moid'),
+                    'authenticity_token': AUTH_TOKEN,
+                    '_method': 'put',
+                    'shoveled': true
+                },
+                error: function (jqXHR) {
+                    //  if (bDebug) console.error(data);
+                    data = $.parseJSON(jqXHR.responseText);
+                    hideSpinner();
+                },
+                success: function (data) {
+                    refreshKML();
+                    createPopup(data, pos);
+                    hideSpinner();
+                }
+            });
+            return false;
+        });
 
-    $('#clean').on('click', function() {
-      var id = $(this).attr('data-moid');
-      showSpinner();
+        $('#unclean').on('click', function () {
+            var id = $(this).attr('data-moid');
+            showSpinner();
 
-      $.ajax({
-        type: 'POST',
-        url: '/sidewalks/' + id,
-        data: { 'moid': $(this).attr('data-moid'),
-                'authenticity_token': AUTH_TOKEN,
-                '_method': 'put',
-                'shoveled': true },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          if (bDebug) console.error(data);
-          hideSpinner();
-        },
-        success: function(data) {
-          refreshKML();
-          createPopup(data, pos);
-          hideSpinner();
-        }
-      });
-      return false;
-    });
+            $.ajax({
+                type: 'POST',
+                url: '/sidewalks/' + id,
+                data: {
+                    'moid': $(this).attr('data-moid'),
+                    'authenticity_token': AUTH_TOKEN,
+                    '_method': 'put',
+                    'shoveled': false
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    if (bDebug) console.error(data);
+                },
+                success: function (data) {
+                    refreshKML();
+                    createPopup(data, pos);
+                    hideSpinner();
+                }
+            });
+            return false;
+        });
 
-    $('#unclean').on('click', function() {
-      var id = $(this).attr('data-moid');
-      showSpinner();
-
-      $.ajax({
-        type: 'POST',
-        url: '/sidewalks/' + id,
-        data: { 'moid': $(this).attr('data-moid'),
-                'authenticity_token': AUTH_TOKEN,
-                '_method': 'put',
-                'shoveled': false },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          if (bDebug) console.error(data);
-        },
-        success: function(data) {
-          refreshKML();
-          createPopup(data, pos);
-          hideSpinner();
-        }
-      });
-      return false;
-    });
-
-  }
+    }
 
 });  /* end of function */

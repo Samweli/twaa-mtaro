@@ -25,7 +25,7 @@ class UsersController < Devise::RegistrationsController
       if resource.save
         sign_in resource
         session[:omniauth] = nil unless @user.new_record?
-        render :inline => "You have been registered!" and return
+        render(:json => {"message" => "you have signed up successfully"}, :status => 200) and return
       else
         errors = resource.errors
         puts errors.full_messages
