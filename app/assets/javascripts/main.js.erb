@@ -276,7 +276,7 @@ $(function() {
           hideSpinner();
         },
         success: function(data) {
-          refreshKML();
+          refreshKML("all");
           createPopup(data, pos);
           hideSpinner();
         }
@@ -300,7 +300,7 @@ $(function() {
           if (bDebug) console.error(data);
         },
         success: function(data) {
-          refreshKML();
+          refreshKML("all");
           createPopup(data, pos);
           hideSpinner();
         }

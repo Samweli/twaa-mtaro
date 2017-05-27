@@ -12,9 +12,9 @@ class SidewalksController < ApplicationController
         if params[:type] == 'cleaned'
           @sidewalks = Sidewalk.where(:cleared => true)
         elsif params[:type] == 'uncleaned'
-          @sidewalks = Sidewalk.find_by_cleared(false)
+          @sidewalks = Sidewalk.where(:cleared => false)
         elsif params[:type] == 'need_help'
-          @sidewalks = Sidewalk.find_by_need_help(true)
+          @sidewalks = Sidewalk.where(:need_help => true)
         end
       end
 
@@ -68,12 +68,12 @@ class SidewalksController < ApplicationController
 
       puts reply_street_leader, notify_user
 
-      sms_service.send_sms(
-        reply_street_leader, 
-        '+255655899266');
-      sms_service.send_sms(
-        notify_user, 
-        '+255655899266');
+      # sms_service.send_sms(
+      #   reply_street_leader, 
+      #   '+255655899266');
+      # sms_service.send_sms(
+      #   notify_user, 
+      #   '+255655899266');
       
       # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
       #   claim.update_attribute(:shoveled, shoveled)
