@@ -1,10 +1,18 @@
 class Sidewalk < ActiveRecord::Base
   set_table_name 'mitarokigogo'
-  
+
   has_many :claims, :class_name => 'SidewalkClaim', :foreign_key => "gid"
   validates_presence_of :lat, :lon
   
   include Geokit::Geocoders
+
+  def self.find_all(limit=10000)
+    query = %Q(
+    SELECT s.*, ST_AsKML(the_geom) AS "kml" from mitarokigogo s LIMIT ?
+    )
+
+    find_by_sql([query,limit.to_i])
+  end
 
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(

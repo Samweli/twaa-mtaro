@@ -18,7 +18,7 @@ $(function () {
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
     map.addLayer(osm);
 
-    var refreshKML = function () {
+    var refreshKML = function (limit) {
 
       /* Styling mitaro */
         var customLayer = L.geoJson(null, {
@@ -33,6 +33,7 @@ $(function () {
                     case '#cleared':
                         return {color: "green"};
 
+
                 }
             }
         });
@@ -40,10 +41,20 @@ $(function () {
             map.removeLayer(kmlLayer);
         }
 
-      /* dyamically loading mitaro using the center coordinates */
-        var c = map.getCenter();
-        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng);
-        var url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+
+    
+    /* dyamically loading mitaro using the center coordinates */
+    var c = map.getCenter();
+    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
+    var url;
+    if (limit && limit == "all"){
+      url = 'sidewalks.kml?all=true';
+    }else{
+      url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+    }
+    
+    /* Loading KML*/
+    kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
 
       /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
@@ -59,7 +70,8 @@ $(function () {
       /*add KML layer to map*/
         map.addLayer(kmlLayer);
     }
-    refreshKML();
+            refreshKML("all");
+
 
 
   /* popup Window for displaying details of Mtaro */
@@ -326,62 +338,57 @@ $(function () {
         });
     }
 
+  function bind(pos){
 
-    function bind(pos) {
+    $('#clean').on('click', function() {
+      var id = $(this).attr('data-moid');
+      showSpinner();
 
-        $('#clean').on('click', function () {
-            var id = $(this).attr('data-moid');
-            showSpinner();
+      $.ajax({
+        type: 'POST',
+        url: '/sidewalks/' + id,
+        data: { 'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': true },
+        error: function(jqXHR) {
+          data = $.parseJSON(jqXHR.responseText);
+          if (bDebug) console.error(data);
+          hideSpinner();
+        },
+        success: function(data) {
+          refreshKML();
+          createPopup(data, pos);
+          hideSpinner();
+        }
+      });
+      return false;
+    });
 
-            $.ajax({
-                type: 'POST',
-                url: '/sidewalks/' + id,
-                data: {
-                    'moid': $(this).attr('data-moid'),
-                    'authenticity_token': AUTH_TOKEN,
-                    '_method': 'put',
-                    'shoveled': true
-                },
-                error: function (jqXHR) {
-                    //  if (bDebug) console.error(data);
-                    data = $.parseJSON(jqXHR.responseText);
-                    hideSpinner();
-                },
-                success: function (data) {
-                    refreshKML();
-                    createPopup(data, pos);
-                    hideSpinner();
-                }
-            });
-            return false;
-        });
+    $('#unclean').on('click', function() {
+      var id = $(this).attr('data-moid');
+      showSpinner();
 
-        $('#unclean').on('click', function () {
-            var id = $(this).attr('data-moid');
-            showSpinner();
+      $.ajax({
+        type: 'POST',
+        url: '/sidewalks/' + id,
+        data: { 'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': false },
+        error: function(jqXHR) {
+          data = $.parseJSON(jqXHR.responseText);
+          if (bDebug) console.error(data);
+        },
+        success: function(data) {
+          refreshKML();
+          createPopup(data, pos);
+          hideSpinner();
+        }
+      });
+      return false;
+    });
 
-            $.ajax({
-                type: 'POST',
-                url: '/sidewalks/' + id,
-                data: {
-                    'moid': $(this).attr('data-moid'),
-                    'authenticity_token': AUTH_TOKEN,
-                    '_method': 'put',
-                    'shoveled': false
-                },
-                error: function (jqXHR) {
-                    data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
-                },
-                success: function (data) {
-                    refreshKML();
-                    createPopup(data, pos);
-                    hideSpinner();
-                }
-            });
-            return false;
-        });
-
-    }
+  }
 
 });  /* end of function */
