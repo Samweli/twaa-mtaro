@@ -28,7 +28,6 @@ class UsersController < Devise::RegistrationsController
         render(:json => {"message" => "you have signed up successfully"}, :status => 200) and return
       else
         errors = resource.errors
-        puts errors.full_messages
       end
 
     #set_flash_message :notice, :inactive_signed_up, :reason => errors if is_navigational_format?
