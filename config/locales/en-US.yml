@@ -7,6 +7,8 @@ en-US:
     change_password: "Change my password"
     continue: "Continue"
     cleaned: "Clean"
+    clean: 'cleaned'
+    dirt: 'not clean'
     need_help: "Need help"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
@@ -16,26 +18,33 @@ en-US:
     sign_in: "Sign in"
     sign_out: "Sign out"
     sign_up: "Sign up"
-    unclean: "uncleaned"
     update: "Update"
     send_request: "Send Request"
     go: "Go"
   captions:
     adopted: "Claim the %{thing} that you'll clean this season"
-    clean: "Let everyone know you've cleared your %{thing}."
+    clean: "clean."
     current_password: "(we need your current password to confirm your changes)"
-    need_help: "Ask for help if you need an extra hand this season"
+    drain_status: "This %{thing} has not adopted"
+    need_help: "help is needed"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
+    unclean: "not Clean"
   defaults:
     address: "address"
+    ask_help: "Ask for help if you need an extra hand this season."
+    aware: "You may know that you're required to clean the drain near your home or business,but how about helping others out? "
     city: "Dar es salaam, TZ"
+    claim: "Claim the drains that you'll clean this season "
+    drain_number: "The number of %{thing} is"
+    missing: "Don't see your sidewalk on the map?"
+    notify_all: "Let everyone know you've cleared your drain."
     thing: "Drain"
     this_thing: "This %{thing}"
     tagline: "Claim responsibility for cleaning drains before it floods."
     tos: "By signing up, you agree to the %{tos}."
-    missing: "Don't see your sidewalk on the map?"
+    welcome: "Welcome to Dar es salaam"    
   errors:
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
@@ -69,6 +78,7 @@ en-US:
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
     terms: "Terms of Service"
+    refresh: "reflesh"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
     sign_out: "Sign Out"
@@ -103,7 +113,7 @@ en-US:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
-    welcom: "welcom to Dar es salaam adopt a %{thing}"  
+    drain_color: "Drains colors"
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME
