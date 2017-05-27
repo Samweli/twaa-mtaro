@@ -18,7 +18,7 @@
     %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
       = button_tag t("buttons.dirty"), :class => "btn warning"
     %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
-      = button_tag t("buttons.clean"), :class => "btn success"
+      = button_tag t("buttons.cleaned"), :class => "btn success"
   
   / %h1.actions_label
   /   - if @shoveled_by_me

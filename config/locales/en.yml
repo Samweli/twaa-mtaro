@@ -32,7 +32,7 @@ en:
     private: "(private)"
     public: "(may be visible to other users)"
     taken: "It is taken with "
-    unclean: "Not clean"
+    unclean: "not clean"
   defaults:
     address: "address"
     city: "Dar es salaam, TZ"

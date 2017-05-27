@@ -129,24 +129,35 @@ $(function() {
 
     /* displays sign_in form inside a popup */
     $('body').on('click', '#sign_in_link',function() {
+
+    var locale = urlParam('locale');
+
         $.ajax({
             type: 'GET',
             url: '/users/sign_in',
-            success: function(msg) {
+            data: {
+        'locale' : locale
+      },
+        success: function(msg) {
 
-                createPopup(msg,map.getCenter());
+               createPopup(msg,map.getCenter());
 
             }
+
         });
         return false;
     });
 
-
   /* displays sign_up form inside a popup */
     $('body').on('click', '#sign_up_link',function() {
+      var locale = urlParam('locale');
+
         $.ajax({
             type: 'GET',
             url: '/users/sign_up',
+            data: {
+              'locale' : locale
+            },
             success: function(msg) {
                 createPopup(msg, map.getCenter());
                 ajaxJS(msg);
