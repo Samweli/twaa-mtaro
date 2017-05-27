@@ -102,6 +102,7 @@ $(function() {
       success: function(data) {
         //renderSocialButtons();
         createPopup(data, pos);
+        hideSpinner();
       }
     });
 
@@ -278,7 +279,6 @@ $(function() {
         success: function(data) {
           refreshKML("all");
           createPopup(data, pos);
-          hideSpinner();
         }
       });
       return false;
