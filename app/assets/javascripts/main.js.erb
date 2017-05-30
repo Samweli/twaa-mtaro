@@ -98,23 +98,26 @@ $(function () {
         }
         var dataToReturn;
         //if (bDebug) console.info(e.latLng);
+        var locale = urlParam('locale');
+        var dataToReturn;
+        //if (bDebug) console.info(e.latLng);
         $.ajax({
-            type: 'GET',
-            url: '/sidewalk_claims/' + gid,
-            data: {
-                //'id': activeObjectId
-            },
-            error: function (jqXHR) {
-            },
-            success: function (data) {
-                //renderSocialButtons();
-                createPopup(data, pos);
-                hideSpinner();
-            }
+          type: 'GET',
+          url: '/sidewalk_claims/' + gid,
+          data: {
+            //'id': activeObjectId
+            'locale' : locale
+          },
+          error: function(jqXHR) {
+          },
+          success: function(data) {
+            //renderSocialButtons();
+            createPopup(data, pos);
+            hideSpinner();
+          }
         });
 
     }
-
     function showSpinner() {
         $('#spinner').show();
     }
@@ -151,26 +154,37 @@ $(function () {
         });
     }
 
-  /* displays sign_in form inside a popup */
-    $('body').on('click', '#sign_in_link', function () {
+    /* displays sign_in form inside a popup */
+    $('body').on('click', '#sign_in_link',function() {
+
+    var locale = urlParam('locale');
 
         $.ajax({
             type: 'GET',
             url: '/users/sign_in',
-            success: function (msg) {
-                createPopup(msg, map.getCenter());
+            data: {
+              'locale' : locale
+            },
+        success: function(msg) {
+
+               createPopup(msg,map.getCenter());
             }
+
         });
         return false;
     });
 
-
   /* displays sign_up form inside a popup */
-    $('body').on('click', '#sign_up_link', function () {
+    $('body').on('click', '#sign_up_link',function() {
+      var locale = urlParam('locale');
+
         $.ajax({
             type: 'GET',
             url: '/users/sign_up',
-            success: function (msg) {
+            data: {
+              'locale' : locale
+            },
+            success: function(msg) {
                 createPopup(msg, map.getCenter());
                 ajaxJS(msg);
             }
@@ -401,5 +415,15 @@ $(function () {
     });
   }
   get_clean();
+
+  var urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+  }
 
 });  /* end of function */

@@ -61,7 +61,7 @@ class SidewalksController < ApplicationController
       sidewalk.need_help = false if shoveled
       sidewalk.save(validate:false)
 
-      status = (shoveled ? 'ni msafi' : 'sio msafi')
+      status = (shoveled ? [t("messages.clear_status")] : [t("message.dirt_status")])
       
       reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}" 
       notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"

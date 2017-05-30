@@ -4,7 +4,7 @@
     / Language
     \#{link_to_unless_current "English", locale: "en"}
     \#{link_to_unless_current "Kiswahili", locale: "sw"}
-  = image_tag "logos/twaa-mtaro.jpeg",:style => "width:340px; height:80px;", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+  = image_tag "logos/twaa-mtaro-logo.jpeg", :style => "width:340px; height: 90px;",  :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
   = # render :partial => 'register'
   = render :partial => 'address_form'
   - # unless user_signed_in?
@@ -20,7 +20,7 @@
     = render :partial => 'twitter_button'
 
   #service_logos.center
-    = link_to 'Dar es salaam', 'http://www.twaamtaro.org', :target => '_blank'
+    = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
   #feedback.font_12.link_1
     = link_to t("links.terms"), tos_path, :target => '_blank'
 #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}

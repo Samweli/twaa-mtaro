@@ -22,6 +22,11 @@ div.card-unclean {
     background-color: #f0ad4e;
     border-color: #eea236;
 }
+.primary{
+     color: #fff;
+     background-color: #6495ED;
+     border-color: #93b4f0;
+}
 
 .btn {
     display: inline-block;

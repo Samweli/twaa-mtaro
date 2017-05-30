@@ -722,35 +722,6 @@ p.font_16.font_bold{
   text-align: justify;
   margin-left: 2px;
 }
-
-button.button-1,button.button-3,button.button-2{
-  border-radius: 12px
-  font-size: 73%;
-}
-
-button.button-2{
-  background-color: #d02b2b;
-}
-button.button-3{
-  background-color: #DAFF33;
-}
-button.button-1{
-  background-color: #BFECA3;
-
-}
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: black;
-    text-transform: uppercase;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    margin: 4px;
-    cursor: pointer;
-}
 input.form-control{
   height: 30px;
 }

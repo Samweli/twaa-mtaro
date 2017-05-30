@@ -6,6 +6,8 @@ en:
     adopt: "Adopt!"
     back: "Back"
     change_password: "Change my password"
+    clean: "Clean"
+    dirty: 'not clean'
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
@@ -23,9 +25,14 @@ en:
     need_help: "Needhelp"
   captions:
     current_password: "(we need your current password to confirm your changes)"
+    clean: "clean."
+    drain_status: "This %{thing} has been not adopted"
+    need_help: "help is needed"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
+    taken: "It is taken with "
+    unclean: "not clean"
   defaults:
     address: "address"
     city: "Dar es salaam, TZ"
@@ -40,10 +47,14 @@ en:
     welcome: "Welcome to Dar es salaam"
     aware: "You may know that you're required to clean the drain near your home or business,"
     help_question: "but how about helping others out?"
+    drain_number: "The number of %{thing} is"
   errors:
+    error: "Drain"
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
+    drain_notfound: "%{error} not found"
+    adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
   labels:
     address: "Street address"
     city_state: "City"
@@ -68,8 +79,10 @@ en:
     recaptcha: "Please verify the code below"
   links:
     accessibility: "Accessibility"
+    city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
+    refresh: "reflesh"
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
@@ -78,6 +91,8 @@ en:
     sign_up_short: "Sign Up"
     login: "Login"
     register: "Register"
+  messages: 
+    notification: "Street leaader turned the color of your %{thing} number "  
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
@@ -87,10 +102,16 @@ en:
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
     stolen: "%{thing} stolen!"
+  terms:
+    list_one: "are not liable for any improper or incorrect use of the information on this site,"
+    list_two: "assume no responsibility for anyone's use of the information,"
+    list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
+    title: "The City of Dar es salaam, its agents, and its employees"   
   titles:
     adopt: "Adopt this %{thing}"
     adopted: "%{thing_name} has been adopted"
     byline: "by %{name}"
+    caption: "you may know that you're required to clean the drain near your home or business,but how about helping others out"
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
     ofline: "of %{organization}"
@@ -99,9 +120,8 @@ en:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
+    drain_color: "Drains colors"  
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME
-  welcome:
-    title: "Welcome to Dar es salaam Twaa mtaro (Adopt a drain)!"
-    body: "You may know that you're required to clean the drain near your home or business, but how about helping others out? "
+  
