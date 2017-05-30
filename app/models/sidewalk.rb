@@ -1,5 +1,5 @@
 class Sidewalk < ActiveRecord::Base
-  set_table_name 'mitarokigogo'
+  set_table_name 'mitaro_dar'
 
   has_many :claims, :class_name => 'SidewalkClaim', :foreign_key => "gid"
   validates_presence_of :lat, :lon
@@ -8,7 +8,7 @@ class Sidewalk < ActiveRecord::Base
 
   def self.find_all(limit=10000)
     query = %Q(
-    SELECT s.*, ST_AsKML(the_geom) AS "kml" from mitarokigogo s LIMIT ?
+    SELECT s.*, ST_AsKML(the_geom) AS "kml" from mitaro_dar s LIMIT ?
     )
 
     find_by_sql([query,limit.to_i])
@@ -17,7 +17,7 @@ class Sidewalk < ActiveRecord::Base
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"
-    FROM mitarokigogo s
+    FROM mitaro_dar s
     WHERE ST_Intersects(
       the_geom, 
       ST_Transform( 

@@ -15,7 +15,11 @@ $(function () {
 
   /* Creating map*/
   var map = new L.Map('map_canvas', mapOptions);
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+  var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:osmAttr
+  });
+
   map.addLayer(osm);
 
   /* load KML data when zoomed */
@@ -31,13 +35,13 @@ $(function () {
             style: function (feature) {
                 switch (feature.properties.styleUrl) {
                     case '#unclear':
-                        return {color: "#dd9031"};
+                        return {color: "#dd9031", opacity: 1, weight: 1.5};
                     case '#adopted':
-                        return {color: "blue"};
+                        return {color: "blue", opacity: 1, weight: 1.5};
                     case '#needs_help':
-                        return {color: "#de6060"};
+                        return {color: "#de6060", opacity: 1, weight: 1.5};
                     case '#cleared':
-                        return {color: "green"};
+                        return {color: "green", opacity: 1, weight: 1.5};
                 }
             }
         });
@@ -96,7 +100,6 @@ $(function () {
             map.closePopup();
             return false;
         }
-        var dataToReturn;
         //if (bDebug) console.info(e.latLng);
         var locale = urlParam('locale');
         var dataToReturn;

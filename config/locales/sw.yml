@@ -6,7 +6,7 @@ sw:
     back: "Rudi"
     change_password: "Badili nenosiri"
     continue: "Endelea"
-    cleaned: 'Iliosafishwa'
+    cleaned: 'Misafi'
     clean: 'msafi'
     dirty: "sio msafi"
     edit_profile: "Hariri wasifu"
@@ -18,10 +18,11 @@ sw:
     sign_in: "kuingia"
     sign_out: "Ondoka"
     sign_up: "kujisajili"
-    uncleaned: "michafu"
+    uncleaned: "Michafu"
     update: "badilisha"
     send_request: "Tuma maombi"
     go: "nenda"
+    all: "Yote"
   captions:
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
     clean: "msafi"

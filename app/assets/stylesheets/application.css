@@ -745,3 +745,35 @@ input.form-control{
   z-index: 30001; 
   opacity: 0.4;
 }
+
+.top-buffer { 
+  margin-top:5%;
+ }
+
+.cat-btn {
+    padding: 6px 18px;
+    margin: 0 0px 5px 5px;
+}
+
+#address_button_{
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background:none ;
+    filter:none ;
+    background-color:none ;
+    -moz-border-radius:none;
+    -webkit-border-radius:none;
+    border-radius:none ;
+    border:none ;
+    display:none ;
+    color: none;
+    font-family: none;
+    font-size: none;
+    font-weight:none ;
+    padding:none ;
+    text-decoration: none;
+    text-shadow: none;
+    zoom:none ;
+    *display:none ;
+}

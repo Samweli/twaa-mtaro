@@ -7,7 +7,7 @@ class SidewalksController < ApplicationController
     # check for the type of drains to query
     if params.has_key?(:type)
       if params[:type] == 'all'
-        @sidewalks = Sidewalk.find_all()
+        @sidewalks = Sidewalk.find_all(5000)
       else
         if params[:type] == 'cleaned'
           @sidewalks = Sidewalk.where(:cleared => true)
