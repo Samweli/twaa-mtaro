@@ -22,3 +22,9 @@
           %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
           |
           %li= link_to t("links.register"), '#', :id => "sign_up_link"
+  #nav
+    %ul.horizontal_items.item_separator.pen_lightgray.center
+      - if I18n.locale == :en 
+        %li= link_to_unless_current "Swahili", :locale => "sw"
+      - elsif  I18n.locale == :sw 
+        %li= link_to_unless_current "English", :locale => "en"

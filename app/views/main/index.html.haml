@@ -6,11 +6,7 @@
   - # unless user_signed_in?
   / #sidebar_login.radius_5
   /   = # render :partial => 'sessions/sign_in'
-  #nav
-    %ul.horizontal_items.item_separator.pen_lightgray.center
-      %li= link_to_unless_current "English", '#', :locale => "en"
-      |
-      %li= link_to_unless_current "Kiswahili", '#', :locale => "sw"
+  
   #mini_profile.radius_5
     = render :partial => 'user_badge'
     = render :partial => 'sidewalk_list'

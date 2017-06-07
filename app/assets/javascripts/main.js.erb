@@ -123,6 +123,7 @@ $(function () {
     }
     function showSpinner() {
         $('#spinner').show();
+        console.log('showing spinner');
     }
 
     function hideSpinner() {
@@ -151,7 +152,6 @@ $(function () {
                 url: this.src,
                 dataType: "script",
                 success: function () {
-                    console.log('success')
                 }
             });
         });
@@ -344,10 +344,15 @@ $(function () {
     });
 
     function updateSidebar() {
+        var locale = urlParam('locale');
+
         $.ajax({
             type: 'GET',
             url: '/sidebar',
             dataType: 'json',
+            data: {
+                'locale':locale
+            },
             error: function (jqXHR) {
                 //if (bDebug) console.error(jqXHR);
             },
@@ -363,6 +368,7 @@ $(function () {
 
     $('#clean').on('click', function() {
       var id = $(this).attr('data-moid');
+      var locale = urlParam('locale');
       showSpinner();
 
       $.ajax({
@@ -371,7 +377,8 @@ $(function () {
         data: { 'moid': $(this).attr('data-moid'),
                 'authenticity_token': AUTH_TOKEN,
                 '_method': 'put',
-                'shoveled': true },
+                'shoveled': true,
+                'locale': locale },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
           if (bDebug) console.error(data);
@@ -387,6 +394,7 @@ $(function () {
 
     $('#unclean').on('click', function() {
       var id = $(this).attr('data-moid');
+      var locale = urlParam('locale');
       showSpinner();
 
       $.ajax({
@@ -395,7 +403,8 @@ $(function () {
         data: { 'moid': $(this).attr('data-moid'),
                 'authenticity_token': AUTH_TOKEN,
                 '_method': 'put',
-                'shoveled': false },
+                'shoveled': false,
+                'locale': locale },
         error: function(jqXHR) {
           data = $.parseJSON(jqXHR.responseText);
           if (bDebug) console.error(data);
@@ -411,18 +420,27 @@ $(function () {
 
   }
 
-  function get_clean(){
+  function get_categories(){
 
     $('#cleaned').on('click', function() {
+      showSpinner();
       refreshKML("cleaned");
     });
+    $('#uncleaned').on('click', function() {
+      showSpinner();
+      refreshKML("uncleaned");
+    });
+    $('#need_help').on('click', function() {
+      showSpinner();
+      refreshKML("need_help");
+    });
   }
-  get_clean();
+  get_categories();
 
   var urlParam = function(name){
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results==null){
-       return null;
+       return 'en';
     }
     else{
        return results[1] || 0;

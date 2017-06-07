@@ -10,11 +10,11 @@ class SidewalksController < ApplicationController
         @sidewalks = Sidewalk.find_all(5000)
       else
         if params[:type] == 'cleaned'
-          @sidewalks = Sidewalk.where(:cleared => true)
+          @sidewalks = Sidewalk.where_custom(:cleared => true)
         elsif params[:type] == 'uncleaned'
-          @sidewalks = Sidewalk.where(:cleared => false)
+          @sidewalks = Sidewalk.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
-          @sidewalks = Sidewalk.where(:need_help => true)
+          @sidewalks = Sidewalk.where_custom(:need_help => true)
         end
       end
 

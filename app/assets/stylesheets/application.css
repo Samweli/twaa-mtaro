@@ -628,9 +628,9 @@ form.wide label {
 .pen_lightgray   {color: #aaa;}
 
 .needs_help {color: #de6060;}
-.cleared    {color: #8e8e8e;}
+.cleared    {color: #5cb85c;}
 .adopted    {color: #73acd5;}
-.unclear    {color: #cccccc;}
+.unclear    {color: #f0ad4e;}
 
 #my_sidewalks caption {
   caption-side: top;
@@ -776,4 +776,8 @@ input.form-control{
     text-shadow: none;
     zoom:none ;
     *display:none ;
+}
+
+.font_h3{
+  font-size: 1.5em;
 }

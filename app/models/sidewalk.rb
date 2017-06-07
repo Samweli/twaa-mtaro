@@ -14,6 +14,23 @@ class Sidewalk < ActiveRecord::Base
     find_by_sql([query,limit.to_i])
   end
 
+  def self.where_custom(arg)
+    if (arg.length == 1)
+      column = arg.keys.join("") # this returns string instead of array
+      column_value = arg.values
+     
+     # TODO replace "#{column}" with ? and add column variable in 
+     # find_by_sql function 
+      query = %Q(
+      SELECT "mitaro_dar".*, ST_AsKML(the_geom) AS "kml" FROM mitaro_dar  
+      WHERE  "#{column}" = ?
+      )
+      find_by_sql([query, column_value])
+    else
+      return
+    end
+  end
+
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)
     query = %Q(
     SELECT s.*, ST_AsKML(the_geom) AS "kml"

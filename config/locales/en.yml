@@ -7,7 +7,7 @@ en:
     back: "Back"
     change_password: "Change my password"
     clean: "Clean"
-    dirty: 'not clean'
+    dirty: 'Not clean'
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
@@ -33,7 +33,7 @@ en:
     private: "(private)"
     public: "(may be visible to other users)"
     taken: "It is taken with "
-    unclean: "not clean"
+    unclean: "Not clean"
   defaults:
     address: "address"
     city: "Dar es salaam, TZ"
@@ -103,6 +103,7 @@ en:
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
     stolen: "%{thing} stolen!"
+    welcome: 'Welcome'
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"

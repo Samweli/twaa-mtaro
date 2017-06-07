@@ -7,8 +7,8 @@ sw:
     change_password: "Badili nenosiri"
     continue: "Endelea"
     cleaned: 'Misafi'
-    clean: 'msafi'
-    dirty: "sio msafi"
+    clean: 'Msafi'
+    dirty: "Sio msafi"
     edit_profile: "Hariri wasifu"
     email_password: "Ntumie nenosiri kwenye barua pepe"
     find: "Tafuta mtaa wako"
@@ -25,14 +25,14 @@ sw:
     all: "Yote"
   captions:
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
-    clean: "msafi"
+    clean: "Msafi"
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
     drain_status: "Huu %{thing} hauna mhusika yoyote"
     need_help: "Msaada unahitajika"
     password: "(acha nafasi wazi kama huhitaji kubadili nenosiri )"
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"
-    unclean: "sio msafi"
+    unclean: "Sio msafi"
     taken: "Umechukuliwa na'"
   defaults:
     address: "mahali"
@@ -101,6 +101,7 @@ sw:
     signed_out: "Umetoka."
     signed_up: "Asante kwa kujisajili!"
     stolen: "%{thing} kimeibiwa!"
+    welcome: 'Karibu'
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
