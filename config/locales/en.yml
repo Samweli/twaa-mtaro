@@ -26,7 +26,7 @@ en:
     all: "All"
   captions:
     current_password: "(we need your current password to confirm your changes)"
-    clean: "clean."
+    clean: "Clean"
     drain_status: "This %{thing} has been not adopted"
     need_help: "help is needed"
     password: "(leave blank if you don't want to change it)"

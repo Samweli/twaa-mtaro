@@ -781,3 +781,32 @@ input.form-control{
 .font_h3{
   font-size: 1.5em;
 }
+
+.btn-submit{
+    background-color: #79bbff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #469df5;
+    display: inline-block;
+    color: #ffffff;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0px #287ace;
+    zoom: 1;
+}
+
+.input-text{
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    color: #666;
+    font: 13px/18px Helvetica Neue,Helvetica,Arial,sans-serif !important;
+    margin: 0;
+    padding: 5px;
+    width: 145px;
+}
