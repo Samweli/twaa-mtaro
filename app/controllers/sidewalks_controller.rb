@@ -7,7 +7,7 @@ class SidewalksController < ApplicationController
     # check for the type of drains to query
     if params.has_key?(:type)
       if params[:type] == 'all'
-        @sidewalks = Sidewalk.find_all(5000)
+        @sidewalks = Sidewalk.find_all(10000)
       else
         if params[:type] == 'cleaned'
           @sidewalks = Sidewalk.where_custom(:cleared => true)
@@ -15,7 +15,7 @@ class SidewalksController < ApplicationController
           @sidewalks = Sidewalk.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
           @sidewalks = Sidewalk.where_custom(:need_help => true)
-        elsif params[:type].include? "street"
+        elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]
           puts value
@@ -70,8 +70,6 @@ class SidewalksController < ApplicationController
       
       reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}" 
       notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"
-
-      puts reply_street_leader, notify_user
 
       # sms_service.send_sms(
       #   reply_street_leader, 

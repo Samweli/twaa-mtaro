@@ -27,41 +27,63 @@ $(function () {
   //         refreshKML();
   //     }
   // );
+  var urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return 'en';
+    }
+    else{
+       return results[1] || 0;
+    }
+  }
 
-    var refreshKML = function (type) {
+  var refreshKML = function (type) {
 
-      /* Styling mitaro */
-        var customLayer = L.geoJson(null, {
-            style: function (feature) {
-                switch (feature.properties.styleUrl) {
-                    case '#unclear':
-                        return {color: "#dd9031", opacity: 1, weight: 2.5};
-                    case '#adopted':
-                        return {color: "gray", opacity: 1, weight: 2.5};
-                    case '#needs_help':
-                        return {color: "#6495ed", opacity: 1, weight: 2.5};
-                    case '#cleared':
-                        return {color: "green", opacity: 1, weight: 2.5};
-                }
+   /* Styling mitaro */
+   var customLayer = L.geoJson(null, {
+        style: function (feature) {
+            switch (feature.properties.styleUrl) {
+                case '#unclear':
+                    return {color: "#dd9031", opacity: 1, weight: 2.5};
+                case '#adopted':
+                    return {color: "gray", opacity: 1, weight: 2.5};
+                case '#needs_help':
+                    return {color: "#6495ed", opacity: 1, weight: 2.5};
+                case '#cleared':
+                    return {color: "green", opacity: 1, weight: 2.5};
             }
-        });
-        if (kmlLayer) {
-            map.removeLayer(kmlLayer);
         }
+    });
+    if (kmlLayer) {
+        map.removeLayer(kmlLayer);
+    }
     
     /* dyamically loading mitaro using the center coordinates */
     var c = map.getCenter();
     console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
+    var locale = urlParam('locale');
+
     var url;
     if (type){
-      url = 'sidewalks.kml?type='+type;
+      url = 'sidewalks.kml?locale='+ locale +'&type='+type;
     }else{
-      url = 'sidewalks.kml?lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+      url = 'sidewalks.kml?locale='+ locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
     }
     showSpinner();
     
     /* Loading KML*/
-    kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
+    kmlLayer = omnivore.kml(url, null, customLayer)
+    .on('ready', function() {
+        hideSpinner();
+    })
+    .on('error', function(jqXHR) {
+        hideSpinner();
+        data = $.parseJSON(jqXHR.error.responseText);
+
+        msg = '<h2>' + data.errors.address + '</h2>';
+        createPopup(msg, map.getCenter());
+        
+    }).addTo(map);
 
       /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
@@ -76,7 +98,7 @@ $(function () {
 
       /*add KML layer to map*/
         map.addLayer(kmlLayer);
-        hideSpinner();
+        
     }
     
     refreshKML("all");
@@ -123,7 +145,6 @@ $(function () {
     }
     function showSpinner() {
         $('#spinner').show();
-        console.log('showing spinner');
     }
 
     function hideSpinner() {
@@ -170,7 +191,7 @@ $(function () {
             },
         success: function(msg) {
 
-               createPopup(msg,map.getCenter());
+               createPopup(msg, map.getCenter());
             }
 
         });
@@ -446,14 +467,5 @@ $(function () {
   }
   get_categories();
 
-  var urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-       return 'en';
-    }
-    else{
-       return results[1] || 0;
-    }
-  }
 
 });  /* end of function */

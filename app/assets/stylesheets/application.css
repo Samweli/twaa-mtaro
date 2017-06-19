@@ -160,8 +160,7 @@ label, input {
 
 input, select, option, button, input[type="submit"] {
   display: inline;
-  margin-bottom: 5px;
-  font-size: 1.0em;
+  font-size: 0.9em;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -743,7 +742,7 @@ input.form-control{
   height: 100%; 
   background-color: rgb(102, 102, 102); 
   z-index: 30001; 
-  opacity: 0.4;
+  opacity: 0.7;
 }
 
 .top-buffer { 
@@ -782,22 +781,7 @@ input.form-control{
   font-size: 1.5em;
 }
 
-.btn-submit{
-    background-color: #79bbff;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    border: 1px solid #469df5;
-    display: inline-block;
-    color: #ffffff;
-    font-family: arial;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 6px 24px;
-    text-decoration: none;
-    text-shadow: 1px 1px 0px #287ace;
-    zoom: 1;
-}
+
 
 .input-text{
     border: 1px solid #ccc;
@@ -808,5 +792,5 @@ input.form-control{
     font: 13px/18px Helvetica Neue,Helvetica,Arial,sans-serif !important;
     margin: 0;
     padding: 5px;
-    width: 145px;
+    width: 150px;
 }

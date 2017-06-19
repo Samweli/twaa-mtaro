@@ -4,17 +4,17 @@
     =# hidden_field_tag :limit, params[:limit] || 40
     =# label_tag :address, t("labels.address"), :id => "address_label"
     = text_field_tag :address, params[:address], :class => "form-group input-text"
-    = submit_tag t("buttons.find"), :id => 'address_button', :class => "btn default btn-submit"
+    = submit_tag t("buttons.find"), :id => 'address_button', :class => "default btn-submit"
 
   / %form.sidebar-form{:action => "#", :method => "get"}
   / .input-group
   / %input.form-control{:name => "q", :placeholder => "Tafuta mtaa wako...", :type => "sarch",}/
   
   .font_12.link_1.center
-    #missing_address
-      = link_to t("defaults.missing"),
-          'http://webapps.twaamtaro.org/twaamtaro/adopt.jsp',
-          :target => '_blank'
+    / #missing_address
+    /   = link_to t("defaults.missing"),
+    /       'http://webapps.twaamtaro.org/twaamtaro/adopt.jsp',
+    /       :target => '_blank'
 
     - unless user_signed_in?
       #sidebar_login.font_14.radius_5

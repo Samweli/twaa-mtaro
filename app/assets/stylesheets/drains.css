@@ -49,4 +49,24 @@ div.card-unclean {
     border: 1px solid transparent;
     border-radius: 4px;
 }
- }
+
+.btn-submit{
+    background-color: #79bbff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #469df5;
+    color: #ffffff;
+    margin:0 0 0 8%;
+    font-size: 12px;
+    font-weight:400;
+    line-height: 1.42857143;
+    padding: 4px 20px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0px #287ace;
+    zoom: 1;
+}
+
+.btn-submit:hover{
+    cursor:pointer;
+}
