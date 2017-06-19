@@ -626,7 +626,7 @@ form.wide label {
 .pen_darkgray   {color: #444;}
 .pen_lightgray   {color: #aaa;}
 
-.needs_help {color: #de6060;}
+.needs_help {color: #6495ED;}
 .cleared    {color: #5cb85c;}
 .adopted    {color: #73acd5;}
 .unclear    {color: #f0ad4e;}
@@ -792,5 +792,5 @@ input.form-control{
     font: 13px/18px Helvetica Neue,Helvetica,Arial,sans-serif !important;
     margin: 0;
     padding: 5px;
-    width: 150px;
+    width: 145px;
 }

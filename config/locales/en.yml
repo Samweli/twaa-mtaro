@@ -35,7 +35,7 @@ en:
     taken: "It is taken with "
     unclean: "Not clean"
   defaults:
-    address: "address"
+    address: "Address"
     city: "Dar es salaam, TZ"
     thing: "Drain"
     this_thing: "This %{thing}"

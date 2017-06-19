@@ -8,11 +8,14 @@
       %li.unclear=  t("captions.unclean")
       %li.unclear.link_1= link_to t("links.refresh", :id => 'refresh_link'), :target => '_blank'
 
-  %h4
+  %h3
+    = t('defaults.address') + ':'
     = @sidewalk.address
     %br
     %span.font12= t("defaults.drain_number", :thing => t("defaults.thing").titleize)
     = @sidewalk.gid
+    %br
+    %br
 
   / %h1.actions_label
   /   - if @shoveled_by_me
