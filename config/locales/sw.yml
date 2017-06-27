@@ -120,7 +120,7 @@ sw:
     sign_in: "Ingia"
     forgot_password: "Umesahau nenosiri"
     registered: "Umesajiliwa!"
-    drain_color: "Rangi ya mtaro wako"
+    drain_color: "Rangi ya mtaro"
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME

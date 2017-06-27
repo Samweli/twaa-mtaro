@@ -85,23 +85,20 @@ $(function () {
         
     }).addTo(map);
 
-      /* Loading KML*/
-        kmlLayer = omnivore.kml(url, null, customLayer).addTo(map);
+    /* Listens to clicks on drains*/
+    kmlLayer.on('click', function (e) {
+        var mtaro = e.layer.feature.properties;
+        // Fetching drain info
+        fetchDrainInfo(mtaro.description, e.latlng);
+     });
 
-      /* Listens to clicks on drains*/
-        kmlLayer.on('click', function (e) {
-
-            var mtaro = e.layer.feature.properties;
-            // Fetching drain info
-            fetchDrainInfo(mtaro.description, e.latlng);
-        });
-
-      /*add KML layer to map*/
-        map.addLayer(kmlLayer);
+    /*add KML layer to map*/
+    map.addLayer(kmlLayer);
         
-    }
+    };
     
     refreshKML("all");
+    console.log("refreshKML called from main");
 
   /* popup Window for displaying details of Mtaro */
     function createPopup(msg, pos) {
@@ -407,6 +404,7 @@ $(function () {
         },
         success: function(data) {
           refreshKML("all");
+          console.log("refreshKML called from bind");
           createPopup(data, pos);
         }
       });
@@ -432,6 +430,7 @@ $(function () {
         },
         success: function(data) {
           refreshKML("all");
+          console.log("refreshKML called from bind 2");
           createPopup(data, pos);
           hideSpinner();
         }
