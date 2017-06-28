@@ -98,9 +98,45 @@ $(function () {
     };
     
     refreshKML("all");
-    console.log("refreshKML called from main");
 
-  /* popup Window for displaying details of Mtaro */
+    // Adding Legend
+    var legend = L.control({position: 'topright'});
+
+    legend.onAdd = function (map) {
+
+        var locale = urlParam('locale');
+        var colour_map;
+        var div;
+
+        if (locale == 'sw') {
+            colour_map = { 'Misafi':"green", 'Michafu':"#dd9031", 'Msaada':'#6495ed'}
+
+            div = L.DomUtil.create('div', 'info legend'),
+            colours = ['Misafi', 'Michafu', 'Msaada'],
+            labels = [];
+
+        }else{
+            colour_map = {'Clean':"green", 'Not clean':"#dd9031", 'Needs help':'#6495ed'}
+
+            div = L.DomUtil.create('div', 'info legend'),
+            colours = [ 'Clean', 'Not clean', 'Needs help'],
+
+            labels = [];
+        }
+              
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < colours.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + colour_map[colours[i]] + '"></i> ' +
+                colours[i] + '<br><br>';
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
+
+    /* popup Window for displaying details of Mtaro */
     function createPopup(msg, pos) {
         if (pos == null) {
             pos = map.getCenter();
