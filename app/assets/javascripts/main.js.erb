@@ -95,46 +95,57 @@ $(function () {
     /*add KML layer to map*/
     map.addLayer(kmlLayer);
         
-    };
-    
-    refreshKML("all");
+    }
 
     // Adding Legend
-    var legend = L.control({position: 'topright'});
+    function addLegend(){
+        var legend = L.control({position: 'topright'});
 
-    legend.onAdd = function (map) {
+        legend.onAdd = function (map) {
 
-        var locale = urlParam('locale');
-        var colour_map;
-        var div;
+            var locale = urlParam('locale');
+            var colour_map;
+            var div;
 
-        if (locale == 'sw') {
-            colour_map = { 'Misafi':"green", 'Michafu':"#dd9031", 'Msaada':'#6495ed'}
+            if (locale == 'sw') {
+                colour_map = { 'Misafi':"green", 'Michafu':"#dd9031", 'Msaada':'#6495ed'}
 
-            div = L.DomUtil.create('div', 'info legend'),
-            colours = ['Misafi', 'Michafu', 'Msaada'],
-            labels = [];
+                div = L.DomUtil.create('div', 'info legend'),
+                colours = ['Misafi', 'Michafu', 'Msaada'],
+                labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3> Alama </h3>';
 
-        }else{
-            colour_map = {'Clean':"green", 'Not clean':"#dd9031", 'Needs help':'#6495ed'}
+            }else{
+                colour_map = {'Clean':"green", 'Not clean':"#dd9031", 'Needs help':'#6495ed'}
 
-            div = L.DomUtil.create('div', 'info legend'),
-            colours = [ 'Clean', 'Not clean', 'Needs help'],
+                div = L.DomUtil.create('div', 'info legend'),
+                colours = [ 'Clean', 'Not clean', 'Needs help'],
 
-            labels = [];
-        }
-              
-        // loop through our density intervals and generate a label with a colored square for each interval
-        for (var i = 0; i < colours.length; i++) {
-            div.innerHTML +=
-                '<i style="background:' + colour_map[colours[i]] + '"></i> ' +
-                colours[i] + '<br><br>';
-        }
+                labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3> Legend </h3>';
+            }
+            
+           
+                  
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < colours.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colour_map[colours[i]] + '"></i> ' +
+                    colours[i] + '<br><br>';
+            }
 
-        return div;
-    };
+            return div;
+        };
 
-    legend.addTo(map);
+        legend.addTo(map);
+
+    }
+
+    refreshKML("all");
+    addLegend();
+    
 
     /* popup Window for displaying details of Mtaro */
     function createPopup(msg, pos) {
