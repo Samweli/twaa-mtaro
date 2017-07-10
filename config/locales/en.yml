@@ -7,7 +7,7 @@ en:
     back: "Back"
     change_password: "Change my password"
     clean: "Clean"
-    dirty: 'not clean'
+    dirty: 'Not clean'
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
@@ -20,21 +20,22 @@ en:
     update: "Update"
     send_request: "Send Request"
     go: "Go"
-    cleaned: "Clean"
-    uncleaned: "Dirty"
-    need_help: "Needhelp"
+    cleaned: " %{count} Clean"
+    uncleaned: "%{count} Dirty"
+    need_help: "%{count} Needs help"
+    all: "%{count} All"
   captions:
     current_password: "(we need your current password to confirm your changes)"
-    clean: "clean."
+    clean: "Clean"
     drain_status: "This %{thing} has been not adopted"
     need_help: "help is needed"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
     taken: "It is taken with "
-    unclean: "not clean"
+    unclean: "Not clean"
   defaults:
-    address: "address"
+    address: "Address"
     city: "Dar es salaam, TZ"
     thing: "Drain"
     this_thing: "This %{thing}"
@@ -52,7 +53,7 @@ en:
     error: "Drain"
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
-    not_found: "Could not find %{thing}."
+    not_found: "%{thing} could not be found."
     drain_notfound: "%{error} not found"
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
   labels:
@@ -105,6 +106,7 @@ en:
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
     stolen: "%{thing} stolen!"
+    welcome: 'Welcome'
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"
@@ -123,7 +125,8 @@ en:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
-    drain_color: "Drains colors"  
+    drain_color: "Drains colors" 
+    drain_category: "Drains Filter" 
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME

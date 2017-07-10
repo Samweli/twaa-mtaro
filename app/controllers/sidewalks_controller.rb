@@ -4,8 +4,25 @@ class SidewalksController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
 
   def index
-    if params.has_key?(:all)
-      @sidewalks = Sidewalk.find_all()
+    # check for the type of drains to query
+    if params.has_key?(:type)
+      if params[:type] == 'all'
+        @sidewalks = Sidewalk.find_all(10000)
+      else
+        if params[:type] == 'cleaned'
+          @sidewalks = Sidewalk.where_custom(:cleared => true)
+        elsif params[:type] == 'uncleaned'
+          @sidewalks = Sidewalk.where_custom(:cleared => false)
+        elsif params[:type] == 'need_help'
+          @sidewalks = Sidewalk.where_custom(:need_help => true)
+        elsif params[:type].include? "address"
+          values = params[:type].split('=')
+          value = values[1]
+          puts value
+          @sidewalks = Sidewalk.where_custom(:address => value)
+        end
+      end
+
       unless @sidewalks.blank?
         respond_with(@sidewalks) do |format|
         format.kml { render }
@@ -54,14 +71,12 @@ class SidewalksController < ApplicationController
       reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}" 
       notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"
 
-      puts reply_street_leader, notify_user
-
-      sms_service.send_sms(
-        reply_street_leader, 
-        '+255655899266');
-      sms_service.send_sms(
-        notify_user, 
-        '+255655899266');
+      # sms_service.send_sms(
+      #   reply_street_leader, 
+      #   '+255655899266');
+      # sms_service.send_sms(
+      #   notify_user, 
+      #   '+255655899266');
       
       # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
       #   claim.update_attribute(:shoveled, shoveled)

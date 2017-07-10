@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "mitarokigogo", :primary_key => "gid", :force => true do |t|
+  create_table "mitaro_dar", :primary_key => "gid", :force => true do |t|
     t.string  "the_geom",     :limit => 0
     t.string  "full_id",      :limit => 254
     t.string  "osm_id",       :limit => 254

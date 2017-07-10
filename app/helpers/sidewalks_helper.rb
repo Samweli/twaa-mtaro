@@ -10,4 +10,9 @@ module SidewalksHelper
       "#unclear"
     end
   end
+
+  def count(sidewalks, value)
+  
+  end
+
 end

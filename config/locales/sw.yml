@@ -6,35 +6,36 @@ sw:
     back: "Rudi"
     change_password: "Badili nenosiri"
     continue: "Endelea"
-    cleaned: 'Iliosafishwa'
-    clean: 'msafi'
-    dirty: "sio msafi"
+    cleaned: '%{count} Misafi'
+    clean: 'Msafi'
+    dirty: "Sio msafi"
     edit_profile: "Hariri wasifu"
     email_password: "Ntumie nenosiri kwenye barua pepe"
     find: "Tafuta mtaa wako"
-    need_help: "Misaada"
+    need_help: "%{count} Misaada"
     send_reminder: "Kumbusha kusafisha kwa kutuma ujumbe"
     register: "Jisajili sasa"
     sign_in: "kuingia"
     sign_out: "Ondoka"
     sign_up: "kujisajili"
-    uncleaned: "michafu"
+    uncleaned: "%{count} Michafu"
     update: "badilisha"
     send_request: "Tuma maombi"
     go: "nenda"
+    all: "%{count} Yote"
   captions:
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
-    clean: "msafi"
+    clean: "Msafi"
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
     drain_status: "Huu %{thing} hauna mhusika yoyote"
     need_help: "Msaada unahitajika"
     password: "(acha nafasi wazi kama huhitaji kubadili nenosiri )"
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"
-    unclean: "sio msafi"
+    unclean: "Sio msafi"
     taken: "Umechukuliwa na'"
   defaults:
-    address: "mahali"
+    address: "Anwani"
     ask_help: "Omba msaada, ukihitaji kusaidiwa kusafisha mtaro"
     aware: "Je unajua kuwa unatakiwa kusafisha mitaro karibu na nyumbani kwako,"
     city: "Dar es Salaam"
@@ -105,6 +106,7 @@ sw:
     signed_out: "Umetoka."
     signed_up: "Asante kwa kujisajili!"
     stolen: "%{thing} kimeibiwa!"
+    welcome: 'Karibu'
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
@@ -123,7 +125,8 @@ sw:
     sign_in: "Ingia"
     forgot_password: "Umesahau nenosiri"
     registered: "Umesajiliwa!"
-    drain_color: "Rangi ya mtaro wako"
+    drain_color: "Rangi ya mtaro"
+    drain_category: "Mgawanyo wa Mitaro" 
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME
