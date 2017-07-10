@@ -1,25 +1,22 @@
 #actions_box
   #legend.gray_box.radius_5.font_14.center
     %h3
-      Drains colors
+      = t("titles.drain_color")
     %ul.horizontal_items.font_bold
-      %li.needs_help= 'Msaada unahitajika'
-      %li.cleared= 'Msafi'
-      %li.unclear= 'Si Msafi'
-      %li.unclear.link_1= link_to 'Refresh', '#', :id => 'refresh_link'
+      %li.needs_help= t("captions.need_help")
+      %li.cleared= t("captions.clean")
+      %li.unclear=  t("captions.unclean")
+      %li.unclear.link_1= link_to t("links.refresh", :id => 'refresh_link'), :target => '_blank'
 
-  %h4
+  %h3
+    = t('defaults.address') + ':'
     = @sidewalk.address
     %br
-    %span.font12='Namba ya mtaro ni '
+    %span.font12= t("defaults.drain_number", :thing => t("defaults.thing").titleize)
     = @sidewalk.gid
+    %br
+    %br
 
-  %div
-    %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
-      %button.btn.warning Sio Msafi
-    %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
-      %button.btn.success Msafi
-  
   / %h1.actions_label
   /   - if @shoveled_by_me
   /     .cleared= 'You have shoveled this sidewalk'
@@ -33,52 +30,56 @@
   /     Can you shovel this sidewalk?
   
   - if user_signed_in?
-    %ul.actions_menu
-      - if @my_sidewalk
-        %li.abandon
-          %a{:href => "#", :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
-            %h1 Abandon
-            .btn_image
-            .label No longer adopt this sidewalk.
-      - else
-        %li.adopt
-          %a{:href => "#", :id => "adopt_link"}
-            %h1 Adopt
-            .btn_image
-            .label Yes, I will adopt this sidewalk.
+    %div
+      %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+        = button_tag t("captions.unclean"), :class => "btn warning"
+      %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+        = button_tag t("captions.clean"), :class => "btn success"
+    / %ul.actions_menu
+    /   - if @my_sidewalk
+    /     %li.abandon
+    /       %a{:href => "#", :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
+    /         %h1 Abandon
+    /         .btn_image
+    /         .label No longer adopt this drain.
+    /   - else
+    /     %li.adopt
+    /       %a{:href => "#", :id => "adopt_link"}
+    /         %h1 Adopt
+    /         .btn_image
+    /         .label Yes, I will adopt this drain.
       
-      - if @my_sidewalk
-        - if @shoveled_by_me
-          %li.snowed
-            %a{:href => "#", :id => "snowed_link", :data => {:moid => @my_sidewalk.id}}
-              %h1 Shoveled?
-              .btn_image
-              .label This sidewalk needs to be shoveled.
-        - else
-          %li.shoveled
-            %a{:href => "#", :id => "shoveled_link", :data => {:moid => @my_sidewalk.id}}
-              %h1 Shoveled?
-              .btn_image
-              .label I shoveled this sidewalk.
-      - else
-        %li.need_help
-          %a{:href => "#", :id => "get_help_link"}
-            %h1 Get Help
-            .btn_image
-            .label I need help to keep this sidewalk clean.
-      %li.need_supplies
-        - if browser.ie7?
-          %a{:href => "http://www.ohsowe.com", :target => "_blank"}
-            %h1 Share
-            .btn_image
-            .label I need supplies or can share.
-        - else
-          %a{:href => "#", :id => "share_link"}
-            %h1 Share
-            .btn_image
-            .label I need supplies or can share.
+    /   - if @my_sidewalk
+    /     - if @shoveled_by_me
+    /       %li.snowed
+    /         %a{:href => "#", :id => "snowed_link", :data => {:moid => @my_sidewalk.id}}
+    /           %h1 Shoveled?
+    /           .btn_image
+    /           .label This drain need to be shoveled.
+    /     - else
+    /       %li.shoveled
+    /         %a{:href => "#", :id => "shoveled_link", :data => {:moid => @my_sidewalk.id}}
+    /           %h1 Shoveled?
+    /           .btn_image
+    /           .label I shoveled this drain.
+    /   - else
+    /     %li.need_help
+    /       %a{:href => "#", :id => "get_help_link"}
+    /         %h1 Get Help
+    /         .btn_image
+    /         .label I need help to keep this drain clean.
+    /   %li.need_supplies
+    /     %a{:href => "#", :id => "share_link"}
+    /       %h1 Share
+    /       .btn_image
+    /       .label I need supplies or can share.
 
   - else
+    - if @sidewalk.cleared?
+      = button_tag t("captions.clean"), :class => "btn success"
+    - else
+      = button_tag t("captions.unclean"), :class => "btn warning"
+ 
     / #need_register.radius_5.link_1
     /   Please
     /   = link_to t("links.login"), '#', :id => 'sign_in_link'
@@ -90,8 +91,8 @@
   - if @claims.empty?
     %p.font_18.color_warn.center
       / Nobody has adopted this drain yet.
-      Huu mtaro hauna mhusika yoyote
+      / =t("captions.drain_status", :thing => t("defaults.thing").titleize)
   - else
-    %h1= 'Umechukuliwa na'
+    %h1= t("captions.taken")
     #people_list
       = @claims.map{|c| c.user.short_name}.join(', ')

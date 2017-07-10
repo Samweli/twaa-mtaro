@@ -4,7 +4,7 @@ ruby "2.2.3"
 gem 'rails', '~> 3.2.13'
 
 gem 'arel'
-gem 'devise'
+gem 'devise', '2.2.2'
 gem 'geokit'
 gem 'haml', '~> 3.2.0.alpha'
 gem 'haml-rails'

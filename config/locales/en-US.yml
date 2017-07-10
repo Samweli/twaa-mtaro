@@ -1,18 +1,18 @@
 # Please maintain alphabetical order
-
 en-US:
   buttons:
     abandon: "Abandon this %{thing}"
     adopt: "Adopt!"
     back: "Back"
     change_password: "Change my password"
+    continue: "Continue"
     cleaned: "Clean"
-    uncleaned: "Not Clean"
+    clean: 'cleaned'
+    dirt: 'not clean'
     need_help: "Need help"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
-    continue: "Continue"
     send_reminder: "Send reminder to clean"
     register: "Register now"
     sign_in: "Sign in"
@@ -22,22 +22,34 @@ en-US:
     send_request: "Send Request"
     go: "Go"
   captions:
+    adopted: "Claim the %{thing} that you'll clean this season"
+    clean: "clean."
     current_password: "(we need your current password to confirm your changes)"
+    drain_status: "This %{thing} has not adopted"
+    need_help: "help is needed"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
+    unclean: "not Clean"
   defaults:
     address: "address"
+    ask_help: "Ask for help if you need an extra hand this season."
+    aware: "You may know that you're required to clean the drain near your home or business,but how about helping others out? "
     city: "Dar es salaam, TZ"
+    claim: "Claim the drains that you'll clean this season "
+    drain_number: "The number of %{thing} is"
+    missing: "Don't see your sidewalk on the map?"
+    notify_all: "Let everyone know you've cleared your drain."
     thing: "Drain"
     this_thing: "This %{thing}"
     tagline: "Claim responsibility for cleaning drains before it floods."
     tos: "By signing up, you agree to the %{tos}."
-    missing: "Don't see your sidewalk on the map?"
+    welcome: "Welcome to Dar es salaam"    
   errors:
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
     not_found: "Could not find %{thing}."
+    error: "Have you adopted a lot of %{thing}! If you would like to adopt more %{thing}, please send your request to www.twaamtaro.org"
   labels:
     address: "Street address"
     city_state: "City"
@@ -62,9 +74,11 @@ en-US:
     recaptcha: "Please verify the code below"
   links:
     accessibility: "Accessibility"
+    city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
     terms: "Terms of Service"
+    refresh: "reflesh"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
     sign_out: "Sign Out"
@@ -80,11 +94,17 @@ en-US:
     signed_in: "Signed in!"
     signed_out: "Signed out."
     signed_up: "Thanks for signing up!"
-    stolen: "%{thing} stolen!"
+    stolen: "%{thing} stolen!"    
+  terms:
+    list_one: "are not liable for any improper or incorrect use of the information on this site,"
+    list_two: "assume no responsibility for anyone's use of the information,"
+    list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
+    title: "The City of Dar es salaam, its agents, and its employees" 
   titles:
     adopt: "Adopt this %{thing}"
     adopted: "%{thing_name} has been adopted"
     byline: "by %{name}"
+    caption: "you may know that you're required to clean the drain near your home or business,but how about helping others out"
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
     ofline: "of %{organization}"
@@ -93,6 +113,7 @@ en-US:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
+    drain_color: "Drains colors"
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME

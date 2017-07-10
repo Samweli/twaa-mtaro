@@ -160,8 +160,7 @@ label, input {
 
 input, select, option, button, input[type="submit"] {
   display: inline;
-  margin-bottom: 5px;
-  font-size: 1.0em;
+  font-size: 0.9em;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -627,10 +626,10 @@ form.wide label {
 .pen_darkgray   {color: #444;}
 .pen_lightgray   {color: #aaa;}
 
-.needs_help {color: #de6060;}
-.cleared    {color: #8e8e8e;}
+.needs_help {color: #6495ED;}
+.cleared    {color: #5cb85c;}
 .adopted    {color: #73acd5;}
-.unclear    {color: #cccccc;}
+.unclear    {color: #f0ad4e;}
 
 #my_sidewalks caption {
   caption-side: top;
@@ -722,35 +721,76 @@ p.font_16.font_bold{
   text-align: justify;
   margin-left: 2px;
 }
-
-button.button-1,button.button-3,button.button-2{
-  border-radius: 12px
-  font-size: 73%;
-}
-
-button.button-2{
-  background-color: #d02b2b;
-}
-button.button-3{
-  background-color: #DAFF33;
-}
-button.button-1{
-  background-color: #BFECA3;
-
-}
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: black;
-    text-transform: uppercase;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    margin: 4px;
-    cursor: pointer;
-}
 input.form-control{
   height: 30px;
+}
+
+#spinner p{
+  position: absolute;
+  color: white; 
+  top: 40%; 
+  left: 45%;
+}
+
+#spinner{
+  margin: 0px; 
+  padding: 0px; 
+  position: fixed; 
+  right: 0px; 
+  top: 0px; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(102, 102, 102); 
+  z-index: 30001; 
+  opacity: 0.7;
+}
+
+.top-buffer { 
+  margin-top:5%;
+ }
+
+.cat-btn {
+    padding: 6px 18px;
+    margin: 0 0px 5px 5px;
+}
+
+#address_button_{
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background:none ;
+    filter:none ;
+    background-color:none ;
+    -moz-border-radius:none;
+    -webkit-border-radius:none;
+    border-radius:none ;
+    border:none ;
+    display:none ;
+    color: none;
+    font-family: none;
+    font-size: none;
+    font-weight:none ;
+    padding:none ;
+    text-decoration: none;
+    text-shadow: none;
+    zoom:none ;
+    *display:none ;
+}
+
+.font_h3{
+  font-size: 1.5em;
+}
+
+
+
+.input-text{
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    color: #666;
+    font: 13px/18px Helvetica Neue,Helvetica,Arial,sans-serif !important;
+    margin: 0;
+    padding: 5px;
+    width: 145px;
 }
