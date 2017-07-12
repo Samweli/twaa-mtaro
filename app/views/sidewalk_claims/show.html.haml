@@ -17,81 +17,24 @@
     %br
     %br
 
-  / %h1.actions_label
-  /   - if @shoveled_by_me
-  /     .cleared= 'You have shoveled this sidewalk'
-  /   - elsif @my_sidewalk
-  /     .adopted= 'You have adopted this sidewalk'
-  /   - elsif @sidewalk.cleared
-  /     .cleared= 'This sidewalk is cleared'
-  /   - elsif @sidewalk.need_help
-  /     .needs_help= 'This sidewalk needs help'
-  /   - else
-  /     Can you shovel this sidewalk?
-  
   - if user_signed_in?
     %div
-      %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+      %a{:href => "#", :id => "unclean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.unclean"), :class => "btn warning"
-      %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
+      %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.clean"), :class => "btn success"
-    / %ul.actions_menu
-    /   - if @my_sidewalk
-    /     %li.abandon
-    /       %a{:href => "#", :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
-    /         %h1 Abandon
-    /         .btn_image
-    /         .label No longer adopt this drain.
-    /   - else
-    /     %li.adopt
-    /       %a{:href => "#", :id => "adopt_link"}
-    /         %h1 Adopt
-    /         .btn_image
-    /         .label Yes, I will adopt this drain.
-      
-    /   - if @my_sidewalk
-    /     - if @shoveled_by_me
-    /       %li.snowed
-    /         %a{:href => "#", :id => "snowed_link", :data => {:moid => @my_sidewalk.id}}
-    /           %h1 Shoveled?
-    /           .btn_image
-    /           .label This drain need to be shoveled.
-    /     - else
-    /       %li.shoveled
-    /         %a{:href => "#", :id => "shoveled_link", :data => {:moid => @my_sidewalk.id}}
-    /           %h1 Shoveled?
-    /           .btn_image
-    /           .label I shoveled this drain.
-    /   - else
-    /     %li.need_help
-    /       %a{:href => "#", :id => "get_help_link"}
-    /         %h1 Get Help
-    /         .btn_image
-    /         .label I need help to keep this drain clean.
-    /   %li.need_supplies
-    /     %a{:href => "#", :id => "share_link"}
-    /       %h1 Share
-    /       .btn_image
-    /       .label I need supplies or can share.
+      %button#assign.btn.success assign
 
   - else
     - if @sidewalk.cleared?
       = button_tag t("captions.clean"), :class => "btn success"
+
     - else
       = button_tag t("captions.unclean"), :class => "btn warning"
- 
-    / #need_register.radius_5.link_1
-    /   Please
-    /   = link_to t("links.login"), '#', :id => 'sign_in_link'
-    /   or
-    /   = link_to t("links.register"), '#', :id => 'sign_up_link'
-    /   %br
-    /   to see what you can do for this sidewalk.
-  
+      %button#assign_two.btn.success assign
+
   - if @claims.empty?
     %p.font_18.color_warn.center
-      / Nobody has adopted this drain yet.
-      / =t("captions.drain_status", :thing => t("defaults.thing").titleize)
   - else
     %h1= t("captions.taken")
     #people_list

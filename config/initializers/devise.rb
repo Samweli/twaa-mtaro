@@ -61,8 +61,7 @@ Devise.setup do |config|
   # The time the user will be remembered without asking for credentials again.
   config.remember_for = 2.weeks
 
-  config.secret_key = '73a654d76add0576534e5268e2046801384bcd2e5a33dee79a1a6db8fcbfc59eca6cae167214ab4070b991caf97c62ca73c6190bedf7e3393b40f8369b8a88cd'
-
+  
   # If true, extends the user's remember period when remembered via cookie.
   config.extend_remember_period = false
 

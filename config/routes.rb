@@ -7,6 +7,7 @@ AdoptASidewalk::Application.routes.draw do
       :sessions => 'sessions',
   } do
     get 'forgot_password' => 'passwords#forgot'
+    get 'users' => 'users#index'
   end
 
   get 'address' => 'addresses#show', :as => 'address'
@@ -14,6 +15,7 @@ AdoptASidewalk::Application.routes.draw do
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
+  post 'citizen' => 'user#citizen'
 
   match '/auth/:provider/callback' => 'authentications#create'
 

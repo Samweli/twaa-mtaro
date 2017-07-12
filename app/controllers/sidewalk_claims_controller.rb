@@ -3,7 +3,7 @@ class SidewalkClaimsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   
   layout 'info_window'
-
+  
   def create
     unless (@sidewalk = Sidewalk.find_by_gid(params[:gid]))
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
