@@ -39,6 +39,7 @@ end
 
 group :development do
   gem 'nifty-generators'
+  gem 'faker'
 end
 
 group :test do

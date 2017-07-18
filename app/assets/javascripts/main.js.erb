@@ -1,6 +1,8 @@
 $(function () {
 
 
+
+
     var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
     var mapOptions = {
         center: center,
@@ -12,7 +14,10 @@ $(function () {
     var kmlLayer;
     var popup;
     var drainLocation;
+    var activeObjectId;
+    var user_id;
     var users;
+    var pos;
     var bDebug = true;
 
   /* Creating map*/
@@ -86,6 +91,7 @@ $(function () {
       /* Listens to clicks on drains*/
         kmlLayer.on('click', function (e) {
             var mtaro = e.layer.feature.properties;
+            activeObjectId = mtaro.description;
             drainLocation = e.latlng;
             // Fetching drain info
             fetchDrainInfo(mtaro.description, drainLocation);
@@ -178,6 +184,7 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
+                console.log(data);
                 //renderSocialButtons();
                 createPopup(data, pos);
                 hideSpinner();
@@ -265,6 +272,25 @@ $(function () {
         $.ajax({
             type: 'GET',
             url: '/users/sign_up',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, map.getCenter());
+                ajaxJS(msg);
+            }
+        });
+        return false;
+    });
+
+
+  /* for addikng users in assigning drains */
+    $('body').on('click', '#add_user', function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/add',
             data: {
                 'locale': locale
             },
@@ -426,7 +452,7 @@ $(function () {
     });
 
   /*Getting all users */
-    function getUsers () {
+    function getUsers() {
         var locale = urlParam('locale');
 
         $.ajax({
@@ -443,7 +469,7 @@ $(function () {
     }
 
   /* signs up new users */
-    $('body').on('submit', '#assign_drain', function (e) {
+    $('body').on('submit', '#new_user', function (e) {
         e.preventDefault();
         console.log('it can listen to events');
         var submitButton = $("input[type='submit']", this);
@@ -453,9 +479,10 @@ $(function () {
         var upwd = $('#user_last_name');
         var upwdc = $('#user_last_name');
 
+
         $.ajax({
             type: 'POST',
-            url: '/users.json',
+            url: '/createuser.json',
             data: {
                 'commit': submitButton.val(),
                 'utf8': '✓',
@@ -471,7 +498,7 @@ $(function () {
                 }
             },
             beforeSend: function () {
-                console.log(uemail);
+
 
             },
             error: function (jqXHR) {
@@ -487,8 +514,12 @@ $(function () {
 
             },
             success: function (data) {
-                $('#sidebar_login.radius_5').remove();
-                updateSidebar();
+                console.log('id returned after signup');
+                user_id = data.user.id;
+                console.log(user_id);
+                if(user_id){
+                    assignDrain(pos)
+                }
                 fetchDrainInfo();
             }
         });
@@ -516,8 +547,85 @@ $(function () {
         });
     }
 
+
+    function assignDrain (pos) {
+        $.ajax({
+            type: 'POST',
+            url: '/sidewalk_claims',
+            data: {
+                'gid': activeObjectId,
+                'user_id': user_id,
+                'authenticity_token': AUTH_TOKEN
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+                alert(data.errors);
+            },
+            success: function (data) {
+                map.closePopup();
+                //add a new style 'foo'
+                $.notify.addStyle('foo', {
+                    html:
+                    "<div>" +
+                    "<div class='clearfix'>" +
+                    "<div class='title' data-notify-html='title'>" +
+                    "You have successfully assigned this drain" +
+                    "</div>" +
+                    "<button class='buttons no'>&#10006;</button>" +
+                    "</div>" +
+                    "</div>"
+                });
+
+                //listen for click events from this style
+                $(document).on('click', '.notifyjs-foo-base .no', function() {
+                    //programmatically trigger propogating hide event
+                    $(this).trigger('notify-hide');
+                    refreshKML();
+                    updateSidebar();
+                    createPopup(data, pos);
+
+                });
+                $(document).on('click', '.notifyjs-foo-base .yes', function() {
+                    //show button text
+                    alert($(this).text() + " clicked!");
+                    //hide notification
+                    $(this).trigger('notify-hide');
+                });
+
+
+                var h5 = $("<h5/>").append("You have successfully assigned a dran !")
+
+                $.notify({
+
+                }, {
+                    style: 'foo',
+                    autoHide: false,
+                    clickToHide: false,
+                    position:'top center'
+                });
+
+            }
+        });
+    }
+
     function bind(pos) {
 
+
+
+
+
+      /*Function for adoping a drain */
+        $('#new_assign').on('click', function () {
+            var selectedUser = document.getElementById('city_id');
+            user_id = selectedUser.options[selectedUser.selectedIndex].value;
+            console.log('Id of the user who wants to adpt');
+            console.log(user_id);
+
+            assignDrain()
+            return false;
+        });
+
+          /* displays a form for assigning drains to users */
         $('#assign').on('click', function () {
             var locale = urlParam('locale');
             getUsers();
@@ -529,23 +637,26 @@ $(function () {
                     'locale': locale
                 },
                 success: function (msg) {
-                    if(users){
+                    if (users) {
                         console.log(users);
-                    }
 
-                    createPopup(msg, drainLocation);
-                    var mySelect = document.getElementById('city_id');
-                    for (var i = 0; i < users.length; i++){
-                        var option = document.createElement('option');
-                        option.value = users[i].id;
-                        option.text = users[i].first_name;
-                        mySelect.appendChild(option);
+
+                        createPopup(msg, drainLocation);
+                        var mySelect = document.getElementById('city_id');
+                        for (var i = 0; i < users.length; i++) {
+                            var option = document.createElement('option');
+                            option.value = users[i].id;
+                            option.text = users[i].first_name;
+                            mySelect.appendChild(option);
+                        }
                     }
 
                 }
             });
             return false;
         });
+
+
 
         $('#clean').on('click', function () {
             var id = $(this).attr('data-moid');
@@ -631,6 +742,8 @@ $(function () {
             refreshKML("address=" + address);
         });
     }
+
+
 
 
 

@@ -4,6 +4,7 @@ en:
   buttons:
     abandon: "Abandon this %{thing}"
     adopt: "Adopt!"
+    assign: "Assign Drain"
     back: "Back"
     change_password: "Change my password"
     clean: "Clean"
@@ -25,6 +26,7 @@ en:
     need_help: "%{count} Needs help"
     all: "%{count} All"
   captions:
+    add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
     clean: "Clean"
     drain_status: "This %{thing} has been not adopted"
@@ -110,6 +112,7 @@ en:
     list_three: "are not liable for any damages (of any type, for any reason, however caused, or under any theory of liability) arising in any way out of the use of this site."
     title: "The City of Dar es salaam, its agents, and its employees"   
   titles:
+    add_user: "Sajili Mtumiaji Mpya"
     adopt: "Adopt this %{thing}"
     adopted: "%{thing_name} has been adopted"
     byline: "by %{name}"

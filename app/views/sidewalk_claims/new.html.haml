@@ -5,6 +5,7 @@
         %li
           = select_tag(:city_id, '<option value="1">Lisbon</option>...')
       %ul.horizontal_items.font_12.center{:style => "margin-top: 15px;"}
-        %li
-          = f.submit
-          Assign Drain
+        %li#new_assign
+          = f.submit t("buttons.assign")
+        %li#add_user
+          = f.submit t("captions.add_user")

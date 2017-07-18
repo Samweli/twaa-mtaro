@@ -4,6 +4,8 @@
     %title
       = t("titles.main", :thing => t("defaults.thing").titleize)
     / = stylesheet_link_tag "bootstrap/bootstrap.min"
+    %link{:href => "//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css", :rel => "stylesheet"}/
+
     = stylesheet_link_tag "application"
     = stylesheet_link_tag "leaflet"
     = stylesheet_link_tag "drains"
@@ -11,6 +13,7 @@
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
     = javascript_include_tag "jquery.browser"
+    = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"
 
     = javascript_include_tag "application"
 

@@ -23,7 +23,8 @@
         = button_tag t("captions.unclean"), :class => "btn warning"
       %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.clean"), :class => "btn success"
-      %button#assign.btn.success assign
+      %button#assign.btn.success= t("buttons.adopt")
+
 
   - else
     - if @sidewalk.cleared?
@@ -31,7 +32,6 @@
 
     - else
       = button_tag t("captions.unclean"), :class => "btn warning"
-      %button#assign_two.btn.success assign
 
   - if @claims.empty?
     %p.font_18.color_warn.center
@@ -39,3 +39,4 @@
     %h1= t("captions.taken")
     #people_list
       = @claims.map{|c| c.user.short_name}.join(', ')
+

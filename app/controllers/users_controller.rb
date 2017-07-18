@@ -15,6 +15,9 @@ class UsersController < Devise::RegistrationsController
   def edit
     render :edit
   end
+  def add
+    render :add
+  end
 
   def update
     if resource.update_with_password(params[resource_name])
@@ -48,14 +51,26 @@ class UsersController < Devise::RegistrationsController
            :status => 500)
   end
 
-  def citizen
+  def createuser
     build_resource
     if resource.save
-      render(:json => {"message" => "you have signed up successfully"}, :status => 200) and return
+      puts resource
+      session[:omniauth] = nil unless @user.new_record?
+      render(:json => {"user" => resource}, :status => 200) and return
     else
       errors = resource.errors
     end
+
+    #set_flash_message :notice, :inactive_signed_up, :reason => errors if is_navigational_format?
+    flash.now[:error] = errors
+    flash.delete(:recaptcha_error)
+
+    clean_up_passwords(resource)
+    render(:json => {"errors" => errors,
+                     :html => render_to_string(:template => 'users/add.html.haml')},
+           :status => 500)
   end
+
 
   private
 
