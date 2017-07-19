@@ -1,2 +1,2 @@
 
-# Twaa Mtaro | Dar es salaam
+# Twaa Mtaro Dar es salaam
