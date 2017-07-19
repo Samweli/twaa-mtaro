@@ -11,7 +11,7 @@ sw:
     dirty: "Sio msafi"
     edit_profile: "Hariri wasifu"
     email_password: "Ntumie nenosiri kwenye barua pepe"
-    find: "Tafuta mtaa wako"
+    find: "Tafuta mtaa"
     need_help: "%{count} Misaada"
     send_reminder: "Kumbusha kusafisha kwa kutuma ujumbe"
     register: "Jisajili sasa"
