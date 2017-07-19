@@ -17,6 +17,7 @@ AdoptASidewalk::Application.routes.draw do
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
+  get 'sidewalk_claims/adopt' => 'sidewalk_claims#adopt'
 
   match '/auth/:provider/callback' => 'authentications#create'
 

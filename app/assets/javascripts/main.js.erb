@@ -615,13 +615,14 @@ $(function () {
 
 
       /*Function for adoping a drain */
-        $('#new_assign').on('click', function () {
-            var selectedUser = document.getElementById('city_id');
-            user_id = selectedUser.options[selectedUser.selectedIndex].value;
-            console.log('Id of the user who wants to adpt');
-            console.log(user_id);
+        $('#location').on('click','.btnassing', function () {
+            // get the current row
+            var currentRow=$(this).closest("tr");
 
-            assignDrain()
+            var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+            var data=col1;
+            user_id = col1;
+            assignDrain(pos);
             return false;
         });
 
@@ -632,16 +633,33 @@ $(function () {
 
             $.ajax({
                 type: 'GET',
-                url: 'sidewalk_claims/new',
+                url: 'sidewalk_claims/adopt',
                 data: {
                     'locale': locale
                 },
                 success: function (msg) {
-                    if (users) {
+                    getUsers();
+
+
+                   if(users){
+
+                       createPopup(msg, drainLocation);
+                       var trHTML = '';
+
+                       $.each(users, function (i, item) {
+
+                           trHTML += '<tr><td> '+ item.id +' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>'+ '<button class="btnassing">' + 'assign' + '</button>' +'</tr>' ;
+                       });
+
+                       $('#location').append(trHTML);
+
+                   }
+
+                   /* if (users) {
                         console.log(users);
 
 
-                        createPopup(msg, drainLocation);
+
                         var mySelect = document.getElementById('city_id');
                         for (var i = 0; i < users.length; i++) {
                             var option = document.createElement('option');
@@ -649,7 +667,7 @@ $(function () {
                             option.text = users[i].first_name;
                             mySelect.appendChild(option);
                         }
-                    }
+                    }*/
 
                 }
             });
@@ -743,6 +761,32 @@ $(function () {
         });
     }
 
+
+
+
+/* searching table of users */
+
+    $('body').on('keyup', '#myInput', function () {
+        console.log('onkeyup listened succsessfully');
+
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("location");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+        return false;
+    });
 
 
 

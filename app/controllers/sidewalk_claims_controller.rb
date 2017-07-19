@@ -43,6 +43,10 @@ class SidewalkClaimsController < ApplicationController
     @claims = claims.all
   end
 
+  def adopt
+    render :adopt
+  end
+
   def destroy
     @claim = SidewalkClaim.find(params[:id])
     @claim.destroy if @claim

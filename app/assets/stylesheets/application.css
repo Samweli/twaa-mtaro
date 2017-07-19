@@ -827,3 +827,42 @@ input.form-control{
 .notifyjs-foo-base .no {
 
 }
+
+
+/* Syles for users table */
+
+.users {
+    padding: 2px;
+}
+.users table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.users td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.users tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.btnassing {
+    background-color: red;
+}
+
+
+#myInput {
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: inherit;
+    position: relative;
+    left: 20%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}

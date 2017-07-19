@@ -1,0 +1,14 @@
+#testdiv
+  %h2 Users
+  = succeed "/" do
+    %input#myInput{:placeholder => "Search for names..", :title => "Type in a name", :type => "text"}/
+  .users{:style => "height:200px; width:450px;overflow:auto;"}
+    %table#location
+      %tr
+        %th Index
+        %th FirstName
+        %th LastName
+        %th Action
+  %div
+    %a#add_user
+      = t("captions.add_user")
