@@ -35,12 +35,14 @@ class SidewalkClaimsController < ApplicationController
   end
 
   def show
-    flash[:notice] = "You have  successfully adopted"
     @sidewalk = Sidewalk.find_by_gid(params[:id])
-    claims = @sidewalk.claims.includes(:user)
-    @my_sidewalk = user_signed_in? ? claims.find_by_user_id(current_user.id) : nil
-    @shoveled_by_me = @sidewalk.cleared && @my_sidewalk && @my_sidewalk.shoveled
-    @claims = claims.all
+    claims = SidewalkClaim.where_custom(params[:id])
+    @my_sidewalk =  SidewalkClaim.find_by_user_id(17)
+    @shoveled_by_me = true
+    @claims = claims
+
+
+
   end
 
   def adopt

@@ -184,8 +184,8 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
+                console.log('this is the data returned yee yee');
                 console.log(data);
-                //renderSocialButtons();
                 createPopup(data, pos);
                 hideSpinner();
             }
@@ -767,7 +767,6 @@ $(function () {
 /* searching table of users */
 
     $('body').on('keyup', '#myInput', function () {
-        console.log('onkeyup listened succsessfully');
 
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
