@@ -1,5 +1,5 @@
 class CreateSidewalkClaims < ActiveRecord::Migration
-  def change
+  def up
     create_table :sidewalk_claims do |t|
       t.timestamps
       t.integer :user_id
@@ -11,4 +11,9 @@ class CreateSidewalkClaims < ActiveRecord::Migration
     add_index :sidewalk_claims, :gid
     add_index :sidewalk_claims, :user_id
   end
+
+  def self.down
+    drop_table :sidewalk_claims
+  end
+
 end

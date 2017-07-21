@@ -1,8 +1,6 @@
 $(function () {
 
 
-
-
     var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
     var mapOptions = {
         center: center,
@@ -517,7 +515,7 @@ $(function () {
                 console.log('id returned after signup');
                 user_id = data.user.id;
                 console.log(user_id);
-                if(user_id){
+                if (user_id) {
                     assignDrain(pos)
                 }
                 fetchDrainInfo();
@@ -548,7 +546,7 @@ $(function () {
     }
 
 
-    function assignDrain (pos) {
+    function assignDrain(pos) {
         $.ajax({
             type: 'POST',
             url: '/sidewalk_claims',
@@ -565,8 +563,7 @@ $(function () {
                 map.closePopup();
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {
-                    html:
-                    "<div>" +
+                    html: "<div>" +
                     "<div class='clearfix'>" +
                     "<div class='title' data-notify-html='title'>" +
                     "You have successfully assigned this drain" +
@@ -577,7 +574,7 @@ $(function () {
                 });
 
                 //listen for click events from this style
-                $(document).on('click', '.notifyjs-foo-base .no', function() {
+                $(document).on('click', '.notifyjs-foo-base .no', function () {
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
                     refreshKML();
@@ -585,7 +582,7 @@ $(function () {
                     createPopup(data, pos);
 
                 });
-                $(document).on('click', '.notifyjs-foo-base .yes', function() {
+                $(document).on('click', '.notifyjs-foo-base .yes', function () {
                     //show button text
                     alert($(this).text() + " clicked!");
                     //hide notification
@@ -595,13 +592,11 @@ $(function () {
 
                 var h5 = $("<h5/>").append("You have successfully assigned a dran !")
 
-                $.notify({
-
-                }, {
+                $.notify({}, {
                     style: 'foo',
                     autoHide: false,
                     clickToHide: false,
-                    position:'top center'
+                    position: 'top center'
                 });
 
             }
@@ -611,22 +606,45 @@ $(function () {
     function bind(pos) {
 
 
-
+        $('#abandon_link').on('click', function () {
+            if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/sidewalk_claims/' + $(this).attr('data-moid'),
+                    data: {
+                        'gid': activeObjectId,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'delete'
+                    },
+                    error: function (jqXHR) {
+                        data = $.parseJSON(jqXHR.responseText);
+                        if (bDebug) console.error(data);
+                    },
+                    success: function (data) {
+                         console.info("abandoned");
+                        refreshKML();
+                        updateSidebar();
+                        createPopup(data,pos);
+                    }
+                });
+            }
+            return false;
+        });
 
 
       /*Function for adoping a drain */
-        $('#location').on('click','.btnassing', function () {
+        $('#location').on('click', '.btnassing', function () {
             // get the current row
-            var currentRow=$(this).closest("tr");
+            var currentRow = $(this).closest("tr");
 
-            var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-            var data=col1;
+            var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+            var data = col1;
             user_id = col1;
             assignDrain(pos);
             return false;
         });
 
-          /* displays a form for assigning drains to users */
+      /* displays a form for assigning drains to users */
         $('#assign').on('click', function () {
             var locale = urlParam('locale');
             getUsers();
@@ -641,39 +659,38 @@ $(function () {
                     getUsers();
 
 
-                   if(users){
+                    if (users) {
 
-                       createPopup(msg, drainLocation);
-                       var trHTML = '';
+                        createPopup(msg, drainLocation);
+                        var trHTML = '';
 
-                       $.each(users, function (i, item) {
+                        $.each(users, function (i, item) {
 
-                           trHTML += '<tr><td> '+ item.id +' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>'+ '<button class="btnassing">' + 'assign' + '</button>' +'</tr>' ;
-                       });
+                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                        });
 
-                       $('#location').append(trHTML);
+                        $('#location').append(trHTML);
 
+                    }
+
+                  /* if (users) {
+                   console.log(users);
+
+
+
+                   var mySelect = document.getElementById('city_id');
+                   for (var i = 0; i < users.length; i++) {
+                   var option = document.createElement('option');
+                   option.value = users[i].id;
+                   option.text = users[i].first_name;
+                   mySelect.appendChild(option);
                    }
-
-                   /* if (users) {
-                        console.log(users);
-
-
-
-                        var mySelect = document.getElementById('city_id');
-                        for (var i = 0; i < users.length; i++) {
-                            var option = document.createElement('option');
-                            option.value = users[i].id;
-                            option.text = users[i].first_name;
-                            mySelect.appendChild(option);
-                        }
-                    }*/
+                   }*/
 
                 }
             });
             return false;
         });
-
 
 
         $('#clean').on('click', function () {
@@ -762,9 +779,7 @@ $(function () {
     }
 
 
-
-
-/* searching table of users */
+  /* searching table of users */
 
     $('body').on('keyup', '#myInput', function () {
 
@@ -786,8 +801,6 @@ $(function () {
 
         return false;
     });
-
-
 
 
     get_categories();

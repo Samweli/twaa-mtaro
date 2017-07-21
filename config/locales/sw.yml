@@ -6,6 +6,7 @@ sw:
     assign: "Gawia Mtaro"
     back: "Rudi"
     change_password: "Badili nenosiri"
+    change: "badili"
     continue: "Endelea"
     cleaned: '%{count} Misafi'
     clean: 'Msafi'

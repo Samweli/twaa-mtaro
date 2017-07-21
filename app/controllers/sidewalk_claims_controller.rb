@@ -37,7 +37,7 @@ class SidewalkClaimsController < ApplicationController
   def show
     @sidewalk = Sidewalk.find_by_gid(params[:id])
     claims = SidewalkClaim.where_custom(params[:id])
-    @my_sidewalk =  SidewalkClaim.find_by_user_id(17)
+    @my_sidewalk =  SidewalkClaim.find_by_gid(params[:id])
     @shoveled_by_me = true
     @claims = claims
 

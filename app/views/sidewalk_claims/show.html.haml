@@ -11,11 +11,24 @@
   %h3
     = t('defaults.address') + ':'
     = @sidewalk.address
-    %br
     %span.font12= t("defaults.drain_number", :thing => t("defaults.thing").titleize)
     = @sidewalk.gid
-    %br
-    %br
+
+  - if @claims.empty?
+    %p.font_18.color_warn.center
+      Nobody has adopted this sidewalk yet.
+  - else
+    %h3#people_list
+      = t('captions.taken') + ':'
+      = @claims.map{|c| c.user.short_name}.join(', ')
+
+
+
+
+
+
+
+
 
   - if user_signed_in?
     %div
@@ -24,11 +37,12 @@
       %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.clean"), :class => "btn success"
       - if @claims.empty?
-        %button#assign.btn.success
+        %button#assign.btn.info_adopt
           = t("buttons.adopt")
       - else
-        %button#change_drain.btn.success
-          change
+        %a{ :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
+          %button.btn.success
+            change
 
 
   - else
@@ -38,10 +52,5 @@
     - else
       = button_tag t("captions.unclean"), :class => "btn warning"
 
-  - if @claims.empty?
-    %p.font_18.color_warn.center
-  - else
-    %h1= t("captions.taken")
-    #people_list
-      = @claims.map{|c| c.user.short_name}.join(', ')
+
 
