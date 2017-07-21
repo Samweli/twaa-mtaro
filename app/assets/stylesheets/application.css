@@ -997,15 +997,3 @@ input.form-control {
 }
 
 
-.btnassing {
-    background-color: #5bc0de;
-    border: 2px solid #46b8da;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-}
-
-.btnassing:hover {
-    background-color: #5bc0de;
-    border: 2px solid #46b8da;
-}

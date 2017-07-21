@@ -8,25 +8,20 @@
       %li.unclear=  t("captions.unclean")
       %li.unclear.link_1= link_to t("links.refresh", :id => 'refresh_link'), :target => '_blank'
 
-  %h3
-    = t('defaults.address') + ':'
-    = @sidewalk.address
-    %span.font12= t("defaults.drain_number", :thing => t("defaults.thing").titleize)
-    = @sidewalk.gid
-
-  - if @claims.empty?
-    %p.font_18.color_warn.center
-      Nobody has adopted this sidewalk yet.
-  - else
-    %h3#people_list
-      = t('captions.taken') + ':'
-      = @claims.map{|c| c.user.short_name}.join(', ')
-
-
-
-
-
-
+  .descriptions
+    %h3
+      = t('defaults.address') + ':'
+      = @sidewalk.address
+      %span.font12
+        = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+        = @sidewalk.gid
+    - if @claims.empty?
+      %p.font_18.color_warn.center
+        Nobody has adopted this sidewalk yet.
+    - else
+      %h3#people_list
+        = t('captions.taken') + ':'
+        %span= @claims.map{|c| c.user.short_name}.join(', ')
 
 
 
@@ -41,7 +36,7 @@
           = t("buttons.adopt")
       - else
         %a{ :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
-          %button.btn.success
+          %button.btn.g.change_drain
             change
 
 

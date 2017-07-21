@@ -35,7 +35,7 @@ en:
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"
-    taken: "It is taken with "
+    taken: "Adopted by "
     unclean: "Not clean"
   defaults:
     address: "Address"

@@ -24,6 +24,34 @@ div.card-unclean {
     border-radius: 4px;
 }
 
+.btnassing {
+    background-color: #5bc0de;
+    border: 2px solid #46b8da;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.btnassing:hover {
+    background-color: #5bc0de;
+    border: 2px solid #46b8da;
+}
+
+
+
+.change_drain {
+    background-color: #f44336;
+    border: 2px solid #f44336;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.change_drain:hover {
+    background-color: #c93326;
+    border: 2px solid #c93326;
+}
+
 .warning {
     color: #fff;
     background-color: #f0ad4e;
@@ -118,3 +146,33 @@ div.card-unclean {
     padding: 5px 18px 8px 14px;
     font-weight: bold;
 }
+
+.descriptions {
+    padding: 15px 0 15px 0;
+}
+
+.link_add_user {
+    position: relative;
+    left: 50%;
+}
+
+#add_user {
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.submit_user {
+    position: relative;
+    left: 5%;
+}
+
+#people_list span {
+    font-size: 15px;
+}
+
+.font12 {
+    font-size: 15px;
+}
+
+
