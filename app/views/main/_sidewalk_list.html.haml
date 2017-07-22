@@ -17,7 +17,7 @@
         #pagination.font_12.link_1
           = paginate @my_sidewalks, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
-    #info_box.center
+    #info_box.center.hidden-xm
       %h2.font_bold{:style => 'margin: 0'}
         = t("defaults.welcome")
         %br
