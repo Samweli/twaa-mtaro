@@ -55,8 +55,8 @@ h3 {
 }
 
 #map_canvas {
- min-height: 730px;
-    width: auto;
+  min-height: 730px;
+  width: auto;
   position: relative;
   margin: 0px;
   padding: 0px;
