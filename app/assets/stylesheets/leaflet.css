@@ -1,4 +1,4 @@
-/* required styles */
+/*/* required styles */
 
 .leaflet-map-pane,
 .leaflet-tile,
@@ -83,6 +83,7 @@
 	position: relative;
 	z-index: 7;
 	pointer-events: auto;
+	margin-right: 10px;
 	}
 .leaflet-top,
 .leaflet-bottom {
@@ -103,7 +104,7 @@
 	left: 0;
 	}
 .leaflet-control {
-	float: left;
+	float: right;
 	clear: both;
 	}
 .leaflet-right .leaflet-control {
@@ -113,7 +114,7 @@
 	margin-top: 10px;
 	}
 .leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
+	margin-bottom: 100px;
 	}
 .leaflet-left .leaflet-control {
 	margin-left: 10px;
@@ -132,6 +133,7 @@
 	   -moz-transition: opacity 0.2s linear;
 	     -o-transition: opacity 0.2s linear;
 	        transition: opacity 0.2s linear;
+	        margin: 0px auto;
 	}
 .leaflet-fade-anim .leaflet-tile-loaded,
 .leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
@@ -387,7 +389,10 @@
 .leaflet-popup {
 	position: absolute;
 	text-align: center;
+	
+
 	}
+	
 .leaflet-popup-content-wrapper {
 	padding: 1px;
 	text-align: left;
@@ -476,4 +481,4 @@
 .leaflet-div-icon {
 	background: #fff;
 	border: 1px solid #666;
-	}
+	}*/

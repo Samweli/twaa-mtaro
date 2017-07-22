@@ -13,6 +13,8 @@ $(function () {
     var popup;
     var bDebug = true;
 
+
+
   /* Creating map*/
   var map = new L.Map('map_canvas', mapOptions);
   var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
@@ -21,6 +23,7 @@ $(function () {
   });
 
   map.addLayer(osm);
+
 
   /* load KML data when zoomed */
   // map.on('zoomend moveend',function (ev) {
@@ -114,7 +117,7 @@ $(function () {
                 colours = ['Misafi', 'Michafu', 'Msaada'],
                 labels = [];
                 // Adding legend header
-                div.innerHTML += '<h3> Alama </h3>';
+                div.innerHTML += '<h3 > Alama </h3>';
 
             }else{
                 colour_map = {'Clean':"green", 'Not clean':"#dd9031", 'Needs help':'#6495ed'}
@@ -181,6 +184,8 @@ $(function () {
           },
           success: function(data) {
             //renderSocialButtons();
+            console.log('returned data');
+            console.log(data);
             createPopup(data, pos);
             hideSpinner();
           }
@@ -435,7 +440,6 @@ $(function () {
       var id = $(this).attr('data-moid');
       var locale = urlParam('locale');
       showSpinner();
-
       $.ajax({
         type: 'POST',
         url: '/sidewalks/' + id,
@@ -496,10 +500,12 @@ $(function () {
     $('#uncleaned').on('click', function() {
       showSpinner();
       refreshKML("uncleaned");
+    
     });
     $('#need_help').on('click', function() {
       showSpinner();
       refreshKML("need_help");
+    
     });
     $('#all').on('click', function() {
       showSpinner();
@@ -514,4 +520,27 @@ $(function () {
   get_categories();
 
 
+
+
 });  /* end of function */
+
+$(document).ready(function(){
+    $("#page").click(function () {
+        $("#myDiv").fadeToggle("slow");
+    });
+});
+$(window).resize(function() {
+if( $(window).width() > 768 ) {
+    $('#myDiv').show();
+    $('#page').hide();
+} else {
+
+}
+
+if( $(window).width() <767 ) {
+    $('#myDiv').hide();
+    $('#page').show();
+} else {
+
+}
+});
