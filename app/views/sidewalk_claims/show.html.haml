@@ -1,5 +1,5 @@
 #actions_box
-  #legend.gray_box.radius_5.font_14.center
+  #legend.gray_box.radius_4.font_14.center
     %h3
       = t("titles.drain_color")
     %ul.horizontal_items.font_bold
@@ -24,7 +24,6 @@
         %span= @claims.map{|c| c.user.short_name}.join(', ')
 
 
-
   - if user_signed_in?
     %div
       %a{:href => "#", :id => "unclean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
@@ -43,9 +42,5 @@
   - else
     - if @sidewalk.cleared?
       = button_tag t("captions.clean"), :class => "btn success"
-
     - else
       = button_tag t("captions.unclean"), :class => "btn warning"
-
-
-

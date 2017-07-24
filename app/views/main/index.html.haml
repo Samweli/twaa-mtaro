@@ -1,29 +1,48 @@
 #aside 
-#sidebar
-  = image_tag "logos/twaa-mtaro-logo.jpeg", :style => "width:340px; height: 90px;",  :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  = # render :partial => 'register'
-  = render :partial => 'address_form'
-  - # unless user_signed_in?
-  / #sidebar_login.radius_5
-  /   = # render :partial => 'sessions/sign_in'
-  
-  #mini_profile.radius_5
-    = render :partial => 'user_badge'
-    = render :partial => 'sidewalk_list'
-  
-  %div.top-buffer
-    %h4.info.header
-      = t("titles.drain_category")
-    %div.btn-group.clearfix
-      = render :partial => 'needhelp_button'
-      = render :partial => 'unclean_button'
-      = render :partial => 'cleaned_button'
-      = render :partial => 'all_button'
+.row
+  .col-lg-4.col-md-4.col-sm-4
+    %nav.navbar
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand 
+            = image_tag "logos/twaa-mtaro-logo.jpeg", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
 
-  #service_logos.center
-    = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
-  #feedback.font_12.link_1
-    = link_to t("links.terms"), tos_path, :target => '_blank'
+        #myNavbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            #sidebar_content
+              = render :partial => 'address_form'
+
+              #mini_profile.radius_5
+                = render :partial => 'user_badge'
+                = render :partial => 'sidewalk_list'
+
+
+              %div.top-buffer
+
+                %h4.info.header
+                  = t("titles.drain_category")
+                  %button#page
+                    %span
+                    %span
+                    %span
+                %div.btn-group.clearfix#myDiv
+                  = render :partial => 'needhelp_button'
+                  = render :partial => 'unclean_button'
+                  = render :partial => 'cleaned_button'
+                  = render :partial => 'all_button'
+              #service_logos.center
+                = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
+              #feedback.font_12.link_1
+                = link_to t("links.terms"), tos_path, :target => '_blank'
+    
+              
+  .col-lg-8.col-md-8.col-sm-8
+    #map_canvas
+
 #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
 
 
@@ -31,6 +50,11 @@
   %p
     = image_tag "loading2.gif"
 
-
-#map_canvas
-
+/ .container_fluid
+/   .jumbotron
+/     #footer_content
+/       #service_logos.center
+/         = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
+/       #feedback.font_12.link_1
+/         = link_to t("links.terms"), tos_path, :target => '_blank'
+    

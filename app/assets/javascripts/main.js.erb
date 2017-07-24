@@ -18,25 +18,26 @@ $(function () {
     var pos;
     var bDebug = true;
 
+
+
   /* Creating map*/
-    var map = new L.Map('map_canvas', mapOptions);
-    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: osmAttr
-    });
 
-    map.addLayer(osm);
+  var map = new L.Map('map_canvas', mapOptions);
+  var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:osmAttr
+  });
 
-
-    var urlParam = function (name) {
-        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        if (results == null) {
-            return 'en';
-        }
-        else {
-            return results[1] || 0;
-        }
-    }
+  map.addLayer(osm);
+  var urlParam = function(name) {
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results == null) {
+          return 'en';
+      }
+      else {
+          return results[1] || 0;
+      }
+  }
 
     var refreshKML = function (type) {
 
@@ -117,7 +118,7 @@ $(function () {
                     colours = ['Misafi', 'Michafu', 'Msaada'],
                     labels = [];
                 // Adding legend header
-                div.innerHTML += '<h3> Alama </h3>';
+                div.innerHTML += '<h3 > Alama </h3>';
 
             } else {
                 colour_map = {'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed'}
@@ -187,6 +188,7 @@ $(function () {
                 createPopup(data, pos);
                 hideSpinner();
             }
+
         });
 
     }
@@ -466,16 +468,22 @@ $(function () {
 
     }
 
-  /* signs up new users */
+  /* signs up new users for assigning drains */
     $('body').on('submit', '#new_user', function (e) {
         e.preventDefault();
-        console.log('it can listen to events');
+        var gen_password = Math.random() // Generate random number, eg: 0.123456
+                           .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
+                           .slice(-8);// Cut off last 8 characters : "yo82mvyr"
+
+        console.log('this the generated password');
+        console.log(gen_password);
+
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
-        var upwd = $('#user_last_name');
-        var upwdc = $('#user_last_name');
+        var upwd = gen_password;
+        var upwdc = gen_password;
 
 
         $.ajax({
@@ -577,7 +585,7 @@ $(function () {
                 $(document).on('click', '.notifyjs-foo-base .no', function () {
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
-                    refreshKML();
+                    refreshKML("all");
                     updateSidebar();
                     createPopup(data, pos);
 
@@ -588,7 +596,6 @@ $(function () {
                     //hide notification
                     $(this).trigger('notify-hide');
                 });
-
 
                 var h5 = $("<h5/>").append("You have successfully assigned a dran !")
 
@@ -622,7 +629,7 @@ $(function () {
                     },
                     success: function (data) {
                          console.info("abandoned");
-                        refreshKML();
+                        refreshKML("all");
                         updateSidebar();
                         createPopup(data,pos);
                     }
@@ -661,6 +668,7 @@ $(function () {
 
                     if (users) {
 
+
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
@@ -673,19 +681,7 @@ $(function () {
 
                     }
 
-                  /* if (users) {
-                   console.log(users);
 
-
-
-                   var mySelect = document.getElementById('city_id');
-                   for (var i = 0; i < users.length; i++) {
-                   var option = document.createElement('option');
-                   option.value = users[i].id;
-                   option.text = users[i].first_name;
-                   mySelect.appendChild(option);
-                   }
-                   }*/
 
                 }
             });
@@ -806,4 +802,27 @@ $(function () {
     get_categories();
 
 
+
+
 });  /* end of function */
+
+$(document).ready(function(){
+    $("#page").click(function () {
+        $("#myDiv").fadeToggle("slow");
+    });
+});
+$(window).resize(function() {
+if( $(window).width() > 768 ) {
+    $('#myDiv').show();
+    $('#page').hide();
+} else {
+
+}
+
+if( $(window).width() <767 ) {
+    $('#myDiv').hide();
+    $('#page').show();
+} else {
+
+}
+});

@@ -1,4 +1,4 @@
-#address_box.radius_5
+#address_box.radius_4 
   %div.form-group
     = hidden_field_tag :city_state, "Dar es salaam, TZ", :class => 'form-group'
     =# hidden_field_tag :limit, params[:limit] || 40
@@ -17,7 +17,7 @@
     /       :target => '_blank'
 
     - unless user_signed_in?
-      #sidebar_login.font_14.radius_5
+      #sidebar_login.font_14.radius_4
         %ul.horizontal_items.item_separator.pen_lightgray
           %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
           |

@@ -96,7 +96,10 @@ en:
     login: "Login"
     register: "Register"
   messages: 
-    notification: "Street leaader turned the color of your %{thing} number "  
+    clear_status: "its clean"
+    dirt_status: "not clean"
+    notification: "Street leaader turned the mark of your %{thing} number "  
+    reply: "have you marked your drain to"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
