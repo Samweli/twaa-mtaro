@@ -465,7 +465,6 @@ $(function () {
                 users = msg;
             }
         });
-
     }
 
   /* signs up new users for assigning drains */
@@ -499,8 +498,8 @@ $(function () {
                     'email': uemail.val(),
                     'first_name': ufname.val(),
                     'last_name': ulname.val(),
-                    'password': upwd.val(),
-                    'password_confirmation': upwdc.val(),
+                    'password': upwd,
+                    'password_confirmation': upwdc,
                 }
             },
             beforeSend: function () {
