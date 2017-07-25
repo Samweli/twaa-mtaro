@@ -6,12 +6,12 @@ class SmsService
 
   end
 
-  def send_sms(content, tonumber) 
-	# set up a client to talk to the Twilio REST API  
+  def send_sms(content, tonumber)
+	# set up a client to talk to the Twilio REST API
 	@client.account.messages.create({
-	  :from => '+14256540807', 
-	  :to => tonumber, 
-	  :body => content, 
+	  :from => '+14256540807',
+	  :to => tonumber,
+	  :body => content,
 	})
   end
 

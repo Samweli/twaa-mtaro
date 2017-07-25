@@ -2,8 +2,4 @@
   #loader{:style => "display: none;"}
     = image_tag "default.gif"
   #info_window
-    - flash.each do |key, message|
-      - if message.is_a? String
-        %div{:id => key}
-          = message
     = yield

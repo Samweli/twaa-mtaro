@@ -1,0 +1,18 @@
+#sign_up_box
+  = form_for :user, :url => user_registration_path, :html => {:id => "new_user", :class => 'form'} do |f|
+    %h2
+      = t("titles.add_user")
+    .signup
+      %ul.horizontal_items
+        %li
+          = f.label :first_name, t("labels.first_name")
+          = f.text_field :first_name
+        %li
+          = f.label :last_name, t("labels.last_name")
+          = f.text_field :last_name
+        %li
+          = f.label :email, t("labels.email")
+          = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
+      %ul.horizontal_items.font_12.center{:style => "margin-top: 15px;"}
+        %li.submit_user
+          = f.submit t("buttons.assign")

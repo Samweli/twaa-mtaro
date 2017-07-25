@@ -7,6 +7,9 @@ AdoptASidewalk::Application.routes.draw do
       :sessions => 'sessions',
   } do
     get 'forgot_password' => 'passwords#forgot'
+    get 'users' => 'users#index'
+    get 'add' => 'users#add'
+    post 'createuser' => 'users#createuser'
   end
 
   get 'address' => 'addresses#show', :as => 'address'
@@ -14,6 +17,7 @@ AdoptASidewalk::Application.routes.draw do
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
+  get 'sidewalk_claims/adopt' => 'sidewalk_claims#adopt'
 
   match '/auth/:provider/callback' => 'authentications#create'
 
@@ -21,5 +25,6 @@ AdoptASidewalk::Application.routes.draw do
     get 'find_closest', :on => :collection
   end
   resources :sidewalk_claims
+
   root :to => 'main#index'
 end

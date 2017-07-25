@@ -25,25 +25,36 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "mitaro_dar", :primary_key => "gid", :force => true do |t|
+  create_table "mitaro_dar", :force => true do |t|
     t.string  "the_geom",     :limit => 0
+    t.integer "gid"
     t.string  "full_id",      :limit => 254
-    t.string  "osm_id",       :limit => 254
-    t.string  "osm_type",     :limit => 254
-    t.string  "tunnel",       :limit => 254
-    t.string  "covered",      :limit => 254
-    t.string  "layer",        :limit => 254
     t.string  "waterway",     :limit => 254
-    t.string  "blockage",     :limit => 254
-    t.string  "diameter",     :limit => 254
+    t.string  "covered",      :limit => 254
     t.string  "depth",        :limit => 254
     t.string  "width",        :limit => 254
+    t.string  "blockage",     :limit => 254
+    t.string  "tunnel",       :limit => 254
+    t.string  "diameter",     :limit => 254
+    t.string  "ditch",        :limit => 254
+    t.string  "drain",        :limit => 254
     t.string  "name",         :limit => 254
-    t.text    "address"
+    t.string  "bridge",       :limit => 254
+    t.string  "height",       :limit => 254
+    t.string  "surface",      :limit => 254
+    t.string  "smoothness",   :limit => 254
+    t.string  "oneway",       :limit => 254
+    t.decimal "lat",                         :precision => 16, :scale => 14
+    t.decimal "lng",                         :precision => 16, :scale => 14
     t.boolean "cleared"
-    t.integer "claims_count"
     t.boolean "need_help"
+    t.string  "zipcode"
+    t.string  "user_phone"
+    t.string  "address"
+    t.integer "claims_count",                                                :default => 0
   end
+
+  add_index "mitaro_dar", ["cleared"], :name => "index_mitaro_dar_on_cleared"
 
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -75,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.string   "sms_number"
     t.boolean  "admin",                  :default => false
     t.integer  "claims_count",           :default => 0
+    t.integer  "role",                   :default => 1
     t.integer  "max_claims"
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"

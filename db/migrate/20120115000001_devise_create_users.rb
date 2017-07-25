@@ -1,5 +1,5 @@
 class DeviseCreateUsers < ActiveRecord::Migration
-  def change
+  def up
     create_table :users do |t|
       t.timestamps
       t.string :first_name, :null => false
@@ -9,6 +9,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :sms_number
       t.boolean :admin, :default => false
       t.integer :claims_count, :default => 0
+      t.integer :role, :default => 1
       t.integer :max_claims
       t.string :encrypted_password, :null => false, :default => ""
     ## Recoverable
@@ -28,4 +29,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
     add_index :users, :email, :unique => true
     add_index :users, :reset_password_token, :unique => true
   end
+
+  def self.down
+    drop_table :users
+  end
+
 end
