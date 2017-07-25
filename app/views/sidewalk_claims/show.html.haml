@@ -19,9 +19,22 @@
       %p.font_18.color_warn.center
         Nobody has adopted this sidewalk yet.
     - else
-      %h3#people_list
+      %h3
         = t('captions.taken') + ':'
-        %span= @claims.map{|c| c.user.short_name}.join(', ')
+      #people_list.users{:style => "max-height:150px; width:400px;overflow:auto;"}
+        %table#abandon_link
+          %tr
+            %th User name
+            %th Status
+            %th Action
+          - @claims.each do |c|
+            %tr
+              %td= c.user.short_name
+              %td clean
+              %td
+                %button{:class => "abdn_link", :data => {:moid=>c.id}, :style => "text-decoration:none;"}
+                  change
+
 
 
   - if user_signed_in?
@@ -34,9 +47,8 @@
         %button#assign.btn.info_adopt
           = t("buttons.adopt")
       - else
-        %a{ :id => "abandon_link", :data => {:moid => @my_sidewalk.id}}
-          %button.btn.g.change_drain
-            change
+        %button#add_claim.btn.info_adopt
+          add
 
 
   - else

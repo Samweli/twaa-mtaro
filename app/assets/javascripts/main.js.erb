@@ -612,7 +612,7 @@ $(function () {
     function bind(pos) {
 
 
-        $('#abandon_link').on('click', function () {
+        $('#abandon_link').on('click','.abdn_link', function () {
             if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
                 $.ajax({
                     type: 'POST',
@@ -649,6 +649,46 @@ $(function () {
             assignDrain(pos);
             return false;
         });
+
+
+
+        /* adding more claims */
+        $('#add_claim').on('click', function () {
+            var locale = urlParam('locale');
+            getUsers();
+
+            $.ajax({
+                type: 'GET',
+                url: 'sidewalk_claims/adopt',
+                data: {
+                    'locale': locale
+                },
+                success: function (msg) {
+                    getUsers();
+
+
+                    if (users) {
+
+
+                        createPopup(msg, drainLocation);
+                        var trHTML = '';
+
+                        $.each(users, function (i, item) {
+
+                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                        });
+
+                        $('#location').append(trHTML);
+
+                    }
+
+
+
+                }
+            });
+            return false;
+        });
+
 
       /* displays a form for assigning drains to users */
         $('#assign').on('click', function () {
