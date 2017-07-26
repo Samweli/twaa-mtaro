@@ -54,7 +54,7 @@ class UsersController < Devise::RegistrationsController
   def createuser
     build_resource
     if resource.save
-      puts resource
+      Rails.logger.debug("this is the user #{resource}")
       session[:omniauth] = nil unless @user.new_record?
       render(:json => {"user" => resource}, :status => 200) and return
     else

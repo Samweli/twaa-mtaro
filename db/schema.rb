@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116202050) do
+ActiveRecord::Schema.define(:version => 20170726135249) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -74,6 +74,13 @@ ActiveRecord::Schema.define(:version => 20120116202050) do
     t.integer "auth_srid"
     t.string  "srtext",    :limit => 2048
     t.string  "proj4text", :limit => 2048
+  end
+
+  create_table "streets", :force => true do |t|
+    t.string "street_name"
+    t.string "ward_name"
+    t.string "municipal_name"
+    t.string "city_name"
   end
 
   create_table "users", :force => true do |t|
