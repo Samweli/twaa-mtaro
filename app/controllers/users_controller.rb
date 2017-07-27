@@ -31,7 +31,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def create
-    build_resource
     if resource.save
       sign_in resource
       puts resource

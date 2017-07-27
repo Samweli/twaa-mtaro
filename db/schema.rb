@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170726135249) do
+ActiveRecord::Schema.define(:version => 20170726141720) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -77,10 +77,12 @@ ActiveRecord::Schema.define(:version => 20170726135249) do
   end
 
   create_table "streets", :force => true do |t|
-    t.string "street_name"
-    t.string "ward_name"
-    t.string "municipal_name"
-    t.string "city_name"
+    t.string   "street_name"
+    t.string   "ward_name"
+    t.string   "municipal_name"
+    t.string   "city_name"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -95,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20170726135249) do
     t.integer  "claims_count",           :default => 0
     t.integer  "role",                   :default => 1
     t.integer  "max_claims"
+    t.integer  "street_id"
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

@@ -5,6 +5,7 @@ class CreateStreets < ActiveRecord::Migration
       t.string :ward_name
       t.string :municipal_name
       t.string :city_name
+      t.timestamps
     end
   end
 

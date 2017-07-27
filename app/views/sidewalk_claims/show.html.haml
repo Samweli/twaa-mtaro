@@ -39,6 +39,7 @@
 
   - if user_signed_in?
     %div
+      = current_user.street.id
       %a{:href => "#", :id => "unclean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.unclean"), :class => "btn warning"
       %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}

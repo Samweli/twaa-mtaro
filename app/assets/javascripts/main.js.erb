@@ -354,7 +354,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
 
@@ -373,6 +373,7 @@ $(function () {
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
         var uPhone = $('#user_sms_number');
+        var uStreet = $('#user_street_id');
         var upwd = $('#user_password');
         var upwdc = $('#user_password_confirmation');
         var errors = [];
@@ -423,6 +424,7 @@ $(function () {
                         'first_name': ufname.val(),
                         'last_name': ulname.val(),
                         'sms_number': uPhone.val(),
+                        'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
                     }
@@ -442,7 +444,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
                 }
@@ -484,8 +486,11 @@ $(function () {
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
         var uPhone = $('#user_sms_number');
+        var uStreet = $(this).attr('data-moid')
         var upwd = gen_password;
         var upwdc = gen_password;
+
+        console.log('this is the street id for new user: '+ uStreet);
 
 
         $.ajax({
@@ -503,6 +508,7 @@ $(function () {
                     'last_name': ulname.val(),
                     'password': upwd,
                     'sms_number': uPhone.val(),
+                    'street_id': uStreet,
                     'password_confirmation': upwdc,
                 }
             },

@@ -1,5 +1,5 @@
 #sign_up_box
-  = form_for :user, :url => user_registration_path, :html => {:id => "new_user", :class => 'form'} do |f|
+  = form_for :user, :url => user_registration_path, :html => {:id => "new_user", :class => 'form', :data => {:moid=>current_user.street.id}} do |f|
     %h2
       = t("titles.add_user")
     .signup
