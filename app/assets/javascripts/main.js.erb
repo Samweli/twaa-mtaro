@@ -307,7 +307,7 @@ $(function () {
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
-        var uemail = $('.user_email', i);
+        var uemail = $('.user_sms_number', i);
         var upwd = $('.user_password', i);
         var err_msg = $('.error_msg', i);
         var errors = [];
@@ -315,11 +315,11 @@ $(function () {
 
         e.preventDefault();
         submitButton.attr('disabled', 'disabled');
-        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+/*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
             markError(uemail, errors);
         } else {
             unmarkError(uemail);
-        }
+        }*/
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -338,7 +338,7 @@ $(function () {
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'email': uemail.val(),
+                        'sms_number': uemail.val(),
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     }
