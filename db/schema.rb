@@ -13,48 +13,91 @@
 
 ActiveRecord::Schema.define(:version => 20170726141720) do
 
-  create_table "authentications", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "token"
-    t.string   "secret"
-    t.datetime "expires"
-    t.string   "nickname"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "mitaro_dar", :force => true do |t|
+  create_table "drains_part", :primary_key => "gid", :force => true do |t|
     t.string  "the_geom",     :limit => 0
-    t.integer "gid"
     t.string  "full_id",      :limit => 254
+    t.string  "osm_id",       :limit => 254
+    t.string  "osm_type",     :limit => 254
     t.string  "waterway",     :limit => 254
-    t.string  "covered",      :limit => 254
-    t.string  "depth",        :limit => 254
+    t.string  "name",         :limit => 254
+    t.string  "boat",         :limit => 254
     t.string  "width",        :limit => 254
-    t.string  "blockage",     :limit => 254
+    t.string  "depth",        :limit => 254
+    t.string  "covered",      :limit => 254
     t.string  "tunnel",       :limit => 254
+    t.string  "layer",        :limit => 254
+    t.string  "blockage",     :limit => 254
+    t.string  "level",        :limit => 254
+    t.string  "canoe",        :limit => 254
+    t.string  "motorboat",    :limit => 254
+    t.string  "ship",         :limit => 254
     t.string  "diameter",     :limit => 254
+    t.string  "intermitte",   :limit => 254
     t.string  "ditch",        :limit => 254
     t.string  "drain",        :limit => 254
-    t.string  "name",         :limit => 254
+    t.string  "highway",      :limit => 254
     t.string  "bridge",       :limit => 254
+    t.string  "no",           :limit => 254
+    t.string  "drainage",     :limit => 254
     t.string  "height",       :limit => 254
+    t.string  "addr_stree",   :limit => 254
     t.string  "surface",      :limit => 254
     t.string  "smoothness",   :limit => 254
-    t.string  "oneway",       :limit => 254
-    t.decimal "lat",                         :precision => 16, :scale => 14
-    t.decimal "lng",                         :precision => 16, :scale => 14
+    t.string  "bridge_mov",   :limit => 254
+    t.string  "bridge_str",   :limit => 254
+    t.string  "incline",      :limit => 254
+    t.string  "address",      :limit => 200
     t.boolean "cleared"
+    t.integer "claims_count"
     t.boolean "need_help"
-    t.string  "zipcode"
-    t.string  "user_phone"
-    t.string  "address"
-    t.integer "claims_count",                                                :default => 0
   end
 
-  add_index "mitaro_dar", ["cleared"], :name => "index_mitaro_dar_on_cleared"
+  create_table "mitaro", :primary_key => "gid", :force => true do |t|
+    t.string  "the_geom",          :limit => 0
+    t.string  "full_id",           :limit => 254
+    t.string  "osm_id",            :limit => 254
+    t.string  "osm_type",          :limit => 254
+    t.string  "tunnel",            :limit => 254
+    t.string  "covered",           :limit => 254
+    t.string  "layer",             :limit => 254
+    t.string  "waterway",          :limit => 254
+    t.string  "blockage",          :limit => 254
+    t.string  "diameter",          :limit => 254
+    t.string  "depth",             :limit => 254
+    t.string  "width",             :limit => 254
+    t.string  "name",              :limit => 254
+    t.boolean "cleared"
+    t.integer "claims_count"
+    t.boolean "need_help"
+    t.text    "address"
+    t.text    "user_phone_number"
+  end
+
+  create_table "mitaro_dar", :id => false, :force => true do |t|
+    t.integer "gid"
+    t.string  "the_geom",          :limit => 0
+    t.string  "full_id",           :limit => 254
+    t.string  "waterway",          :limit => 254
+    t.string  "covered",           :limit => 254
+    t.string  "depth",             :limit => 254
+    t.string  "width",             :limit => 254
+    t.string  "blockage",          :limit => 254
+    t.string  "tunnel",            :limit => 254
+    t.string  "diameter",          :limit => 254
+    t.string  "ditch",             :limit => 254
+    t.string  "drain",             :limit => 254
+    t.string  "name",              :limit => 254
+    t.string  "bridge",            :limit => 254
+    t.string  "height",            :limit => 254
+    t.string  "surface",           :limit => 254
+    t.string  "smoothness",        :limit => 254
+    t.string  "oneway",            :limit => 254
+    t.boolean "cleared"
+    t.boolean "need_help"
+    t.integer "claims_count"
+    t.text    "user_phone_number"
+    t.text    "address"
+  end
 
   create_table "sidewalk_claims", :force => true do |t|
     t.datetime "created_at", :null => false

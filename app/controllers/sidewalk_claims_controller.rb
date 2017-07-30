@@ -30,6 +30,17 @@ class SidewalkClaimsController < ApplicationController
     #  
     #  publish_facebook_status(message)
     #end
+    sms_service = SmsService.new();
+    if I18n.locale == :en
+      msg = 'You have claimed drain number #{@sidewalk.gid} located at #{@sidewalk.address}'\
+    else
+      msg = 'Umetwaa mtaro number #{@sidewalk.gid} unaopatikana #{@sidewalk.address}'\
+    end
+    user = User.find_by_gid(params[:user_id])
+
+    sms_service.send_sms(
+      msg, 
+      user.sms_number);
 
     redirect_to :action => :show, :id => @sidewalk.gid
   end

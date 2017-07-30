@@ -34,7 +34,6 @@ class UsersController < Devise::RegistrationsController
     build_resource
     if resource.save
       sign_in resource
-      puts resource
       session[:omniauth] = nil unless @user.new_record?
       render(:json => {"message" => "you have signed up successfully"}, :status => 200) and return
     else
@@ -54,8 +53,21 @@ class UsersController < Devise::RegistrationsController
   def createuser
     build_resource
     if resource.save
-      Rails.logger.debug("this is the user #{resource}")
       session[:omniauth] = nil unless @user.new_record?
+      sms_service = SmsService.new();
+      if I18n.locale == :en
+        msg = 'Your Twaa mtaro account has been created, go to http://twaamtaro.org'\
+              'and login with '\
+              'email #{resource.email} and password #{resource.password}'
+      else
+         msg = 'Umesajiliwa kwenye tovuti ya Twaa mtaro imetengenezwa,'\
+               'ingia http://twaamtaro.org'\
+               'kwa kutumia barua pepe #{resource.email} na nywila #{resource.password}'
+      end
+      sms_service.send_sms(
+        msg, 
+        resource.sms_number);
+
       render(:json => {"user" => resource}, :status => 200) and return
     else
       errors = resource.errors

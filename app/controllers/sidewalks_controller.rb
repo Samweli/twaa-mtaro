@@ -71,6 +71,9 @@ class SidewalksController < ApplicationController
       reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}"
       notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"
 
+      user = User.find_by_id(SidewalkClaim.find_by_gid(sidewalk.gid).user_id)
+      puts user
+      puts user.sms_number
       # sms_service.send_sms(
       #   reply_street_leader, 
       #   '+255655899266');

@@ -704,6 +704,7 @@ $(function () {
       /* displays a form for assigning drains to users */
         $('#assign').on('click', function () {
             var locale = urlParam('locale');
+            console.info("Inside assign");
             getUsers();
 
             $.ajax({
