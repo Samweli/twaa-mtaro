@@ -68,6 +68,7 @@ $(function () {
         var url;
         if (type) {
             url = 'sidewalks.kml?locale=' + locale + '&type=' + type;
+            console.log('the url: ' + url);
         } else {
             url = 'sidewalks.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
@@ -844,6 +845,14 @@ $(function () {
             }
         }
 
+        return false;
+    });
+
+
+    $('a.view_sidewalk').on('click', function() {
+        activeObjectId = $(this).attr('data-gid');
+        $('#address').val($(this).text());
+        $('#address_button').trigger('click');
         return false;
     });
 

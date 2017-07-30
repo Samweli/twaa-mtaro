@@ -11,7 +11,7 @@
           %tbody
           - @my_sidewalks.each do |s|
             %tr
-              %td.address= link_to s.sidewalk.address, '#', :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid
+              %td.address= link_to s.sidewalk.address, "#{s.sidewalk.address}", :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid
               %td= yesno(s.sidewalk.cleared)
               %td= yesno(s.sidewalk.need_help)
         #pagination.font_12.link_1
