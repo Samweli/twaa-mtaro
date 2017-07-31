@@ -1,4 +1,4 @@
-#sidewalk_list
+#sidewalk_list.hidden-xs
   - if user_signed_in?
     #my_sidewalks
       - if @my_sidewalks.size > 0
@@ -17,7 +17,7 @@
         #pagination.font_12.link_1
           = paginate @my_sidewalks, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
-    #info_box.center.hidden-xm
+    #info_box.center
       %h2.font_bold{:style => 'margin: 0'}
         = t("defaults.welcome")
         %br
@@ -28,7 +28,7 @@
         %br
           = t("defaults.help_question")
       
-      %ul.features
+      %ul.features.hidden-sm
         %li= t("defaults.claim")
         %br
         %li= t("defaults.ask_help")
