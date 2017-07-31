@@ -22,7 +22,8 @@ class CreateSidewalkClaims < ActiveRecord::Migration
     end
 
   def self.down
-    drop_table :sidewalk_claims
+    if ActiveRecord::Base.connection.table_exists? :sidewalk_claims
+      drop_table :sidewalk_claims
   end
 
 end

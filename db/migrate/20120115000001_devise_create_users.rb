@@ -32,7 +32,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :users
+    if ActiveRecord::Base.connection.table_exists? :users
+      drop_table :users
   end
 
 end
