@@ -22,6 +22,7 @@
       %h3
         = t('captions.taken') + ':'
       #people_list.users{:style => "max-height:150px; width:400px;overflow:auto;"}
+      - if user_signed_in? && current_user.role == 2
         %table#abandon_link
           %tr
             %th User name
@@ -34,11 +35,21 @@
               %td
                 %button{:class => "abdn_link", :data => {:moid=>c.id}, :style => "text-decoration:none;"}
                   change
+      - else
+        %table#abandon_lin
+          %tr
+            %th User name
+            %th Status
+          - @claims.each do |c|
+            %tr
+              %td= c.user.short_name
+              %td clean
 
 
 
-  - if user_signed_in?
+  - if user_signed_in? && current_user.role == 2
     %div
+      = current_user.street.id
       %a{:href => "#", :id => "unclean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}
         = button_tag t("captions.unclean"), :class => "btn warning"
       %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.id}, :style => "text-decoration:none;"}

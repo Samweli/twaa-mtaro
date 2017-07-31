@@ -68,6 +68,7 @@ $(function () {
         var url;
         if (type) {
             url = 'sidewalks.kml?locale=' + locale + '&type=' + type;
+            console.log('the url: ' + url);
         } else {
             url = 'sidewalks.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
@@ -307,7 +308,7 @@ $(function () {
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
-        var uemail = $('.user_email', i);
+        var uemail = $('.user_sms_number', i);
         var upwd = $('.user_password', i);
         var err_msg = $('.error_msg', i);
         var errors = [];
@@ -315,11 +316,11 @@ $(function () {
 
         e.preventDefault();
         submitButton.attr('disabled', 'disabled');
-        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+/*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
             markError(uemail, errors);
         } else {
             unmarkError(uemail);
-        }
+        }*/
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -338,7 +339,7 @@ $(function () {
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'email': uemail.val(),
+                        'sms_number': uemail.val(),
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     }
@@ -354,7 +355,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
 
@@ -372,6 +373,8 @@ $(function () {
         var uemail = $('#user_email');
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $('#user_street_id');
         var upwd = $('#user_password');
         var upwdc = $('#user_password_confirmation');
         var errors = [];
@@ -421,6 +424,8 @@ $(function () {
                         'email': uemail.val(),
                         'first_name': ufname.val(),
                         'last_name': ulname.val(),
+                        'sms_number': uPhone.val(),
+                        'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
                     }
@@ -440,7 +445,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
                 }
@@ -481,8 +486,12 @@ $(function () {
         var uemail = $('#user_email');
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $(this).attr('data-moid')
         var upwd = gen_password;
         var upwdc = gen_password;
+
+        console.log('this is the street id for new user: '+ uStreet);
 
 
         $.ajax({
@@ -499,6 +508,8 @@ $(function () {
                     'first_name': ufname.val(),
                     'last_name': ulname.val(),
                     'password': upwd,
+                    'sms_number': uPhone.val(),
+                    'street_id': uStreet,
                     'password_confirmation': upwdc,
                 }
             },
@@ -835,6 +846,14 @@ $(function () {
             }
         }
 
+        return false;
+    });
+
+
+    $('a.view_sidewalk').on('click', function() {
+        activeObjectId = $(this).attr('data-gid');
+        $('#address').val($(this).text());
+        $('#address_button').trigger('click');
         return false;
     });
 

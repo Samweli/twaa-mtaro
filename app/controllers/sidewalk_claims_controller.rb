@@ -8,8 +8,8 @@ class SidewalkClaimsController < ApplicationController
     unless (@sidewalk = Sidewalk.find_by_gid(params[:gid]))
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
-
-    if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, params[:user_id])).new_record?
+            # use id of sidewalk as gid in sidewalk claims table
+    if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.id, params[:user_id])).new_record?
       if @sidewalk.lat.nil?
         gc = Address.geocode("#{@sidewalk.address}, Dar es salaam")
         if gc && gc.success
@@ -47,8 +47,9 @@ class SidewalkClaimsController < ApplicationController
 
   def show
     @sidewalk = Sidewalk.find_by_gid(params[:id])
-    claims = SidewalkClaim.where_custom(params[:id])
-    @my_sidewalk =  SidewalkClaim.find_by_gid(params[:id])
+      # treat sidewalk id as gid in sidewalk_claims table
+    claims = SidewalkClaim.where_custom(@sidewalk.id)
+    @my_sidewalk =  SidewalkClaim.find_by_gid(@sidewalk.id)
     @shoveled_by_me = true
     @claims = claims
 
