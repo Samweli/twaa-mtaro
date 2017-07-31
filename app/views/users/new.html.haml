@@ -18,11 +18,18 @@
           = f.label :email, t("labels.email")
           = f.text_field :email, :value => params[:user] ? params[:user][:email] : nil
         %li
+          = f.label :sms_number, t("labels.sms_number")
+          = f.text_field :sms_number
+        %li
+          = f.label :sms_number, t("labels.sms_number")
+          = f.collection_select(:street_id, Street.all, :id, :street_name)
+        %li
           = f.label :password, t("labels.password_reg")
           = f.password_field :password
         %li
           = f.label :password_confirmation, t("labels.password_confirm")
           = f.password_field :password_confirmation
+
 
       %ul.horizontal_items.font_12.center{:style => 'margin-top: 15px;'}
         %li= f.submit t("buttons.register")

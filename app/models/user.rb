@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  attr_accessible :email, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :remember_me
-  validates_presence_of :first_name, :last_name
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number:true}
+  attr_accessible :email, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
+  validates_presence_of :first_name, :last_name, :street_id
   has_many :sidewalk_claims
   has_many :authentications
+  belongs_to :street
 
   def short_name
     "#{first_name} #{last_name.chr}."
