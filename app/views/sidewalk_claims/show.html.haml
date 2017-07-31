@@ -32,9 +32,9 @@
   - if user_signed_in?
     %div
       %a{:href => "#", :id => "unclean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
-        = button_tag t("captions.unclean"), :class => "btn warning"
+        = button_tag t("captions.unclean"), :class => "btn btn-warning cat-btn"
       %a{:href => "#", :id => "clean", :data => {:moid => @sidewalk.id}, :style => "text-decoration:none;"}
-        = button_tag t("captions.clean"), :class => "btn success"
+        = button_tag t("captions.clean"), :class => "btn btn-success cat-btn"
     / %ul.actions_menu
     /   - if @my_sidewalk
     /     %li.abandon
