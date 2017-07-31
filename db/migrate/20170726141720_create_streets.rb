@@ -11,6 +11,7 @@ class CreateStreets < ActiveRecord::Migration
 
   def down
     if ActiveRecord::Base.connection.table_exists? :streets
-      drop_table(:streets, if_exists: true)
+      drop_table :streets
+    end
   end
 end

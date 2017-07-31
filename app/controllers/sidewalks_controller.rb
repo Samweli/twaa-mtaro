@@ -60,30 +60,53 @@ class SidewalksController < ApplicationController
 
     sidewalk = Sidewalk.find_by_gid(params[:id])
     sms_service = SmsService.new()
+    claim = sidewalk.claims.find_by_user_id(user.id)
 
     if params.has_key?(:shoveled)
-      sidewalk.cleared = shoveled
-      sidewalk.need_help = false if shoveled
-      sidewalk.save(validate: false)
+      user = current_user
 
       status = (shoveled ? [t("messages.clear_status")] : [t("message.dirt_status")])
+      if(user.role == 1)
+        if not claim
+          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 
+        else
+          claim.update_attribute(:shoveled, shoveled)
+          claim.save(validate: false)
+          street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
-      reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} kuwa #{status}"
-      notify_user = "Kiongozi wa mtaa abadilisha alama ya mtaro wako, namba #{sidewalk.gid} #{status}"
+          reply_street_leader = '#{user.first_name} #{user.last_name} '\
+                              'amewekea alama ya mtaro namba #{sidewalk.gid}'\
+                              'kuwa #{status}'
+          notify_user = 'Umefanikiwa kubadilisha alama ya mtaro wako,'\
+                      'namba #{sidewalk.gid} kuwa #{status}'
+          sms_service.send_sms(
+            reply_street_leader, 
+            street_leader.sms_number);
+          sms_service.send_sms(
+            notify_user, 
+            user.sms_number);
+        end
 
-      user = User.find_by_id(SidewalkClaim.find_by_gid(sidewalk.gid).user_id)
-      puts user
-      puts user.sms_number
-      # sms_service.send_sms(
-      #   reply_street_leader, 
-      #   '+255655899266');
-      # sms_service.send_sms(
-      #   notify_user, 
-      #   '+255655899266');
+      else
 
-      # if (claim = sidewalk.claims.find_by_user_id(current_user.id))
-      #   claim.update_attribute(:shoveled, shoveled)
-      # end
+        sidewalk.cleared
+        sidewalk.need_help = false if shoveled
+        sidewalk.save(validate: false)
+
+        normal_user = User.find_by_id(SidewalkClaim.find_by_gid(sidewalk.gid).user_id)
+
+        reply_street_leader = 'Umeuwekea alama ya mtaro namba #{sidewalk.gid}'\
+                              'kuwa #{status}'
+        notify_user = 'Kiongozi wa mtaa amebadilisha alama ya mtaro wako,'\
+                      'namba #{sidewalk.gid} kuwa #{status}'
+        sms_service.send_sms(
+          reply_street_leader, 
+          user.sms_number);
+        sms_service.send_sms(
+          notify_user, 
+          normal_user.sms_number);
+      end
+
     elsif params.has_key?(:need_help)
       sidewalk.update_attribute(:need_help, need_help)
     end

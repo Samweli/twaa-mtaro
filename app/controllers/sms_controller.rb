@@ -10,16 +10,28 @@ class SmsController < ApplicationController
 	    	if (drain_status == 'msafi' or drain_status == 'Msafi' )
 	    		sidewalk.cleared = true
 	    		sidewalk.need_help = false
-	    		if (sidewalk.save(validate: false))
-	    			message = 'Asante, kwa kusafisha mtaro.'
-	    		else
-	    			message = 'Kuna tatizo upokeaji taarifa za mtaro, Jaribu tena baadae'
-	    		end
+	    		message = 'Asante, kwa kusafisha mtaro.'
+
+	    	elsif (drain_status == 'mchafu' or drain_status == 'Mchafu')
+	    		sidewalk.cleared = false
+	    		sidewalk.need_help = false
+	    		message = 'Asante, kwa kutoa taarifa kuwa mtaro ni mchafu.'
+
+	    	elsif (drain_status == 'msaada' or drain_status == 'Msaada')
+	    		sidewalk.cleared = false
+	    		sidewalk.need_help = true
 	    	else
-	    		message = 'Samahani hatukuweza kutambua maana ya ujumbe wako'
+	    		message = 'Samahani hatukuweza kutambua maana ya ujumbe wako.'
 	    	end
+
+	    	if (sidewalk.save(validate: false))
+
+	    	else
+	    		message = 'Kuna tatizo upokeaji wa taarifa za mtaro, Jaribu tena baadae.'
+	    	end
+
 	    else
-	    	message = 'Samahani hatukuweza kutambua mtaro wako'
+	    	message = 'Samahani hatukuweza kutambua mtaro wako.'
 	  	end
 
 		twiml = Twilio::TwiML::Response.new do |response|

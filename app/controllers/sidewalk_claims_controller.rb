@@ -9,7 +9,7 @@ class SidewalkClaimsController < ApplicationController
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
             # use id of sidewalk as gid in sidewalk claims table
-    if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.id, params[:user_id])).new_record?
+    if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, params[:user_id])).new_record?
       if @sidewalk.lat.nil?
         gc = Address.geocode("#{@sidewalk.address}, Dar es salaam")
         if gc && gc.success
@@ -32,11 +32,11 @@ class SidewalkClaimsController < ApplicationController
     #end
     sms_service = SmsService.new();
     if I18n.locale == :en
-      msg = 'You have claimed drain number #{@sidewalk.gid} located at #{@sidewalk.address}'\
+      msg = "You have claimed drain number #{@sidewalk.gid} located at #{@sidewalk.address}"
     else
-      msg = 'Umetwaa mtaro number #{@sidewalk.gid} unaopatikana #{@sidewalk.address}'\
+      msg = "Umetwaa mtaro number #{@sidewalk.gid} unaopatikana #{@sidewalk.address}"
     end
-    user = User.find_by_gid(params[:user_id])
+    user = User.find_by_id(params[:user_id])
 
     sms_service.send_sms(
       msg, 

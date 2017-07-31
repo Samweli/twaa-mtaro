@@ -15,5 +15,6 @@ class CreateAuthentications < ActiveRecord::Migration
   def self.down
     if ActiveRecord::Base.connection.table_exists? :authentications
       drop_table :authentications 
+    end
   end
 end
