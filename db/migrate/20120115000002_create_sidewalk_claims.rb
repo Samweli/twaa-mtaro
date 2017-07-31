@@ -11,6 +11,15 @@ class CreateSidewalkClaims < ActiveRecord::Migration
     add_index :sidewalk_claims, :gid
     add_index :sidewalk_claims, :user_id
   end
+  change_table :mitaro_dar do |t|
+      t.decimal :lat, :default => nil, :precision => 16, :scale => 14
+      t.decimal :lng, :default => nil, :precision => 16, :scale => 14
+      t.boolean :cleared
+      t.boolean :need_help
+      t.string :zipcode
+      t.inde :cleared
+      t.integer :claims_count, :default => 0
+    end
 
   def self.down
     drop_table :sidewalk_claims
