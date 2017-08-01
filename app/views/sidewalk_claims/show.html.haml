@@ -49,7 +49,6 @@
 
   - if user_signed_in? && current_user.role == 2
     %div
-      = current_user.street.id
       %a{:href => "#", :id => "unclean", :data => {:moid=>@sidewalk.gid}, :style => "text-decoration:none;"}
         = button_tag t("captions.unclean"), :class => "btn btn-warning cat-btn"
       %a{:href => "#", :id => "clean", :data => {:moid=>@sidewalk.gid}, :style => "text-decoration:none;"}

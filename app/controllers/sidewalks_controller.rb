@@ -18,7 +18,6 @@ class SidewalksController < ApplicationController
         elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]
-          puts value
           @sidewalks = Sidewalk.where_custom(:address => value)
         end
       end
@@ -60,10 +59,11 @@ class SidewalksController < ApplicationController
 
     sidewalk = Sidewalk.find_by_gid(params[:id])
     sms_service = SmsService.new()
+    user = current_user
+
     claim = sidewalk.claims.find_by_user_id(user.id)
 
     if params.has_key?(:shoveled)
-      user = current_user
 
       status = (shoveled ? [t("messages.clear_status")] : [t("message.dirt_status")])
       if(user.role == 1)
@@ -74,11 +74,11 @@ class SidewalksController < ApplicationController
           claim.save(validate: false)
           street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
-          reply_street_leader = '#{user.first_name} #{user.last_name} '\
-                              'amewekea alama ya mtaro namba #{sidewalk.gid}'\
-                              'kuwa #{status}'
-          notify_user = 'Umefanikiwa kubadilisha alama ya mtaro wako,'\
-                      'namba #{sidewalk.gid} kuwa #{status}'
+          reply_street_leader = "#{user.first_name} #{user.last_name} "\
+                              "amewekea alama ya mtaro namba #{sidewalk.gid}"\
+                              "kuwa #{status}"
+          notify_user = "Umefanikiwa kubadilisha alama ya mtaro wako,"\
+                      "namba #{sidewalk.gid} kuwa #{status}"
           sms_service.send_sms(
             reply_street_leader, 
             street_leader.sms_number);
@@ -89,22 +89,27 @@ class SidewalksController < ApplicationController
 
       else
 
-        sidewalk.cleared
+        sidewalk.cleared = shoveled
         sidewalk.need_help = false if shoveled
         sidewalk.save(validate: false)
 
-        normal_user = User.find_by_id(SidewalkClaim.find_by_gid(sidewalk.gid).user_id)
+        claim = SidewalkClaim.find_by_gid(sidewalk.gid)
 
-        reply_street_leader = 'Umeuwekea alama ya mtaro namba #{sidewalk.gid}'\
-                              'kuwa #{status}'
-        notify_user = 'Kiongozi wa mtaa amebadilisha alama ya mtaro wako,'\
-                      'namba #{sidewalk.gid} kuwa #{status}'
+        reply_street_leader = "Umeuwekea alama ya mtaro namba #{sidewalk.gid} "\
+                              "kuwa #{status.to_s}"
         sms_service.send_sms(
           reply_street_leader, 
           user.sms_number);
-        sms_service.send_sms(
+
+        if claim
+          normal_user = User.find_by_id(claim.user_id)
+          notify_user = "Kiongozi wa mtaa amebadilisha alama ya mtaro wako,"\
+                      "namba #{sidewalk.gid} kuwa #{status.to_s}"
+          sms_service.send_sms(
           notify_user, 
           normal_user.sms_number);
+        end     
+        
       end
 
     elsif params.has_key?(:need_help)

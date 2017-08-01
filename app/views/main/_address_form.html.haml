@@ -16,17 +16,15 @@
     /       'http://webapps.twaamtaro.org/twaamtaro/adopt.jsp',
     /       :target => '_blank'
 
-    - unless user_signed_in?
-      #sidebar_login.font_14.radius_4
-        %ul.horizontal_items.item_separator.pen_lightgray{:style => "font-size: 12px"}
+    #sidebar_login.font_14.radius_4
+      %ul.horizontal_items.item_separator.pen_lightgray{:style => "font-size: 12px"}
+        - unless user_signed_in?
           %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
           |
           %li= link_to t("links.register"), '#', :id => "sign_up_link"
           |
-          %li 
-            #nav
-              %ul.horizontal_items.item_separator.pen_lightgray.center
-                - if I18n.locale == :en 
-                  %li= link_to_unless_current "Swahili", :locale => "sw"
-                - elsif  I18n.locale == :sw 
-                  %li= link_to_unless_current "English", :locale => "en"
+        %li
+          - if I18n.locale == :en 
+            %li= link_to_unless_current "Swahili", :locale => "sw"
+          - elsif  I18n.locale == :sw 
+            %li= link_to_unless_current "English", :locale => "en"

@@ -6,6 +6,11 @@ class CreateStreets < ActiveRecord::Migration
       t.string :municipal_name
       t.string :city_name
       t.timestamps
+     
+    end
+    change_table :streets do |t|
+      t.decimal :lat, :default => nil, :precision => 16, :scale => 14
+      t.decimal :lng, :default => nil, :precision => 16, :scale => 14
     end
   end
 

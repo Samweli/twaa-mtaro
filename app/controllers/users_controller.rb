@@ -58,11 +58,11 @@ class UsersController < Devise::RegistrationsController
       if I18n.locale == :en
         msg = "Your Twaa mtaro account has been created, go to http://twaamtaro.org "\
               "and login with "\
-              "email #{@user.email} and password #{@user.password}"
+              "your number and password #{@user.password}"
       else
          msg = "Umesajiliwa kwenye tovuti ya Twaa mtaro imetengenezwa,"\
                "ingia http://twaamtaro.org"\
-               "kwa kutumia barua pepe #{@user.email} na nywila #{@user.password}"
+               "kwa kutumia namba yako ya simu na nywila #{@user.password}"
       end
       sms_service.send_sms(
         msg, 

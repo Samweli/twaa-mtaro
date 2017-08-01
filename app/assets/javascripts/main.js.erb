@@ -18,8 +18,6 @@ $(function () {
     var pos;
     var bDebug = true;
 
-
-
   /* Creating map*/
 
   var map = new L.Map('map_canvas', mapOptions);
@@ -184,8 +182,6 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
-                console.log('this is the data returned yee yee');
-                console.log(data);
                 createPopup(data, pos);
                 hideSpinner();
             }
@@ -478,9 +474,6 @@ $(function () {
         var gen_password = Math.random() // Generate random number, eg: 0.123456
                            .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
                            .slice(-8);// Cut off last 8 characters : "yo82mvyr"
-
-        console.log('this the generated password');
-        console.log(gen_password);
 
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
@@ -856,6 +849,14 @@ $(function () {
         $('#address_button').trigger('click');
         return false;
     });
+
+    $('#view_street').on('click', function(){
+        var lat = $(this).attr('data-lat');
+        var lng = $(this).attr('data-lng');
+        var latlng = L.latLng(lat, lng);
+
+        map.setView(latlng, 17);
+    })
 
 
     get_categories();

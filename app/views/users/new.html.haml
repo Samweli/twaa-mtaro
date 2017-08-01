@@ -21,7 +21,7 @@
           = f.label :sms_number, t("labels.sms_number")
           = f.text_field :sms_number
         %li
-          = f.label :sms_number, t("labels.sms_number")
+          = f.label :street, t("labels.street")
           = f.collection_select(:street_id, Street.all, :id, :street_name)
         %li
           = f.label :password, t("labels.password_reg")

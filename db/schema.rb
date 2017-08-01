@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170726141720) do
+ActiveRecord::Schema.define(:version => 20170801130858) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(:version => 20170726141720) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "drain_claims", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "gid"
+    t.boolean  "shoveled"
+    t.string   "notes"
+  end
+
+  add_index "drain_claims", ["gid"], :name => "index_drain_claims_on_gid"
+  add_index "drain_claims", ["user_id"], :name => "index_drain_claims_on_user_id"
 
   create_table "mitaro", :primary_key => "gid", :force => true do |t|
     t.string  "the_geom",          :limit => 0
@@ -46,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20170726141720) do
     t.text    "user_phone_number"
   end
 
-  create_table "mitaro_dar", :id => false, :force => true do |t|
+  create_table "mitaro_bk_2", :id => false, :force => true do |t|
     t.integer "gid"
     t.string  "the_geom",          :limit => 0
     t.string  "full_id",           :limit => 254
@@ -74,6 +86,35 @@ ActiveRecord::Schema.define(:version => 20170726141720) do
     t.decimal "lng",                              :precision => 16, :scale => 14
     t.string  "zipcode"
   end
+
+  create_table "mitaro_dar", :primary_key => "gid", :force => true do |t|
+    t.string  "the_geom",     :limit => 0
+    t.string  "full_id",      :limit => 254
+    t.string  "waterway",     :limit => 254
+    t.string  "covered",      :limit => 254
+    t.string  "depth",        :limit => 254
+    t.string  "width",        :limit => 254
+    t.string  "blockage",     :limit => 254
+    t.string  "tunnel",       :limit => 254
+    t.string  "diameter",     :limit => 254
+    t.string  "ditch",        :limit => 254
+    t.string  "drain",        :limit => 254
+    t.string  "name",         :limit => 254
+    t.string  "bridge",       :limit => 254
+    t.string  "height",       :limit => 254
+    t.string  "surface",      :limit => 254
+    t.string  "smoothness",   :limit => 254
+    t.string  "oneway",       :limit => 254
+    t.decimal "lat",                         :precision => 16, :scale => 14
+    t.decimal "lng",                         :precision => 16, :scale => 14
+    t.boolean "cleared"
+    t.boolean "need_help"
+    t.string  "address"
+    t.string  "zipcode"
+    t.integer "claims_count",                                                :default => 0
+  end
+
+  add_index "mitaro_dar", ["cleared"], :name => "index_mitaro_dar_on_cleared"
 
   create_table "mitaro_dar_bk", :id => false, :force => true do |t|
     t.integer "gid"
@@ -126,8 +167,10 @@ ActiveRecord::Schema.define(:version => 20170726141720) do
     t.string   "ward_name"
     t.string   "municipal_name"
     t.string   "city_name"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.decimal  "lat",            :precision => 16, :scale => 14
+    t.decimal  "lng",            :precision => 16, :scale => 14
   end
 
   create_table "users", :force => true do |t|
