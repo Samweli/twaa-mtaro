@@ -6,8 +6,8 @@
     .signin
       %ul.horizontal_items
         %li
-          = f.label :email, t("labels.email")
-          = f.text_field :email, :class => 'user_email'
+          = f.label :sms_number, t("labels.sms_number")
+          = f.text_field :sms_number, :class => 'user_sms_number'
         %li  
           = f.label "password", t("labels.password")
           = f.password_field "password", :class => 'user_password'

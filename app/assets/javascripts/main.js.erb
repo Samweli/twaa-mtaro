@@ -1,6 +1,6 @@
 $(function () {
 
-    //var center = new L.LatLng(-6.7992, 39.2428);
+
     var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
     var mapOptions = {
         center: center,
@@ -11,11 +11,17 @@ $(function () {
     //kml layer with drains
     var kmlLayer;
     var popup;
+    var drainLocation;
+    var activeObjectId;
+    var user_id;
+    var users;
+    var pos;
     var bDebug = true;
 
 
 
   /* Creating map*/
+
   var map = new L.Map('map_canvas', mapOptions);
   var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
@@ -23,85 +29,81 @@ $(function () {
   });
 
   map.addLayer(osm);
-
-
-  /* load KML data when zoomed */
-  // map.on('zoomend moveend',function (ev) {
-  //         refreshKML();
-  //     }
-  // );
-  var urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-       return 'en';
-    }
-    else{
-       return results[1] || 0;
-    }
+  var urlParam = function(name) {
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results == null) {
+          return 'en';
+      }
+      else {
+          return results[1] || 0;
+      }
   }
 
-  var refreshKML = function (type) {
+    var refreshKML = function (type) {
 
-   /* Styling mitaro */
-   var customLayer = L.geoJson(null, {
-        style: function (feature) {
-            switch (feature.properties.styleUrl) {
-                case '#unclear':
-                    return {color: "#dd9031", opacity: 1, weight: 2.5};
-                case '#adopted':
-                    return {color: "gray", opacity: 1, weight: 2.5};
-                case '#needs_help':
-                    return {color: "#6495ed", opacity: 1, weight: 2.5};
-                case '#cleared':
-                    return {color: "green", opacity: 1, weight: 2.5};
+      /* Styling mitaro */
+        var customLayer = L.geoJson(null, {
+            style: function (feature) {
+                switch (feature.properties.styleUrl) {
+                    case '#unclear':
+                        return {color: "#dd9031", opacity: 1, weight: 2.5};
+                    case '#adopted':
+                        return {color: "gray", opacity: 1, weight: 2.5};
+                    case '#needs_help':
+                        return {color: "#6495ed", opacity: 1, weight: 2.5};
+                    case '#cleared':
+                        return {color: "green", opacity: 1, weight: 2.5};
+                }
             }
+        });
+        if (kmlLayer) {
+            map.removeLayer(kmlLayer);
         }
-    });
-    if (kmlLayer) {
-        map.removeLayer(kmlLayer);
-    }
-    
-    /* dyamically loading mitaro using the center coordinates */
-    var c = map.getCenter();
-    console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
-    var locale = urlParam('locale');
 
-    var url;
-    if (type){
-      url = 'sidewalks.kml?locale='+ locale +'&type='+type;
-    }else{
-      url = 'sidewalks.kml?locale='+ locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
-    }
-    showSpinner();
-    
-    /* Loading KML*/
-    kmlLayer = omnivore.kml(url, null, customLayer)
-    .on('ready', function() {
-        hideSpinner();
-    })
-    .on('error', function(jqXHR) {
-        hideSpinner();
-        data = $.parseJSON(jqXHR.error.responseText);
+      /* dyamically loading mitaro using the center coordinates */
+        var c = map.getCenter();
+        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
+        var locale = urlParam('locale');
 
-        msg = '<h2>' + data.errors.address + '</h2>';
-        createPopup(msg, map.getCenter());
-        
-    }).addTo(map);
+        var url;
+        if (type) {
+            url = 'sidewalks.kml?locale=' + locale + '&type=' + type;
+            console.log('the url: ' + url);
+        } else {
+            url = 'sidewalks.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+        }
+        showSpinner();
 
-    /* Listens to clicks on drains*/
-    kmlLayer.on('click', function (e) {
-        var mtaro = e.layer.feature.properties;
-        // Fetching drain info
-        fetchDrainInfo(mtaro.description, e.latlng);
-     });
+      /* Loading KML*/
+        kmlLayer = omnivore.kml(url, null, customLayer)
+            .on('ready', function () {
+                hideSpinner();
+            })
+            .on('error', function (jqXHR) {
+                hideSpinner();
+                data = $.parseJSON(jqXHR.error.responseText);
 
-    /*add KML layer to map*/
-    map.addLayer(kmlLayer);
-        
+                msg = '<h2>' + data.errors.address + '</h2>';
+                createPopup(msg, map.getCenter());
+
+            }).addTo(map);
+
+      /* Listens to clicks on drains*/
+        kmlLayer.on('click', function (e) {
+            var mtaro = e.layer.feature.properties;
+            activeObjectId = mtaro.description;
+            drainLocation = e.latlng;
+            // Fetching drain info
+            fetchDrainInfo(mtaro.description, drainLocation);
+        });
+
+      /*add KML layer to map*/
+        map.addLayer(kmlLayer);
+
     }
 
     // Adding Legend
-    function addLegend(){
+    function addLegend() {
         var legend = L.control({position: 'topright'});
 
         legend.onAdd = function (map) {
@@ -111,27 +113,26 @@ $(function () {
             var div;
 
             if (locale == 'sw') {
-                colour_map = { 'Misafi':"green", 'Michafu':"#dd9031", 'Msaada':'#6495ed'}
+                colour_map = {'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed'}
 
                 div = L.DomUtil.create('div', 'info legend'),
-                colours = ['Misafi', 'Michafu', 'Msaada'],
-                labels = [];
+                    colours = ['Misafi', 'Michafu', 'Msaada'],
+                    labels = [];
                 // Adding legend header
                 div.innerHTML += '<h3 > Alama </h3>';
 
-            }else{
-                colour_map = {'Clean':"green", 'Not clean':"#dd9031", 'Needs help':'#6495ed'}
+            } else {
+                colour_map = {'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed'}
 
                 div = L.DomUtil.create('div', 'info legend'),
-                colours = [ 'Clean', 'Not clean', 'Needs help'],
+                    colours = ['Clean', 'Not clean', 'Needs help'],
 
-                labels = [];
+                    labels = [];
                 // Adding legend header
                 div.innerHTML += '<h3> Legend </h3>';
             }
-            
-           
-                  
+
+
             // loop through our density intervals and generate a label with a colored square for each interval
             for (var i = 0; i < colours.length; i++) {
                 div.innerHTML +=
@@ -148,9 +149,9 @@ $(function () {
 
     refreshKML("all");
     addLegend();
-    
 
-    /* popup Window for displaying details of Mtaro */
+
+  /* popup Window for displaying details of Mtaro */
     function createPopup(msg, pos) {
         if (pos == null) {
             pos = map.getCenter();
@@ -172,26 +173,27 @@ $(function () {
         //if (bDebug) console.info(e.latLng);
         var locale = urlParam('locale');
         var dataToReturn;
-        //if (bDebug) console.info(e.latLng);
+
         $.ajax({
-          type: 'GET',
-          url: '/sidewalk_claims/' + gid,
-          data: {
-            //'id': activeObjectId
-            'locale' : locale
-          },
-          error: function(jqXHR) {
-          },
-          success: function(data) {
-            //renderSocialButtons();
-            console.log('returned data');
-            console.log(data);
-            createPopup(data, pos);
-            hideSpinner();
-          }
+            type: 'GET',
+            url: '/sidewalk_claims/' + gid,
+            data: {
+                //'id': activeObjectId
+                'locale': locale
+            },
+            error: function (jqXHR) {
+            },
+            success: function (data) {
+                console.log('this is the data returned yee yee');
+                console.log(data);
+                createPopup(data, pos);
+                hideSpinner();
+            }
+
         });
 
     }
+
     function showSpinner() {
         $('#spinner').show();
     }
@@ -227,37 +229,54 @@ $(function () {
         });
     }
 
-    /* displays sign_in form inside a popup */
-    $('body').on('click', '#sign_in_link',function() {
+  /* displays sign_in form inside a popup */
+    $('body').on('click', '#sign_in_link', function () {
 
-    var locale = urlParam('locale');
+        var locale = urlParam('locale');
 
         $.ajax({
             type: 'GET',
             url: '/users/sign_in',
             data: {
-              'locale' : locale
+                'locale': locale
             },
-        success: function(msg) {
+            success: function (msg) {
 
-               createPopup(msg, map.getCenter());
+                createPopup(msg, map.getCenter());
             }
 
         });
         return false;
     });
 
+    function eddie() {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'sidewalk_claims/new',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, map.getCenter());
+                ajaxJS(msg);
+            }
+        });
+        return false;
+    }
+
   /* displays sign_up form inside a popup */
-    $('body').on('click', '#sign_up_link',function() {
-      var locale = urlParam('locale');
+    $('body').on('click', '#sign_up_link', function () {
+        var locale = urlParam('locale');
 
         $.ajax({
             type: 'GET',
             url: '/users/sign_up',
             data: {
-              'locale' : locale
+                'locale': locale
             },
-            success: function(msg) {
+            success: function (msg) {
                 createPopup(msg, map.getCenter());
                 ajaxJS(msg);
             }
@@ -265,11 +284,31 @@ $(function () {
         return false;
     });
 
+
+  /* for addikng users in assigning drains */
+    $('body').on('click', '#add_user', function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/add',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, map.getCenter());
+                ajaxJS(msg);
+            }
+        });
+        return false;
+    });
+
+
   /* signs in registered users */
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
-        var uemail = $('.user_email', i);
+        var uemail = $('.user_sms_number', i);
         var upwd = $('.user_password', i);
         var err_msg = $('.error_msg', i);
         var errors = [];
@@ -277,11 +316,11 @@ $(function () {
 
         e.preventDefault();
         submitButton.attr('disabled', 'disabled');
-        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+/*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
             markError(uemail, errors);
         } else {
             unmarkError(uemail);
-        }
+        }*/
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -300,7 +339,7 @@ $(function () {
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'email': uemail.val(),
+                        'sms_number': uemail.val(),
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     }
@@ -316,7 +355,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
 
@@ -334,6 +373,8 @@ $(function () {
         var uemail = $('#user_email');
         var ufname = $('#user_first_name');
         var ulname = $('#user_last_name');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $('#user_street_id');
         var upwd = $('#user_password');
         var upwdc = $('#user_password_confirmation');
         var errors = [];
@@ -383,6 +424,8 @@ $(function () {
                         'email': uemail.val(),
                         'first_name': ufname.val(),
                         'last_name': ulname.val(),
+                        'sms_number': uPhone.val(),
+                        'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
                     }
@@ -402,7 +445,7 @@ $(function () {
 
                 },
                 success: function (data) {
-                    $('#sidebar_login.radius_5').remove();
+                    $('#sidebar_login').remove();
                     updateSidebar();
                     fetchDrainInfo();
                 }
@@ -413,6 +456,92 @@ $(function () {
         return false;
     });
 
+  /*Getting all users */
+    function getUsers() {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'users',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                users = msg;
+            }
+        });
+    }
+
+  /* signs up new users for assigning drains */
+    $('body').on('submit', '#new_user', function (e) {
+        e.preventDefault();
+        var gen_password = Math.random() // Generate random number, eg: 0.123456
+                           .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
+                           .slice(-8);// Cut off last 8 characters : "yo82mvyr"
+
+        console.log('this the generated password');
+        console.log(gen_password);
+
+        var submitButton = $("input[type='submit']", this);
+        var uemail = $('#user_email');
+        var ufname = $('#user_first_name');
+        var ulname = $('#user_last_name');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $(this).attr('data-moid')
+        var upwd = gen_password;
+        var upwdc = gen_password;
+
+        console.log('this is the street id for new user: '+ uStreet);
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/createuser.json',
+            data: {
+                'commit': submitButton.val(),
+                'utf8': '✓',
+                'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                'recaptcha_challenge_field': $('#recaptcha_challenge_field').val(),
+                'recaptcha_response_field': $('#recaptcha_response_field').val(),
+                'user': {
+                    'email': uemail.val(),
+                    'first_name': ufname.val(),
+                    'last_name': ulname.val(),
+                    'password': upwd,
+                    'sms_number': uPhone.val(),
+                    'street_id': uStreet,
+                    'password_confirmation': upwdc,
+                }
+            },
+            beforeSend: function () {
+
+
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+                hideSpinner();
+                showInfoWindow();
+                submitButton.removeAttr('disabled');
+                if (data) {
+                    createPopup(data.html, map.getCenter());
+                    popup.setContent($('#IWCONTENT')[0]);
+                    ajaxJS(data.html);
+                }
+
+            },
+            success: function (data) {
+                console.log('id returned after signup');
+                user_id = data.user.id;
+                console.log(user_id);
+                if (user_id) {
+                    assignDrain(pos)
+                }
+                fetchDrainInfo();
+            }
+        });
+    });
+
+
     function updateSidebar() {
         var locale = urlParam('locale');
 
@@ -421,7 +550,7 @@ $(function () {
             url: '/sidebar',
             dataType: 'json',
             data: {
-                'locale':locale
+                'locale': locale
             },
             error: function (jqXHR) {
                 //if (bDebug) console.error(jqXHR);
@@ -434,90 +563,302 @@ $(function () {
         });
     }
 
-  function bind(pos){
 
-    $('#clean').on('click', function() {
-      var id = $(this).attr('data-moid');
-      var locale = urlParam('locale');
-      showSpinner();
-      $.ajax({
-        type: 'POST',
-        url: '/sidewalks/' + id,
-        data: { 'moid': $(this).attr('data-moid'),
-                'authenticity_token': AUTH_TOKEN,
-                '_method': 'put',
-                'shoveled': true,
-                'locale': locale },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          if (bDebug) console.error(data);
-          hideSpinner();
-        },
-        success: function(data) {
-          refreshKML("all");
-          console.log("refreshKML called from bind");
-          createPopup(data, pos);
+    function assignDrain(pos) {
+        $.ajax({
+            type: 'POST',
+            url: '/sidewalk_claims',
+            data: {
+                'gid': activeObjectId,
+                'user_id': user_id,
+                'authenticity_token': AUTH_TOKEN
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+                alert(data.errors);
+            },
+            success: function (data) {
+                map.closePopup();
+                //add a new style 'foo'
+                $.notify.addStyle('foo', {
+                    html: "<div>" +
+                    "<div class='clearfix'>" +
+                    "<div class='title' data-notify-html='title'>" +
+                    "You have successfully assigned this drain" +
+                    "</div>" +
+                    "<button class='buttons no'>&#10006;</button>" +
+                    "</div>" +
+                    "</div>"
+                });
+
+                //listen for click events from this style
+                $(document).on('click', '.notifyjs-foo-base .no', function () {
+                    //programmatically trigger propogating hide event
+                    $(this).trigger('notify-hide');
+                    refreshKML("all");
+                    updateSidebar();
+                    createPopup(data, pos);
+
+                });
+                $(document).on('click', '.notifyjs-foo-base .yes', function () {
+                    //show button text
+                    alert($(this).text() + " clicked!");
+                    //hide notification
+                    $(this).trigger('notify-hide');
+                });
+
+                var h5 = $("<h5/>").append("You have successfully assigned a dran !")
+
+                $.notify({}, {
+                    style: 'foo',
+                    autoHide: false,
+                    clickToHide: false,
+                    position: 'top center'
+                });
+
+            }
+        });
+    }
+
+    function bind(pos) {
+
+
+        $('#abandon_link').on('click','.abdn_link', function () {
+            if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/sidewalk_claims/' + $(this).attr('data-moid'),
+                    data: {
+                        'gid': activeObjectId,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'delete'
+                    },
+                    error: function (jqXHR) {
+                        data = $.parseJSON(jqXHR.responseText);
+                        if (bDebug) console.error(data);
+                    },
+                    success: function (data) {
+                         console.info("abandoned");
+                        refreshKML("all");
+                        updateSidebar();
+                        createPopup(data,pos);
+                    }
+                });
+            }
+            return false;
+        });
+
+
+      /*Function for adoping a drain */
+        $('#location').on('click', '.btnassing', function () {
+            // get the current row
+            var currentRow = $(this).closest("tr");
+
+            var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+            var data = col1;
+            user_id = col1;
+            assignDrain(pos);
+            return false;
+        });
+
+
+
+        /* adding more claims */
+        $('#add_claim').on('click', function () {
+            var locale = urlParam('locale');
+            getUsers();
+
+            $.ajax({
+                type: 'GET',
+                url: 'sidewalk_claims/adopt',
+                data: {
+                    'locale': locale
+                },
+                success: function (msg) {
+                    getUsers();
+
+
+                    if (users) {
+
+
+                        createPopup(msg, drainLocation);
+                        var trHTML = '';
+
+                        $.each(users, function (i, item) {
+
+                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                        });
+
+                        $('#location').append(trHTML);
+
+                    }
+
+
+
+                }
+            });
+            return false;
+        });
+
+
+      /* displays a form for assigning drains to users */
+        $('#assign').on('click', function () {
+            var locale = urlParam('locale');
+            console.info("Inside assign");
+            getUsers();
+
+            $.ajax({
+                type: 'GET',
+                url: 'sidewalk_claims/adopt',
+                data: {
+                    'locale': locale
+                },
+                success: function (msg) {
+                    getUsers();
+
+
+                    if (users) {
+
+
+                        createPopup(msg, drainLocation);
+                        var trHTML = '';
+
+                        $.each(users, function (i, item) {
+
+                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                        });
+
+                        $('#location').append(trHTML);
+
+                    }
+
+
+
+                }
+            });
+            return false;
+        });
+
+
+        $('#clean').on('click', function () {
+            var id = $(this).attr('data-moid');
+            var locale = urlParam('locale');
+            showSpinner();
+
+            $.ajax({
+                type: 'POST',
+                url: '/sidewalks/' + id,
+                data: {
+                    'moid': $(this).attr('data-moid'),
+                    'authenticity_token': AUTH_TOKEN,
+                    '_method': 'put',
+                    'shoveled': true,
+                    'locale': locale
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    if (bDebug) console.error(data);
+                    hideSpinner();
+                },
+                success: function (data) {
+                    refreshKML("all");
+                    console.log("refreshKML called from bind");
+                    createPopup(data, pos);
+                }
+            });
+            return false;
+        });
+
+        $('#unclean').on('click', function () {
+            var id = $(this).attr('data-moid');
+            var locale = urlParam('locale');
+            showSpinner();
+
+            $.ajax({
+                type: 'POST',
+                url: '/sidewalks/' + id,
+                data: {
+                    'moid': $(this).attr('data-moid'),
+                    'authenticity_token': AUTH_TOKEN,
+                    '_method': 'put',
+                    'shoveled': false,
+                    'locale': locale
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    if (bDebug) console.error(data);
+                },
+                success: function (data) {
+                    refreshKML("all");
+                    console.log("refreshKML called from bind 2");
+                    createPopup(data, pos);
+                    hideSpinner();
+                }
+            });
+            return false;
+        });
+
+    }
+
+    function get_categories() {
+
+        $('#cleaned').on('click', function () {
+            showSpinner();
+            refreshKML("cleaned");
+        });
+        $('#uncleaned').on('click', function () {
+            showSpinner();
+            refreshKML("uncleaned");
+        });
+        $('#need_help').on('click', function () {
+            showSpinner();
+            refreshKML("need_help");
+        });
+        $('#all').on('click', function () {
+            showSpinner();
+            refreshKML("all");
+        });
+        $('#address_button').on('click', function () {
+            showSpinner();
+            var address = $('#address').val();
+            refreshKML("address=" + address);
+        });
+    }
+
+
+  /* searching table of users */
+
+    $('body').on('keyup', '#myInput', function () {
+
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("location");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
         }
-      });
-      return false;
+
+        return false;
     });
 
-    $('#unclean').on('click', function() {
-      var id = $(this).attr('data-moid');
-      var locale = urlParam('locale');
-      showSpinner();
 
-      $.ajax({
-        type: 'POST',
-        url: '/sidewalks/' + id,
-        data: { 'moid': $(this).attr('data-moid'),
-                'authenticity_token': AUTH_TOKEN,
-                '_method': 'put',
-                'shoveled': false,
-                'locale': locale },
-        error: function(jqXHR) {
-          data = $.parseJSON(jqXHR.responseText);
-          if (bDebug) console.error(data);
-        },
-        success: function(data) {
-          refreshKML("all");
-          console.log("refreshKML called from bind 2");
-          createPopup(data, pos);
-          hideSpinner();
-        }
-      });
-      return false;
+    $('a.view_sidewalk').on('click', function() {
+        activeObjectId = $(this).attr('data-gid');
+        $('#address').val($(this).text());
+        $('#address_button').trigger('click');
+        return false;
     });
 
-  }
 
-  function get_categories(){
-
-    $('#cleaned').on('click', function() {
-      showSpinner();
-      refreshKML("cleaned");
-    });
-    $('#uncleaned').on('click', function() {
-      showSpinner();
-      refreshKML("uncleaned");
-    
-    });
-    $('#need_help').on('click', function() {
-      showSpinner();
-      refreshKML("need_help");
-    
-    });
-    $('#all').on('click', function() {
-      showSpinner();
-      refreshKML("all");
-    });
-    $('#address_button').on('click', function() {
-      showSpinner();
-      var address = $('#address').val();
-      refreshKML("address="+address);
-    });
-  }
-  get_categories();
+    get_categories();
 
 
 

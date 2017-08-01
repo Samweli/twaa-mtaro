@@ -6,18 +6,20 @@ class SmsService
 
   end
 
-  def send_sms(content, tonumber) 
-	# set up a client to talk to the Twilio REST API  
-	@client.account.messages.create({
-	  :from => '+14256540807', 
-	  :to => tonumber, 
-	  :body => content, 
+  def send_sms(content, tonumber)
+	# set up a client to talk to the Twilio REST API
+	tonumber = format(tonumber);
+	
+	@client.messages.create({
+	  :from => '+14256540807',
+	  :to => tonumber,
+	  :body => content,
 	})
   end
 
   def new_sms_updates(content, tonumber)
 	# Loop over messages and print out a property for each one
-	@client.account.messages.list.each do |message|
+	@client.messages.list.each do |message|
 	puts message.body
 	end
   end
@@ -26,6 +28,16 @@ class SmsService
 	Twilio::TwiML::Response.new do |r|
 	  r.Say 'Asante'
 	end.text
+   end
+
+   def format(number)
+   	if number.to_s.include? '255' and not number.to_s.include? '+'
+   	  number = "+#{number}"
+   	end
+
+   	puts number
+
+   	return number
    end
 
 end

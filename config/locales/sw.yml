@@ -3,8 +3,10 @@ sw:
   buttons:
     abandon: "kuachana na hii %{thing}"
     adopt: "Twaa!"
+    assign: "Gawia Mtaro"
     back: "Rudi"
     change_password: "Badili nenosiri"
+    change: "badili"
     continue: "Endelea"
     cleaned: '%{count} Misafi'
     clean: 'Msafi'
@@ -24,6 +26,7 @@ sw:
     go: "nenda"
     all: "%{count} Yote"
   captions:
+    add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
     clean: "Msafi"
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
@@ -73,6 +76,7 @@ sw:
     remember_me: "Nikumbuke kwenye kompyuta hii"
     remember_me_short: "Nikumbuke"
     sms_number: "Namba ya simu"
+    street: "Mtaa wako"
     user_existing: "Una akaunti tayari?"
     user_new: "Huna akaunti hapa?"
     voice_number: "Namba ya simu ya nyumbani"
@@ -113,6 +117,7 @@ sw:
     list_three: "Tovuti hii haipo tayari kwa uharibifu wa (aina yoyote, sababu yoyote, yoyote atakayesababisha, au chini ya nadharia yoyote) utakaotokea kwa njia yoyote nje na matumizi sahihi"
     title: "Mji wa Dar es Salaam mawakala, na wafanyakazi wake"  
   titles:
+    add_user: "Add new User"
     adopt: "chukua hii %{thing}"
     adopted: "%{thing_name} imechukuliwa"
     byline: "na %{name}"

@@ -20,7 +20,7 @@ Devise.setup do |config|
   # authenticating an user, both parameters are required. Remember that those
   # parameters are used only when authenticating and not when retrieving from
   # session. If you need permissions, you should implement that in a before filter.
-  config.authentication_keys = [ :email ]
+  config.authentication_keys = [ :sms_number ]
 
   # Tell if authentication through request.params is enabled. True by default.
   # config.params_authenticatable = true
@@ -61,6 +61,7 @@ Devise.setup do |config|
   # The time the user will be remembered without asking for credentials again.
   config.remember_for = 2.weeks
 
+  
   # If true, extends the user's remember period when remembered via cookie.
   config.extend_remember_period = false
 

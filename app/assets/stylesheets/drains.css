@@ -1,18 +1,53 @@
 div.card-unclean {
     width: 270px;
-    box-shadow: 0 4px 8px 0 rgba(46,138,138,1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    box-shadow: 0 4px 8px 0 rgba(46, 138, 138, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
     text-align: center;
     margin-top: 90px;
     border-bottom-left-radius: 1.2em;
     border-bottom-right-radius: 1.2em;
 }
-.overflow{
-  float:left;
+
+.overflow {
+            float:left;
+}
+
+
+.info_adopt {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    border-radius: 4px;
+}
+
+.btnassing {
+    background-color: #5bc0de;
+    border: 2px solid #46b8da;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.btnassing:hover {
+    background-color: #5bc0de;
+    border: 2px solid #46b8da;
 }
 
 
 
-.btn-submit{
+.change_drain {
+    background-color: #f44336;
+    border: 2px solid #f44336;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.change_drain:hover {
+    background-color: #c93326;
+    border: 2px solid #c93326;
+}
+
+.btn-submit {
     background-color: #79bbff;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -25,6 +60,7 @@ div.card-unclean {
     text-shadow: 1px 1px 0px #287ace;
     zoom: 1;
 }
+
 .col-md-3.col-sm-3{
   display: hide;
 }
@@ -36,6 +72,7 @@ div.card-unclean {
     color: #555;
     width:120px;
 }
+
 .legend i {
     width: 18px;
     height: 18px;
@@ -45,6 +82,7 @@ div.card-unclean {
     border-radius: 2px;
     font-size: 10px;
 }
+
 .legend h3 {
     margin-bottom: 8px;
     margin-top: 0px;
@@ -55,17 +93,16 @@ div.card-unclean {
     padding: 7px 18px 10px 14px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
-    background: rgba(255,255,255,0.9);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     cursor: pointer;
 }
+
 .info h4 {
     margin: 0 0 5px;
     color: #777;
 }
-
-
 
 .col-lg-4.col-md-4.col-sm-4{
   padding-left: 0px;
