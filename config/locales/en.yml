@@ -26,6 +26,8 @@ en:
     uncleaned: "%{count} Dirty"
     need_help: "%{count} Needs help"
     all: "%{count} All"
+    adopted: "%{count} Adopted"
+    not_adopted: "%{count} Not Adopted"
   captions:
     add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
@@ -52,6 +54,7 @@ en:
     aware: "You may know that you're required to clean the drain near your home or business,"
     help_question: "but how about helping others out?"
     drain_number: "The number of %{thing} is"
+    my_drains: "Drains I Adopted"
   errors:
     error: "Drain"
     auth_failed: "Username or password is incorrect."

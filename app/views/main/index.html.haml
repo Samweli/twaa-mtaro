@@ -18,7 +18,7 @@
 
               #mini_profile.radius_5.hidden-xs
                 = render :partial => 'user_badge'
-                = render :partial => 'sidewalk_list'
+                = render :partial => 'drain_list'
 
 
               %div.top-buffer
@@ -28,15 +28,20 @@
                   #page
                     %svg{:height => "20", :viewbox => "0 0 24 24", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
                       %path{:d => "M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"}
-
-
                     
                 %div.btn-group.clearfix#myDiv
                   = render :partial => 'needhelp_button'
                   = render :partial => 'unclean_button'
                   = render :partial => 'cleaned_button'
                   = render :partial => 'all_button'
-              
+
+              %div.top-buffer
+                #page
+                  %svg{:height => "20", :viewbox => "0 0 24 24", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"}
+   
+                %div.btn-group.clearfix.myDiv
+                  = render :partial => 'adopt_filter'
     
               
   .col-lg-8.col-md-8.col-sm-8

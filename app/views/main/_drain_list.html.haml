@@ -1,4 +1,4 @@
-#sidewalk_list.hidden-xs
+#drain_list.hidden-xs
   - if user_signed_in?
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
       = current_user.street.street_name 
@@ -6,13 +6,13 @@
       %table.font_12.pen_gray.link_1
         %thead
           %tr
-            %th{:style => "text-align: left"}= "Drains I Adopted"
-            %th= "Shoveled?"
-            %th= "Need help?"
+            %th{:style => "text-align: left"}= t('defaults.my_drains')
+            %th= t('button.clean')
+            %th= t('button.need_help')
         %tbody
         - @my_sidewalks.each do |s|
           %tr
-            %td.address= link_to s.sidewalk.address, "#{s.sidewalk.address}", :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid
+            %td.address= link_to s.sidewalk.address, "#{s.sidewalk.address}", :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid, 'data-lat' => s.sidewalk.street.lat, 'data-lng' =>s.sidewalk.street.lng
             %td= yesno(s.sidewalk.cleared)
             %td= yesno(s.sidewalk.need_help)
       #pagination.font_12.link_1

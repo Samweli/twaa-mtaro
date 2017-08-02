@@ -25,6 +25,8 @@ sw:
     send_request: "Tuma maombi"
     go: "nenda"
     all: "%{count} Yote"
+    adopted: "%{count} Imetwaaliwa"
+    not_adopted: "%{count} Haijatwaaliwa"
   captions:
     add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
@@ -52,6 +54,7 @@ sw:
     tagline: "Chukua jukumu la kusafisha mtaro unapokua na uchafu."
     tos: "Kwa kujisajili, unakubali %{tos}."
     welcome: "Karibu Dar es salaam"
+    my_drains: "Mitaro yangu"
   errors:
     error: "Drain"
     auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
@@ -63,7 +66,7 @@ sw:
     address: "Anwani ya mtaa"
     city_state: "Mji"
     email: "Barua pepe"
-    first_name: "Jina la kwnza"
+    first_name: "Jina la kwanza"
     last_name: "Jina la mwisho"
     name_thing: "upe  %{thing} huu  jina"
     organization: "Shirika"

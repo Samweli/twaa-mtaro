@@ -15,6 +15,10 @@ class SidewalksController < ApplicationController
           @sidewalks = Sidewalk.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
           @sidewalks = Sidewalk.where_custom(:need_help => true)
+        elsif params[:type] == 'adopted'
+          @sidewalks = Sidewalk.where_custom_conditions(:claims_count, "> 0")
+        elsif params[:type] == 'not_adopted'
+          @sidewalks = Sidewalk.where_custom_conditions(:claims_count, "= 0")
         elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]

@@ -45,8 +45,8 @@ $(function () {
                 switch (feature.properties.styleUrl) {
                     case '#unclear':
                         return {color: "#dd9031", opacity: 1, weight: 2.5};
-                    case '#adopted':
-                        return {color: "gray", opacity: 1, weight: 2.5};
+                    // case '#adopted':
+                    //     return {color: "gray", opacity: 1, weight: 2.5};
                     case '#needs_help':
                         return {color: "#6495ed", opacity: 1, weight: 2.5};
                     case '#cleared':
@@ -484,8 +484,6 @@ $(function () {
         var upwd = gen_password;
         var upwdc = gen_password;
 
-        console.log('this is the street id for new user: '+ uStreet);
-
 
         $.ajax({
             type: 'POST',
@@ -523,9 +521,7 @@ $(function () {
 
             },
             success: function (data) {
-                console.log('id returned after signup');
                 user_id = data.user.id;
-                console.log(user_id);
                 if (user_id) {
                     assignDrain(pos)
                 }
@@ -551,7 +547,7 @@ $(function () {
             success: function (data) {
                 //if (bDebug) console.info(data);
                 $('#username').replaceWith(data['user_badge']);
-                $('#sidewalk_list').replaceWith(data['sidewalk_list']);
+                $('#drain_list').replaceWith(data['drain_list']);
             }
         });
     }
@@ -631,7 +627,6 @@ $(function () {
                         if (bDebug) console.error(data);
                     },
                     success: function (data) {
-                         console.info("abandoned");
                         refreshKML("all");
                         updateSidebar();
                         createPopup(data,pos);
@@ -697,7 +692,6 @@ $(function () {
       /* displays a form for assigning drains to users */
         $('#assign').on('click', function () {
             var locale = urlParam('locale');
-            console.info("Inside assign");
             getUsers();
 
             $.ajax({
@@ -755,7 +749,6 @@ $(function () {
                 },
                 success: function (data) {
                     refreshKML("all");
-                    console.log("refreshKML called from bind");
                     createPopup(data, pos);
                 }
             });
@@ -783,7 +776,6 @@ $(function () {
                 },
                 success: function (data) {
                     refreshKML("all");
-                    console.log("refreshKML called from bind 2");
                     createPopup(data, pos);
                     hideSpinner();
                 }
@@ -811,6 +803,16 @@ $(function () {
             showSpinner();
             refreshKML("all");
         });
+        $('#adopted').on('click', function () {
+            showSpinner();
+            refreshKML("adopted");
+        });
+        $('#not_adopted').on('click', function () {
+            showSpinner();
+            refreshKML("not_adopted");
+        });
+
+
         $('#address_button').on('click', function () {
             showSpinner();
             var address = $('#address').val();
@@ -842,15 +844,16 @@ $(function () {
         return false;
     });
 
-
-    $('a.view_sidewalk').on('click', function() {
+    $('body').on('click', '.view_sidewalk',
+     function (e) {
         activeObjectId = $(this).attr('data-gid');
         $('#address').val($(this).text());
         $('#address_button').trigger('click');
         return false;
     });
 
-    $('#view_street').on('click', function(){
+    $('body').on('click', '#view_street', 
+        function (e) {
         var lat = $(this).attr('data-lat');
         var lng = $(this).attr('data-lng');
         var latlng = L.latLng(lat, lng);

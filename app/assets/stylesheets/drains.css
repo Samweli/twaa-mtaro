@@ -150,3 +150,7 @@ div.card-unclean {
   padding-right: 0px;
   padding-left: 0px;
 }
+
+#view_street:hover{
+    cursor: pointer;
+}
