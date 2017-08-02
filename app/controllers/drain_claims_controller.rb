@@ -1,4 +1,4 @@
-class SidewalkClaimsController < ApplicationController
+class DrainClaimsController < ApplicationController
   respond_to :html, :json
   before_filter :authenticate_user!, :except => [:show]
 
@@ -9,7 +9,7 @@ class SidewalkClaimsController < ApplicationController
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
             # use id of sidewalk as gid in sidewalk claims table
-    if (@claim = SidewalkClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, params[:user_id])).new_record?
+    if (@claim = DrainClaim.find_or_initialize_by_gid_and_user_id(@sidewalk.gid, params[:user_id])).new_record?
       if @sidewalk.lat.nil?
         gc = Address.geocode("#{@sidewalk.address}, Dar es salaam")
         if gc && gc.success
@@ -47,9 +47,9 @@ class SidewalkClaimsController < ApplicationController
 
   def show
     @sidewalk = Sidewalk.find_by_gid(params[:id])
-      # treat sidewalk id as gid in sidewalk_claims table
-    claims = SidewalkClaim.where_custom(@sidewalk.id)
-    @my_sidewalk =  SidewalkClaim.find_by_gid(@sidewalk.id)
+      # treat sidewalk id as gid in drain_claims table
+    claims = DrainClaim.where_custom(@sidewalk.id)
+    @my_sidewalk =  DrainClaim.find_by_gid(@sidewalk.id)
     @shoveled_by_me = true
     @claims = claims
 
@@ -62,7 +62,7 @@ class SidewalkClaimsController < ApplicationController
   end
 
   def destroy
-    @claim = SidewalkClaim.find(params[:id])
+    @claim = DrainClaim.find(params[:id])
     @claim.destroy if @claim
     redirect_to :action => :show, :id => @claim.gid
   end

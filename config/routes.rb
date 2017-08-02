@@ -17,14 +17,14 @@ AdoptASidewalk::Application.routes.draw do
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
-  get 'sidewalk_claims/adopt' => 'sidewalk_claims#adopt'
+  get 'drain_claims/adopt' => 'drain_claims#adopt'
 
   match '/auth/:provider/callback' => 'authentications#create'
 
   resources :sidewalks do
     get 'find_closest', :on => :collection
   end
-  resources :sidewalk_claims
+  resources :drain_claims
 
   root :to => 'main#index'
 end

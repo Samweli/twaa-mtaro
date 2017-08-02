@@ -174,7 +174,7 @@ $(function () {
 
         $.ajax({
             type: 'GET',
-            url: '/sidewalk_claims/' + gid,
+            url: '/drain_claims/' + gid,
             data: {
                 //'id': activeObjectId
                 'locale': locale
@@ -250,7 +250,7 @@ $(function () {
 
         $.ajax({
             type: 'GET',
-            url: 'sidewalk_claims/new',
+            url: 'drain_claims/new',
             data: {
                 'locale': locale
             },
@@ -560,7 +560,7 @@ $(function () {
     function assignDrain(pos) {
         $.ajax({
             type: 'POST',
-            url: '/sidewalk_claims',
+            url: '/drain_claims',
             data: {
                 'gid': activeObjectId,
                 'user_id': user_id,
@@ -620,7 +620,7 @@ $(function () {
             if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
                 $.ajax({
                     type: 'POST',
-                    url: '/sidewalk_claims/' + $(this).attr('data-moid'),
+                    url: '/drain_claims/' + $(this).attr('data-moid'),
                     data: {
                         'gid': activeObjectId,
                         'authenticity_token': AUTH_TOKEN,
@@ -663,7 +663,7 @@ $(function () {
 
             $.ajax({
                 type: 'GET',
-                url: 'sidewalk_claims/adopt',
+                url: 'drain_claims/adopt',
                 data: {
                     'locale': locale
                 },
@@ -702,7 +702,7 @@ $(function () {
 
             $.ajax({
                 type: 'GET',
-                url: 'sidewalk_claims/adopt',
+                url: 'drain_claims/adopt',
                 data: {
                     'locale': locale
                 },
