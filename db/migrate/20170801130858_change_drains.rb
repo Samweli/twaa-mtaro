@@ -1,8 +1,6 @@
 class ChangeDrains < ActiveRecord::Migration
   def up
     change_table :mitaro_dar do |t|
-      t.decimal :lat, :default => nil, :precision => 16, :scale => 14
-      t.decimal :lng, :default => nil, :precision => 16, :scale => 14
       t.boolean :cleared
       t.boolean :need_help
       t.string  :address
@@ -13,13 +11,21 @@ class ChangeDrains < ActiveRecord::Migration
   end
 
   def down
-    remove_column :mitaro_dar, :lat
-    remove_column :mitaro_dar, :lng
-    remove_column :mitaro_dar, :cleared
-    remove_column :mitaro_dar, :need_help
-    remove_column :mitaro_dar, :address
-    remove_column :mitaro_dar, :zipcode
-    remove_column :mitaro_dar, :claims_count
+    if ActiveRecord::Base.connection.column_exists?(:mitaro_dar, :cleared)
+      remove_column :mitaro_dar, :cleared
+    end
+    if ActiveRecord::Base.connection.column_exists?(:mitaro_dar, :need_help)
+      remove_column :mitaro_dar, :need_help
+    end
+    if ActiveRecord::Base.connection.column_exists?(:mitaro_dar, :address)
+      remove_column :mitaro_dar, :address
+    end
+    if ActiveRecord::Base.connection.column_exists?(:mitaro_dar, :zipcode)
+      remove_column :mitaro_dar, :zipcode
+    end
+    if ActiveRecord::Base.connection.column_exists?(:mitaro_dar, :claims_count)
+      remove_column :mitaro_dar, :claims_count
+    end
   end
 end
 
