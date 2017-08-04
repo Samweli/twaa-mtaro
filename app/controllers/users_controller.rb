@@ -19,6 +19,10 @@ class UsersController < Devise::RegistrationsController
     render :add
   end
 
+  def profile
+    render :profile
+  end
+
   def update
     if resource.update_with_password(params[resource_name])
       sign_in(resource_name, resource, :bypass => true)
