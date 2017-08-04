@@ -153,6 +153,7 @@ $(function () {
     function createPopup(msg, pos) {
         if (pos == null) {
             pos = map.getCenter();
+
         }
         popup = L.popup({maxWidth: 960})
             .setLatLng(pos)
@@ -244,6 +245,28 @@ $(function () {
         });
         return false;
     });
+
+
+  /* displays sign_in form inside a popup */
+    $('body').on('click', '#my_profile_link', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/users/profile',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+
+                createPopup(msg, map.getCenter());
+            }
+
+        });
+        return false;
+    });
+
 
     function eddie() {
         var locale = urlParam('locale');
@@ -812,11 +835,11 @@ $(function () {
             refreshKML("not_adopted");
         });
 
-
         $('#address_button').on('click', function () {
             showSpinner();
             var address = $('#address').val();
             refreshKML("address=" + address);
+
         });
     }
 
@@ -849,6 +872,12 @@ $(function () {
         activeObjectId = $(this).attr('data-gid');
         $('#address').val($(this).text());
         $('#address_button').trigger('click');
+
+         var lat = $(this).attr('data-lat');
+         var lng = $(this).attr('data-lng');
+         var latlng = L.latLng(lat, lng);
+         map.setView(latlng, 19);
+
         return false;
     });
 

@@ -6,18 +6,18 @@
   %em
     = image_tag "lock.svg", :class => "lock", :alt => t("captions.private"), :title => t("captions.private")
   = f.text_field "email"
-  = f.label "name", t("labels.name"), :id => "user_name_label"
+  = f.label "first_name", t("labels.name"), :id => "user_name_label"
   %em
     = t("captions.public")
-  = f.text_field "name"
+  = f.text_field "first_name"
   = f.label "organization", t("labels.organization"), :id => "user_organization_label"
   %em
     = t("captions.public")
   = f.text_field "organization"
-  = f.label "voice_number", t("labels.voice_number"), :id => "user_voice_number_label"
+  = f.label "sms_number", t("labels.voice_number"), :id => "user_voice_number_label"
   %em
     = image_tag "lock.svg", :class => "lock", :alt => t("captions.private"), :title => t("captions.private")
-  = f.text_field "voice_number"
+  = f.text_field "sms_number"
   = f.label "sms_number", t("labels.sms_number"), :id => "user_sms_number_label"
   %em
     = image_tag "lock.svg", :class => "lock", :alt => t("captions.private"), :title => t("captions.private")
@@ -31,4 +31,3 @@
     = t("captions.current_password")
   = f.password_field "current_password"
   = f.submit t("buttons.update")
-= render :partial => 'things/back'
