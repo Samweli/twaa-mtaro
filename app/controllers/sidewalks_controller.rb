@@ -22,7 +22,7 @@ class SidewalksController < ApplicationController
         elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]
-          @sidewalks = Sidewalk.where_custom(:address => value)
+          @sidewalks = Sidewalk.where_custom(:gid => value)
         end
       end
 
