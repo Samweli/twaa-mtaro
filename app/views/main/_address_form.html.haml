@@ -19,11 +19,13 @@
     #sidebar_login.font_14.radius_4
       %ul.horizontal_items.item_separator.pen_lightgray{:style => "font-size: 12px"}
         - unless user_signed_in?
-          %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
-          |
-          %li= link_to t("links.register"), '#', :id => "sign_up_link"
-          |
-        %li
+          %li.sign_links= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
+          %span.sign_links
+            |
+          %li.sign_links= link_to t("links.register"), '#', :id => "sign_up_link"
+          %span.sign_links
+            |
+        %li.locale
           - if I18n.locale == :en 
             %li= link_to_unless_current "Swahili", :locale => "sw"
           - elsif  I18n.locale == :sw 
