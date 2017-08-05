@@ -233,8 +233,8 @@ border-radius: 5px 5px 5px 5px;
 
 .gray_box {
     background-color: #f9f9f9;
-    border: 1px solid #dedede;
-    box-shadow: 0 1px 0 #FFFFFF;
+/*    border: 1px solid #dedede;
+*/    box-shadow: 0 1px 0 #FFFFFF;
     padding: 5px;
     margin: 5px 0 0px 0;
 }
@@ -349,6 +349,9 @@ ul.horizontal_items {
     padding: 0;
     margin: 5px 0 0 0;
     clear: both;
+}
+ul.horizontal_items.font_bold{
+  font-size: 14px;
 }
 
 ul.horizontal_items > li {
@@ -631,7 +634,6 @@ form.wide label {
   display:inline-block;
   color:#ffffff;
   font-family:arial;
-  font-size:15px;
   font-weight:bold;
   padding:6px 24px;
   text-decoration:none;
@@ -684,8 +686,8 @@ form.wide label {
 }
 
 #legend {
-    background: none;
-}
+/*    background: none;
+*/}
 
 .pen_gray {
     color: #777;
@@ -957,7 +959,7 @@ input.form-control {
     background-repeat: no-repeat;
     width: inherit;
     position: relative;
-    left: 20%;
+    left: 15%;
     font-size: 16px;
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;

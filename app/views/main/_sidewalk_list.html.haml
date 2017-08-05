@@ -5,9 +5,9 @@
         %table.font_12.pen_gray.link_1
           %thead
             %tr
-              %th{:style => "text-align: left"}= "Drains I Adopted"
-              %th= "Shoveled?"
-              %th= "Need help?"
+              %th{:style => "text-align: left"}= t("captions.adopt_table")
+              %th= t("captions.cleaned")
+              %th= t("captions.help")
           %tbody
           - @my_sidewalks.each do |s|
             %tr

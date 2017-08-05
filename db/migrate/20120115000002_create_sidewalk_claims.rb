@@ -11,9 +11,7 @@ class CreateSidewalkClaims < ActiveRecord::Migration
     add_index :sidewalk_claims, :gid
     add_index :sidewalk_claims, :user_id
 
-    change_table :mitaro_dar, id: false do |t|
-      t.primary_key :gid
-    end
+    
 
   end
 

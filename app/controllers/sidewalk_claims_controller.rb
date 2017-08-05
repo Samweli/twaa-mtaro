@@ -46,7 +46,7 @@ class SidewalkClaimsController < ApplicationController
   end
 
   def show
-    @sidewalk = Sidewalk.find_by_gid(params[:gid])
+    @sidewalk = Sidewalk.find_by_gid(params[:id])
       # treat sidewalk id as gid in sidewalk_claims table
     claims = SidewalkClaim.where_custom(@sidewalk.gid)
     @my_sidewalk =  SidewalkClaim.find_by_gid(@sidewalk.gid)
