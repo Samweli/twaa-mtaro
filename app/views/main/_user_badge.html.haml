@@ -4,6 +4,9 @@
       %div.font_h3.font_bold{:style => "margin:none;"}
         = t("notices.welcome")
         = current_user.fullname
+      [
+      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main', :class => 'font_12'
+      ]
 
 #username.hidden-lg.hidden-md
   - if user_signed_in?

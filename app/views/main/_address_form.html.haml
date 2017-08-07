@@ -26,9 +26,6 @@
           %li.sign_links= link_to t("links.register"), '#', :id => "sign_up_link"
           %span.sign_links
             |
-        %li
-          = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
-          |
         %li.locale
           - if I18n.locale == :en 
             %li= link_to_unless_current "Swahili", :locale => "sw"
