@@ -16,6 +16,7 @@ $(function () {
     var user_id;
     var users;
     var pos;
+    var drain_pos;
     var bDebug = true;
 
   /* Creating map*/
@@ -182,6 +183,9 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
+                // Updating variable for info window position
+                drain_pos = pos;
+
                 createPopup(data, pos);
                 hideSpinner();
             }
@@ -612,6 +616,20 @@ $(function () {
     function bind(pos) {
 
 
+        $('body').on('click','#refresh_link', function(e){
+
+            drain_gid = $(this).attr('data_gid');
+            console.log(drain_pos);
+
+            if(drain_pos == null){
+                drain_pos = map.getCenter();
+            }
+            showSpinner();
+            fetchDrainInfo(drain_gid, drain_pos);
+
+        });
+
+
         $('#abandon_link').on('click','.abdn_link', function () {
             if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
                 $.ajax({
@@ -782,7 +800,6 @@ $(function () {
             });
             return false;
         });
-
     }
 
     function get_categories() {
@@ -859,10 +876,12 @@ $(function () {
         var latlng = L.latLng(lat, lng);
 
         map.setView(latlng, 17);
-    })
+    });
 
 
     get_categories();
+
+    
 
 
 
