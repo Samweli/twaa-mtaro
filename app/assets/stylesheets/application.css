@@ -642,12 +642,12 @@ form.wide label {
   *display: inline;
 }
 
-.form input[type="submit"]:hover {
+/*.form input[type="submit"]:hover {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
   background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
   background-color:#4197ee;
-}
+}*/
 
 .form input[type="submit"]:active {
   position:relative;

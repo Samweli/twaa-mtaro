@@ -96,6 +96,10 @@ h4{
   font-size: 14px;
  
 }
+.info {
+    font: 14px/16px Arial, Helvetica, sans-serif;
+   
+}
 .form input[type="submit"] {
   font-size: 15px;
   }
@@ -109,6 +113,11 @@ h4{
   font-size: 16px;
   color: white;
   font-weight: 500;
+    cursor: default;
+
+}
+.btn.btn-warning.btn-block.cat-btn:hover:not(:disabled), 
+.btn.btn-success.btn-block.cat-btn:hover:not(:disabled){
 }
 h2 {
     display: block;
@@ -152,7 +161,7 @@ input, select, option, button, input[type="submit"] {
 }
 /* media query for resizing the map and sidebar */
 @media (max-width: 625px) {
-  .radius_5,#feedback.font_12.link_1,#service_logos.center,#myDiv{
+  .radius_5,#myDiv{
     display: none;
   }
   .btn {
@@ -164,7 +173,7 @@ input, select, option, button{
 }
    /*resixing the popup contents in the map*/
  #map_canvas {
-  min-height: 570px;
+  min-height: 520px;
     cursor: default;
     border: 0px solid #737373;
     top: 0%;
@@ -187,7 +196,7 @@ input, select, option, button{
     font-size: 12px;
   }
 h3{
-  font-size: 16px;
+  font-size: 13px;
   }
 h2{
     font-size: 10px;
@@ -217,15 +226,21 @@ ul.horizontal_items li,
 
 h4{
   text-align:center;
-  padding-top:25px
-  font-size: 10px;
+  padding-top:25px;
+  font-size: 9.7px;
+
 }
 .legend i {
-    width: 14px;
-    height: 14px;
-    font-size: 10px;
+    width: 12px;
+    height: 12px;
+    font-size: 6px;
 
   }
+
+.info {
+    font: 10px/12px Arial, Helvetica, sans-serif;
+    
+}
 #forgot_pw_box,
 #sign_up_box,
 #testdiv, 
