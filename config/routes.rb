@@ -11,6 +11,7 @@ AdoptASidewalk::Application.routes.draw do
     get 'add' => 'users#add'
     get 'profile' => 'users#profile'
     post 'createuser' => 'users#createuser'
+    put 'update' => 'users#update'
   end
 
   get 'address' => 'addresses#show', :as => 'address'

@@ -983,3 +983,7 @@ input.form-control {
   padding: 10px;
 }
 
+#edit_profile_form, form {
+    width: 250px;
+}
+

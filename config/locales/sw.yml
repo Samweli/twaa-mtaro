@@ -16,6 +16,7 @@ sw:
     find: "Tafuta mtaa"
     need_help: "%{count} Misaada"
     send_reminder: "Kumbusha kusafisha kwa kutuma ujumbe"
+    my_profile: "Habari Zangu"
     register: "Jisajili sasa"
     sign_in: "kuingia"
     sign_out: "Ondoka"

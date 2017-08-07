@@ -27,7 +27,7 @@ class UsersController < Devise::RegistrationsController
     if resource.update_with_password(params[resource_name])
       sign_in(resource_name, resource, :bypass => true)
       flash[:notice] = "Profile updated!"
-      redirect_to(:controller => "info_window", :action => "index", :map_object_id => params[:map_object_id])
+      redirect_to(:controller => "main", :action => "index")
     else
       clean_up_passwords(resource)
       render(:json => {"errors" => resource.errors}, :status => 500)

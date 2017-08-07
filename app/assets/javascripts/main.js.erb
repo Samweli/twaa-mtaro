@@ -251,14 +251,14 @@ $(function () {
     });
 
 
-  /* displays sign_in form inside a popup */
-    $('body').on('click', '#my_profile_link', function () {
+  /* displays user profile inside a popup */
+    $('body').on('click', '#my_profile', function () {
 
         var locale = urlParam('locale');
 
         $.ajax({
             type: 'GET',
-            url: '/users/profile',
+            url: '/profile',
             data: {
                 'locale': locale
             },
@@ -272,7 +272,28 @@ $(function () {
     });
 
 
-    function eddie() {
+  /* displays edit profile form inside a popup */
+    $('body').on('click', '#edit_profile_form', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/users/edit',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+
+                createPopup(msg, map.getCenter());
+            }
+
+        });
+        return false;
+    });
+
+
+    function newClaim() {
         var locale = urlParam('locale');
 
         $.ajax({
@@ -479,7 +500,59 @@ $(function () {
         return false;
     });
 
-  /*Getting all users */
+
+  /* updates an existing user */
+    $('body').on('submit', '#edit_profile_form', function () {
+        var submitButton = $("input[type='submit']", this);
+        var uemail = $('#user_email');
+        var ufname = $('#user_first_name');
+        var ulname = $('#user_organization');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $('#user_street_id');
+        var upwd = $('#user_password');
+        var uid = $('#user_id');
+        var upwdc = $('#user_current_password');
+
+        $.ajax({
+            type: 'POST',
+            url: '/users.json',
+            data: {
+                'commit': submitButton.val(),
+                'utf8': '✓',
+                'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                'user': {
+                    'email': uemail.val(),
+                    'first_name': ufname.val(),
+                    'last_name': ulname.val(),
+                    'sms_number': uPhone.val(),
+                    'street_id': uStreet.val(),
+                    'password': upwd.val(),
+                    'password_confirmation': upwdc.val(),
+                }
+            },
+            beforeSend: function () {
+            },
+            error: function (jqXHR) {
+
+             console.log('an error occured');
+
+
+            },
+            success: function (data) {
+                updateSidebar();
+                fetchDrainInfo();
+            }
+        });
+
+        return false;
+    });
+
+
+
+
+
+
+    /*Getting all users */
     function getUsers() {
         var locale = urlParam('locale');
 
