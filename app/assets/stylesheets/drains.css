@@ -154,3 +154,26 @@ div.card-unclean {
 #view_street:hover{
     cursor: pointer;
 }
+
+/* Social Media */
+
+.social-share-button-facebook {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("facebook.png") no-repeat;
+}
+
+.social-share-button-twitter {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("twitter.png") no-repeat;
+}
+
+.social-share-button-google_plus {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("google_plus.png") no-repeat; 
+}
