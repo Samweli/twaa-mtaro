@@ -4,6 +4,22 @@
       %div.font_h3.font_bold{:style => "margin:none;"}
         = t("notices.welcome")
         = current_user.fullname
-      [
-      = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main', :class => 'font_12'
-      ]
+
+#username.hidden-lg.hidden-md
+  - if user_signed_in?
+    #user_badge.link_1.center
+      %div.font_h3.font_bold{:style => "margin:none; font-size:14px;"}
+        = t("notices.welcome")
+        = current_user.fullname
+    #sidebar_login.font_14.radius_4
+      %ul.horizontal_items.item_separator.pen_lightgray{:style => "margin-left:60px;"}
+        %li
+          = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+        |
+        %li
+          - if I18n.locale == :en 
+            %li= link_to_unless_current "Swahili", :locale => "sw"
+          - elsif  I18n.locale == :sw 
+            %li= link_to_unless_current "English", :locale => "en"       
+        
+
