@@ -9,6 +9,7 @@ AdoptASidewalk::Application.routes.draw do
     get 'forgot_password' => 'passwords#forgot'
     get 'users' => 'users#index'
     get 'add' => 'users#add'
+    get 'profile' => 'users#profile'
     post 'createuser' => 'users#createuser'
   end
 
