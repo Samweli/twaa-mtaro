@@ -58,11 +58,6 @@ h2.address {
     color: #666;
 }
 
-h3 {
-    font-size: 18px;
-    color: #888;
-    margin: 0;
-}
 
 #sidebar_content {
   left: 0;
@@ -159,9 +154,11 @@ img {
 }
 
 label, input {
-    white-space: nowrap;
-    text-align: left;
+  white-space: nowrap;
+  text-align: left;
 }
+
+
 
 input[type="radio"], input[type="checkbox"] {
     display: inline;
@@ -241,8 +238,8 @@ border-radius: 5px 5px 5px 5px;
 
 .gray_box {
     background-color: #f9f9f9;
-    border: 1px solid #dedede;
-    box-shadow: 0 1px 0 #FFFFFF;
+/*    border: 1px solid #dedede;
+*/    box-shadow: 0 1px 0 #FFFFFF;
     padding: 5px;
     margin: 5px 0 0px 0;
 }
@@ -266,7 +263,7 @@ border-radius: 5px 5px 5px 5px;
 .font_12 {
       font-size: 12px;
           }
-.font_14 {font-size: 14px;}
+.font_14 {font-size: 15px;}
 .font_16 {font-size: 16px;}
 .font_18 {font-size: 18px;}
 .font_20 {font-size: 20px;}
@@ -340,11 +337,26 @@ ul, menu, dir {
 li{
   list-style-type: disc;
 }
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+li{
+  list-style-type: disc;
+}
 
 ul.horizontal_items {
     padding: 0;
     margin: 5px 0 0 0;
     clear: both;
+}
+ul.horizontal_items.font_bold{
+  font-size: 14px;
 }
 
 ul.horizontal_items > li {
@@ -476,8 +488,8 @@ ul.social_items > li {
   border: 1px solid #dadada;
   box-shadow: 0 1px 0 #FFFFFF;
   margin: 10px 0 0 0;
-/*  padding: 5px 10px;
-*/}
+  padding: 5px 10px;
+}
 
 
 ul.actions_menu {
@@ -627,7 +639,6 @@ form.wide label {
   display:inline-block;
   color:#ffffff;
   font-family:arial;
-  font-size:15px;
   font-weight:bold;
   padding:6px 24px;
   text-decoration:none;
@@ -636,12 +647,12 @@ form.wide label {
   *display: inline;
 }
 
-.form input[type="submit"]:hover {
+/*.form input[type="submit"]:hover {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
   background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
   background-color:#4197ee;
-}
+}*/
 
 .form input[type="submit"]:active {
   position:relative;
@@ -680,8 +691,8 @@ form.wide label {
 }
 
 #legend {
-    background: none;
-}
+/*    background: none;
+*/}
 
 .pen_gray {
     color: #777;
@@ -953,7 +964,7 @@ input.form-control {
     background-repeat: no-repeat;
     width: inherit;
     position: relative;
-    left: 20%;
+    left: 15%;
     font-size: 16px;
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;
@@ -971,5 +982,4 @@ input.form-control {
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
 }
-
 

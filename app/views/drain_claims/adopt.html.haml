@@ -1,14 +1,19 @@
 #testdiv
-  %h2 Users
+  %h2 
+    = t("notices.title")
   = succeed "/" do
-    %input#myInput{:placeholder => "Search for names..", :title => "Type in a name", :type => "text"}/
+    %input#myInput{:placeholder => t("labels.search"), :title => "Type in a name", :type => "text" }/
   .users{:style => "max-height:200px; width:450px;overflow:auto;"}
     %table#location
       %tr
-        %th Index
-        %th FirstName
-        %th LastName
-        %th Action
+        %th 
+          = t("notices.indexing")
+        %th
+          = t("notices.first_name")
+        %th 
+          = t("notices.last_name")
+        %th 
+          = t("notices.actions")
   %div.link_add_user
     %a#add_user
       = t("captions.add_user")

@@ -1175,7 +1175,7 @@ h6,
 .h5,
 .h6 {
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 600;
 /*  line-height: 1.0;
 */  color: inherit;
 }
@@ -1265,10 +1265,10 @@ h1,
 .h3 {
   font-size: 24px;
 }*/
-h4,
+/*h4,
 .h4 {
-  font-size: 18px;
-}
+  font-size: 14px;
+}*/
 h5,
 .h5 {
   font-size: 14px;
@@ -3445,7 +3445,7 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-block {
   display: block;
-  width: 100%;
+  width: 87%;
 }
 .btn-block + .btn-block {
   margin-top: 5px;

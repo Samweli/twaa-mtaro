@@ -31,6 +31,7 @@ en-US:
     private: "(private)"
     public: "(may be visible to other users)"
     unclean: "not Clean"
+    adopt_table: "Drains I Adopted"
   defaults:
     address: "address"
     ask_help: "Ask for help if you need an extra hand this season."
@@ -39,6 +40,7 @@ en-US:
     claim: "Claim the drains that you'll clean this season "
     drain_number: "The number of %{thing} is"
     missing: "Don't see your sidewalk on the map?"
+    notify: "Nobody has adopted this drain yet."
     notify_all: "Let everyone know you've cleared your drain."
     thing: "Drain"
     this_thing: "This %{thing}"

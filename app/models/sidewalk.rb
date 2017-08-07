@@ -2,6 +2,7 @@ class Sidewalk < ActiveRecord::Base
   set_table_name 'mitaro_dar'
 
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
+ 
   validates_presence_of :lat, :lng
   
   include Geokit::Geocoders
@@ -16,7 +17,6 @@ class Sidewalk < ActiveRecord::Base
 
   def self.where_custom(arg)
     if (arg.length == 1)
-      puts arg
       column = arg.keys.join("") # this returns string instead of array
       column_value = arg.values
      

@@ -78,16 +78,46 @@ nav.navbar{
 }
 .btn-group{
   margin-left: 65px;
-        font-size: 13px;
+  font-size: 13px;
 
 }
 
 #page{
   float: right;
 }
+/*css for popup in map for larger screen*/
 h3 {
-  font-size: 24px;
-    margin-top: 0px;
+  font-size: 20px;
+  margin-top: 0px;
+}
+h4{
+  text-align:center;
+  padding-top:25px;
+  font-size: 14px;
+ 
+}
+.info {
+    font: 14px/16px Arial, Helvetica, sans-serif;
+   
+}
+.form input[type="submit"] {
+  font-size: 15px;
+  }
+
+ #assign.btn.info_adopt,#add_claim.btn.info_adopt{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+.btn.btn-warning.btn-block.cat-btn, 
+.btn.btn-success.btn-block.cat-btn{
+  font-size: 16px;
+  color: white;
+  font-weight: 500;
+    cursor: default;
+
+}
+.btn.btn-warning.btn-block.cat-btn:hover:not(:disabled), 
+.btn.btn-success.btn-block.cat-btn:hover:not(:disabled){
 }
 h2 {
     display: block;
@@ -97,6 +127,12 @@ h2 {
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
     font-weight: bold;
+}
+#add_user{
+  cursor: pointer;
+  padding-left: 15px;
+  font-weight: 600;
+
 }
 .col-md-8{ 
     cursor: default;
@@ -125,19 +161,19 @@ input, select, option, button, input[type="submit"] {
 }
 /* media query for resizing the map and sidebar */
 @media (max-width: 625px) {
-  .radius_5,#feedback.font_12.link_1,#service_logos.center,#myDiv{
+  .radius_5,#myDiv{
     display: none;
   }
   .btn {
       font-size: 10px;
 }
 
-input, select, option, button, input[type="submit"] {
+input, select, option, button{
   font-size: 11.9px;
 }
    /*resixing the popup contents in the map*/
  #map_canvas {
-  min-height: 570px;
+  min-height: 520px;
     cursor: default;
     border: 0px solid #737373;
     top: 0%;
@@ -160,21 +196,82 @@ input, select, option, button, input[type="submit"] {
     font-size: 12px;
   }
 h3{
-  font-size: 16px;
+  font-size: 13px;
   }
 h2{
-    font-size: 20px;
+    font-size: 10px;
+    font-weight: bold;
   }
+  #assign.btn.info_adopt,
+  #add_claim.btn.info_adopt{
+    padding-left: 0px;
+    padding-right: 0;
+  }
+
+  .gray_box.btn.btn-warning.cat-btn{
+    padding-left: 0px;
+    padding-right: 0;
+  }
+  .btn.btn-warning.btn-block.cat-btn,
+  .btn.btn-success.btn-block.cat-btn{
+  font-size: 10px;
+  font-weight: 100;
+}
+ul.horizontal_items.font_bold,
+ul.horizontal_items li,
+.form input[type="submit"],
+.default.btn-submit.pull-right {
+  font-size: 10px;
+}
+
+h4{
+  text-align:center;
+  padding-top:25px;
+  font-size: 9.7px;
+
+}
 .legend i {
-    width: 14px;
-    height: 14px;
-        font-size: 10px;
+    width: 12px;
+    height: 12px;
+    font-size: 6px;
 
   }
+
+.info {
+    font: 10px/12px Arial, Helvetica, sans-serif;
+    
+}
 #forgot_pw_box,
-#sign_up_box, 
+#sign_up_box,
+#testdiv, 
 #sign_in_box{
   width: 280px;
+}
+#location{
+  width: 45%;
+}
+#location th{
+ padding:12px;
+ font-size: 10px;
+}
+#location tr{
+  font-size: 10px;
+}
+#myInput{
+  width: 70%;
+  height: 20px;
+}
+#abandon_link{
+ margin-left: 15px;
+ margin-bottom: 12px;
+ margin-right: 15px;
+}
+table #abandon_link , #abandon_link th, #abandon_link td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+     width: 90px;
+     margin-bottom: 12px;
+     padding: 4px;
 }
 .font_1 {
   font-size: 10px;
@@ -277,7 +374,8 @@ h2{
     box-shadow: none;
   }
 }
-/*media query for displaying content in a larger size */
+
+/*media query for displaying  content in a larger size */
 @media (min-width: 768px) {
   #aside{
   background-color: #6495ED;
@@ -310,9 +408,42 @@ h2{
 }
 #forgot_pw_box,
 #sign_in_box,
-#sign_up_box {
+#sign_up_box ,
+#testdiv{
   width: 400px;
 }
+#location{
+  width: 90%;
+}
+#location th{
+ padding:12px;
+ font-size: 12px;
+}
+#location tr{
+  font-size: 12px;
+}
+#myInput{
+  width: 60%;
+  height: 50px;
+}
+#abandon_link{
+ margin-left: 25px;
+ margin-bottom: 12px;
+ margin-right: 15px;
+}
+table #abandon_link , #abandon_link th, #abandon_link td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+     width: 150px;
+     margin-bottom: 12px;
+     padding: 4px;
+}
+
+th, td {
+    padding: 4px;
+    text-align: center;
+}
+
   #address_box {
   background:rgba(141, 222, 92, 0.56);
   border: 1px solid #b4cdde;
@@ -355,4 +486,3 @@ nav.navbar{
   }
 
 }
-  /*for the col-md-*/

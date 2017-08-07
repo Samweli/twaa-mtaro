@@ -10,43 +10,49 @@
         = t("links.refresh")
 
   .descriptions
-    %h3
+    %h4
       = t('defaults.address') + ':'
       = @sidewalk.address
       %span.font12
         = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
         = @sidewalk.gid
     - if @claims.empty?
-      %p.font_18.color_warn.center
-        Nobody has adopted this sidewalk yet.
+      %p.font_14.color_warn.center
+        = t("defaults.notify")
     - else
-      %h3
+      %h3{:style => "font-size:14px;"}
         = t('captions.taken') + ':'
-      #people_list.users{:style => "max-height:150px; width:400px;overflow:auto;"}
+      
+      #people_list.users
       - if user_signed_in? && current_user.role == 2
         %table#abandon_link
           %tr
-            %th User name
-            %th Status
-            %th Action
+            %th 
+              = t("defaults.user")
+            %th 
+              = t("defaults.status")
+            %th 
+              = t("defaults.actions")
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td clean
+              %td 
+                = t("buttons.clean")
               %td
-                %button{:class => "abdn_link", :data => {:moid=>c.id}, :style => "text-decoration:none;"}
-                  change
+                %button{:class => "btn btn-default", :style => "font-size:8px;", :data => {:moid=>c.id}}
+                  = t("buttons.change")
       - else
-        %table#abandon_lin
+        %table#abandon_link
           %tr
-            %th User name
-            %th Status
+            %th 
+              = t("defaults.user")
+            %th
+              = t("defaults.status")
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td clean
-
-
+              %td 
+                = t("buttons.clean")
 
   - if user_signed_in? && current_user.role == 2
     %div
@@ -59,9 +65,9 @@
           = t("buttons.adopt")
       - else
         %button#add_claim.btn.info_adopt
-          add
+          = t("captions.add")
   - else
     - if @sidewalk.cleared?
-      = button_tag t("captions.clean"), :class => "btn success"
+      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
     - else
-      = button_tag t("captions.unclean"), :class => "btn warning"
+      = button_tag t("captions.unclean"), :class => "btn btn-warning btn-block cat-btn"
