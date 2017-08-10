@@ -1,7 +1,8 @@
 class Sidewalk < ActiveRecord::Base
   set_table_name 'mitaro_dar'
 
-  has_many :claims, :class_name => 'SidewalkClaim', primary_key: "gid", :foreign_key => "gid"
+  has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
+ 
   validates_presence_of :lat, :lng
   
   include Geokit::Geocoders
@@ -29,6 +30,29 @@ class Sidewalk < ActiveRecord::Base
     else
       return
     end
+  end
+
+  def self.where_custom_conditions(condition, condition_value)
+    query = %Q(
+      SELECT "mitaro_dar".*, ST_AsKML(the_geom) AS "kml" FROM mitaro_dar  
+      WHERE  "mitaro_dar"."#{condition}" #{condition_value} 
+      )
+      find_by_sql([query])
+    # if (arg.length == 1)
+    #   puts arg
+    #   column = arg.keys.join("") # this returns string instead of array
+    #   column_value = arg.values
+     
+    #  # TODO replace "#{column}" with ? and add column variable in 
+    #  # find_by_sql function 
+    #   query = %Q(
+    #   SELECT "mitaro_dar".*, ST_AsKML(the_geom) AS "kml" FROM mitaro_dar  
+    #   WHERE  "#{condition} #{condition_value}"  
+    #   )
+    #   find_by_sql([query,])
+    # else
+    #   return
+    # end
   end
 
   def self.find_closest(lat, lng, limit=40, geo_buffer_size = 0.07)

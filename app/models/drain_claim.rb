@@ -1,4 +1,4 @@
-class SidewalkClaim < ActiveRecord::Base
+class DrainClaim < ActiveRecord::Base
   belongs_to :user, :counter_cache => :claims_count
   belongs_to :sidewalk, :counter_cache => :claims_count, :foreign_key => 'gid'
 
@@ -8,7 +8,7 @@ class SidewalkClaim < ActiveRecord::Base
   def self.where_custom(arg)
     
     query = %Q(
-      SELECT "sidewalk_claims".* FROM "sidewalk_claims" WHERE "sidewalk_claims"."gid" IN (?)
+      SELECT "drain_claims".* FROM "drain_claims" WHERE "drain_claims"."gid" IN (?)
 
       )
     find_by_sql([query, arg])

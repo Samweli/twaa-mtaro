@@ -1,3 +1,8 @@
+/*
+ *= require social-share-button
+ *= require_self
+ */
+
 html {
     height: 100%;
 }
@@ -928,7 +933,7 @@ input.form-control {
 
 }
 
-/* Syles for users table */
+/* Styles for users table */
 
 .users {
     padding: 2px;
@@ -976,5 +981,9 @@ input.form-control {
   border: 1px solid #b4cdde;
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
+}
+
+#edit_profile_form, form {
+    width: 250px;
 }
 

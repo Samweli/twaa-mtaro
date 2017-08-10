@@ -15,6 +15,7 @@ en:
     find: "Find Address"
     continue: "Continue"
     send_reminder: "Send reminder to clean"
+    my_profile: "My Profile"
     register: "Register now"
     sign_in: "Sign in"
     sign_out: "Sign out"
@@ -26,6 +27,8 @@ en:
     uncleaned: "%{count} Dirty"
     need_help: "%{count} Needs help"
     all: "%{count} All"
+    adopted: "%{count} Adopted"
+    not_adopted: "%{count} Not Adopted"
   captions:
     add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
@@ -58,6 +61,7 @@ en:
     aware: "You may know that you're required to clean the drain near your home or business,"
     help_question: "but how about helping others out?"
     drain_number: "The number of %{thing} is"
+    my_drains: "Drains I Adopted"
     user: "User_name"
     status: "Status"
     actions: "Action"
@@ -65,7 +69,7 @@ en:
     error: "Drain"
     auth_failed: "Username or password is incorrect."
     password: "You need to sign in or sign up before continuing."
-    not_found: "%{thing} could not be found."
+    not_found: "%{thing}(s) could not be found."
     drain_notfound: "%{error} not found"
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
   labels:
