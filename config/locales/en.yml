@@ -115,6 +115,7 @@ en:
     dirt_status: "not clean"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
+    share: "Share"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"

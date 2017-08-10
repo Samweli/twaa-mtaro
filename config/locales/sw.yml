@@ -115,6 +115,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "ni msafi"
     dirt_status: "sio msafi"
+    share: "Shirikisha"
   notices:
     abandoned: "%{thing} kutelekezwa!"
     adopted: "Umechukua %{thing}!"

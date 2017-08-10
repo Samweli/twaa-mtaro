@@ -7,7 +7,9 @@
       / %li.cleared= t("captions.clean")
       / %li.unclear=  t("captions.unclean")
       %li.unclear.link_1{:data_gid => @sidewalk.gid,  :id => 'refresh_link'}
-        = t("links.refresh")
+       = t("links.refresh")
+      %li.share{:data_gid => @sidewalk.gid,  :id => 'share_link'}
+       = t("links.share")
 
   .descriptions
     %h4
