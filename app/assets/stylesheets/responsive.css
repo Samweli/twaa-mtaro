@@ -81,7 +81,18 @@ nav.navbar{
   font-size: 13px;
 
 }
-
+.btn-clean{
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  border-radius: 4px;
+}
+.btn-unclean{
+   color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+  border-radius: 4px;
+}
 #page{
   float: right;
 }
@@ -108,8 +119,8 @@ h4{
     padding-left: 20px;
     padding-right: 20px;
   }
-.btn.btn-warning.btn-block.cat-btn, 
-.btn.btn-success.btn-block.cat-btn{
+.btn.btn-clean.btn-block.cat-btn, 
+.btn.btn-unclean.btn-block.cat-btn{
   font-size: 16px;
   color: white;
   font-weight: 500;
