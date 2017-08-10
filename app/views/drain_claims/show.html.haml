@@ -1,15 +1,20 @@
 #actions_box
   #legend.gray_box.radius_4.font_14.center
     %h3
-      = t("titles.drain_color")
+      = t("titles.drain_details")
     %ul.horizontal_items.font_bold
       / %li.needs_help= t("captions.need_help")
       / %li.cleared= t("captions.clean")
       / %li.unclear=  t("captions.unclean")
       %li.unclear.link_1{:data_gid => @sidewalk.gid,  :id => 'refresh_link'}
-       = t("links.refresh")
-      %li.share{:data_gid => @sidewalk.gid,  :id => 'share_link'}
-       = t("links.share")
+        = t("links.refresh")
+      %li.share{:data_gid => @sidewalk.gid,  :class => 'share_link'}
+        = t("links.share")
+
+    // Todo replace current_user.street.street_name with sidewalk.street.street_name
+    .drain_social_media
+      = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@sidewalk.gid}?locale={I18n.locale}" ))
+
 
   .descriptions
     %h4

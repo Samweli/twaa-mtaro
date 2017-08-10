@@ -709,20 +709,38 @@ $(function () {
         });
     }
 
+    // Shows social media links, for sharing drain info
+
+    $('body').on('click','.share_link', function(e){
+       drain_gid = $(this).attr('data_gid');
+
+       if($(".drain_social_media").css("display") == 'none'){
+        $(".drain_social_media").css( {position:"relative", display: "block"
+        , left: '10%' });
+       }
+       else{
+            $(".drain_social_media").css( {display: "none"});
+       }
+
+    });
+
+    // Refreshs drain details on a popup
+
+    $('body').on('click','#refresh_link', function(e){
+
+        drain_gid = $(this).attr('data_gid');
+
+        if(drain_pos == null){
+            drain_pos = map.getCenter();
+        }
+        showSpinner();
+        fetchDrainInfo(drain_gid, drain_pos);
+
+    });
+
+
+
     function bind(pos) {
-
-
-        $('body').on('click','#refresh_link', function(e){
-
-            drain_gid = $(this).attr('data_gid');
-
-            if(drain_pos == null){
-                drain_pos = map.getCenter();
-            }
-            showSpinner();
-            fetchDrainInfo(drain_gid, drain_pos);
-
-        });
 
 
         $('#abandon_link').on('click','.abdn_link', function () {

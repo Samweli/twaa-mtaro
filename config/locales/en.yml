@@ -101,7 +101,7 @@ en:
     city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
-    refresh: "reflesh"
+    refresh: "Reflesh"
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
@@ -115,7 +115,7 @@ en:
     dirt_status: "not clean"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
-    share: "Share"
+    share: "share"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
@@ -150,8 +150,11 @@ en:
     sign_in: "Sign In"
     forgot_password: "Forgot Password"
     registered: "You have been registered!"
-    drain_color: "Drains colors" 
+    drain_color: "Drain colors" 
     drain_category: "Drains Filter" 
+    drain_details: "Drain details"
+    site_share_message: "Adopt a drain | Dar es salaam"
+    drain_share_message: "Drain in %{address} is adopted by %{username}"
   sponsors:
     cfa: "Tanzania Open data initiative"   # FIXME
     city: "City of Dar es salaam"    # FIXME

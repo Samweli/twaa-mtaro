@@ -152,6 +152,9 @@ sw:
     registered: "Umesajiliwa!"
     drain_color: "Rangi ya mtaro"
     drain_category: "Mgawanyo wa Mitaro" 
+    drain_details: "Taarifa za Mtaro"
+    site_share_message: "Twaa mtaro | Dar es salaam"
+    drain_share_message: "%{username} anasafisha mtaro unaopatikan %{address}"
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME

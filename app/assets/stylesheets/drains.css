@@ -130,10 +130,13 @@ div.card-unclean {
   padding-left: 0px;
 }
 
-#view_street:hover{
+#view_street:hover, #refresh_link:hover{
     cursor: pointer;
 }
 
+.share_link:hover{
+    cursor: pointer;
+}
 /* Social Media */
 
 .social-share-button-facebook {
@@ -155,4 +158,8 @@ div.card-unclean {
   width: 16px;
   height: 16px;
   background: url("google_plus_small.png") no-repeat; 
+}
+
+.drain_social_media{
+  display:none;
 }
