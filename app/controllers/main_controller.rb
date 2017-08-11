@@ -29,6 +29,7 @@ class MainController < ApplicationController
     @clean = format_number(Drain.count(:conditions => 'cleared = true') )
     @unclean = format_number(Drain.count(:conditions => 'cleared = false'))
     @need_help = format_number(Drain.count(:conditions => 'need_help = true'))
+    @unknown = format_number(Drain.where('cleared is NULL and need_help is NULL').count)
     @all = format_number(Drain.count)
 
     @adopted = format_number(Drain.count(:conditions => 'claims_count > 0'))

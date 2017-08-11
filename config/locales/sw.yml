@@ -25,6 +25,7 @@ sw:
     update: "badilisha"
     send_request: "Tuma maombi"
     go: "nenda"
+    unknown: "%{count} haijulikani"
     all: "%{count} Yote"
     adopted: "%{count} Imetwaaliwa"
     not_adopted: "%{count} Haijatwaaliwa"
@@ -129,8 +130,9 @@ sw:
     title: "mtumiaji"
     indexing: "namba"
     first_name: "Jina la Kwanza"
-    last_name: "Jina L Mwisho"
+    last_name: "Jina la Mwisho"
     actions: "Kitendo"
+    share: "Shirikisha kuhusu hii tovuti"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"

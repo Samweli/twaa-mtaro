@@ -1,13 +1,20 @@
 module DrainsHelper
   def format_color(s)
-    if s.cleared
-      "#cleared"
+    if not s.cleared.nil?
+      if s.cleared
+        "#cleared"
+      else
+        "#unclear"
+      end
     # elsif s.claims_count > 0
     #   "#adopted"
-    elsif s.need_help
-      "#needs_help"
+    elsif not s.need_help.nil?
+       if s.need_help is true
+        "#needs_help"
+       end
     else
-      "#unclear"
+      puts 'unknown'
+      "#unknown"
     end
   end
 
