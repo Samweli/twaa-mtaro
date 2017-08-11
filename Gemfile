@@ -20,6 +20,7 @@ gem 'rest-client'
 gem 'browser'
 gem 'twilio-ruby'
 gem 'social-share-button', '~> 0.1.6'
+gem 'google-analytics-rails', '1.1.1'
 
 platforms :jruby do
   gem 'jruby-openssl'
