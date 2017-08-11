@@ -1,4 +1,4 @@
-module SidewalksHelper
+module DrainsHelper
   def format_color(s)
     if s.cleared
       "#cleared"
@@ -11,7 +11,7 @@ module SidewalksHelper
     end
   end
 
-  def count(sidewalks, value)
+  def count(drains, value)
   
   end
 

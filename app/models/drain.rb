@@ -1,4 +1,4 @@
-class Sidewalk < ActiveRecord::Base
+class Drain < ActiveRecord::Base
   set_table_name 'mitaro_dar'
 
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"

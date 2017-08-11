@@ -72,15 +72,15 @@ $(function () {
 
       /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
-        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
+        console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
 
         var url;
         if (type) {
-            url = 'sidewalks.kml?locale=' + locale + '&type=' + type;
+            url = 'drains.kml?locale=' + locale + '&type=' + type;
             console.log('the url: ' + url);
         } else {
-            url = 'sidewalks.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+            url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
         showSpinner();
 
@@ -755,7 +755,7 @@ $(function () {
 
 
         $('#abandon_link').on('click','.abdn_link', function () {
-            if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
+            if (window.confirm('Are you sure that you want to abandon this drain?')) {
                 $.ajax({
                     type: 'POST',
                     url: '/drain_claims/' + $(this).attr('data-moid'),
@@ -876,7 +876,7 @@ $(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/sidewalks/' + id,
+                url: '/drains/' + id,
                 data: {
                     'moid': $(this).attr('data-moid'),
                     'authenticity_token': AUTH_TOKEN,
@@ -904,7 +904,7 @@ $(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/sidewalks/' + id,
+                url: '/drains/' + id,
                 data: {
                     'moid': $(this).attr('data-moid'),
                     'authenticity_token': AUTH_TOKEN,
@@ -985,7 +985,7 @@ $(function () {
         return false;
     });
 
-    $('body').on('click', '.view_sidewalk',
+    $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
         $('#address').val($(this).text());

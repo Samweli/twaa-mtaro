@@ -1,4 +1,4 @@
-AdoptASidewalk::Application.configure do
+AdoptADrain::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -58,6 +58,7 @@ AdoptASidewalk::Application.configure do
     :authentication => :plain,
     :user_name      => ENV['MAILER_CS_USERNAME'] || '',
     :password       => ENV['MAILER_CS_PASSWORD'] || '',
+    :enable_starttls_auto => true
     #:domain         => ENV['MAILER_CS_DOMAIN'] || ''
   }
   
@@ -70,6 +71,6 @@ AdoptASidewalk::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  GA.tracker = "UA-89249029-1"
+  GA.tracker = ENV['GA_CODE']
   
 end

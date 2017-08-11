@@ -39,7 +39,7 @@ en-US:
     city: "Dar es salaam, TZ"
     claim: "Claim the drains that you'll clean this season "
     drain_number: "The number of %{thing} is"
-    missing: "Don't see your sidewalk on the map?"
+    missing: "Don't see your drain on the map?"
     notify: "Nobody has adopted this drain yet."
     notify_all: "Let everyone know you've cleared your drain."
     thing: "Drain"
