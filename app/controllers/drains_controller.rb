@@ -5,6 +5,8 @@ class DrainsController < ApplicationController
 
   def index
     # check for the type of drains to query
+    # TODO update all where_custom domain method to use
+    # base where with select as Domain.where(conditions).select('columns')
     if params.has_key?(:type)
       if params[:type] == 'all'
         @drains = Drain.find_all(10000)
@@ -15,6 +17,9 @@ class DrainsController < ApplicationController
           @drains = Drain.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
           @drains = Drain.where_custom(:need_help => true)
+         elsif params[:type] == 'unknown'
+          @drains = Drain.where(:cleared => nil, :need_help => nil).
+          select('*, ST_AsKML(the_geom) AS "kml"')
         elsif params[:type] == 'adopted'
           @drains = Drain.where_custom_conditions(:claims_count, "> 0")
         elsif params[:type] == 'not_adopted'

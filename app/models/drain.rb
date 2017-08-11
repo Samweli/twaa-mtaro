@@ -28,6 +28,7 @@ class Drain < ActiveRecord::Base
       )
       find_by_sql([query, column_value])
     else
+      puts arg.keys[0], arg.keys[1]
       return
     end
   end
