@@ -25,7 +25,7 @@ sw:
     update: "badilisha"
     send_request: "Tuma maombi"
     go: "nenda"
-    unknown: "%{count} haijulikani"
+    unknown: "%{count} Haijulikani"
     all: "%{count} Yote"
     adopted: "%{count} Imetwaaliwa"
     not_adopted: "%{count} Haijatwaaliwa"
