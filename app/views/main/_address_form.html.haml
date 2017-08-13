@@ -26,8 +26,7 @@
           %li.sign_links= link_to t("links.register"), '#', :id => "sign_up_link"
           %span.sign_links
             |
-        %li.locale
-          - if I18n.locale == :en 
-            %li= link_to_unless_current "Swahili", :locale => "sw"
-          - elsif  I18n.locale == :sw 
-            %li= link_to_unless_current "English", :locale => "en"
+        - if I18n.locale == :en 
+          %li.locale= link_to_unless_current "Swahili", :locale => "sw"
+        - elsif  I18n.locale == :sw 
+          %li.locale= link_to_unless_current "English", :locale => "en"
