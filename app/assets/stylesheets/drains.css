@@ -48,17 +48,18 @@ div.card-unclean {
 }
 
 .btn-submit {
-    background-color: #79bbff;
-    -moz-border-radius: 6px;
+/*    background-color: #79bbff;
+*/    -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
     border: 1px solid #469df5;
-    color: #ffffff;
+    color: #000;
+    opacity: 0.7;
     margin:0;
     padding: 4px 15px;
     text-decoration: none;
-    text-shadow: 1px 1px 0px #287ace;
-    zoom: 1;
+/*    text-shadow: 1px 1px 0px #287ace;
+*/    zoom: 1;
 }
 
 .col-md-3.col-sm-3{
@@ -120,8 +121,8 @@ div.card-unclean {
   padding-left: 12px;
   margin-left: 22px;
   margin-right: 25px;
-  background:rgba(141, 222, 92, 0.56);
-  border: 1px solid #b4cdde;
+/*  background:rgba(141, 222, 92, 0.56);
+*/  border: 2px solid rgba(141, 222, 92, 0.56);
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
 }
@@ -147,7 +148,7 @@ div.card-unclean {
   display: inline-block;
   width: 32px;
   height: 32px;
-  background: url("twitter.png") no-repeat;
+  background: url('twitter.png') no-repeat;
 }
 
 .social-share-button-google_plus {

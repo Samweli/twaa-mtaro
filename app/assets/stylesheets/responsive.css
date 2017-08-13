@@ -9,7 +9,7 @@ nav.navbar{
     margin-left: 8px;
     margin-top: 5px;
   }
-.navbar-collapse, {
+.navbar-collapse{
   padding-right: 15px;
   padding-left: 15px;
   overflow-x: visible;
@@ -156,6 +156,7 @@ h2 {
 input, select, option, button, input[type="submit"] {
   font-size: 0.9em;
   display: inline;
+  background-color: #fff;
 }
 #address_box{
   margin-left: 52px;
@@ -191,6 +192,9 @@ input, select, option, button{
     bottom: 0%;
     width: 100%;
   }
+  #my_profile{
+  margin-top: 4px;
+}
   .form-contol{
     width: 25%;
   }
@@ -305,6 +309,7 @@ table #abandon_link , #abandon_link th, #abandon_link td {
   }
 .input-text{
     width: 160px;
+border: 0.5px solid #79bbff;
 }
 #address_box{
   margin-left: 22px;
@@ -396,8 +401,11 @@ table #abandon_link , #abandon_link th, #abandon_link td {
   position: fixed;
 
 }
+#my_profile{
+  margin-top: 4px;
+}
 #map_canvas {
-    min-height: 615px;
+    min-height: 623px;
     position: relative;
     margin: 0px;
     padding: 0px;
@@ -456,8 +464,8 @@ th, td {
 }
 
   #address_box {
-  background:rgba(141, 222, 92, 0.56);
-  border: 1px solid #b4cdde;
+  /*border-color:;*/
+  border: 2px solid rgba(141, 222, 92, 0.56);
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
   margin:0px 0px 12px 0px; 
@@ -471,6 +479,7 @@ nav.navbar{
 }
 .input-text{
     width: 163px;
+    border: 0.9px solid #79bbff;
 }
 .btn-submit{
   float: right;

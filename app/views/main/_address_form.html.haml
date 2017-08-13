@@ -31,3 +31,5 @@
             %li= link_to_unless_current "Swahili", :locale => "sw"
           - elsif  I18n.locale == :sw 
             %li= link_to_unless_current "English", :locale => "en"
+        
+    = render :partial => 'users/my_profile'
