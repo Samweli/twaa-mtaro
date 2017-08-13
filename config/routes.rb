@@ -1,4 +1,4 @@
-AdoptASidewalk::Application.routes.draw do
+AdoptADrain::Application.routes.draw do
   resources :authentications
 
   devise_for :users, :controllers => {
@@ -23,7 +23,7 @@ AdoptASidewalk::Application.routes.draw do
 
   match '/auth/:provider/callback' => 'authentications#create'
 
-  resources :sidewalks do
+  resources :drains do
     get 'find_closest', :on => :collection
   end
   resources :drain_claims

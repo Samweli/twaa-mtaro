@@ -27,6 +27,13 @@ class UsersController < Devise::RegistrationsController
     if resource.update_with_password(params[resource_name])
       sign_in(resource_name, resource, :bypass => true)
       flash[:notice] = "Profile updated!"
+
+      sms_service = SmsService.new();
+      msg = text_message('update');
+      sms_service.send_sms(
+        msg, 
+        resource.sms_number);
+
       redirect_to(:controller => "main", :action => "index")
     else
       clean_up_passwords(resource)
@@ -58,16 +65,9 @@ class UsersController < Devise::RegistrationsController
     build_resource
     if resource.save
       session[:omniauth] = nil unless @user.new_record?
+
       sms_service = SmsService.new();
-      if I18n.locale == :en
-        msg = "Your Twaa mtaro account has been created, go to http://twaamtaro.org "\
-              "and login with "\
-              "your number and password #{@user.password}"
-      else
-         msg = "Umesajiliwa kwenye tovuti ya Twaa mtaro imetengenezwa,"\
-               "ingia http://twaamtaro.org"\
-               "kwa kutumia namba yako ya simu na nywila #{@user.password}"
-      end
+      msg = text_message('create')
       sms_service.send_sms(
         msg, 
         @user.sms_number);
@@ -98,4 +98,25 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  def text_message(type)
+    if type == 'create'
+      if I18n.locale == :en
+        msg = "Your Twaa mtaro account has been created, go to http://twaamtaro.org "\
+              "and login with "\
+              "your number and password #{@user.password}."
+      else
+         msg = "Umesajiliwa kwenye tovuti ya Twaa mtaro imetengenezwa,"\
+               "ingia http://twaamtaro.org"\
+               "kwa kutumia namba yako ya simu na nywila #{@user.password}."
+      end
+    else
+      if I18n.locale == :en
+        msg = "Your twaa mtaro account details have been updated. "
+      else
+         msg = "Taarifa za akaunti yako ya twaa mtaro zimebadilishwa."
+      end
+    end
+    
+    return msg
+  end
 end

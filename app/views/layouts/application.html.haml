@@ -12,6 +12,8 @@
     = stylesheet_link_tag "responsive"
     = stylesheet_link_tag "bootstrap"
 
+    = analytics_init if GoogleAnalytics.valid_tracker?
+
 
 
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
