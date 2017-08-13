@@ -18,8 +18,14 @@
 
               #mini_profile.radius_5
                 = render :partial => 'user_badge'
+               
+                = render :partial => 'users/my_profile'
+                
                 - if user_signed_in?
+                  - if flash[:notice]
+                    .notice=flash[:notice]
                   = render :partial => 'users/my_profile'
+                  
                 = render :partial => 'drain_list'
 
 
