@@ -102,7 +102,7 @@ en:
     city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
-    refresh: "Reflesh"
+    refresh: "Refresh"
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
@@ -111,7 +111,7 @@ en:
     sign_up_short: "Sign Up"
     login: "Login"
     register: "Register"
-  messages: 
+  messages:
     clear_status: "its clean"
     dirt_status: "not clean"
     notification: "Street leaader turned the mark of your %{thing} number "  

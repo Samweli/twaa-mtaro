@@ -43,8 +43,11 @@
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td 
-                = t("buttons.clean")
+              %td
+                - if c.shoveled 
+                  = t("buttons.clean")
+                - else
+                  = t("buttons.dirty")
               %td
                 %button{:class => "btn btn-default", :style => "font-size:8px;", :data => {:moid=>c.id}}
                   = t("buttons.change")
@@ -58,8 +61,11 @@
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td 
-                = t("buttons.clean")
+              %td
+                - if c.shoveled 
+                  = t("buttons.clean")
+                - else
+                  = t("buttons.dirty")
 
   - if user_signed_in? && current_user.role == 2
     %div
