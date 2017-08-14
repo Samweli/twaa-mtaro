@@ -19,6 +19,12 @@
 
               #mini_profile.radius_5
                 = render :partial => 'user_badge'
+                
+                - if user_signed_in?
+                  - if flash[:notice]
+                    .notice=flash[:notice]
+                  = render :partial => 'users/my_profile'
+            
                 = render :partial => 'drain_list'
 
 
@@ -35,9 +41,10 @@
                   = render :partial => 'unclean_button'
                   = render :partial => 'cleaned_button'
                   = render :partial => 'all_button'
+                %div.btn-group
                   = render :partial => 'adopt_filter'
-                  = render :partial => 'site_social_media'
-    
+                %div
+                  = render :partial => 'site_social_media'   
               
   .col-lg-8.col-md-8.col-sm-8
     #map_canvas

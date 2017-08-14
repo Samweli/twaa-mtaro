@@ -131,29 +131,38 @@ div.card-unclean {
   padding-left: 0px;
 }
 
-#view_street:hover{
+#view_street:hover, #refresh_link:hover{
     cursor: pointer;
 }
+
+.share_link:hover{
+    cursor: pointer;
+}
+
 
 /* Social Media */
 
 .social-share-button-facebook {
   display: inline-block;
-  width: 32px;
-  height: 32px;
-  background: url("facebook.png") no-repeat;
+  width: 16px;
+  height: 16px;
+  background: url("facebook_small.png") no-repeat;
 }
 
 .social-share-button-twitter {
   display: inline-block;
-  width: 32px;
-  height: 32px;
-  background: url('twitter.png') no-repeat;
+  width: 16px;
+  height: 16px;
+  background: url("twitter_small.png") no-repeat;
 }
 
 .social-share-button-google_plus {
   display: inline-block;
-  width: 32px;
-  height: 32px;
-  background: url("google_plus.png") no-repeat; 
+  width: 16px;
+  height: 16px;
+  background: url("google_plus_small.png") no-repeat; 
+}
+
+.drain_social_media{
+  display:none;
 }
