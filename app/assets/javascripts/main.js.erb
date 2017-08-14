@@ -17,6 +17,7 @@ $(function () {
     var users;
     var pos;
     var drain_pos;
+    var selected_drain;
     var bDebug = true;
 
   /* Creating map*/
@@ -103,6 +104,18 @@ $(function () {
       /* Listens to clicks on drains*/
         kmlLayer.on('click', function (e) {
             var mtaro = e.layer.feature.properties;
+            // increase size of the clicked drain
+            selected = e.layer
+            selected.bringToFront()
+            // check for past selected drain and 
+            // return its style as always
+            if (selected_drain){
+                selected_drain.setStyle({weight: 2.5});
+            }
+            // Style selected
+            selected.setStyle({weight: 6});
+            selected_drain = selected;
+            
             activeObjectId = mtaro.description;
             drainLocation = e.latlng;
             // Fetching drain info
