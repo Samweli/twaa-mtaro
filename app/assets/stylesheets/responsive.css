@@ -192,9 +192,11 @@ input, select, option, button{
     bottom: 0%;
     width: 100%;
   }
+
   #my_profile{
   margin-top: 4px;
 }
+
   .form-contol{
     width: 25%;
   }
@@ -449,8 +451,10 @@ border: 0.5px solid #79bbff;
  margin-left: 25px;
  margin-bottom: 12px;
  margin-right: 15px;
+     text-align: center;
+
 }
-table #abandon_link , #abandon_link th, #abandon_link td {
+table #abandon_link , #abandon_link tr th, #abandon_link tr td {
     border: 1px solid gray;
     border-collapse: collapse;
      width: 150px;
@@ -458,7 +462,11 @@ table #abandon_link , #abandon_link th, #abandon_link td {
      padding: 4px;
 }
 
-th, td {
+tr td{
+    padding: 4px;
+    text-align: center;
+}
+tr th{
     padding: 4px;
     text-align: center;
 }
