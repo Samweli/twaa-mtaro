@@ -1,0 +1,2 @@
+module DrainClaimsHelper
+end

@@ -21,18 +21,19 @@ class MainController < ApplicationController
   
   def get_my_drains
     if user_signed_in?
-      @my_sidewalks = current_user.drain_claims.includes(:sidewalk).page(params[:page]).per(10)
+      @my_drains = current_user.drain_claims.includes(:drain).page(params[:page]).per(10)
     end
   end
 
   def get_drains_categories
-    @clean = format_number(Sidewalk.count(:conditions => 'cleared = true') )
-    @unclean = format_number(Sidewalk.count(:conditions => 'cleared = false'))
-    @need_help = format_number(Sidewalk.count(:conditions => 'need_help = true'))
-    @all = format_number(Sidewalk.count)
+    @clean = format_number(Drain.count(:conditions => 'cleared = true') )
+    @unclean = format_number(Drain.count(:conditions => 'cleared = false'))
+    @need_help = format_number(Drain.count(:conditions => 'need_help = true'))
+    @unknown = format_number(Drain.where('cleared is NULL and need_help is NULL').count)
+    @all = format_number(Drain.count)
 
-    @adopted = format_number(Sidewalk.count(:conditions => 'claims_count > 0'))
-    @not_adopted = format_number(Sidewalk.count(:conditions => 'claims_count = 0'))
+    @adopted = format_number(Drain.count(:conditions => 'claims_count > 0'))
+    @not_adopted = format_number(Drain.count(:conditions => 'claims_count = 0'))
 
     puts "adopted #{@adopted}, #{@not_adopted}"
 

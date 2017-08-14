@@ -26,8 +26,19 @@ $(function () {
   var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     attribution:osmAttr
   });
+  
+  // var hananasif = L.tileLayer( 
+  //   'https://api.mapbox.com/styles/v1/samtwesa/cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ',
+  // {     
+  //       minZoom: 13,
+  //       maxZoom: 18,
+  //       attribution:osmAttr
+  //  });
 
   map.addLayer(osm);
+
+  // map.addLayer(hananasif);
+
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
       if (results == null) {
@@ -52,6 +63,8 @@ $(function () {
                         return {color: "#6495ed", opacity: 1, weight: 2.5};
                     case '#cleared':
                         return {color: "green", opacity: 1, weight: 2.5};
+                    case '#unknown':
+                        return {color: "#CB7D50", opacity: 1, weight: 2.5}
                 }
             }
         });
@@ -61,15 +74,15 @@ $(function () {
 
       /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
-        console.info("Rendering sidewalks of [%s, %s]", c.lat, c.lng)
+        console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
 
         var url;
         if (type) {
-            url = 'sidewalks.kml?locale=' + locale + '&type=' + type;
+            url = 'drains.kml?locale=' + locale + '&type=' + type;
             console.log('the url: ' + url);
         } else {
-            url = 'sidewalks.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+            url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
         showSpinner();
 
@@ -112,19 +125,21 @@ $(function () {
             var div;
 
             if (locale == 'sw') {
-                colour_map = {'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed'}
+                colour_map = {'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
+                              'Haijulikani': "#CB7D50" }
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Misafi', 'Michafu', 'Msaada'],
+                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
                     labels = [];
                 // Adding legend header
                 div.innerHTML += '<h3 > Alama </h3>';
 
             } else {
-                colour_map = {'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed'}
+                colour_map = {'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
+                              'Unknown': "#CB7D50"}
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Clean', 'Not clean', 'Needs help'],
+                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
 
                     labels = [];
                 // Adding legend header
@@ -706,24 +721,42 @@ $(function () {
         });
     }
 
+    // Shows social media links, for sharing drain info
+
+    $('body').on('click','.share_link', function(e){
+       drain_gid = $(this).attr('data_gid');
+
+       if($(".drain_social_media").css("display") == 'none'){
+        $(".drain_social_media").css( {position:"relative", display: "block"
+        , left: '10%' });
+       }
+       else{
+            $(".drain_social_media").css( {display: "none"});
+       }
+
+    });
+
+    // Refreshs drain details on a popup
+
+    $('body').on('click','#refresh_link', function(e){
+
+        drain_gid = $(this).attr('data_gid');
+
+        if(drain_pos == null){
+            drain_pos = map.getCenter();
+        }
+        showSpinner();
+        fetchDrainInfo(drain_gid, drain_pos);
+
+    });
+
+
+
     function bind(pos) {
 
 
-        $('body').on('click','#refresh_link', function(e){
-
-            drain_gid = $(this).attr('data_gid');
-
-            if(drain_pos == null){
-                drain_pos = map.getCenter();
-            }
-            showSpinner();
-            fetchDrainInfo(drain_gid, drain_pos);
-
-        });
-
-
         $('#abandon_link').on('click','.abdn_link', function () {
-            if (window.confirm('Are you sure that you want to abandon this sidewalk?')) {
+            if (window.confirm('Are you sure that you want to abandon this drain?')) {
                 $.ajax({
                     type: 'POST',
                     url: '/drain_claims/' + $(this).attr('data-moid'),
@@ -844,7 +877,7 @@ $(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/sidewalks/' + id,
+                url: '/drains/' + id,
                 data: {
                     'moid': $(this).attr('data-moid'),
                     'authenticity_token': AUTH_TOKEN,
@@ -872,7 +905,7 @@ $(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/sidewalks/' + id,
+                url: '/drains/' + id,
                 data: {
                     'moid': $(this).attr('data-moid'),
                     'authenticity_token': AUTH_TOKEN,
@@ -907,6 +940,10 @@ $(function () {
         $('#need_help').on('click', function () {
             showSpinner();
             refreshKML("need_help");
+        });
+        $('#unknown').on('click', function () {
+            showSpinner();
+            refreshKML("unknown");
         });
         $('#all').on('click', function () {
             showSpinner();
@@ -953,7 +990,7 @@ $(function () {
         return false;
     });
 
-    $('body').on('click', '.view_sidewalk',
+    $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
         $('#address').val($(this).text());

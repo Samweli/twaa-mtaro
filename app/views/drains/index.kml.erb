@@ -40,14 +40,24 @@
       <color>ffcccccc</color>
     </PolyStyle>
   </Style>
+  
+  <Style id="unknown">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>ffcccccc</color>
+    </PolyStyle>
+  </Style>
 
-  <% for sidewalk in @sidewalks %>
+  <% for drain in @drains %>
   <Placemark>
-    <id><%= sidewalk.gid %></id>
-    <description><%= sidewalk.gid %></description>
-    <name><%= sidewalk.address %></name>
-    <styleUrl><%= format_color(sidewalk) %></styleUrl>
-    <%= raw(sidewalk.kml) %>
+    <id><%= drain.gid %></id>
+    <description><%= drain.gid %></description>
+    <name><%= drain.address %></name>
+    <styleUrl><%= format_color(drain) %></styleUrl>
+    <%= raw(drain.kml) %>
   </Placemark>
   <% end %>
 </Document>

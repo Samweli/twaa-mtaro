@@ -5,26 +5,26 @@ class SmsController < ApplicationController
 
 		message = ''
 
-		sidewalk = Sidewalk.find_by_user_phone_number(from_number)
-	    unless sidewalk.blank?
+		drain = Drain.find_by_user_phone_number(from_number)
+	    unless drain.blank?
 	    	if (drain_status == 'msafi' or drain_status == 'Msafi' )
-	    		sidewalk.cleared = true
-	    		sidewalk.need_help = false
+	    		drain.cleared = true
+	    		drain.need_help = false
 	    		message = 'Asante, kwa kusafisha mtaro.'
 
 	    	elsif (drain_status == 'mchafu' or drain_status == 'Mchafu')
-	    		sidewalk.cleared = false
-	    		sidewalk.need_help = false
+	    		drain.cleared = false
+	    		drain.need_help = false
 	    		message = 'Asante, kwa kutoa taarifa kuwa mtaro ni mchafu.'
 
 	    	elsif (drain_status == 'msaada' or drain_status == 'Msaada')
-	    		sidewalk.cleared = false
-	    		sidewalk.need_help = true
+	    		drain.cleared = false
+	    		drain.need_help = true
 	    	else
 	    		message = 'Samahani hatukuweza kutambua maana ya ujumbe wako.'
 	    	end
 
-	    	if (sidewalk.save(validate: false))
+	    	if (drain.save(validate: false))
 
 	    	else
 	    		message = 'Kuna tatizo upokeaji wa taarifa za mtaro, Jaribu tena baadae.'

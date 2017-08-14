@@ -14,15 +14,19 @@
         #myNavbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             #sidebar_content
+              
               = render :partial => 'address_form'
 
               #mini_profile.radius_5
                 = render :partial => 'user_badge'
-                - if flash[:notice]
-                  .notice=flash[:notice]
-                = render :partial => 'users/my_profile'
-                = render :partial => 'drain_list'
 
+                - if user_signed_in?
+                  - if flash[:notice]
+                    .notice
+                      %p{:style => "margin: 2px 0 2px 0;"}=flash[:notice]
+                  = render :partial => 'users/my_profile'
+            
+                = render :partial => 'drain_list'
 
 
               %div.top-buffer
@@ -38,9 +42,10 @@
                   = render :partial => 'unclean_button'
                   = render :partial => 'cleaned_button'
                   = render :partial => 'all_button'
+                %div.btn-group
                   = render :partial => 'adopt_filter'
-                  = render :partial => 'site_social_media'
-    
+                %div
+                  = render :partial => 'site_social_media'   
               
   .col-lg-8.col-md-8.col-sm-8
     #map_canvas

@@ -1,8 +1,9 @@
 #drain_list.hidden-xs
   - if user_signed_in?
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
-      = current_user.street.street_name 
-    - if @my_sidewalks.size > 0
+      %span{:style => "margin:5px 2px 0 2px"}=t('labels.street')
+      %span{:style => "color: #337ab7;"}=current_user.street.street_name
+    - if @my_drains.size > 0
       %table.font_12.pen_gray.link_1
         %thead
           %tr
@@ -10,13 +11,13 @@
             %th= t('button.clean')
             %th= t('button.need_help')
         %tbody
-        - @my_sidewalks.each do |s|
+        - @my_drains.each do |s|
           %tr
-            %td.address= link_to s.sidewalk.address, "#{s.sidewalk.gid}", :class => 'view_sidewalk', 'data-gid' => s.sidewalk.gid, 'data-lat' => s.sidewalk.lat, 'data-lng' =>s.sidewalk.lng
-            %td= yesno(s.sidewalk.cleared)
-            %td= yesno(s.sidewalk.need_help)
+            %td.address= link_to s.drain.address, "#{s.drain.gid}", :class => 'view_drain', 'data-gid' => s.drain.gid, 'data-lat' => s.drain.lat, 'data-lng' =>s.drain.lng
+            %td= yesno(s.drain.cleared)
+            %td= yesno(s.drain.need_help)
       #pagination.font_12.link_1
-        = paginate @my_sidewalks, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
+        = paginate @my_drains, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
     #info_box.center
       %h2.font_bold{:style => 'margin: 0'}

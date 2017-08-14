@@ -1,4 +1,4 @@
-class Sidewalk < ActiveRecord::Base
+class Drain < ActiveRecord::Base
   set_table_name 'mitaro_dar'
 
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
@@ -28,6 +28,7 @@ class Sidewalk < ActiveRecord::Base
       )
       find_by_sql([query, column_value])
     else
+      puts arg.keys[0], arg.keys[1]
       return
     end
   end

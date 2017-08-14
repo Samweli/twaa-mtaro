@@ -1,4 +1,4 @@
-AdoptASidewalk::Application.configure do
+AdoptADrain::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -49,14 +49,16 @@ AdoptASidewalk::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = {:host => 'adopt.chicagoshovels.org'}
+  config.action_mailer.default_url_options = {:host => 'twaamtaro.org'}
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
-    :address        => "webappsmail.cityofchicago.org",
-    :port           => 25
-    #:authentication => :plain,
-    #:user_name      => ENV['MAILER_CS_USERNAME'] || '',
-    #:password       => ENV['MAILER_CS_PASSWORD'] || '',
+    :address        => "smtp.gmail.com",
+    :domain         => "gmail.com",
+    :port           => 587,
+    :authentication => :plain,
+    :user_name      => ENV['MAILER_CS_USERNAME'] || '',
+    :password       => ENV['MAILER_CS_PASSWORD'] || '',
+    :enable_starttls_auto => true
     #:domain         => ENV['MAILER_CS_DOMAIN'] || ''
   }
   
@@ -69,4 +71,7 @@ AdoptASidewalk::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  GA.tracker = ENV['GA_CODE']
+  
 end
