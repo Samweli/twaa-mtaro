@@ -78,7 +78,7 @@ h2.address {
 }
 
 #map_canvas {
-    min-height: 540px;
+    min-height: 560px;
     position: relative;
     margin: 0px;
     padding: 0px;
@@ -473,8 +473,8 @@ ul.social_items > li {
 }
 
 #mini_profile {
-    background: rgba(141, 222, 92, 0.56);
-    border: 1px solid #dadada;
+/*    background: ;
+*/    border: 2px solid rgba(141, 222, 92, 0.56);
     box-shadow: 0 1px 0 #FFFFFF;
     margin: 10px 0 0 0;
     padding: 7px 3px;
@@ -625,10 +625,7 @@ form.wide label {
 }
 
 .form input[type="submit"] {
-  -moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-  -webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-  box-shadow:inset 0px 1px 0px 0px #cae3fc;
-  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
+background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
   background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
   background-color:#79bbff;
@@ -977,13 +974,13 @@ input.form-control {
   padding-left: 12px;
   margin-left: 22px;
   margin-right: 25px;
-  background:rgba(141, 222, 92, 0.56);
-  border: 1px solid #b4cdde;
+  /*background:rgba(141, 222, 92, 0.56);*/
+  border: 2px solid rgba(141, 222, 92, 0.56);
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
 }
 
-#edit_profile_form, form {
+#edit_profile_form{
     width: 250px;
 }
 
