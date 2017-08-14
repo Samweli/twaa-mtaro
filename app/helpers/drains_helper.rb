@@ -13,7 +13,6 @@ module DrainsHelper
         "#needs_help"
        end
     else
-      puts 'unknown'
       "#unknown"
     end
   end

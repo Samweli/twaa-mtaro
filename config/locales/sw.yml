@@ -71,7 +71,7 @@ sw:
     auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
     drain_notfound: "%{error} haupo "
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
-    not_found: "Sijaweza Kupata %{thing}."
+    not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   labels:
     address: "Anwani ya mtaa"
@@ -90,7 +90,7 @@ sw:
     remember_me: "Nikumbuke kwenye kompyuta hii"
     remember_me_short: "Nikumbuke"
     sms_number: "Namba ya simu"
-    street: "Mtaa wako"
+    street: "Mtaa wangu"
     search: "Tafuta majina.."
     user_existing: "Una akaunti tayari?"
     user_new: "Huna akaunti hapa?"
