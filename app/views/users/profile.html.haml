@@ -1,4 +1,10 @@
 
 - if user_signed_in?
-  = render :partial => 'users/edit_profile'
+  .user_profile
+    = current_user.first_name
+    = current_user.last_name
+    = current_user.organization
+    = current_user.email
+    = current_user.sms_number
+    = render :partial => 'users/edit_profile'
 - else
