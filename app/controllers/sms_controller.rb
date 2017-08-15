@@ -2,12 +2,13 @@ class SmsController < ApplicationController
 	def new
 		from_number = params[:from]
 		drain_status = params[:body]
+		user_number = filter_number(from_number)
 
 		message = ''
 		# logic to updated drain
 		# TODO to updated, to deal with users with many drains
 
-		user = User.find_by_sms_number(from_number)
+		user = User.find_by_sms_number(user_number)
 		drain_claim = DrainClaim.find_by_user_id(user.id)
 
 		clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
@@ -51,6 +52,13 @@ class SmsController < ApplicationController
 	    end
 	    render xml: twiml.to_xml, content_type:'text/xml'
 
+	end
+
+	private 
+
+	def filter_number(number)
+		number = number.gsub!('+',' ');
+		return number
 	end
 
 	# private 
