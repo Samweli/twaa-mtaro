@@ -358,7 +358,7 @@ $(function () {
     });
 
 
-  /* for addikng users in assigning drains */
+  /* for adding users in assigning drains */
     $('body').on('click', '#add_user', function () {
         var locale = urlParam('locale');
 
@@ -824,13 +824,15 @@ $(function () {
 
                     if (users) {
 
-
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
 
-                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            trHTML += '<tr><td>' + item.first_name + '</td>' +
+                            '<td>' + item.last_name + '</td><td>' + 
+                            '<button class="btnassing">' + 'assign' + 
+                            '</button>' + '</tr>';
                         });
 
                         $('#location').append(trHTML);
