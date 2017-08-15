@@ -7,7 +7,8 @@ en:
     assign: "Assign Drain"
     back: "Back"
     change_password: "Change my password"
-    change: "change"
+    change_status: "change"
+    change: "remove"
     clean: "Clean"
     dirty: 'Not clean'
     edit_profile: "Edit profile"
@@ -49,6 +50,7 @@ en:
   defaults:
     address: "Address"
     city: "Dar es salaam, TZ"
+    change_status: "Change Status"
     thing: "Drain"
     this_thing: "This %{thing}"
     tagline: "Claim responsibility for cleaning drains before it floods."
@@ -65,7 +67,7 @@ en:
     my_drains: "Drains I Adopted"
     user: "User_name"
     status: "Status"
-    actions: "Action"
+    actions: "Remove"
   errors:
     error: "Drain"
     auth_failed: "Username or password is incorrect."

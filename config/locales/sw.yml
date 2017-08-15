@@ -6,7 +6,8 @@ sw:
     assign: "Gawia Mtaro"
     back: "Rudi"
     change_password: "Badili nenosiri"
-    change: "badili"
+    change_status: "badili"
+    change: "ondoa"
     continue: "Endelea"
     cleaned: '%{count} Misafi'
     clean: 'Msafi'
@@ -51,6 +52,7 @@ sw:
     ask_help: "Omba msaada, ukihitaji kusaidiwa kusafisha mtaro"
     aware: "Je unajua kuwa unatakiwa kusafisha mitaro karibu na nyumbani kwako,"
     city: "Dar es Salaam"
+    change_status: "Badili hali"
     claim: "Twaa mitaro utakayoweza kusafisha "
     drain_number: "Namba ya %{thing} ni"
     help_question: "unaweza kusafisha hiyo mitaro?"
@@ -65,7 +67,7 @@ sw:
     my_drains: "Mitaro yangu"
     user: "Jina"
     status: "Hali"
-    actions: "badilisha"
+    actions: "Ondoa"
   errors:
     error: "Drain"
     auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
