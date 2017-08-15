@@ -377,11 +377,24 @@ $(function () {
     });
 
 
+    /* stardardizes the phonenumber */
+    function standardizePhoneNumber(num){
+        var country_code ="255";
+        if(num.startsWith("0")){
+          var  standard_number = country_code.concat(num.slice(1))
+            return standard_number;
+        }
+        else {
+            return num;
+        }
+    }
+
+
   /* signs in registered users */
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
-        var uemail = $('.user_sms_number', i);
+        var usms_number = $('.user_sms_number', i);
         var upwd = $('.user_password', i);
         var err_msg = $('.error_msg', i);
         var errors = [];
@@ -412,7 +425,7 @@ $(function () {
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'sms_number': uemail.val(),
+                        'sms_number':standardizePhoneNumber(usms_number.val()) ,
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     }
@@ -469,6 +482,11 @@ $(function () {
         } else {
             unmarkError(uemail);
         }
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(uPhone.val())) {
+            markError(uPhone, errors);
+        } else {
+            unmarkError(uPhone);
+        }
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -497,7 +515,7 @@ $(function () {
                         'email': uemail.val(),
                         'first_name': ufname.val(),
                         'last_name': ulname.val(),
-                        'sms_number': uPhone.val(),
+                        'sms_number': standardizePhoneNumber(uPhone.val()),
                         'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
