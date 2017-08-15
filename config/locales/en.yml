@@ -145,6 +145,8 @@ en:
     last_name: "LastName"
     actions: "Action"
     share: "Share about this site"
+    true_value: "Yes"
+    false_value: "No"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"
