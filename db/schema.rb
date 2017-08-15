@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20170801130858) do
     t.string   "last_name",                                 :null => false
     t.string   "organization"
     t.string   "email",                  :default => "",    :null => false
-    t.string   "sms_number"
+    t.string   "sms_number",             :default => "",    :null => false
     t.boolean  "admin",                  :default => false
     t.integer  "claims_count",           :default => 0
     t.integer  "role",                   :default => 1
@@ -112,5 +112,6 @@ ActiveRecord::Schema.define(:version => 20170801130858) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["sms_number"], :name => "index_users_on_sms_number", :unique => true
 
 end

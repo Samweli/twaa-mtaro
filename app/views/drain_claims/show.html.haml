@@ -79,7 +79,7 @@
                 
               %td
                 - if current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:shv=>c.shoveled}}
+                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
 
   - if user_signed_in? && current_user.role == 2
