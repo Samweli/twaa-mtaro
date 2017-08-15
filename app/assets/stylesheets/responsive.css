@@ -93,6 +93,12 @@ nav.navbar{
   border-color: #eea236;
   border-radius: 4px;
 }
+.btn-unknown {
+ color: #fff;
+  background-color: #CB7D50;
+  border-color: #CB7D50;
+  border-radius: 4px;
+}
 #page{
   float: right;
 }
@@ -120,7 +126,8 @@ h4{
     padding-right: 20px;
   }
 .btn.btn-clean.btn-block.cat-btn, 
-.btn.btn-unclean.btn-block.cat-btn{
+.btn.btn-unclean.btn-block.cat-btn,
+.btn.btn-unknown.btn-block.cat-btn{
   font-size: 16px;
   color: white;
   font-weight: 500;

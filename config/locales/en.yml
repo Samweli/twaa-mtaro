@@ -66,6 +66,7 @@ en:
     user: "User_name"
     status: "Status"
     actions: "Action"
+    unknown: "Unknown"
   errors:
     error: "Drain"
     auth_failed: "Username or password is incorrect."
@@ -168,6 +169,6 @@ en:
     site_share_message: "Adopt a drain | Dar es salaam"
     drain_share_message: "Drain in %{address} is adopted by %{username}"
   sponsors:
-    cfa: "Tanzania Open data initiative"   # FIXME
+    cfa: "Tanzania Urban Resilience Program"   # FIXME
     city: "City of Dar es salaam"    # FIXME
   

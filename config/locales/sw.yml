@@ -46,6 +46,7 @@ sw:
     cleaned: "msafi"
     help: "Msaada unashitajika"
     status: "ndiohapana"
+    unknown: "Haijulikani"
   defaults:
     address: "Anwani"
     ask_help: "Omba msaada, ukihitaji kusaidiwa kusafisha mtaro"

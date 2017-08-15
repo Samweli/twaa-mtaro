@@ -81,6 +81,8 @@
           = t("captions.add")
   - else
     - if @drain.cleared?
-      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
+      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn", :title => t()
+    - elsif @drain.cleared == nil and @drain.need_help == nil
+      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - else
       = button_tag t("captions.unclean"), :class => "btn btn-unclean btn-block cat-btn"
