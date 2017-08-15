@@ -9,7 +9,7 @@
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
       %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
-        = t("links.share")
+        = t("messages.drain_share")
 
     // Todo replace current_user.street.street_name with drain.street.street_name
     .drain_social_media
@@ -43,8 +43,11 @@
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td 
-                = t("buttons.clean")
+              %td
+                - if c.shoveled?
+                  = t("buttons.clean")
+                - else
+                  = t("buttons.dirty")
               %td
                 %button{:class => "btn btn-default", :style => "font-size:8px;", :data => {:moid=>c.id}}
                   = t("buttons.change")
@@ -58,8 +61,13 @@
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
-              %td 
-                = t("buttons.clean")
+              %td
+                - if c.shoveled?
+                  = t("buttons.clean")
+                - elsif c.shoveled == nil
+                  = t("buttons.unknown_status")
+                - else
+                  = t("buttons.dirty")
 
   - if user_signed_in? && current_user.role == 2
     %div
@@ -74,8 +82,9 @@
         %button#add_claim.btn.info_adopt
           = t("captions.add")
   - else
-
     - if @drain.cleared?
-      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
+      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn", :title => t()
+    - elsif @drain.cleared == nil and @drain.need_help == nil
+      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - else
       = button_tag t("captions.unclean"), :class => "btn btn-unclean btn-block cat-btn"

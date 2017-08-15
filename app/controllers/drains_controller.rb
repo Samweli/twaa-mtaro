@@ -74,7 +74,7 @@ class DrainsController < ApplicationController
 
     if params.has_key?(:shoveled)
 
-      status = (shoveled ? [t("messages.clear_status")] : [t("message.dirt_status")])
+      status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
       if(user.role == 1)
         if not claim
           render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 
@@ -83,11 +83,9 @@ class DrainsController < ApplicationController
           claim.save(validate: false)
           street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
-          reply_street_leader = "#{user.first_name} #{user.last_name} "\
-                              "amewekea alama ya mtaro namba #{drain.gid}"\
-                              "kuwa #{status}"
-          notify_user = "Umefanikiwa kubadilisha alama ya mtaro wako,"\
-                      "namba #{drain.gid} kuwa #{status}"
+          reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
+                                :last_name => user.last_name , :id => drain.gid, :status => status) 
+          notify_user = t('message.user_notify', :id => drain.gid, :status => status)
           sms_service.send_sms(
             reply_street_leader, 
             street_leader.sms_number);
@@ -104,16 +102,14 @@ class DrainsController < ApplicationController
 
         claim = DrainClaim.find_by_gid(drain.gid)
 
-        reply_street_leader = "Umeuwekea alama ya mtaro namba #{drain.gid} "\
-                              "kuwa #{status.to_s}"
+        reply_street_leader = t('messages.leader_notify' , :id => drain.gid, :status => status)
         sms_service.send_sms(
           reply_street_leader, 
           user.sms_number);
 
         if claim
           normal_user = User.find_by_id(claim.user_id)
-          notify_user = "Kiongozi wa mtaa amebadilisha alama ya mtaro wako,"\
-                      "namba #{drain.gid} kuwa #{status.to_s}"
+          notify_user = t('messages.leader_to_user', :id => drain.gid, :status => status)
           sms_service.send_sms(
           notify_user, 
           normal_user.sms_number);

@@ -2,6 +2,8 @@
   - if user_signed_in?
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
       %p
+      %span{:style => "margin:5px 2px 0 2px"}=t('labels.street')
+      %span{:style => "color: #337ab7;"}
       = current_user.street.street_name 
     - if @my_drains.size > 0
       %table.font_12.pen_gray.link_1

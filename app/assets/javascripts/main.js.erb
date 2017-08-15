@@ -17,6 +17,7 @@ $(function () {
     var users;
     var pos;
     var drain_pos;
+    var selected_drain;
     var bDebug = true;
 
   /* Creating map*/
@@ -103,6 +104,18 @@ $(function () {
       /* Listens to clicks on drains*/
         kmlLayer.on('click', function (e) {
             var mtaro = e.layer.feature.properties;
+            // increase size of the clicked drain
+            selected = e.layer
+            selected.bringToFront()
+            // check for past selected drain and 
+            // return its style as always
+            if (selected_drain){
+                selected_drain.setStyle({weight: 2.5});
+            }
+            // Style selected
+            selected.setStyle({weight: 6});
+            selected_drain = selected;
+            
             activeObjectId = mtaro.description;
             drainLocation = e.latlng;
             // Fetching drain info
@@ -216,6 +229,7 @@ $(function () {
 
     function hideSpinner() {
         $('#spinner').hide();
+
     }
 
     function showInfoWindow() {
@@ -1011,6 +1025,50 @@ $(function () {
 
         map.setView(latlng, 17);
     });
+
+    function updateNotification(){
+        var notification_msg = $('.notice').text();
+        $('.notice').hide();
+        console.log(notification_msg);
+        if(notification_msg){
+
+            //add a new style 'foo'
+            $.notify.addStyle('foo', {
+                html: "<div>" +
+                "<div class='clearfix'>" +
+                "<div class='title' data-notify-html='title'>" +
+                "Profile Updated" +
+                "</div>" +
+                "<button class='buttons no'>&#10006;</button>" +
+                "</div>" +
+                "</div>"
+            });
+
+            //listen for click events from this style
+            $(document).on('click', '.notifyjs-foo-base .no', function () {
+                //programmatically trigger propogating hide event
+                $(this).trigger('notify-hide');
+
+            });
+            $(document).on('click', '.notifyjs-foo-base .yes', function () {
+                //show button text
+                alert($(this).text() + " clicked!");
+                //hide notification
+                $(this).trigger('notify-hide');
+            });
+
+            var h5 = $("<h5/>").append(notification_msg);
+
+            $.notify({}, {
+                style: 'foo',
+                autoHide: false,
+                clickToHide: false,
+                position: 'top center'
+            });
+
+        }
+    }
+
 
     function updateNotification(){
         var notification_msg = $('.notice').text();

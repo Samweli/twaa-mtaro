@@ -9,7 +9,7 @@ en:
     change_password: "Change my password"
     change: "change"
     clean: "Clean"
-    dirty: 'Not clean'
+    dirty: "Not clean"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
@@ -30,6 +30,7 @@ en:
     all: "%{count} All"
     adopted: "%{count} Adopted"
     not_adopted: "%{count} Not Adopted"
+    unknown_status: "Unknown"
   captions:
     add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
@@ -66,6 +67,7 @@ en:
     user: "User_name"
     status: "Status"
     actions: "Action"
+    unknown: "Unknown"
   errors:
     error: "Drain"
     auth_failed: "Username or password is incorrect."
@@ -90,7 +92,7 @@ en:
     remember_me: "Remember me on this computer"
     remember_me_short: "Remember me"
     sms_number: "Mobile phone number"
-    street: "Your Street"
+    street: "My Street"
     search: "Search the names.."
     user_existing: "Already have an account?"
     user_new: "Don't have an account here?"
@@ -102,7 +104,7 @@ en:
     city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
-    refresh: "Reflesh"
+    refresh: "refresh"
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
@@ -111,12 +113,22 @@ en:
     sign_up_short: "Sign Up"
     login: "Login"
     register: "Register"
-  messages: 
-    clear_status: "its clean"
+  messages:
+    clear_status: "clean"
     dirt_status: "not clean"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
-    share: "share"
+    drain_share: "share"
+    drain_cleaned: "Thanks for cleaning your drain."
+    drain_dirty: "Thanks for updating drain status to dirty."
+    unknown: "Sorry, we could not understand your message."
+    error: "There is a problem in receiving drains details, please try again later."
+    drain_unknown: "We could retrieve you drain, maybe you haven't adopted a drain."
+    thanks: "Thanks for your notification."
+    user_to_leader: "%{first_name} %{last_name} has updated status of drain with number %{id} to %{status}."
+    user_notify: "You have successfully updated drain with number %{id} to %{status}."
+    leader_notify: "You have successfully updated drain with number %{id} to %{status}."
+    leader_to_user: "Your street leader have changed your drain with number %{id} to %{status}."
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
@@ -160,6 +172,6 @@ en:
     site_share_message: "Adopt a drain | Dar es salaam"
     drain_share_message: "Drain in %{address} is adopted by %{username}"
   sponsors:
-    cfa: "Tanzania Open data initiative"   # FIXME
+    cfa: "Tanzania Urban Resilience Program"   # FIXME
     city: "City of Dar es salaam"    # FIXME
   
