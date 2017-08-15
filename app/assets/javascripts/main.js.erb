@@ -377,11 +377,24 @@ $(function () {
     });
 
 
+    /* stardardizes the phonenumber */
+    function standardizePhoneNumber(num){
+        var country_code ="255";
+        if(num.startsWith("0")){
+          var  standard_number = country_code.concat(num.slice(1))
+            return standard_number;
+        }
+        else {
+            return num;
+        }
+    }
+
+
   /* signs in registered users */
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
-        var uemail = $('.user_sms_number', i);
+        var usms_number = $('.user_sms_number', i);
         var upwd = $('.user_password', i);
         var err_msg = $('.error_msg', i);
         var errors = [];
@@ -412,7 +425,7 @@ $(function () {
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'sms_number': uemail.val(),
+                        'sms_number':standardizePhoneNumber(usms_number.val()) ,
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     }
@@ -469,6 +482,11 @@ $(function () {
         } else {
             unmarkError(uemail);
         }
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(uPhone.val())) {
+            markError(uPhone, errors);
+        } else {
+            unmarkError(uPhone);
+        }
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -497,7 +515,7 @@ $(function () {
                         'email': uemail.val(),
                         'first_name': ufname.val(),
                         'last_name': ulname.val(),
-                        'sms_number': uPhone.val(),
+                        'sms_number': standardizePhoneNumber(uPhone.val()),
                         'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
@@ -608,51 +626,81 @@ $(function () {
         var uStreet = $(this).attr('data-moid')
         var upwd = gen_password;
         var upwdc = gen_password;
+        var errors = [];
 
 
-        $.ajax({
-            type: 'POST',
-            url: '/createuser.json',
-            data: {
-                'commit': submitButton.val(),
-                'utf8': '✓',
-                'authenticity_token': $('input[name="authenticity_token"]', this).val(),
-                'recaptcha_challenge_field': $('#recaptcha_challenge_field').val(),
-                'recaptcha_response_field': $('#recaptcha_response_field').val(),
-                'user': {
-                    'email': uemail.val(),
-                    'first_name': ufname.val(),
-                    'last_name': ulname.val(),
-                    'password': upwd,
-                    'sms_number': uPhone.val(),
-                    'street_id': uStreet,
-                    'password_confirmation': upwdc,
+        submitButton.attr('disabled', 'disabled');
+        if (ufname.val() === '') {
+            markError(ufname, errors);
+        } else {
+            unmarkError(ufname);
+        }
+        if (ulname.val() === '') {
+            markError(ulname, errors);
+        } else {
+            unmarkError(ulname);
+        }
+        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            markError(uemail, errors);
+        } else {
+            unmarkError(uemail);
+        }
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(uPhone.val())) {
+            markError(uPhone, errors);
+        } else {
+            unmarkError(uPhone);
+        }
+        if (errors.length > 0) {
+            submitButton.removeAttr('disabled');
+            errors[0].focus();
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/createuser.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                    'recaptcha_challenge_field': $('#recaptcha_challenge_field').val(),
+                    'recaptcha_response_field': $('#recaptcha_response_field').val(),
+                    'user': {
+                        'email': uemail.val(),
+                        'first_name': ufname.val(),
+                        'last_name': ulname.val(),
+                        'password': upwd,
+                        'sms_number': standardizePhoneNumber(uPhone.val()),
+                        'street_id': uStreet,
+                        'password_confirmation': upwdc,
+                    }
+                },
+                beforeSend: function () {
+
+
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    hideSpinner();
+                    showInfoWindow();
+                    submitButton.removeAttr('disabled');
+                    if (data) {
+                        createPopup(data.html, map.getCenter());
+                        popup.setContent($('#IWCONTENT')[0]);
+                        ajaxJS(data.html);
+                    }
+
+                },
+                success: function (data) {
+                    user_id = data.user.id;
+                    if (user_id) {
+                        assignDrain(pos)
+                    }
+                    fetchDrainInfo();
                 }
-            },
-            beforeSend: function () {
+            });
 
+        }
 
-            },
-            error: function (jqXHR) {
-                data = $.parseJSON(jqXHR.responseText);
-                hideSpinner();
-                showInfoWindow();
-                submitButton.removeAttr('disabled');
-                if (data) {
-                    createPopup(data.html, map.getCenter());
-                    popup.setContent($('#IWCONTENT')[0]);
-                    ajaxJS(data.html);
-                }
-
-            },
-            success: function (data) {
-                user_id = data.user.id;
-                if (user_id) {
-                    assignDrain(pos)
-                }
-                fetchDrainInfo();
-            }
-        });
     });
 
 
@@ -789,6 +837,35 @@ $(function () {
                         createPopup(data,pos);
                     }
                 });
+            }
+            return false;
+        });
+
+
+
+
+        $('#abandon_link').on('click','.chng_link', function () {
+            if (window.confirm('Are you sure that you want to change status?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/drains/' + activeObjectId,
+                    data: {
+                        'gid': activeObjectId,
+                        'shoveled': true,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'put'
+                    },
+                    error: function (jqXHR) {
+                        data = $.parseJSON(jqXHR.responseText);
+                        if (bDebug) console.error(data);
+                    },
+                    success: function (data) {
+                        refreshKML("all");
+                        updateSidebar();
+                        createPopup(data,pos);
+                    }
+                });
+               console.log('this can work');
             }
             return false;
         });
@@ -1115,6 +1192,9 @@ $(function () {
 
         }
     }
+
+    /* Updates claims status */
+
 
     get_categories();
     updateNotification();
