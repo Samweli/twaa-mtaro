@@ -25,6 +25,7 @@ sw:
     update: "badilisha"
     send_request: "Tuma maombi"
     go: "nenda"
+    unknown: "%{count} Haijulikani"
     all: "%{count} Yote"
     adopted: "%{count} Imetwaaliwa"
     not_adopted: "%{count} Haijatwaaliwa"
@@ -115,6 +116,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "ni msafi"
     dirt_status: "sio msafi"
+    share: "Shirikisha"
   notices:
     abandoned: "%{thing} kutelekezwa!"
     adopted: "Umechukua %{thing}!"
@@ -128,8 +130,11 @@ sw:
     title: "mtumiaji"
     indexing: "namba"
     first_name: "Jina la Kwanza"
-    last_name: "Jina L Mwisho"
+    last_name: "Jina la Mwisho"
     actions: "Kitendo"
+    share: "Shirikisha kuhusu hii tovuti"
+    true_value: "Ndio"
+    false_value: "hapana"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
@@ -151,6 +156,9 @@ sw:
     registered: "Umesajiliwa!"
     drain_color: "Rangi ya mtaro"
     drain_category: "Mgawanyo wa Mitaro" 
+    drain_details: "Taarifa za Mtaro"
+    site_share_message: "Twaa mtaro | Dar es salaam"
+    drain_share_message: "%{username} anasafisha mtaro unaopatikan %{address}"
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME

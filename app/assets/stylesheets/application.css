@@ -69,7 +69,7 @@ h2.address {
   background-color: #6495ED;
   height: 100%;
   display: none;
-  width: 10px;
+  width: 5px;
   overflow: hidden;
   padding: 3px;
   z-index: 20;
@@ -350,16 +350,16 @@ li{
   list-style-type: disc;
 }
 
-ul.horizontal_items {
+ul.horizontal_items,ul#profile {
     padding: 0;
     margin: 5px 0 0 0;
     clear: both;
 }
-ul.horizontal_items.font_bold{
+ul.horizontal_items.font_bold,ul#profile{
   font-size: 14px;
 }
 
-ul.horizontal_items > li {
+ul.horizontal_items > li,ul#profile {
   list-style-type: none;
   display: inline-block;
   margin: 0 5px 5px 0;
@@ -369,14 +369,14 @@ ul.horizontal_items > li {
   *display: inline;
 }
 
-ul.horizontal_items > li label {
+ul.horizontal_items > li label,ul#profile > li label {
     display: inline-block;
     width: 140px;
     zoom: 1;
     *display: inline;
 }
 
-#sidebar_content ul.horizontal_items > li label {
+#sidebar_content ul.horizontal_items > li label, ul#profile > li label  {
   width: 85px;
   font-size: 13px;
   color: #888;
@@ -444,7 +444,7 @@ ul.social_items > li {
 
 .item_separator > li {
     margin: 0 5px !important;
-    color: #d5d5d5;
+    color: #aaa;
 }
 
 .center {
@@ -692,7 +692,7 @@ background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79
 */}
 
 .pen_gray {
-    color: #777;
+    color: #616060;
 }
 
 .pen_darkgray {
@@ -719,7 +719,7 @@ background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79
     color: #f0ad4e;
 }
 
-#my_sidewalks caption {
+#my_drains caption {
     caption-side: top;
     color: #44759d;
     font-size: 14px;
@@ -729,23 +729,23 @@ background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79
     border-bottom: 1px solid #f4f8fa;
 }
 
-#my_sidewalks thead th {
+#my_drains thead th {
     padding: 3px 2px;
 }
 
-#my_sidewalks table {
+#my_drains table {
     margin: 10px 0 5px 0;
     border-collapse: collapse;
 }
 
-#my_sidewalks td {
+#my_drains td {
     color: #678197;
     /*background-color: #f4f8fa;*/
     padding: 0;
     text-align: center;
 }
 
-#my_sidewalks td.address {
+#my_drains td.address {
     width: 170px;
     text-align: left;
 }
@@ -896,8 +896,7 @@ input.form-control {
     color: #666;
     font: 13px/18px Helvetica Neue, Helvetica, Arial, sans-serif !important;
     margin: 0;
-    padding: 5px;
-    width: 190px;
+    
 }
 
 /* styling notifications */
@@ -980,7 +979,5 @@ input.form-control {
   padding: 10px;
 }
 
-#edit_profile_form{
-    width: 250px;
-}
+
 

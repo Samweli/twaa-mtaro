@@ -18,16 +18,15 @@
               = render :partial => 'address_form'
 
               #mini_profile.radius_5
-                = render :partial => 'user_badge'
+                = render :partial => 'user_badge'                
                 = render :partial => 'drain_list'
 
 
               %div.top-buffer
-
                 %h4.info.header.hidden-md
                   = t("titles.drain_category")
                   #page
-                    %svg{:height => "20", :viewbox => "0 0 24 24", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
+                    %svg{:height => "15", :viewbox => "0 0 24 24", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
                       %path{:d => "M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"}
                     
                 %div.btn-group.clearfix#myDiv
@@ -36,8 +35,9 @@
                   = render :partial => 'cleaned_button'
                   = render :partial => 'all_button'
                   = render :partial => 'adopt_filter'
-                  = render :partial => 'site_social_media'
-    
+
+                %div
+                  = render :partial => 'site_social_media'   
               
   .col-lg-8.col-md-8.col-sm-8
     #map_canvas

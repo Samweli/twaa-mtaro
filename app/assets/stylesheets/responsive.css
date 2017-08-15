@@ -196,7 +196,10 @@ input, select, option, button{
   #my_profile{
   margin-top: 4px;
 }
-
+#social_media p{
+  margin: 2px 0 2px 10px; 
+  font-size:10px;
+}
   .form-contol{
     width: 25%;
   }
@@ -205,6 +208,13 @@ input, select, option, button{
 .btn.btn-warning.cat-btn,
 .btn.btn-default.cat-btn{
       padding: 2px;
+}
+.btn.btn-update{
+  background-color: #6495ED;
+  color: #333;
+  border-color: #6495ED;
+  border-radius: 4px;
+  cursor: pointer;
 }
 #actions_box{
   width: 210px;
@@ -310,24 +320,63 @@ table #abandon_link , #abandon_link th, #abandon_link td {
     display: block;
   }
 .input-text{
-    width: 160px;
-border: 0.5px solid #79bbff;
+
 }
+.input-text {
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    color: #666;
+    font: 13px/18px Helvetica Neue, Helvetica, Arial, sans-serif !important;
+    margin: 0;
+  width: 160px;
+border: 0.5px solid rgba(189, 191, 193, 0.82);
+
+}
+.btn.btn-update{
+  background-color: #6495ED;
+  color: #333;
+  border-color: #6495ED;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ul#user_profile > li{
+  list-style-type:none;
+  padding: 5px;
+  text-align: left;
+  padding-right: 20px;
+  font-size: 9px;
+}
+.btn.btn-edit{
+   background-color: #6495ED;
+  color: #333;
+  border-color: #6495ED;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 #address_box{
-  margin-left: 22px;
-  margin-right: 25px;
+  margin-left: 10px;
+  margin-right: 15px;
+  width: 93%;
+}
+#social_media p{
+  margin: 2px 0 2px 10px; 
+  font-size:10px;
 }
 .header{
     margin-top:4px;
     margin-bottom:6px;
     padding: 5px 18px 8px 14px;
     font-weight:100;
-    margin-left: 22px;
-    margin-right: 30px;
+    margin-left: 10px;
+    margin-right: 20px;
     font-size: 10px;
+    width: 93%;
 }
 .btn-group{
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 }
@@ -341,6 +390,12 @@ border: 0.5px solid #79bbff;
 #actions_box{
   width: 210px;
   }
+}
+ul#user_profile > li{
+  list-style-type:none;
+  padding: 5px;
+  text-align: left;
+  padding-right: 20px;
 }
 
 /*resizing the sidebar */
@@ -405,6 +460,10 @@ border: 0.5px solid #79bbff;
 }
 #my_profile{
   margin-top: 4px;
+} 
+#social_media p{
+  margin: 2px 0 2px 10px; 
+  font-size:15px;
 }
 #map_canvas {
     min-height: 623px;
@@ -453,6 +512,30 @@ border: 0.5px solid #79bbff;
  margin-right: 15px;
      text-align: center;
 
+
+}
+ul#user_profile > li{
+  list-style-type:none;
+  padding: 5px;
+  text-align: left;
+  padding-right: 20px;
+  font-size: 15px;
+}
+.btn.btn-edit{
+   background-color: #6495ED;
+  color: #333;
+  border-color: #6495ED;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn.btn-update{
+  background-color: #6495ED;
+  color: #333;
+  border-color: #6495ED;
+  border-radius: 4px;
+  cursor: pointer;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 table #abandon_link , #abandon_link tr th, #abandon_link tr td {
     border: 1px solid gray;
@@ -471,6 +554,7 @@ tr th{
     text-align: center;
 }
 
+
   #address_box {
   /*border-color:;*/
   border: 2px solid rgba(141, 222, 92, 0.56);
@@ -479,6 +563,31 @@ tr th{
   margin:0px 0px 12px 0px; 
   
 }
+#drain_list.hidden-xs p{
+  margin: 0;
+  padding: 0;
+}
+#view_street{
+  text-align: center;
+  color: #616060;
+}
+table.font_12.pen_gray.link_1{
+  
+    border-collapse: collapse;
+     width: 280px;
+     margin: 10px 0 12px 25px;
+}
+table, .font_12.pen_gray.link_1 th, .font_12.pen_gray.link_1 td {
+    border: 1px solid #9c9696;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+.user_profile{
+  display: inline-block;
+}
 nav.navbar{
 }
 .legend {
@@ -486,8 +595,20 @@ nav.navbar{
     padding: 6px;
 }
 .input-text{
-    width: 163px;
-    border: 0.9px solid #79bbff;
+   
+}
+.input-text {
+    border: 1px solid #ccc;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    color: #666;
+    font: 13px/18px Helvetica Neue, Helvetica, Arial, sans-serif !important;
+    margin: 0;
+  width: 160px;
+    padding: 5px;
+     width: 163px;
+    border: 0.9px solid rgba(189, 191, 193, 0.82);
 }
 .btn-submit{
   float: right;

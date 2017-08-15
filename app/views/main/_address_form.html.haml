@@ -31,5 +31,16 @@
             %li= link_to_unless_current "Swahili", :locale => "sw"
           - elsif  I18n.locale == :sw 
             %li= link_to_unless_current "English", :locale => "en"
-        
-    = render :partial => 'users/my_profile'
+        %li.horizontal_items.item_separator.pen_lightgray
+          - if user_signed_in?
+            %span.sign_links
+            | 
+            %li
+              = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+            %span.sign_links
+              |
+            %li
+              - if flash[:notice]
+                .notice=flash[:notice]
+              = render :partial => 'users/my_profile'
+              

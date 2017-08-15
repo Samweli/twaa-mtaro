@@ -1,2 +1,3 @@
-.pull-left.top-buffer
-  = social_share_button_tag("Twaa Mtaro", :url => "http://twaamtaro.org", :class => "pull-left")
+%div#social_media
+	%p= t('notices.share')
+	= social_share_button_tag(t('titles.site_share_message') , :url => "http://twaamtaro.org")
