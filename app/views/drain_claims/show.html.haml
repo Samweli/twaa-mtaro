@@ -72,10 +72,11 @@
               %td
                 - if c.shoveled?
                   = t("buttons.clean")
-                - elsif c.shoveled == nil
-                  = t("buttons.unknown_status")
                 - else
                   = t("buttons.dirty")
+                /- elsif c.shoveled == nil
+                /  = t("buttons.unknown_status")
+                
               %td
                 - if current_user.id == c.user.id
                   %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:shv=>c.shoveled}}
