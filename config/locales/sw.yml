@@ -143,6 +143,8 @@ sw:
     last_name: "Jina la Mwisho"
     actions: "Kitendo"
     share: "Shirikisha kuhusu hii tovuti"
+    true_value: "Ndio"
+    false_value: "hapana"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"

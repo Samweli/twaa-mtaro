@@ -1,10 +1,17 @@
+#profile_detail
+	- if user_signed_in?
+		.user_profile
+			%ul#user_profile
+				%li{:style => " text-transform: uppercase;"}
+					= current_user.fullname
+		
+				%li
+					= current_user.sms_number
+				%li
+					= current_user.organization
+				%li
+					= current_user.email
+				%li
+					= render :partial => 'users/edit_profile'	
+	- else
 
-- if user_signed_in?
-  .user_profile
-    = current_user.first_name
-    = current_user.last_name
-    = current_user.organization
-    = current_user.email
-    = current_user.sms_number
-    = render :partial => 'users/edit_profile'
-- else

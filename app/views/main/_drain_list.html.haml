@@ -1,13 +1,15 @@
 #drain_list.hidden-xs
   - if user_signed_in?
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
+      %p
       %span{:style => "margin:5px 2px 0 2px"}=t('labels.street')
-      %span{:style => "color: #337ab7;"}=current_user.street.street_name
+      %span{:style => "color: #337ab7;"}
+      = current_user.street.street_name 
     - if @my_drains.size > 0
       %table.font_12.pen_gray.link_1
         %thead
           %tr
-            %th{:style => "text-align: left"}= t('defaults.my_drains')
+            %th= t('defaults.my_drains')
             %th= t('button.clean')
             %th= t('button.need_help')
         %tbody
@@ -24,7 +26,7 @@
         = t("defaults.welcome")
         %br
           = t("titles.main", :thing => t("defaults.thing").titleize)
-      %p
+      %p{:style => "margin-top:0; padding:0;"}
         = t("defaults.aware")
        
         %br
