@@ -35,8 +35,6 @@ class SmsService
    	  number = "+#{number}"
    	end
 
-   	puts number
-
    	return number
    end
 
