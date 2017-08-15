@@ -9,7 +9,7 @@
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
       %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
-        = t("messages.share")
+        = t("messages.drain_share")
 
     // Todo replace current_user.street.street_name with drain.street.street_name
     .drain_social_media
@@ -44,7 +44,7 @@
             %tr
               %td= c.user.short_name
               %td
-                - if c.shoveled 
+                - if c.shoveled?
                   = t("buttons.clean")
                 - else
                   = t("buttons.dirty")
@@ -62,8 +62,10 @@
             %tr
               %td= c.user.short_name
               %td
-                - if c.shoveled 
+                - if c.shoveled?
                   = t("buttons.clean")
+                - elsif c.shoveled == nil
+                  = t("buttons.unknown_status")
                 - else
                   = t("buttons.dirty")
 

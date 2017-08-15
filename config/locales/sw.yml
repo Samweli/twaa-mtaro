@@ -117,7 +117,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "msafi"
     dirt_status: "sio msafi"
-    share: "Shirikisha"
+    drain_share: "shirikisha"
     drain_cleaned: "Asante, kwa kusafisha mtaro."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
     unknown: "Samahani hatukuweza kutambua maana ya ujumbe wako."
