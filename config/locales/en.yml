@@ -10,7 +10,7 @@ en:
     change_status: "change"
     change: "remove"
     clean: "Clean"
-    dirty: 'Not clean'
+    dirty: "Not clean"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
     find: "Find Address"
@@ -31,6 +31,7 @@ en:
     all: "%{count} All"
     adopted: "%{count} Adopted"
     not_adopted: "%{count} Not Adopted"
+    unknown_status: "Unknown"
   captions:
     add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
@@ -68,6 +69,7 @@ en:
     user: "User_name"
     status: "Status"
     actions: "Remove"
+    unknown: "Unknown"
   errors:
     error: "Drain"
     auth_failed: "Username or password is incorrect."
@@ -104,7 +106,7 @@ en:
     city: "Dar es salaam"
     forgot_password: "Forgot your password?"
     remembered_password: "Never mind. I remembered my password."
-    refresh: "Refresh"
+    refresh: "refresh"
     terms: "Terms of Service"
     sign_in: "Sign in to your account now"
     sign_up: "Register with Dar es salaam drains now!"
@@ -118,7 +120,7 @@ en:
     dirt_status: "not clean"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
-    share: "share"
+    drain_share: "share"
     drain_cleaned: "Thanks for cleaning your drain."
     drain_dirty: "Thanks for updating drain status to dirty."
     unknown: "Sorry, we could not understand your message."
@@ -145,6 +147,8 @@ en:
     last_name: "LastName"
     actions: "Action"
     share: "Share about this site"
+    true_value: "Yes"
+    false_value: "No"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"
@@ -170,6 +174,6 @@ en:
     site_share_message: "Adopt a drain | Dar es salaam"
     drain_share_message: "Drain in %{address} is adopted by %{username}"
   sponsors:
-    cfa: "Tanzania Open data initiative"   # FIXME
+    cfa: "Tanzania Urban Resilience Program"   # FIXME
     city: "City of Dar es salaam"    # FIXME
   

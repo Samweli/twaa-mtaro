@@ -52,7 +52,7 @@ div.card-unclean {
 */    -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    border: 1px solid #469df5;
+    border: 1px solid #8b8c8c;;
     color: #000;
     opacity: 0.7;
     margin:0;
@@ -147,6 +147,7 @@ div.card-unclean {
   width: 16px;
   height: 16px;
   background: url("facebook_small.png") no-repeat;
+  margin-left: 10px;
 }
 
 .social-share-button-twitter {
@@ -154,13 +155,16 @@ div.card-unclean {
   width: 16px;
   height: 16px;
   background: url("twitter_small.png") no-repeat;
+    margin-left: 10px;
 }
 
 .social-share-button-google_plus {
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("google_plus_small.png") no-repeat; 
+  background: url("google_plus_small.png") no-repeat;
+    margin-left: 10px;
+ 
 }
 
 .drain_social_media{

@@ -9,7 +9,7 @@
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
       %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
-        = t("messages.share")
+        = t("messages.drain_share")
 
     // Todo replace current_user.street.street_name with drain.street.street_name
     .drain_social_media
@@ -46,7 +46,7 @@
             %tr
               %td= c.user.short_name
               %td
-                - if c.shoveled 
+                - if c.shoveled?
                   = t("buttons.clean")
                 - else
                   = t("buttons.dirty")
@@ -70,8 +70,10 @@
             %tr
               %td= c.user.short_name
               %td
-                - if c.shoveled 
+                - if c.shoveled?
                   = t("buttons.clean")
+                - elsif c.shoveled == nil
+                  = t("buttons.unknown_status")
                 - else
                   = t("buttons.dirty")
               %td
@@ -93,6 +95,8 @@
           = t("captions.add")
   - else
     - if @drain.cleared?
-      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
+      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn", :title => t()
+    - elsif @drain.cleared == nil and @drain.need_help == nil
+      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - else
       = button_tag t("captions.unclean"), :class => "btn btn-unclean btn-block cat-btn"

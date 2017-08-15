@@ -47,6 +47,7 @@ sw:
     cleaned: "msafi"
     help: "Msaada unashitajika"
     status: "ndiohapana"
+    unknown: "Haijulikani"
   defaults:
     address: "Anwani"
     ask_help: "Omba msaada, ukihitaji kusaidiwa kusafisha mtaro"
@@ -118,7 +119,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "msafi"
     dirt_status: "sio msafi"
-    share: "Shirikisha"
+    drain_share: "shirikisha"
     drain_cleaned: "Asante, kwa kusafisha mtaro."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
     unknown: "Samahani hatukuweza kutambua maana ya ujumbe wako."
@@ -144,6 +145,8 @@ sw:
     last_name: "Jina la Mwisho"
     actions: "Kitendo"
     share: "Shirikisha kuhusu hii tovuti"
+    true_value: "Ndio"
+    false_value: "hapana"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"

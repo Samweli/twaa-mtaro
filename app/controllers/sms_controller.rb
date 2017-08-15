@@ -4,8 +4,12 @@ class SmsController < ApplicationController
 		drain_status = params[:body]
 
 		message = ''
+		# logic to updated drain
+		# TODO to updated, to deal with users with many drains
 
-		drain = Drain.find_by_user_phone_number(from_number)
+		user = User.find_by_sms_number(from_number)
+		drain_claim = DrainClaim.find_by_user_id(user.id)
+
 		clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
 		dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
 		 'not clean', 'Not clean'].map(&:downcase)
@@ -15,18 +19,18 @@ class SmsController < ApplicationController
 
 	    unless drain.blank?
 	    	if (clean_keywords.include? drain_status)
-	    		drain.cleared = true
-	    		drain.need_help = false
+	    		drain_claim.cleared = true
+	    		# drain.need_help = false
 	    		message = t('messages.drain_cleaned')
 
 	    	elsif (dirt_keywords.include? drain_status)
-	    		drain.cleared = false
-	    		drain.need_help = false
+	    		drain_claim.cleared = false
+	    		# drain.need_help = false
 	    		message = t('messages.drain_dirty')
 
 	    	elsif (need_help_keywords.include? drain_status)
-	    		drain.cleared = false
-	    		drain.need_help = true
+	    		drain_claim.cleared = false
+	    		# drain.need_help = true
 	    		message = t('messages.thanks')
 	    	else
 	    		message = t('messages.unknown')

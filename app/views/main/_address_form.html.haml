@@ -30,3 +30,14 @@
           %li.locale= link_to_unless_current "Swahili", :locale => "sw"
         - elsif  I18n.locale == :sw 
           %li.locale= link_to_unless_current "English", :locale => "en"
+        %li.horizontal_items.item_separator.pen_lightgray
+          - if user_signed_in?
+            %span.signout_links
+            | 
+            %li
+              = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+            %span.signout_links
+              |
+            %li
+              = link_to t("buttons.my_profile")
+
