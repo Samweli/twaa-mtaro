@@ -846,12 +846,22 @@ $(function () {
 
         $('#abandon_link').on('click','.chng_link', function () {
             if (window.confirm('Are you sure that you want to change status?')) {
+                var shv;
+                console.log('comming vaule');
+                console.log($(this).attr('data-moid'))
+                if($(this).attr('data-moid') == "Yes"){
+                    shoveld = false;
+                }
+                else {
+                    shoveld = true;
+                }
+
                 $.ajax({
                     type: 'POST',
                     url: '/drains/' + activeObjectId,
                     data: {
                         'gid': activeObjectId,
-                        'shoveled': true,
+                        'shoveled': shoveld,
                         'authenticity_token': AUTH_TOKEN,
                         '_method': 'put'
                     },
@@ -865,7 +875,6 @@ $(function () {
                         createPopup(data,pos);
                     }
                 });
-               console.log('this can work');
             }
             return false;
         });
