@@ -1,8 +1,8 @@
 class SmsController < ApplicationController
 	def new
-		from_number = params[:from]
-		to_number = params[:to]
-		drain_status = params[:body]
+		from_number = params['From']
+		to_number = params['To']
+		drain_status = params['Body']
 		user_number = filter_number(from_number)
 
 		message = ''
@@ -50,7 +50,7 @@ class SmsController < ApplicationController
 		    	message = t('messages.drain_unknown')
 		  	end
 		else
-			message = t('message.user_not_found')
+			message = t('messages.user_not_found')
 		end
 
         twiml = Twilio::TwiML::Response.new do |response|
