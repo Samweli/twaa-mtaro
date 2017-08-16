@@ -18,7 +18,7 @@ gem 'kaminari'
 gem 'omniauth-facebook'
 gem 'rest-client'
 gem 'browser'
-gem 'twilio-ruby', '5.0.0'
+gem 'twilio-ruby', '4.13.0'
 gem 'social-share-button', '~> 0.1.6'
 gem 'google-analytics-rails', '1.1.1'
 

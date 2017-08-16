@@ -1,8 +1,8 @@
 class SmsController < ApplicationController
 	def new
-		from_number = params['From']
-		to_number = params['To']
-		drain_status = params['Body']
+		from_number = params[:from]
+		to_number = params[:to]
+		drain_status = params[:body]
 		user_number = filter_number(from_number)
 
 		message = ''
@@ -53,11 +53,9 @@ class SmsController < ApplicationController
 			message = t('message.user_not_found')
 		end
 
-        sms_service = SmsService.new()
-		twiml = sms_service.sms_response(
-			message,
-			from_number,
-			to_number)
+        twiml = Twilio::TwiML::Response.new do |response|
+        	response.Message message
+	    end
 
 	    render xml: twiml.to_xml, content_type:'text/xml'
 
