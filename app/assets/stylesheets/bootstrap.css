@@ -1779,7 +1779,7 @@ pre code {
     width: 75%;
   }
   .col-sm-8 {
-    width: 70.66666667%;
+    width: 66.66666667%;
   }
   .col-sm-7 {
     width: 58.33333333%;
@@ -1791,7 +1791,7 @@ pre code {
     width: 41.66666667%;
   }
   .col-sm-4 {
-    width: 29.33333333%;
+    width: 33.33333333%;
   }
   .col-sm-3 {
     width: 25%;
@@ -1937,7 +1937,7 @@ pre code {
     width: 75%;
   }
   .col-md-8 {
-    width: 70.66666667%;
+    width: 66.66666667%;
   }
   .col-md-7 {
     width: 58.33333333%;
@@ -1949,7 +1949,7 @@ pre code {
     width: 41.66666667%;
   }
   .col-md-4 {
-    width: 29.33333333%;
+    width: 33.33333333%;
   }
   .col-md-3 {
     width: 25%;
@@ -3454,7 +3454,9 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-block {
   display: block;
-  width: 87%;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 12px;
 }
 .btn-block + .btn-block {
   margin-top: 5px;
