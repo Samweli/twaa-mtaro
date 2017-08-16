@@ -398,6 +398,8 @@ $(function () {
         var err_msg = $('.error_msg', i);
         var errors = [];
 
+        var locale = urlParam('locale');
+
 
         e.preventDefault();
         submitButton.attr('disabled', 'disabled');
@@ -427,7 +429,8 @@ $(function () {
                         'sms_number':standardizePhoneNumber(usms_number.val()) ,
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
-                    }
+                    },
+                    'locale': locale
                 },
                 beforeSend: function () {
                 },
@@ -463,6 +466,8 @@ $(function () {
         var upwd = $('#user_password');
         var upwdc = $('#user_password_confirmation');
         var errors = [];
+
+        var locale = urlParam('locale');
 
 
         submitButton.attr('disabled', 'disabled');
@@ -518,7 +523,8 @@ $(function () {
                         'street_id': uStreet.val(),
                         'password': upwd.val(),
                         'password_confirmation': upwdc.val(),
-                    }
+                    },
+                    'locale': locale
                 },
                 beforeSend: function () {
                 },
@@ -559,6 +565,8 @@ $(function () {
         var uid = $('#user_id');
         var upwdc = $('#user_current_password');
 
+        var locale = urlParam('locale');
+
         $.ajax({
             type: 'POST',
             url: '/users.json',
@@ -574,7 +582,8 @@ $(function () {
                     'street_id': uStreet.val(),
                     'password': upwd.val(),
                     'password_confirmation': upwdc.val(),
-                }
+                },
+                'locale': locale
             },
             beforeSend: function () {
             },
@@ -613,6 +622,7 @@ $(function () {
   /* signs up new users for assigning drains */
     $('body').on('submit', '#new_user', function (e) {
         e.preventDefault();
+        var locale = urlParam('locale');
         var gen_password = Math.random() // Generate random number, eg: 0.123456
                            .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
                            .slice(-8);// Cut off last 8 characters : "yo82mvyr"
@@ -671,7 +681,8 @@ $(function () {
                         'sms_number': standardizePhoneNumber(uPhone.val()),
                         'street_id': uStreet,
                         'password_confirmation': upwdc,
-                    }
+                    },
+                    'locale': locale
                 },
                 beforeSend: function () {
 
@@ -727,13 +738,16 @@ $(function () {
 
 
     function assignDrain(pos) {
+        var locale = urlParam('locale');
+
         $.ajax({
             type: 'POST',
             url: '/drain_claims',
             data: {
                 'gid': activeObjectId,
                 'user_id': user_id,
-                'authenticity_token': AUTH_TOKEN
+                'authenticity_token': AUTH_TOKEN,
+                'locale': locale
             },
             error: function (jqXHR) {
                 data = $.parseJSON(jqXHR.responseText);
@@ -812,19 +826,20 @@ $(function () {
     });
 
 
-
     function bind(pos) {
 
-
         $('#abandon_link').on('click','.abdn_link', function () {
+            var locale = urlParam('locale');
             if (window.confirm('Are you sure that you want to abandon this drain?')) {
+
                 $.ajax({
                     type: 'POST',
                     url: '/drain_claims/' + $(this).attr('data-moid'),
                     data: {
                         'gid': activeObjectId,
                         'authenticity_token': AUTH_TOKEN,
-                        '_method': 'delete'
+                        '_method': 'delete',
+                        'locale': locale
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
@@ -841,18 +856,15 @@ $(function () {
         });
 
 
-
-
         $('#abandon_link').on('click','.chng_link', function () {
+            var locale = urlParam('locale');
             if (window.confirm('Are you sure that you want to change status?')) {
-                var shv;
-                console.log('comming vaule');
-                console.log($(this).attr('data-moid'))
-                if($(this).attr('data-moid') == "Yes"){
-                    shoveld = false;
+                var shoveled;
+                if($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio"){
+                    shoveled = false;
                 }
                 else {
-                    shoveld = true;
+                    shoveled = true;
                 }
 
                 $.ajax({
@@ -860,9 +872,11 @@ $(function () {
                     url: '/drains/' + activeObjectId,
                     data: {
                         'gid': activeObjectId,
-                        'shoveled': shoveld,
+                        'shoveled': shoveled,
                         'authenticity_token': AUTH_TOKEN,
-                        '_method': 'put'
+                        '_method': 'put',
+                        'locale': locale
+
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
@@ -1058,7 +1072,7 @@ $(function () {
             showSpinner();
             refreshKML("not_adopted");
         });
-
+        
         $('#address_button').on('click', function () {
             showSpinner();
             var address = $('#address').val();
@@ -1130,7 +1144,8 @@ $(function () {
      function (e) {
         activeObjectId = $(this).attr('data-gid');
         $('#address').val($(this).text());
-        $('#address_button').trigger('click');
+
+        $('#address_button').[0].click();
 
          var lat = $(this).attr('data-lat');
          var lng = $(this).attr('data-lng');

@@ -22,7 +22,6 @@
       = @drain.address
       %span.font12
         = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
-        = @drain.gid
     - if @claims.empty?
       %p.font_14.color_warn.center
         = t("defaults.notify")
@@ -53,7 +52,7 @@
               %td
                 %button{:class => "btn btn-default", :data => {:moid=>c.id}}
                 - if current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :data => {:shv=>c.shoveled}}
+                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
               %td
                 %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
@@ -79,7 +78,7 @@
                 /  = t("buttons.unknown_status")
                 
               %td
-                - if current_user.id == c.user.id
+                - if user_signed_in? && current_user.id == c.user.id
                   %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
 

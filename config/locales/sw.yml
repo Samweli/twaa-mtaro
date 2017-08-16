@@ -73,7 +73,7 @@ sw:
     site: "http://twaamtaro.org"
   errors:
     error: "Drain"
-    auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
+    auth_failed: "Namba ya mtumiaji or nenosiri sio sahihi."
     drain_notfound: "%{error} haupo "
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
@@ -147,8 +147,8 @@ sw:
     last_name: "Jina la Mwisho"
     actions: "Kitendo"
     share: "Shirikisha kuhusu hii tovuti"
-    true_value: "Ndio"
-    false_value: "hapana"
+    yes_value: "Ndio"
+    no_value: "Hapana"
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"

@@ -14,7 +14,7 @@
             %th= t('button.need_help')
         %tbody
         - @my_drains.each do |s|
-          %trgit
+          %tr
             %td.address= link_to s.drain.address, "#{s.drain.gid}", :class => 'view_drain', 'data-gid' => s.drain.gid, 'data-lat' => s.drain.lat, 'data-lng' =>s.drain.lng
             %td= yesno(s.drain.cleared)
             %td= yesno(s.drain.need_help)
