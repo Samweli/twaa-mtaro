@@ -911,15 +911,13 @@ $(function () {
 
                     if (users) {
 
+
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
 
-                            trHTML += '<tr><td>' + item.first_name + '</td>' +
-                            '<td>' + item.last_name + '</td><td>' + 
-                            '<button class="btnassing">' + 'assign' + 
-                            '</button>' + '</tr>';
+                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
                         });
 
                         $('#location').append(trHTML);
@@ -957,7 +955,7 @@ $(function () {
 
                         $.each(users, function (i, item) {
 
-                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
                         });
 
                         $('#location').append(trHTML);
