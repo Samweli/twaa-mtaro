@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     first_name + ' ' + last_name
   end
 
+  def profile_name
+    "#{first_name.chr}#{last_name.chr}"
+  end
+
   def apply_omniauth(omniauth)
     self.first_name = omniauth[:info][:first_name] if first_name.blank?
     self.last_name = omniauth[:info][:last_name] if last_name.blank?
