@@ -81,7 +81,6 @@ $(function () {
         var url;
         if (type) {
             url = 'drains.kml?locale=' + locale + '&type=' + type;
-            console.log('the url: ' + url);
         } else {
             url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
@@ -1068,7 +1067,6 @@ $(function () {
         });
     }
 
-
   /* searching table of users */
 
     $('body').on('keyup', '#myInput', function () {
@@ -1092,6 +1090,42 @@ $(function () {
         return false;
     });
 
+    // function update_drain_view(activeObjectId){
+
+    //     console.info(kmlLayer);
+    //     console.info(kmlLayer.setStyle({weight: 6}));
+
+    //     kmlLayer.eachLayer(function(e){
+    //         console.log('inside');
+    //         console.log(e);
+    //     });
+    //     kmlLayer.eachLayer(function(e){
+    //         console.log('in each')
+    //         feature_layer = e.layer;
+    //         var mtaro = e.layer.feature.properties;
+
+    //         console.log(mtaro.description);
+
+    //         if(mtaro.description == activeObjectId){
+    //             console.log('match');
+
+    //             selected = e.layer
+    //             selected.bringToFront()
+    //             // check for past selected drain and 
+    //             // return its style as always
+    //             if (selected_drain){
+    //                 selected_drain.setStyle({weight: 2.5});
+    //             }
+    //             // Style selected
+    //             selected.setStyle({weight: 6});
+    //             selected_drain = selected;
+
+    //         }
+    //         // increase size of the clicked drain
+           
+    //     });
+    // }
+
     $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
@@ -1102,6 +1136,8 @@ $(function () {
          var lng = $(this).attr('data-lng');
          var latlng = L.latLng(lat, lng);
          map.setView(latlng, 19);
+
+         // update_drain_view(activeObjectId);
 
         return false;
     });

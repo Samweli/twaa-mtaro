@@ -50,7 +50,7 @@ class SmsController < ApplicationController
 		    	message = t('messages.drain_unknown')
 		  	end
 		else
-			message = t('messages.user_not_found')
+			message = t('messages.user_not_found', :site => t('defaults.site'));
 		end
 
         twiml = Twilio::TwiML::Response.new do |response|
