@@ -1,6 +1,7 @@
 class SmsController < ApplicationController
 	def new
 		from_number = params['From']
+		to_number = params['To']
 		drain_status = params['Body']
 		user_number = filter_number(from_number)
 
@@ -53,7 +54,10 @@ class SmsController < ApplicationController
 		end
 
         sms_service = SmsService.new()
-		twiml = sms_service.sms_response(message)
+		twiml = sms_service.sms_response(
+			message,
+			from_number,
+			to_number)
 
 	    render xml: twiml.to_xml, content_type:'text/xml'
 

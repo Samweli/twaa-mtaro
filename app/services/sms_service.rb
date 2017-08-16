@@ -30,9 +30,9 @@ class SmsService
 	end.text
   end
 
-  def sms_response(message)
-  	twiml = Twilio::TwiML::Response.new do |response|
-  	 response.Message message
+  def sms_response(message, to_number, from_number)
+  	twiml = Twilio::TwiML::MessagingResponse.new do |response|
+  	 response.message(message, to_number, from_number)
 	end
 	return twiml
   end
