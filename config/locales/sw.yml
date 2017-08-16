@@ -69,6 +69,7 @@ sw:
     user: "Jina"
     status: "Hali"
     actions: "Ondoa"
+    site: "http://twaamtaro.org"
   errors:
     error: "Drain"
     auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
@@ -147,6 +148,7 @@ sw:
     share: "Shirikisha kuhusu hii tovuti"
     true_value: "Ndio"
     false_value: "hapana"
+    user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
