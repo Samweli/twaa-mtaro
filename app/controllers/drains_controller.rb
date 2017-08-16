@@ -85,7 +85,7 @@ class DrainsController < ApplicationController
 
           reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
                                 :last_name => user.last_name , :id => drain.gid, :status => status) 
-          notify_user = t('message.user_notify', :id => drain.gid, :status => status)
+          notify_user = t('messages.user_notify', :id => drain.gid, :status => status)
           sms_service.send_sms(
             reply_street_leader, 
             street_leader.sms_number);

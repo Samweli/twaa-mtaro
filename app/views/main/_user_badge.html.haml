@@ -4,6 +4,6 @@
       %div.font_h3.font_bold{:style => "margin:none;"}
         = t("notices.welcome")
         = current_user.fullname
- 
-        
-
+    - if flash[:notice]
+      .notice
+        %p{:style => "margin: 2px 0 2px 0;"}=flash[:notice]
