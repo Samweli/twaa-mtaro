@@ -14,7 +14,7 @@
     // Todo replace current_user.street.street_name with drain.street.street_name
     .drain_social_media
       = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
-
+      
 
   .descriptions
     %h4
@@ -51,11 +51,12 @@
                 - else
                   = t("buttons.dirty")
               %td
+                %button{:class => "btn btn-default", :data => {:moid=>c.id}}
                 - if current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:shv=>c.shoveled}}
+                  %button{:class => "btn btn-default chng_link", :data => {:shv=>c.shoveled}}
                     = t("buttons.change_status")
               %td
-                %button{:class => "btn btn-default abdn_link", :style => "font-size:8px;", :data => {:moid=>c.id}}
+                %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
                   = t("buttons.change")
       - else
         %table#abandon_link

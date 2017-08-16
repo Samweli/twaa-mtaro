@@ -47,7 +47,8 @@ en:
     adopt_table: "Drains I Adopted"
     cleaned: "Cleaned"
     help: "need_help"
-    status: "yesno"
+    edit_profile: "To edit your details click "
+    organization: "your organization:"
   defaults:
     address: "Address"
     city: "Dar es salaam, TZ"

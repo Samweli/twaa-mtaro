@@ -46,7 +46,8 @@ sw:
     adopt_table: "Mitaro niliouchukuwa"
     cleaned: "msafi"
     help: "Msaada unashitajika"
-    status: "ndiohapana"
+    edit_profile: "Kubadili taarifa zako bonyeza"
+    organization: "Shirika lako:"
     unknown: "Haijulikani"
   defaults:
     address: "Anwani"
