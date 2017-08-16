@@ -32,7 +32,9 @@ div.card-unclean {
     border: 2px solid #46b8da;
 }
 
-
+.id_user {
+    display: none;
+}
 
 .change_drain {
     background-color: #f44336;
