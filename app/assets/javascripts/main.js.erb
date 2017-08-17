@@ -544,6 +544,10 @@ $(function () {
                     $('.sign_links').remove();
                     updateSidebar();
                     fetchDrainInfo();
+                    window.location.href = window.location.hostname;
+                    console.log(window.location.href);
+                    window.location.reload();
+
                 }
             });
 
