@@ -34,11 +34,13 @@ class UsersController < Devise::RegistrationsController
         msg, 
         resource.sms_number);
 
-      redirect_to(:controller => "main", :action => "index")
+
     else
       clean_up_passwords(resource)
-      render(:json => {"errors" => resource.errors}, :status => 500)
+      flash[:notice] = "Profile not updated due to errors"
+
     end
+    redirect_to(:controller => "main", :action => "index")
   end
 
   def create

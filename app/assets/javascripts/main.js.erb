@@ -924,15 +924,13 @@ $(function () {
 
                     if (users) {
 
+
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
 
-                            trHTML += '<tr><td>' + item.first_name + '</td>' +
-                            '<td>' + item.last_name + '</td><td>' + 
-                            '<button class="btnassing">' + 'assign' + 
-                            '</button>' + '</tr>';
+                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
                         });
 
                         $('#location').append(trHTML);
@@ -970,7 +968,7 @@ $(function () {
 
                         $.each(users, function (i, item) {
 
-                            trHTML += '<tr><td> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
                         });
 
                         $('#location').append(trHTML);
@@ -1166,49 +1164,6 @@ $(function () {
         map.setView(latlng, 17);
     });
 
-    function updateNotification(){
-        var notification_msg = $('.notice').text();
-        $('.notice').hide();
-        console.log(notification_msg);
-        if(notification_msg){
-
-            //add a new style 'foo'
-            $.notify.addStyle('foo', {
-                html: "<div>" +
-                "<div class='clearfix'>" +
-                "<div class='title' data-notify-html='title'>" +
-                "Profile Updated" +
-                "</div>" +
-                "<button class='buttons no'>&#10006;</button>" +
-                "</div>" +
-                "</div>"
-            });
-
-            //listen for click events from this style
-            $(document).on('click', '.notifyjs-foo-base .no', function () {
-                //programmatically trigger propogating hide event
-                $(this).trigger('notify-hide');
-
-            });
-            $(document).on('click', '.notifyjs-foo-base .yes', function () {
-                //show button text
-                alert($(this).text() + " clicked!");
-                //hide notification
-                $(this).trigger('notify-hide');
-            });
-
-            var h5 = $("<h5/>").append(notification_msg);
-
-            $.notify({}, {
-                style: 'foo',
-                autoHide: false,
-                clickToHide: false,
-                position: 'top center'
-            });
-
-        }
-    }
-
 
     function updateNotification(){
         var notification_msg = $('.notice').text();
@@ -1221,7 +1176,7 @@ $(function () {
                 html: "<div>" +
                 "<div class='clearfix'>" +
                 "<div class='title' data-notify-html='title'>" +
-                "Profile Updated" +
+                notification_msg +
                 "</div>" +
                 "<button class='buttons no'>&#10006;</button>" +
                 "</div>" +
