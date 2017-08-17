@@ -53,9 +53,8 @@
                 - else
                   = t("buttons.dirty")
               %td
-                %button{:class => "btn btn-default", :data => {:moid=>c.id}}
                 - if current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
+                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
               %td
                 %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
