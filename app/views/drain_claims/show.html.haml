@@ -8,12 +8,15 @@
       / %li.unclear=  t("captions.unclean")
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
-      %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
-        = t("messages.drain_share")
+      - if not (@drain.cleared == nil and @drain.need_help == nil)
+        %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
+          = t("messages.drain_share")
+
 
     // Todo replace current_user.street.street_name with drain.street.street_name
-    .drain_social_media
-      = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
+    - if not (@drain.cleared == nil and @drain.need_help == nil)
+      .drain_social_media
+        = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
       
 
   .descriptions
