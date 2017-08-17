@@ -132,6 +132,8 @@ sw:
     user_notify: "Umefanikiwa kubadilisha alama ya mtaro %{id} kuwa %{status}."
     leader_notify: "Umefanikiwa kubadilisha alama ya mtaro %{id} kuwa %{status}."
     leader_to_user: "Kiongozi wako wa mtaa amebadilisha mtaro wako namba %{id} kuwa %{status}."
+    user_not_found: "Samahani atuifahamu akaunti yako, tafadhali jisajili hapa %{site}"
+  notices:
     abandoned: "%{thing} kutelekezwa!"
     adopted: "Umechukua %{thing}!"
     password_reset: "Angalia barua pepe yako,maelekezo ya kubadili nenosiri lako yametumwa"
