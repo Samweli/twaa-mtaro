@@ -13,6 +13,8 @@ class CreateAuthentications < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :authentications
+    if ActiveRecord::Base.connection.table_exists? :authentications
+      drop_table :authentications 
+    end
   end
 end

@@ -1,20 +1,44 @@
-#address_box.radius_5
-  = form_for :address, :html => {:id => "address_form", :class => 'form narrow'} do |f|
-    = hidden_field_tag :city_state, "Chicago, IL"
+#address_box.radius_4 
+  %div.form-group
+
+    = hidden_field_tag :city_state, "Dar es salaam, TZ", :class => 'form-group'
     =# hidden_field_tag :limit, params[:limit] || 40
     =# label_tag :address, t("labels.address"), :id => "address_label"
-    = text_field_tag :address, params[:address]
-    = submit_tag t("buttons.find"), :id => 'address_button'
-  
-  .font_12.link_1.center
-    #missing_address
-      = link_to "Don't see your sidewalk on the map?",
-          'http://webapps.cityofchicago.org/eforms/org/cityofchicago/adoptsidewalk/adopt.jsp',
-          :target => '_blank'
+    = text_field_tag :address, params[:address], :class => "input-text"
+    = submit_tag t("buttons.find"), :id => 'address_button', :class => "default btn-submit pull-right"
 
-    - unless user_signed_in?
-      #sidebar_login.font_14.radius_5
-        %ul.horizontal_items.item_separator.pen_lightgray
-          %li= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
-          |
-          %li= link_to t("links.register"), '#', :id => "sign_up_link"
+  / %form.sidebar-form{:action => "#", :method => "get"}
+  / .input-group
+  / %input.form-control{:name => "q", :placeholder => "Tafuta mtaa wako...", :type => "sarch",}/
+ 
+  .font_12.link_1.center
+    / #missing_address
+    /   = link_to t("defaults.missing"),
+    /       'http://webapps.twaamtaro.org/twaamtaro/adopt.jsp',
+    /       :target => '_blank'
+
+    #sidebar_login.font_14.radius_4
+      %ul.horizontal_items.item_separator.pen_lightgray{:style => "font-size: 12px"}
+        - unless user_signed_in?
+          %li.sign_links= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
+          %span.sign_links
+            |
+          %li.sign_links= link_to t("links.register"), '#', :id => "sign_up_link"
+          %span.sign_links
+            |
+        - if I18n.locale == :en 
+          %li.locale= link_to_unless_current "Swahili", :locale => "sw"
+        - elsif  I18n.locale == :sw 
+          %li.locale= link_to_unless_current "English", :locale => "en"
+        %li.horizontal_items.item_separator.pen_lightgray
+          - if user_signed_in?
+            %span.signout_links
+            | 
+            %li
+              = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
+            %span.signout_links
+              |
+            %li
+              %a#my_profile
+                = t("buttons.my_profile")
+

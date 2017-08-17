@@ -1,29 +1,58 @@
-#sidebar
-  = image_tag "logos/asw_logo.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-  =# render :partial => 'register'
-  = render :partial => 'address_form'
-  
-  -# unless user_signed_in?
-    #sidebar_login.radius_5
-      =# render :partial => 'sessions/sign_in'
+#aside 
+.row
+  .col-lg-4.col-md-4.col-sm-4
+    %nav.navbar
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand 
+            = image_tag "logos/twaa-mtaro-logoz.jpeg", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
 
-  #mini_profile.radius_5
-    = render :partial => 'user_badge'
-    = render :partial => 'sidewalk_list'
+        #myNavbar.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            #sidebar_content
+              
+              = render :partial => 'address_form'
 
-  %ul.social_items.clearfix
-    = render :partial => 'gplus_button'
-    = render :partial => 'facebook_button'
-    = render :partial => 'twitter_button'
+              #mini_profile.radius_5
+                = render :partial => 'user_badge'                
+                = render :partial => 'drain_list'
 
-  #service_logos.center
-    = link_to image_tag("logos/ChicagoShovelsHOME.jpg"), 'http://www.chicagoshovels.org', :title => 'Chicago Shovels Home'
-    
-  #feedback.font_12.link_1
-    = link_to t("links.terms"), tos_path, :target => '_blank'
+
+              %div.top-buffer
+                %h4.info.header.hidden-md
+                  = t("titles.drain_category")
+                  #page
+                    %svg{:height => "15", :viewbox => "0 0 24 24", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                      %path{:d => "M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"}
+                    
+                %div.btn-group.clearfix#myDiv
+                  = render :partial => 'needhelp_button'
+                  = render :partial => 'unclean_button'
+                  = render :partial => 'cleaned_button'
+                  = render :partial => 'all_button'
+                  = render :partial => 'adopt_filter'
+
+                %div
+                  = render :partial => 'site_social_media'   
+              
+  .col-lg-8.col-md-8.col-sm-8
+    #map_canvas
 
 #osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
-
-#map_canvas
-
-
+#spinner
+  %p
+    = image_tag "loading2.gif"
+.row
+  .col-md-12.col-sm-12
+    .container_fluid
+      .jumbotron
+        #footer_content
+          #service_logos.center
+            = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
+          #feedback.font_12.link_1{:style => "text-align:center"}
+            = link_to t("links.terms"), tos_path, :target => '_blank'
+         
