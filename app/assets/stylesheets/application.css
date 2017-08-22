@@ -57,7 +57,19 @@ h2.address {
     font-size: 22px;
     color: #666;
 }
+#map_canvas {
+  height: 95vh;
+/**   width: 100vw;
+*/    position: relative;
+    margin: 0px;
+    padding: 0px;
+    cursor: default;
+    border: 0px solid #737373;
+    top: 0%;
+    bottom: 0%;
+    width: 100% auto;
 
+  }
 
 #sidebar_content {
   left: 0;
@@ -76,13 +88,7 @@ h2.address {
   position: fixed;
   left: 0;
 }
-
-#map_canvas {
-    min-height: 560px;
-    position: relative;
-    margin: 0px;
-    padding: 0px;
-  }
+/**/
 form {
     margin: auto;
 }
