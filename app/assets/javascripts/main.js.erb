@@ -77,6 +77,8 @@ $(function () {
         var c = map.getCenter();
         console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
+        console.log('this is the current locale');
+        console.log(locale);
 
         var url;
         if (type) {
@@ -779,8 +781,7 @@ $(function () {
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
                     refreshKML("all");
-
-                    createPopup(data, pos);
+                    fetchDrainInfo(activeObjectId, pos);
 
                 });
                 $(document).on('click', '.notifyjs-foo-base .yes', function () {
@@ -1012,7 +1013,7 @@ $(function () {
                 },
                 success: function (data) {
                     refreshKML("all");
-                    createPopup(data, pos);
+                    fetchDrainInfo(id, drain_pos);
                 }
             });
             return false;
@@ -1038,9 +1039,10 @@ $(function () {
                     if (bDebug) console.error(data);
                 },
                 success: function (data) {
+
                     refreshKML("all");
-                    createPopup(data, pos);
-                    hideSpinner();
+                    fetchDrainInfo(id, drain_pos);
+
                 }
             });
             return false;
