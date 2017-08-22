@@ -1,12 +1,12 @@
-#drain_list.hidden-xs
+#drain_list
   - if user_signed_in?
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
       %p
-      %span{:style => "margin:5px 2px 0 2px"}=t('labels.street')
+      %span=t('labels.street')
       %span{:style => "color: #337ab7;"}
       = current_user.street.street_name 
     - if @my_drains.size > 0
-      %table.font_12.pen_gray.link_1
+      %table.font_12.pen_gray.link_1.hidden-xs
         %thead
           %tr
             %th= t('defaults.my_drains')
@@ -18,10 +18,10 @@
             %td.address= link_to s.drain.address, "#{s.drain.gid}", :class => 'view_drain', 'data-gid' => s.drain.gid, 'data-lat' => s.drain.lat, 'data-lng' =>s.drain.lng
             %td= yesno(s.drain.cleared)
             %td= yesno(s.drain.need_help)
-      #pagination.font_12.link_1
+      #pagination.font_12.link_1.hidden-xs
         = paginate @my_drains, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
-    #info_box.center
+    #info_box.center.hidden-xs
       %h2.font_bold{:style => 'margin: 0'}
         = t("defaults.welcome")
         %br
@@ -32,7 +32,7 @@
         %br
           = t("defaults.help_question")
       
-      %ul.features.hidden-sm
+      %ul.features.hidden-sm.hidden-xs
         %li= t("defaults.claim")
         %br
         %li= t("defaults.ask_help")

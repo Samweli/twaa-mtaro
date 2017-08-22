@@ -47,7 +47,8 @@ en:
     adopt_table: "Drains I Adopted"
     cleaned: "Cleaned"
     help: "need_help"
-    status: "yesno"
+    edit_profile: "To edit your details click "
+    organization: "your organization:"
   defaults:
     address: "Address"
     city: "Dar es salaam, TZ"
@@ -70,9 +71,10 @@ en:
     status: "Status"
     actions: "Remove"
     unknown: "Unknown"
+    site: "http://twaamtaro.org"
   errors:
     error: "Drain"
-    auth_failed: "Username or password is incorrect."
+    auth_failed: "Phone number or password is incorrect."
     password: "You need to sign in or sign up before continuing."
     not_found: "%{thing}(s) could not be found."
     drain_notfound: "%{error} not found"
@@ -131,6 +133,7 @@ en:
     user_notify: "You have successfully updated drain with number %{id} to %{status}."
     leader_notify: "You have successfully updated drain with number %{id} to %{status}."
     leader_to_user: "Your street leader have changed your drain with number %{id} to %{status}."
+    user_not_found: "Sorry we could not find your account, please register here %{site}"
   notices:
     abandoned: "%{thing} abandoned!"
     adopted: "You just adopted a %{thing}!"
@@ -147,8 +150,8 @@ en:
     last_name: "LastName"
     actions: "Action"
     share: "Share about this site"
-    true_value: "Yes"
-    false_value: "No"
+    yes_value: "Yes"
+    no_value: "No"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"

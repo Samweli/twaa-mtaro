@@ -1,7 +1,8 @@
 class SmsController < ApplicationController
 	def new
-		from_number = params[:from]
-		drain_status = params[:body]
+		from_number = params['From']
+		to_number = params['To']
+		drain_status = params['Body']
 		user_number = filter_number(from_number)
 
 		message = ''
@@ -9,47 +10,53 @@ class SmsController < ApplicationController
 		# TODO to updated, to deal with users with many drains
 
 		user = User.find_by_sms_number(user_number)
-		drain_claim = DrainClaim.find_by_user_id(user.id)
 
-		clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
-		dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
-		 'not clean', 'Not clean'].map(&:downcase)
-		need_help_keywords = ['msaada','Msaada', 'need_help', 'Need_help'].map(&:downcase)
+		if user
+			drain_claim = DrainClaim.find_by_user_id(user.id)
 
-		drain_status = drain_status.downcase
+			clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
+			dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
+			 'not clean', 'Not clean'].map(&:downcase)
+			need_help_keywords = ['msaada','Msaada', 'need_help', 'Need_help'].map(&:downcase)
 
-	    unless drain.blank?
-	    	if (clean_keywords.include? drain_status)
-	    		drain_claim.cleared = true
-	    		# drain.need_help = false
-	    		message = t('messages.drain_cleaned')
+			drain_status = drain_status.downcase
 
-	    	elsif (dirt_keywords.include? drain_status)
-	    		drain_claim.cleared = false
-	    		# drain.need_help = false
-	    		message = t('messages.drain_dirty')
+		    unless drain_claim.blank?
+		    	if (clean_keywords.include? drain_status)
+		    		drain_claim.shoveled = true
+		    		# drain.need_help = false
+		    		message = t('messages.drain_cleaned')
 
-	    	elsif (need_help_keywords.include? drain_status)
-	    		drain_claim.cleared = false
-	    		# drain.need_help = true
-	    		message = t('messages.thanks')
-	    	else
-	    		message = t('messages.unknown')
-	    	end
+		    	elsif (dirt_keywords.include? drain_status)
+		    		drain_claim.shoveled = false
+		    		# drain.need_help = false
+		    		message = t('messages.drain_dirty')
 
-	    	if (drain.save(validate: false))
+		    	elsif (need_help_keywords.include? drain_status)
+		    		drain_claim.shoveled = false
+		    		# drain.need_help = true
+		    		message = t('messages.thanks')
+		    	else
+		    		message = t('messages.unknown')
+		    	end
 
-	    	else
-	    		message = t('messages.error')
-	    	end
+		    	if (drain_claim.save(validate: false))
 
-	    else
-	    	message = t('messages.drain_unknown')
-	  	end
+		    	else
+		    		message = t('messages.error')
+		    	end
 
-		twiml = Twilio::TwiML::Response.new do |response|
-	     response.Message message
+		    else
+		    	message = t('messages.drain_unknown')
+		  	end
+		else
+			message = t('messages.user_not_found', :site => t('defaults.site'));
+		end
+
+        twiml = Twilio::TwiML::Response.new do |response|
+        	response.Message message
 	    end
+
 	    render xml: twiml.to_xml, content_type:'text/xml'
 
 	end
@@ -57,7 +64,7 @@ class SmsController < ApplicationController
 	private 
 
 	def filter_number(number)
-		number = number.gsub!('+',' ');
+		number = number.to_s.gsub!('+','');
 		return number
 	end
 

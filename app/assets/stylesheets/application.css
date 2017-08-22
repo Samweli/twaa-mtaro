@@ -69,7 +69,7 @@ h2.address {
   background-color: #6495ED;
   height: 100%;
   display: none;
-  width: 5px;
+  width: 3px;
   overflow: hidden;
   padding: 3px;
   z-index: 20;
@@ -218,8 +218,8 @@ img.lock {
 }
 
 #user_badge {
-    padding: 5px;
-    margin: 0px 0 0px 0;
+/*    padding: 5px;
+*/    margin: 0px 0 0px 0;
     color: #666;
 }
 
@@ -470,14 +470,6 @@ ul.social_items > li {
 .menu_1 li a:hover {
     text-decoration: underline;
     color: #3164d2;
-}
-
-#mini_profile {
-/*    background: ;
-*/    border: 2px solid rgba(141, 222, 92, 0.56);
-    box-shadow: 0 1px 0 #FFFFFF;
-    margin: 10px 0 0 0;
-    padding: 7px 3px;
 }
 
 #sidebar_login {
@@ -857,8 +849,7 @@ input.form-control {
  }
 
 .cat-btn {
-/*    padding: 6px 18px;
-*/    margin: 0 0px 5px 5px;
+ margin: 0 0px 5px 5px;
 }
 
 #address_button_ {
@@ -884,9 +875,7 @@ input.form-control {
     *display: none;
 }
 
-.font_h3 {
-    font-size: 1.5em;
-}
+
 
 .input-text {
     border: 1px solid #ccc;

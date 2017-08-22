@@ -28,14 +28,22 @@ class SmsService
 	Twilio::TwiML::Response.new do |r|
 	  r.Say 'Asante'
 	end.text
-   end
+  end
 
-   def format(number)
-   	if number.to_s.include? '255' and not number.to_s.include? '+'
+ #  Move here response logic from controller
+ #  def sms_response(message)
+ #  	twiml = Twilio::TwiML::Response.new do |response|
+	#      response.Message message
+	# end
+	# return twiml
+ #  end
+
+  def format(number)
+  	if number.to_s.include? '255' and not number.to_s.include? '+'
    	  number = "+#{number}"
    	end
 
    	return number
-   end
+  end
 
 end

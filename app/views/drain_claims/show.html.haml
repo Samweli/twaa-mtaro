@@ -8,13 +8,16 @@
       / %li.unclear=  t("captions.unclean")
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
-      %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
-        = t("messages.drain_share")
+      - if not (@drain.cleared == nil and @drain.need_help == nil)
+        %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
+          = t("messages.drain_share")
+
 
     // Todo replace current_user.street.street_name with drain.street.street_name
-    .drain_social_media
-      = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
-
+    - if not (@drain.cleared == nil and @drain.need_help == nil)
+      .drain_social_media
+        = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
+      
 
   .descriptions
     %h4
@@ -52,10 +55,10 @@
                   = t("buttons.dirty")
               %td
                 - if current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:shv=>c.shoveled}}
+                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
               %td
-                %button{:class => "btn btn-default abdn_link", :style => "font-size:8px;", :data => {:moid=>c.id}}
+                %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
                   = t("buttons.change")
       - else
         %table#abandon_link
@@ -64,8 +67,9 @@
               = t("defaults.user")
             %th
               = t("defaults.status")
-            %th
-              = t("defaults.change_status")
+            - if user_signed_in?
+              %th
+                = t("defaults.change_status")
           - @claims.each do |c|
             %tr
               %td= c.user.short_name
@@ -76,11 +80,11 @@
                   = t("buttons.dirty")
                 /- elsif c.shoveled == nil
                 /  = t("buttons.unknown_status")
-                
-              %td
-                - if user_signed_in? && current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
-                    = t("buttons.change_status")
+              - if user_signed_in?  
+                %td
+                  - if user_signed_in? && current_user.id == c.user.id
+                    %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
+                      = t("buttons.change_status")
 
   - if user_signed_in? && current_user.role == 2
     %div
@@ -96,7 +100,7 @@
           = t("captions.add")
   - else
     - if @drain.cleared?
-      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn", :title => t()
+      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
     - elsif @drain.cleared == nil and @drain.need_help == nil
       = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - else

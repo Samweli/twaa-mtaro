@@ -46,7 +46,8 @@ sw:
     adopt_table: "Mitaro niliouchukuwa"
     cleaned: "msafi"
     help: "Msaada unashitajika"
-    status: "ndiohapana"
+    edit_profile: "Kubadili taarifa zako bonyeza"
+    organization: "Shirika lako:"
     unknown: "Haijulikani"
   defaults:
     address: "Anwani"
@@ -69,9 +70,10 @@ sw:
     user: "Jina"
     status: "Hali"
     actions: "Ondoa"
+    site: "http://twaamtaro.org"
   errors:
     error: "Drain"
-    auth_failed: "Jina la mtumiaji or nenosiri sio sahihi."
+    auth_failed: "Namba ya mtumiaji or nenosiri sio sahihi."
     drain_notfound: "%{error} haupo "
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
@@ -130,6 +132,8 @@ sw:
     user_notify: "Umefanikiwa kubadilisha alama ya mtaro %{id} kuwa %{status}."
     leader_notify: "Umefanikiwa kubadilisha alama ya mtaro %{id} kuwa %{status}."
     leader_to_user: "Kiongozi wako wa mtaa amebadilisha mtaro wako namba %{id} kuwa %{status}."
+    user_not_found: "Samahani atuifahamu akaunti yako, tafadhali jisajili hapa %{site}"
+  notices:
     abandoned: "%{thing} kutelekezwa!"
     adopted: "Umechukua %{thing}!"
     password_reset: "Angalia barua pepe yako,maelekezo ya kubadili nenosiri lako yametumwa"
@@ -145,8 +149,9 @@ sw:
     last_name: "Jina la Mwisho"
     actions: "Kitendo"
     share: "Shirikisha kuhusu hii tovuti"
-    true_value: "Ndio"
-    false_value: "hapana"
+    yes_value: "Ndio"
+    no_value: "Hapana"
+    user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
