@@ -26,7 +26,7 @@ en:
     go: "Go"
     cleaned: " %{count} Clean"
     uncleaned: "%{count} Dirty"
-    need_help: "%{count} Needs help"
+    need_help: "Needs help"
     unknown: "%{count} Unknown"
     all: "%{count} All"
     adopted: "%{count} Adopted"
