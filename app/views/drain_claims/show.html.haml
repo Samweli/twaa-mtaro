@@ -78,7 +78,7 @@
                 /  = t("buttons.unknown_status")
                 
               %td
-                - if current_user.id == c.user.id
+                - if user_signed_in? && current_user.id == c.user.id
                   %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
 
