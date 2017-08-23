@@ -217,6 +217,9 @@ $(function () {
                 drain_pos = pos;
 
                 createPopup(data, pos);
+                if($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No'){
+                    $('#abandon_link').find('.hide_column').hide();
+                }
                 hideSpinner();
             }
 
@@ -855,8 +858,7 @@ $(function () {
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
@@ -892,8 +894,7 @@ $(function () {
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
