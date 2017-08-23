@@ -1,8 +1,20 @@
 nav.navbar{
   overflow: auto;
 }
+#map_canvas {
+    height:77vh;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    cursor: default;
+    border: 0px solid #737373;
+    top: 0%;
+    bottom: 0%;
+    width: 100% auto;
+
+  }
 .navbar-brand img{
-     height: 30%;
+    height: 30%;
     width: 40%;
     padding-right: 10px;
     padding-left: 10px;
@@ -218,14 +230,14 @@ input, select, option, button{
 }
    /*resixing the popup contents in the map*/
  #map_canvas {
-   height: 80vh;
-/*    width: 100vw;
-*/    cursor: default;
+   height: 79.8vh;
+  cursor: default;
     border: 0px solid #737373;
     top: 0%;
     bottom: 0%;
     width: 100%;
   }
+ 
 
   #my_profile{
   margin-top: 4px;
@@ -263,12 +275,6 @@ h2{
     font-size: 10px;
     font-weight: bold;
   }
- /* #assign.btn.info_adopt,
-  #add_claim.btn.info_adopt{
-    padding-left: 0px;
-    padding-right: 0;
-  }*/
-
   .gray_box.btn.btn-warning.cat-btn{
     padding-left: 0px;
     padding-right: 0;
@@ -546,7 +552,7 @@ ul#user_profile > li{
 }
 
 /*media query for displaying  content in a larger size */
-@media (min-width: 768px) {
+@media (min-width:  768px){
   #aside{
   background-color: #6495ED;
   height: 100%;
@@ -582,9 +588,8 @@ html, body{
     width: 100vw;  
 }
 #map_canvas {
-/*     height: 100vh;
-*//*    width: 100vw;
-*/    position: relative;
+    height:95vh;
+  position: relative;
     margin: 0px;
     padding: 0px;
     cursor: default;

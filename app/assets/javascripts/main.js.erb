@@ -187,11 +187,18 @@ map.on('locationerror', onLocationError);
 
         legend.addTo(map);
 
+        var scroll = L.control({position: 'bottomright'});
+
+        scroll .onAdd = function (map) {
+
+        scroll.addTo(map);
+
     }
+}
+
 
     refreshKML("all");
     addLegend();
-
 
   /* popup Window for displaying details of Mtaro */
     function createPopup(msg, pos) {

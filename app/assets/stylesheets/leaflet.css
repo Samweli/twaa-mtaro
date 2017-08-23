@@ -18,6 +18,9 @@
 	left: 0;
 	top: 0;
 	}
+.leaflet-map-pane{
+	height: 100%;
+}
 .leaflet-container {
 	overflow: hidden;
 	-ms-touch-action: none;

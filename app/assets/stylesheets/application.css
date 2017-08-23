@@ -6,7 +6,16 @@
 html {
     height: 100%;
 }
-
+.navbar {
+  position: relative;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  height: 78%;
+}
+.myClass {
+   padding-top:50%;
+   padding-left: 50%;
+}
 
 /* vietnamese */
 @font-face {
@@ -57,19 +66,6 @@ h2.address {
     font-size: 22px;
     color: #666;
 }
-#map_canvas {
-  height: 95vh;
-/**   width: 100vw;
-*/    position: relative;
-    margin: 0px;
-    padding: 0px;
-    cursor: default;
-    border: 0px solid #737373;
-    top: 0%;
-    bottom: 0%;
-    width: 100% auto;
-
-  }
 
 #sidebar_content {
   left: 0;
