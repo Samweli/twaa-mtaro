@@ -17,7 +17,7 @@
     - if not (@drain.cleared == nil and @drain.need_help == nil)
       .drain_social_media
         = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
-      
+
 
   .descriptions
     %h4
@@ -32,16 +32,16 @@
     - else
       %h3{:style => "font-size:14px;"}
         = t('captions.taken') + ':'
-      
+
       #people_list.users
       - if user_signed_in? && current_user.role == 2
-        %table#abandon_link
+        %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
           %tr
             %th
               = t("defaults.user")
-            %th 
+            %th
               = t("defaults.status")
-            %th 
+            %th.hide_column
               = t("defaults.change_status")
             %th
               = t("defaults.actions")
@@ -53,22 +53,22 @@
                   = t("buttons.clean")
                 - else
                   = t("buttons.dirty")
-              %td
-                - if current_user.id == c.user.id
+              %td.hide_column
+                - if user_signed_in? && current_user.id == c.user.id
                   %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.shoveled)}}
                     = t("buttons.change_status")
               %td
                 %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
                   = t("buttons.change")
       - else
-        %table#abandon_link
+        %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
           %tr
-            %th 
+            %th
               = t("defaults.user")
             %th
               = t("defaults.status")
             - if user_signed_in?
-              %th
+              %th.hide_column
                 = t("defaults.change_status")
           - @claims.each do |c|
             %tr
@@ -81,7 +81,7 @@
                 /- elsif c.shoveled == nil
                 /  = t("buttons.unknown_status")
               - if user_signed_in?  
-                %td
+                %td.hide_column
                   - if user_signed_in? && current_user.id == c.user.id
                     %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
                       = t("buttons.change_status")

@@ -36,6 +36,8 @@ div.card-unclean {
     display: none;
 }
 
+.hide_column {}
+
 .change_drain {
     background-color: #f44336;
     border: 2px solid #f44336;

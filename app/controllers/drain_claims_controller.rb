@@ -53,6 +53,13 @@ class DrainClaimsController < ApplicationController
     @shoveled_by_me = true
     @claims = claims
 
+    if user_signed_in?
+      @claim_owner = DrainClaim.find_by_user_id_and_gid(current_user.id,params[:id])
+    else
+      @claim_owner =nil
+    end
+
+
 
 
   end
