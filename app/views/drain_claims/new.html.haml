@@ -1,0 +1,11 @@
+#sign_up_box
+  = form_for :user, :url => user_registration_path, :html => {:id => "assign_drain", :class => 'form'} do |f|
+    .signup
+      %ul.horizontal_items
+        %li
+          = select_tag(:city_id, '<option value="1">Lisbon</option>...')
+      %ul.horizontal_items.font_12.center{:style => "margin-top: 15px;"}
+        %li#new_assign
+          = f.submit t("buttons.assign")
+        %li#add_user
+          = f.submit t("captions.add_user")

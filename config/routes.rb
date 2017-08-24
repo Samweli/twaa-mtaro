@@ -1,4 +1,4 @@
-AdoptASidewalk::Application.routes.draw do
+AdoptADrain::Application.routes.draw do
   resources :authentications
 
   devise_for :users, :controllers => {
@@ -7,18 +7,26 @@ AdoptASidewalk::Application.routes.draw do
       :sessions => 'sessions',
   } do
     get 'forgot_password' => 'passwords#forgot'
+    get 'users' => 'users#index'
+    get 'add' => 'users#add'
+    get 'profile' => 'users#profile'
+    post 'createuser' => 'users#createuser'
+    put 'update' => 'users#update'
   end
-  
+
   get 'address' => 'addresses#show', :as => 'address'
   get 'address_report' => 'addresses#report'
   get 'tos' => 'main#tos'
   get 'sidebar' => 'main#sidebar'
+  get '/sms/new' => 'sms#new'
+  get 'drain_claims/adopt' => 'drain_claims#adopt'
 
   match '/auth/:provider/callback' => 'authentications#create'
-  
-  resources :sidewalks do
+
+  resources :drains do
     get 'find_closest', :on => :collection
   end
-  resources :sidewalk_claims
+  resources :drain_claims
+
   root :to => 'main#index'
 end

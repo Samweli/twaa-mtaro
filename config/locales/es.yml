@@ -42,6 +42,7 @@ es:
     password_new: "Una nueva contraseña"
     remember_me: "Mantener el"
     sms_number: "Número de teléfono móvil"
+    street: "Your Street"
     user_existing: "Ya he firmado"
     user_new: "No se ha inscrito"
     voice_number: "Número de teléfono"

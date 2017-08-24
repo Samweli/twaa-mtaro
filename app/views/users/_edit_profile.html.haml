@@ -1,2 +1,4 @@
-= form_for :user, :url => edit_user_registration_path, :html => {:id => "edit_profile_form", :method => "get"} do |f|
-  = f.submit t("buttons.edit_profile")
+= form_for :user, :url => edit_user_registration_path, :html => {:id => "edit_profile_form", :method => "get"}, remote: true do |f|
+	%p
+		= t("captions.edit_profile")
+		= link_to t("buttons.edit_profile")

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <Style id="needs_help">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>ff9292ff</color>
+    </PolyStyle>
+  </Style>
+
+  <Style id="unclear">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>ffffffff</color>
+    </PolyStyle>
+  </Style>
+
+  <Style id="adopted">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>fff5dbb5</color>
+    </PolyStyle>
+  </Style>
+
+  <Style id="cleared">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>ffcccccc</color>
+    </PolyStyle>
+  </Style>
+  
+  <Style id="unknown">
+    <LineStyle>
+      <width>2</width>
+      <color>7f000000</color>
+    </LineStyle>
+    <PolyStyle>
+      <color>ffcccccc</color>
+    </PolyStyle>
+  </Style>
+
+  <% for drain in @drains %>
+  <Placemark>
+    <id><%= drain.gid %></id>
+    <description><%= drain.gid %></description>
+    <name><%= drain.address %></name>
+    <styleUrl><%= format_color(drain) %></styleUrl>
+    <%= raw(drain.kml) %>
+  </Placemark>
+  <% end %>
+</Document>
+</kml>

@@ -1,9 +1,10 @@
 source 'http://rubygems.org'
+ruby "2.2.3"
 
 gem 'rails', '~> 3.2.13'
 
 gem 'arel'
-gem 'devise'
+gem 'devise', '2.2.2'
 gem 'geokit'
 gem 'haml', '~> 3.2.0.alpha'
 gem 'haml-rails'
@@ -17,6 +18,9 @@ gem 'kaminari'
 gem 'omniauth-facebook'
 gem 'rest-client'
 gem 'browser'
+gem 'twilio-ruby', '4.13.0'
+gem 'social-share-button', '~> 0.1.6'
+gem 'google-analytics-rails', '1.1.1'
 
 platforms :jruby do
   gem 'jruby-openssl'
@@ -37,6 +41,7 @@ end
 
 group :development do
   gem 'nifty-generators'
+  gem 'faker'
 end
 
 group :test do

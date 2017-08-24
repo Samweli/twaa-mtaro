@@ -6,14 +6,14 @@
     .signin
       %ul.horizontal_items
         %li
-          = f.label :email, t("labels.email")
-          = f.text_field :email, :class => 'user_email'
+          = f.label :sms_number, t("labels.sms_number")
+          = f.text_field :sms_number, :class => 'user_sms_number'
         %li  
           = f.label "password", t("labels.password")
           = f.password_field "password", :class => 'user_password'
-        %li{:style => 'margin-top: 15px;'}
+        %li{:style => 'margin-top: 10px;'}
           = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'user_remember_me font_1 font_12'
-          = f.submit t("buttons.sign_in"), :style => 'margin-left: 125px'
+          = f.submit t("buttons.sign_in"), :style => 'margin-left: 100px'
       
       %p.font_1.link_1.center= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
       
