@@ -37,8 +37,17 @@ $(function () {
   //  });
 
    // map.addLayer(hananasif);
-
-   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ');
+   var mapboxAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
+                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
+                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
+                           'Improve this map</a></strong>'
+   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
+                            'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
+                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                            'F1zCcOYqpXWd4C9l9xqvEQ'
+                            ,{
+                                attribution:mapboxAttribution
+  });
    map.addLayer(customOsmBright);
 
    // map.addLayer(osm);
