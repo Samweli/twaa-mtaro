@@ -77,6 +77,8 @@ $(function () {
         var c = map.getCenter();
         console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
+        console.log('this is the current locale');
+        console.log(locale);
 
         var url;
         if (type) {
@@ -238,6 +240,9 @@ map.on('locationerror', onLocationError);
                 drain_pos = pos;
 
                 createPopup(data, pos);
+                if($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No'){
+                    $('#abandon_link').find('.hide_column').hide();
+                }
                 hideSpinner();
             }
 
@@ -802,8 +807,7 @@ map.on('locationerror', onLocationError);
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
                     refreshKML("all");
-                    updateSidebar();
-                    createPopup(data, pos);
+                    fetchDrainInfo(activeObjectId, pos);
 
                 });
                 $(document).on('click', '.notifyjs-foo-base .yes', function () {
@@ -877,8 +881,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
@@ -914,8 +917,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
@@ -1035,7 +1037,7 @@ map.on('locationerror', onLocationError);
                 },
                 success: function (data) {
                     refreshKML("all");
-                    createPopup(data, pos);
+                    fetchDrainInfo(id, drain_pos);
                 }
             });
             return false;
@@ -1061,9 +1063,10 @@ map.on('locationerror', onLocationError);
                     if (bDebug) console.error(data);
                 },
                 success: function (data) {
+
                     refreshKML("all");
-                    createPopup(data, pos);
-                    hideSpinner();
+                    fetchDrainInfo(id, drain_pos);
+
                 }
             });
             return false;
