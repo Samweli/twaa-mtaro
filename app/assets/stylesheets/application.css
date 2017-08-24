@@ -6,8 +6,29 @@
 html {
     height: 100%;
 }
-
-
+body {
+    padding: 0;
+    margin: 0;
+}
+.navbar {
+  position: relative;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  height: 78%;
+}
+.myClass {
+   padding-top:50%;
+   padding-left: 50%;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
 /* vietnamese */
 @font-face {
     font-family: 'Source Sans Pro';
@@ -58,7 +79,6 @@ h2.address {
     color: #666;
 }
 
-
 #sidebar_content {
   left: 0;
   top: 0;
@@ -76,13 +96,7 @@ h2.address {
   position: fixed;
   left: 0;
 }
-
-#map_canvas {
-    min-height: 560px;
-    position: relative;
-    margin: 0px;
-    padding: 0px;
-  }
+/**/
 form {
     margin: auto;
 }
@@ -256,7 +270,6 @@ border-radius: 5px 5px 5px 5px;
 }
 
 .font_1 {
-  font-size: 14px;
   color: #444;
 }
 .font_10 {font-size: 10px;}
@@ -371,7 +384,7 @@ ul.horizontal_items > li,ul#profile {
 
 ul.horizontal_items > li label,ul#profile > li label {
     display: inline-block;
-    width: 140px;
+    width: 130px;
     zoom: 1;
     *display: inline;
 }
@@ -393,7 +406,7 @@ ul.horizontal_items > li label,ul#profile > li label {
 .horizontal_items input[type="password"],
 .horizontal_items textarea,
 .horizontal_items select {
-    width: 220px !important;
+    width: 200px !important;
 }
 
 ul.social_items {
@@ -615,6 +628,9 @@ form.wide label {
   font-size: 14px;
   width: 130px;
 }
+h3 {
+  margin-top: 0px;
+}
 
 .form input[type="submit"] {
 background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
@@ -629,7 +645,7 @@ background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79
   color:#ffffff;
   font-family:arial;
   font-weight:bold;
-  padding:6px 24px;
+  padding:5px 20px;
   text-decoration:none;
   text-shadow:1px 1px 0px #287ace;
   zoom: 1;

@@ -18,6 +18,9 @@
 	left: 0;
 	top: 0;
 	}
+.leaflet-map-pane{
+	height: 100%;
+}
 .leaflet-container {
 	overflow: hidden;
 	-ms-touch-action: none;
@@ -403,7 +406,7 @@
 /*	line-height: 1.4;
 */	}
 .leaflet-popup-content p {
-	margin: 18px 0;
+	/*margin: 18px 0;*/
 	}
 .leaflet-popup-tip-container {
 	margin: 0 auto;
