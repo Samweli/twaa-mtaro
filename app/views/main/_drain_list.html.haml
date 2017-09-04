@@ -26,13 +26,11 @@
         = t("defaults.welcome")
         %br
           = t("titles.main", :thing => t("defaults.thing").titleize)
-      %p{:style => "margin-top:0; padding:0;"}
+      %p{:style => "margin-top:0; padding:0; margin-bottom:6px;"}
         = t("defaults.aware")
-       
         %br
           = t("defaults.help_question")
       
-      %ul.features.hidden-sm.hidden-xs
+      %ul.features.hidden-sm.hidden-xs{:style => "margin-top:0;margin-bottom:6px;"}
         %li= t("defaults.claim")
-        %br
         %li= t("defaults.ask_help")

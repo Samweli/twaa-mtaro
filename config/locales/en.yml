@@ -82,10 +82,12 @@ en:
   labels:
     address: "Street address"
     city_state: "City"
+    current_password: "current_password"
     email: "Email"
     first_name: "First name"
     last_name: "Last name"
     name_thing: "Give this %{thing} a name"
+    name: "Name"
     organization: "Organization"
     password: "Password"
     password_reg: "Password (Min 6)"
@@ -100,7 +102,7 @@ en:
     search: "Search the names.."
     user_existing: "Already have an account?"
     user_new: "Don't have an account here?"
-    voice_number: "Home phone number"
+    voice_number: "phone number"
     facebook_sign_in: "Get started using your Facebook account"
     recaptcha: "Please verify the code below"
   links:

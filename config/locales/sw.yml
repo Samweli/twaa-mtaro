@@ -81,10 +81,12 @@ sw:
   labels:
     address: "Anwani ya mtaa"
     city_state: "Mji"
+    current_password: "Nenosiri la Zamani"
     email: "Barua pepe"
     first_name: "Jina la kwanza"
     last_name: "Jina la mwisho"
     name_thing: "upe  %{thing} huu  jina"
+    name: 'Jina'
     organization: "Shirika"
     password: "nenosiri"
     password_reg: "nenosiri (Min 6)"
@@ -99,7 +101,7 @@ sw:
     search: "Tafuta majina.."
     user_existing: "Una akaunti tayari?"
     user_new: "Huna akaunti hapa?"
-    voice_number: "Namba ya simu ya nyumbani"
+    voice_number: "Namba ya simu"
     facebook_sign_in: "Anza kutumia akaunti yako ya Facebook"
     recaptcha: "Tafadhali thibitisha code hapa chini"
   links:
