@@ -2,11 +2,48 @@ $(function () {
 
 
     var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
+
+
+    // Map background layers
+
+    var mapboxAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
+                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
+                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
+                           'Improve this map</a></strong>'
+   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
+                            'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
+                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                            'F1zCcOYqpXWd4C9l9xqvEQ'
+                            ,{
+                                attribution:mapboxAttribution,
+                                maxZoom: 22
+    });
+
+    // map layer for satellite imagery
+    var satelliteLayer = new L.TileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/'+
+                            'tiles/256/{z}/{x}/{y}?access_token='+
+                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                            'F1zCcOYqpXWd4C9l9xqvEQ'
+                            ,{ 
+                                attribution: mapboxAttribution,
+                                maxZoom: 22
+    });
+
+    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+      
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution:osmAttr
+      });
+
+    // map.addLayer(customOsmBright);
+
     var mapOptions = {
         center: center,
         zoom: 13,
         minZoom: 7,
-        doubleClickZoom: true
+        maxZoom: 23,
+        doubleClickZoom: true,
+        layers:[ osm, satelliteLayer, customOsmBright]
     }
 
     //kml layer with drains
@@ -24,10 +61,15 @@ $(function () {
   /* Creating map*/
 
   var map = new L.Map('map_canvas', mapOptions);
-  var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:osmAttr
-  });
+
+  // Add basemaps and their menu
+  var baseMaps = {
+    "Openstreetmap": osm,
+    "Satellite": satelliteLayer,
+    "Standard": customOsmBright    
+   };
+
+   L.control.layers(baseMaps).addTo(map);
   
   // var hananasif = L.tileLayer( 
   //   'https://api.mapbox.com/styles/v1/samtwesa/cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ',
@@ -38,18 +80,7 @@ $(function () {
   //  });
 
    // map.addLayer(hananasif);
-   var mapboxAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
-                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
-                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
-                           'Improve this map</a></strong>'
-   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
-                            'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
-                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
-                            'F1zCcOYqpXWd4C9l9xqvEQ'
-                            ,{
-                                attribution:mapboxAttribution
-  });
-   map.addLayer(customOsmBright);
+   
 
    // map.addLayer(osm);
 
