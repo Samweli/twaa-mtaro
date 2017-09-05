@@ -1,5 +1,7 @@
 class Api::V1::UserSerializer < Api::V1::BaseSerializer
-  attributes :email, :first_name
+  attributes :email, :first_name, :last_name, :organization, :sms_number,
+             :password, :password_confirmation, :street_id, :remember_me,
+             :authentication_token
 
 
   def created_at

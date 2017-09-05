@@ -24,6 +24,7 @@ gem 'google-analytics-rails', '1.1.1'
 gem 'active_model_serializers', '0.9.2'
 gem 'test-unit', '~> 3.0'
 
+
 platforms :jruby do
   gem 'jruby-openssl'
   gem 'therubyrhino'
