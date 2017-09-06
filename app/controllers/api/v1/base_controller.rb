@@ -26,6 +26,8 @@ class Api::V1::BaseController < ApplicationController
 
     user_email = options.blank?? nil : options[:email]
     user = user_email && User.find_by_email(user_email)
+    Rails.logger.debug("Sent email #{options[:email]}")
+    Rails.logger.debug("Sent token from user #{token}")
 
     if user && ActiveSupport::SecurityUtils.secure_compare(user.authentication_token, token)
       @current_user = user

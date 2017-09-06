@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   def generate_authentication_token
     loop do
-      self.authentication_token = SecureRandom.base64(64)
+      self.authentication_token = SecureRandom.urlsafe_base64
       break unless User.find_by_authentication_token(authentication_token)
     end
   end
