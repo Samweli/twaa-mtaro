@@ -1116,6 +1116,35 @@ map.on('locationerror', onLocationError);
             });
             return false;
         });
+
+        $('#need_help').on('click', function () {
+            var id = $(this).attr('data-moid');
+            var locale = urlParam('locale');
+            showSpinner();
+
+            $.ajax({
+                type: 'POST',
+                url: '/drains/' + id,
+                data: {
+                    'moid': $(this).attr('data-moid'),
+                    'authenticity_token': AUTH_TOKEN,
+                    '_method': 'put',
+                    'shoveled': false,
+                    'locale': locale
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    if (bDebug) console.error(data);
+                },
+                success: function (data) {
+
+                    refreshKML("all");
+                    fetchDrainInfo(id, drain_pos);
+
+                }
+            });
+            return false;
+        });
     }
 
     function get_categories() {
