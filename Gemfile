@@ -21,16 +21,10 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'rest-client'
 gem 'social-share-button', '~> 0.1.6'
-<<<<<<< HEAD
-gem 'google-analytics-rails', '1.1.1'
-gem 'active_model_serializers', '0.9.2'
-gem 'test-unit', '~> 3.0'
-=======
 gem 'test-unit', '~> 3.0'
 gem 'therubyracer'
 gem 'twilio-ruby', '4.13.0'
 
->>>>>>> 5c13367ccdaa988e7aa3a48b328678ae8120413b
 
 platforms :jruby do
   gem 'jruby-openssl'
