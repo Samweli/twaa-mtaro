@@ -2,10 +2,48 @@ $(function () {
 
 
     var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
+
+
+    // Map background layers
+
+    var mapboxAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
+                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
+                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
+                           'Improve this map</a></strong>'
+   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
+                            'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
+                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                            'F1zCcOYqpXWd4C9l9xqvEQ'
+                            ,{
+                                attribution:mapboxAttribution,
+                                maxZoom: 22
+    });
+
+    // map layer for satellite imagery
+    var satelliteLayer = new L.TileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/'+
+                            'tiles/256/{z}/{x}/{y}?access_token='+
+                            'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                            'F1zCcOYqpXWd4C9l9xqvEQ'
+                            ,{ 
+                                attribution: mapboxAttribution,
+                                maxZoom: 22
+    });
+
+    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+      
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution:osmAttr
+      });
+
+    // map.addLayer(customOsmBright);
+
     var mapOptions = {
         center: center,
         zoom: 13,
-        doubleClickZoom: true
+        minZoom: 7,
+        maxZoom: 23,
+        doubleClickZoom: true,
+        layers:[ osm, satelliteLayer, customOsmBright]
     }
 
     //kml layer with drains
@@ -23,10 +61,15 @@ $(function () {
   /* Creating map*/
 
   var map = new L.Map('map_canvas', mapOptions);
-  var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-  var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:osmAttr
-  });
+
+  // Add basemaps and their menu
+  var baseMaps = {
+    "Openstreetmap": osm,
+    "Satellite": satelliteLayer,
+    "Standard": customOsmBright    
+   };
+
+   L.control.layers(baseMaps).addTo(map);
   
   // var hananasif = L.tileLayer( 
   //   'https://api.mapbox.com/styles/v1/samtwesa/cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ',
@@ -36,9 +79,10 @@ $(function () {
   //       attribution:osmAttr
   //  });
 
-  map.addLayer(osm);
+   // map.addLayer(hananasif);
+   
 
-  // map.addLayer(hananasif);
+   // map.addLayer(osm);
 
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -57,15 +101,15 @@ $(function () {
             style: function (feature) {
                 switch (feature.properties.styleUrl) {
                     case '#unclear':
-                        return {color: "#dd9031", opacity: 1, weight: 2.5};
+                        return {color: "#dd9031", opacity: 0.9, weight: 2.5};
                     // case '#adopted':
                     //     return {color: "gray", opacity: 1, weight: 2.5};
                     case '#needs_help':
-                        return {color: "#6495ed", opacity: 1, weight: 2.5};
+                        return {color: "#6495ed", opacity: 0.8, weight: 2.5};
                     case '#cleared':
-                        return {color: "green", opacity: 1, weight: 2.5};
+                        return {color: "green", opacity: 0.9, weight: 2.5};
                     case '#unknown':
-                        return {color: "#CB7D50", opacity: 1, weight: 2.5}
+                        return {color: "#CB7D50", opacity: 0.9, weight: 2.1}
                 }
             }
         });
@@ -77,6 +121,8 @@ $(function () {
         var c = map.getCenter();
         console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
+        console.log('this is the current locale');
+        console.log(locale);
 
         var url;
         if (type) {
@@ -125,6 +171,7 @@ $(function () {
         map.addLayer(kmlLayer);
 
     }
+
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
 
@@ -238,6 +285,9 @@ map.on('locationerror', onLocationError);
                 drain_pos = pos;
 
                 createPopup(data, pos);
+                if($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No'){
+                    $('#abandon_link').find('.hide_column').hide();
+                }
                 hideSpinner();
             }
 
@@ -802,8 +852,7 @@ map.on('locationerror', onLocationError);
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
                     refreshKML("all");
-                    updateSidebar();
-                    createPopup(data, pos);
+                    fetchDrainInfo(activeObjectId, pos);
 
                 });
                 $(document).on('click', '.notifyjs-foo-base .yes', function () {
@@ -877,8 +926,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
@@ -914,8 +962,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        updateSidebar();
-                        createPopup(data,pos);
+                        fetchDrainInfo(activeObjectId,pos);
                     }
                 });
             }
@@ -1035,7 +1082,7 @@ map.on('locationerror', onLocationError);
                 },
                 success: function (data) {
                     refreshKML("all");
-                    createPopup(data, pos);
+                    fetchDrainInfo(id, drain_pos);
                 }
             });
             return false;
@@ -1061,9 +1108,10 @@ map.on('locationerror', onLocationError);
                     if (bDebug) console.error(data);
                 },
                 success: function (data) {
+
                     refreshKML("all");
-                    createPopup(data, pos);
-                    hideSpinner();
+                    fetchDrainInfo(id, drain_pos);
+
                 }
             });
             return false;

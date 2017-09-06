@@ -273,9 +273,10 @@ h4{
   font-size: 9.7px;
 }
 .legend i {
-    width: 12px;
-    height: 12px;
+    width: 18px;
+    height: 2px;
     font-size: 6px;
+    margin-top: 6px;
   }
 
 .info {
@@ -333,6 +334,19 @@ table #abandon_link , #abandon_link th, #abandon_link td {
     padding-right: 10px;
     margin: 0px;
       }
+
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+
+ }
+ .leaflet-control-layers-toggle {
+    background-image: url(../assets/layers.png);
+  width: 26px;
+  height: 26px;
+  }
   
 }
 
@@ -576,7 +590,7 @@ h2 {
     position: relative;
   }
 .legend {
-    width:130px;
+    width:125px;
     padding: 6px;
 }
 .legend h3{
@@ -738,7 +752,17 @@ th, td {
     font-size: 14px;
     color: #666;
    }
- 
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-size: 13px;
+  font-weight: normal;
+  font-family: sans-serif;
+
+ }
+ .leaflet-control-layers-toggle {
+  width: 30px;
+  height: 30px;
+  }
 }
 
   /*medium query for larger screen*/
@@ -806,10 +830,10 @@ h4{
   font-size: 15px;
   }
 .font_1 {
-  font-size: 14px;
+  font-size: 12px;
 }
 .legend {
-    width:160px;
+    width:146px;
     padding: 6px;
 }
     #assign.btn.info_adopt,
@@ -819,5 +843,15 @@ h4{
   padding-left: 20px;
     padding-right: 20px;
   }
+ /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-size: 16px;
+  font-weight: normal;
+  font-family: sans-serif;
 
+ }
+ .leaflet-control-layers-toggle {
+  width: 36px;
+  height: 36px;
+  }
   }

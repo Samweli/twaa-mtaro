@@ -154,6 +154,8 @@ en:
     share: "Share about this site"
     yes_value: "Yes"
     no_value: "No"
+  tables:
+    need_help: "Needs help"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"

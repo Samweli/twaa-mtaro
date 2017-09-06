@@ -154,6 +154,8 @@ sw:
     yes_value: "Ndio"
     no_value: "Hapana"
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
+  tables:
+    need_help: "Msaada"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
