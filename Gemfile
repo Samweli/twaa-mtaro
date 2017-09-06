@@ -22,6 +22,7 @@ gem 'twilio-ruby', '4.13.0'
 gem 'social-share-button', '~> 0.1.6'
 gem 'google-analytics-rails', '1.1.1'
 gem 'active_model_serializers', '0.9.2'
+gem 'test-unit', '~> 3.0'
 
 platforms :jruby do
   gem 'jruby-openssl'
