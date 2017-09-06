@@ -32,4 +32,13 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
+  before_create :generate_authentication_token
+
+  def generate_authentication_token
+    loop do
+      self.authentication_token = SecureRandom.urlsafe_base64
+      break unless User.find_by_authentication_token(authentication_token)
+    end
+  end
+
 end

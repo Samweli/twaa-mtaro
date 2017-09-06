@@ -10,6 +10,7 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
+
 module AdoptADrain
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -56,5 +57,15 @@ module AdoptADrain
     config.assets.version = '1.0'
 
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
+
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options, :head]
+      end
+    end
+
+
   end
 end
