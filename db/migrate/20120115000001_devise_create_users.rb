@@ -13,6 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :max_claims
       t.integer :street_id
       t.string :encrypted_password, :null => false, :default => ""
+      t.string :authentication_token
     ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at

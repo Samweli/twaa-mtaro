@@ -27,4 +27,26 @@ streets.each do |key, street|
   )
 end
 
+# Users
+User.create!(first_name:  "Example",
+             last_name: "User",
+             sms_number: "071234567890",
+             street_id: 1,
+             email: "example@twaamtaro.org",
+             password:              "password")
+99.times do |n|
+  first_name = Faker::Name.name
+  last_name = Faker::Name.name
+  email = "example-#{n+1}@twaamtaro.org"
+  sms_number = "07123456#{n+1}"
+  password = "password"
+  User.create!(first_name:  first_name,
+               email: email,
+               sms_number: sms_number,
+               last_name: last_name,
+               street_id: 1,
+               password: "password")
+end
+
 p "created #{Street.count} streets"
+p "created #{User.count} users"
