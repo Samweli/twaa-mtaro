@@ -1117,7 +1117,7 @@ map.on('locationerror', onLocationError);
             return false;
         });
 
-        $('#need_help').on('click', function () {
+        $('#help').on('click', function () {
             var id = $(this).attr('data-moid');
             var locale = urlParam('locale');
             showSpinner();
@@ -1129,7 +1129,7 @@ map.on('locationerror', onLocationError);
                     'moid': $(this).attr('data-moid'),
                     'authenticity_token': AUTH_TOKEN,
                     '_method': 'put',
-                    'shoveled': false,
+                    'need_help': true,
                     'locale': locale
                 },
                 error: function (jqXHR) {
