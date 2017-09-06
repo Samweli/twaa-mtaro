@@ -26,10 +26,6 @@ gem 'therubyracer'
 gem 'twilio-ruby', '4.13.0'
 
 
-
-
-
-
 platforms :jruby do
   gem 'jruby-openssl'
   gem 'therubyrhino'
