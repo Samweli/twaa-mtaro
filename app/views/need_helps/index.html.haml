@@ -1,0 +1,23 @@
+%h1 Listing need_helps
+
+%table
+  %tr
+    %th Help needed
+    %th Gid
+    %th User
+    %th
+    %th
+    %th
+
+  - @need_helps.each do |need_help|
+    %tr
+      %td= need_help.help_needed
+      %td= need_help.gid
+      %td= need_help.user_id
+      %td= link_to 'Show', need_help
+      %td= link_to 'Edit', edit_need_help_path(need_help)
+      %td= link_to 'Destroy', need_help, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Need help', new_need_help_path
