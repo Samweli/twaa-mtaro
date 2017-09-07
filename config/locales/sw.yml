@@ -78,6 +78,9 @@ sw:
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
+  forms:
+    need_help: "tuambie ni msaada gani ungehitaji"
+    need_help_submit: "Wasilisha"
   labels:
     address: "Anwani ya mtaa"
     city_state: "Mji"
@@ -169,6 +172,7 @@ sw:
     caption: "Hakikishia kwamba unahitajika kusafi %{thing} karibu na nyumbani kwako au biashara yako,pia vyema pia kuwasaidia wengine"
     main: "Twaa %{thing}"
     edit_profile: "Hariri Wasifu kwenye"
+    need_help: "Eleza Msaada Unaohitaji"
     ofline: "wa %{organization}"
     thank_you: " Asante kwa kutwaa huu %{thing}!"
     register_now: "Jisajili sasa!"

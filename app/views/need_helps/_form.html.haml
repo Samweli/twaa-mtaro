@@ -1,4 +1,4 @@
-= form_for @need_help do |f|
+= form_for  @need_help do |f|
   - if @need_help.errors.any?
     #error_explanation
       %h2= "#{pluralize(@need_help.errors.count, "error")} prohibited this need_help from being saved:"
@@ -7,13 +7,6 @@
           %li= msg
 
   .field
-    = f.label :help_needed
-    = f.text_field :help_needed
-  .field
-    = f.label :gid
-    = f.number_field :gid
-  .field
-    = f.label :user_id
-    = f.number_field :user_id
-  .actions
-    = f.submit 'Save'
+    = f.text_area :help_needed,:size => "60x6", placeholder: t("forms.need_help")
+  .actions#drain_help{:data => {:moid=>current_user.id}}
+    = f.submit t("forms.need_help_submit")

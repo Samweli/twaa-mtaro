@@ -65,6 +65,7 @@ es:
     byline: "por %{name}"
     edit_profile: "Edita tu perfil"
     main: "Adoptar una %{thing}"
+    need_help: "Describe The Help You Need"
     ofline: "de %{organization}"
     thank_you: "Gracias por la adopción de esta %{thing}!"
     tos: "Términos de Servicio"

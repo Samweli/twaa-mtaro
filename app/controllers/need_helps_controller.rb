@@ -1,4 +1,5 @@
 class NeedHelpsController < ApplicationController
+  layout 'info_window'
   # GET /need_helps
   # GET /need_helps.json
   def index

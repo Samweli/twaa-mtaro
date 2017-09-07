@@ -352,6 +352,27 @@ map.on('locationerror', onLocationError);
     });
 
 
+    /* displays need help form inside a popup */
+    $('body').on('click', '#help', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/need_helps/new',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+
+                createPopup(msg, drain_pos);
+            }
+
+        });
+        return false;
+    });
+
+
   /* displays user profile inside a popup */
     $('body').on('click', '#my_profile', function () {
 
@@ -1117,29 +1138,54 @@ map.on('locationerror', onLocationError);
             return false;
         });
 
-        $('#help').on('click', function () {
-            var id = $(this).attr('data-moid');
+        $('#drain_help').on('click', function (e) {
+            var submitButton = $("input[type='submit']", this);
+            i = $(e.target);
+            var id = activeObjectId;
             var locale = urlParam('locale');
+            submitButton.attr('disabled', 'disabled');
             showSpinner();
+            console.log(activeObjectId);
 
             $.ajax({
                 type: 'POST',
-                url: '/drains/' + id,
+                url: '/need_helps.json',
                 data: {
-                    'moid': $(this).attr('data-moid'),
-                    'authenticity_token': AUTH_TOKEN,
-                    '_method': 'put',
-                    'need_help': true,
-                    'locale': locale
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                    'need_help': {
+                        'help_needed': $('#need_help_help_needed').val(),
+                        'user_id': $(this).attr('data-moid'),
+                        'gid': id
+                    },
+//                    'locale': locale
                 },
                 error: function (jqXHR) {
-                    data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
                 },
                 success: function (data) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/drains/' + id,
+                        data: {
+                            'moid': id,
+                            'authenticity_token': AUTH_TOKEN,
+                            '_method': 'put',
+                            'need_help': true,
+                            'locale': locale
+                        },
+                        error: function (jqXHR) {
+                            data = $.parseJSON(jqXHR.responseText);
+                            if (bDebug) console.error(data);
+                        },
+                        success: function (data) {
 
-                    refreshKML("all");
-                    fetchDrainInfo(id, drain_pos);
+                            refreshKML("all");
+                            fetchDrainInfo(id, drain_pos);
+
+                        }
+                    });
+
 
                 }
             });
