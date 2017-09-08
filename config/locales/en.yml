@@ -79,6 +79,9 @@ en:
     not_found: "%{thing}(s) could not be found."
     drain_notfound: "%{error} not found"
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
+  forms:
+    need_help: "tell us what kind of help is needed"
+    need_help_submit: "Send"
   labels:
     address: "Street address"
     city_state: "City"
@@ -169,6 +172,7 @@ en:
     caption: "you may know that you're required to clean the drain near your home or business,but how about helping others out"
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
+    need_help: "Describe The Help You Need"
     ofline: "of %{organization}"
     thank_you: "Thank you for adopting this %{thing}!"
     register_now: "Register Now!"

@@ -3,24 +3,29 @@ ruby "2.2.3"
 
 gem 'rails', '~> 3.2.13'
 
+gem 'active_model_serializers', '0.9.2'
 gem 'arel'
+gem 'browser'
 gem 'devise', '2.2.2'
+gem 'execjs'
 gem 'geokit'
+gem 'google-analytics-rails', '1.1.1'
 gem 'haml', '~> 3.2.0.alpha'
 gem 'haml-rails'
-gem 'pg'
-gem 'rack-contrib'
-gem 'execjs'
-gem 'therubyracer'
 gem 'jquery-rails'
-gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'kaminari'
 gem 'omniauth-facebook'
+gem 'pg'
+gem 'rack-contrib'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'rest-client'
-gem 'browser'
-gem 'twilio-ruby', '4.13.0'
 gem 'social-share-button', '~> 0.1.6'
-gem 'google-analytics-rails', '1.1.1'
+gem 'test-unit', '~> 3.0'
+gem 'therubyracer'
+gem 'twilio-ruby', '4.13.0'
+gem 'faker'
+
 
 platforms :jruby do
   gem 'jruby-openssl'
@@ -29,6 +34,7 @@ end
 
 platforms :ruby_18 do
   gem 'fastercsv'
+
 end
 
 group :assets do
@@ -41,7 +47,6 @@ end
 
 group :development do
   gem 'nifty-generators'
-  gem 'faker'
 end
 
 group :test do

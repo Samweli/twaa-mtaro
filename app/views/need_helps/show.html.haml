@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Help needed:
+  = @need_help.help_needed
+%p
+  %b Gid:
+  = @need_help.gid
+%p
+  %b User:
+  = @need_help.user_id
+
+= link_to 'Edit', edit_need_help_path(@need_help)
+\|
+= link_to 'Back', need_helps_path
