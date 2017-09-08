@@ -9,7 +9,7 @@ module DrainsHelper
     # elsif s.claims_count > 0
     #   "#adopted"
     elsif not s.need_help.nil?
-       if s.need_help is true
+       if s.need_help == true
         "#needs_help"
        end
     else
