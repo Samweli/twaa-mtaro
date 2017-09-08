@@ -96,6 +96,14 @@
   background-color: #5cb85c;
   border-color: #4cae4c;
   border-radius: 4px;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #5cb85c;
+    -ms-border-color: #5cb85c;
+    -webkit-border-color: #5cb85c;
+    -o-border-color: #5cb85c;;
 }
 .btn-unclean{
    color: #fff;
@@ -108,6 +116,14 @@
   background-color: #CB7D50;
   border-color: #CB7D50;
   border-radius: 4px;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #CB7D50;
+    -ms-border-color: #CB7D50;
+    -webkit-border-color: #CB7D50;
+    -o-border-color: #CB7D50;;
 }
 #page{
   float: right;
@@ -209,6 +225,14 @@ input, select, option, button{
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
 #actions_box{
   width: 210px;
@@ -249,9 +273,10 @@ h4{
   font-size: 9.7px;
 }
 .legend i {
-    width: 12px;
-    height: 12px;
+    width: 18px;
+    height: 2px;
     font-size: 6px;
+    margin-top: 6px;
   }
 
 .info {
@@ -283,6 +308,10 @@ table #abandon_link , #abandon_link th, #abandon_link td {
      width: 90px;
      margin-bottom: 12px;
      padding: 4px;
+     -moz-border: 1px solid gray;
+     -webkit-border: 1px solid gray;
+     -o-border: 1px solid gray;
+     -ms-border: 1px solid gray
 }
 .font_1 {
   font-size: 10px;
@@ -305,6 +334,19 @@ table #abandon_link , #abandon_link th, #abandon_link td {
     padding-right: 10px;
     margin: 0px;
       }
+
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+
+ }
+ .leaflet-control-layers-toggle {
+    background-image: url(../assets/layers.png);
+  width: 26px;
+  height: 26px;
+  }
   
 }
 
@@ -328,6 +370,14 @@ tr td, tr th{
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
 ul#user_profile > li{
   list-style-type:none;
@@ -350,6 +400,14 @@ table #abandon_link ,
      margin-bottom: 12px;
      margin-right: 15px;
      padding: 0;
+     -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border: 1px solid gray;
+    -ms-border: 1px solid gray;
+    -webkit-border: 1px solid gray;
+    -o-border-border: 1px solid gray;
 }
 .btn.btn-edit{
   background-color: #6495ED;
@@ -357,6 +415,14 @@ table #abandon_link ,
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
 
 #address_box{
@@ -524,7 +590,7 @@ h2 {
     position: relative;
   }
 .legend {
-    width:130px;
+    width:125px;
     padding: 6px;
 }
 .legend h3{
@@ -686,14 +752,24 @@ th, td {
     font-size: 14px;
     color: #666;
    }
- 
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-size: 13px;
+  font-weight: normal;
+  font-family: sans-serif;
+
+ }
+ .leaflet-control-layers-toggle {
+  width: 30px;
+  height: 30px;
+  }
 }
 
   /*medium query for larger screen*/
 @media (min-width:  1200px){
   .navbar-brand img{
     width: 99%;
-    height: 72px;
+    height: 78px;
   }
 /*for the drain list*/
 h2 {
@@ -754,10 +830,10 @@ h4{
   font-size: 15px;
   }
 .font_1 {
-  font-size: 14px;
+  font-size: 12px;
 }
 .legend {
-    width:160px;
+    width:146px;
     padding: 6px;
 }
     #assign.btn.info_adopt,
@@ -767,5 +843,15 @@ h4{
   padding-left: 20px;
     padding-right: 20px;
   }
+ /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-size: 16px;
+  font-weight: normal;
+  font-family: sans-serif;
 
+ }
+ .leaflet-control-layers-toggle {
+  width: 36px;
+  height: 36px;
+  }
   }

@@ -335,6 +335,9 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '#sign_in_link', function () {
 
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide');
+        
+
 
         $.ajax({
             type: 'GET',
@@ -377,6 +380,7 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '#my_profile', function () {
 
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide');
 
         $.ajax({
             type: 'GET',
@@ -398,6 +402,7 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '#edit_profile_form', function () {
 
         var locale = urlParam('locale');
+       
 
         $.ajax({
             type: 'GET',
@@ -417,6 +422,7 @@ map.on('locationerror', onLocationError);
 
     function newClaim() {
         var locale = urlParam('locale');
+    
 
         $.ajax({
             type: 'GET',
@@ -435,6 +441,7 @@ map.on('locationerror', onLocationError);
   /* displays sign_up form inside a popup */
     $('body').on('click', '#sign_up_link', function () {
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide')
 
         $.ajax({
             type: 'GET',
@@ -1084,6 +1091,7 @@ map.on('locationerror', onLocationError);
         $('#clean').on('click', function () {
             var id = $(this).attr('data-moid');
             var locale = urlParam('locale');
+
             showSpinner();
 
             $.ajax({
@@ -1198,30 +1206,37 @@ map.on('locationerror', onLocationError);
         $('#cleaned').on('click', function () {
             showSpinner();
             refreshKML("cleaned");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#uncleaned').on('click', function () {
             showSpinner();
             refreshKML("uncleaned");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#need_help').on('click', function () {
             showSpinner();
             refreshKML("need_help");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#unknown').on('click', function () {
             showSpinner();
             refreshKML("unknown");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#all').on('click', function () {
             showSpinner();
             refreshKML("all");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#adopted').on('click', function () {
             showSpinner();
             refreshKML("adopted");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#not_adopted').on('click', function () {
             showSpinner();
             refreshKML("not_adopted");
+            $('.navbar-collapse').collapse('hide')
         });
         
         $('#address_button').on('click', function () {
@@ -1315,6 +1330,7 @@ map.on('locationerror', onLocationError);
         var latlng = L.latLng(lat, lng);
 
         map.setView(latlng, 17);
+        $('.navbar-collapse').collapse('hide')
     });
 
 

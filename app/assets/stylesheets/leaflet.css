@@ -285,8 +285,7 @@
 	}
 .leaflet-control-layers-toggle {
 	background-image: url(../assets/layers.png);
-	width: 36px;
-	height: 36px;
+	
 	}
 .leaflet-retina .leaflet-control-layers-toggle {
 	background-image: url(../assets/layers-2x.png);

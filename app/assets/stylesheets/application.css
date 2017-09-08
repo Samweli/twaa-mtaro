@@ -29,6 +29,7 @@ h2 {
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
 }
+
 /* vietnamese */
 @font-face {
     font-family: 'Source Sans Pro';
@@ -273,7 +274,7 @@ border-radius: 5px 5px 5px 5px;
   color: #444;
 }
 .font_10 {font-size: 10px;}
-.font_12 {
+.font_12,.pen_lightgray{
       font-size: 12px;
           }
 .font_14 {font-size: 15px;}
@@ -983,6 +984,56 @@ input.form-control {
   box-shadow: 0 1px 0 #FFFFFF;
   padding: 10px;
 }
+#street{
+  color: #337ab7;
+}
+#info_box.center.hidden-xs h2.font_bold,
+#info_box.center.hidden-xs p
+{
+  margin: 0;
+}
+ul.features.hidden-sm.hidden-xs,
+#info_box.center.hidden-xs p{
+  margin-top:0;
+  margin-bottom:6px;
+}
+.notice p {
+  margin: 2px 0 2px 0;
+}
 
 
-
+#osw_widget{
+  position: fixed; 
+  left: 345px; 
+  bottom: 0px; 
+  z-index: 90000000
+}
+#feedback.font_12.link_1{
+  text-align:center;
+}
+#testdiv .users{
+  max-height:200px; 
+  width:450px;
+  overflow:auto;}
+#sign_up_box  ul.horizontal_items.font_12.center,{
+    "margin-top: 15px;
+}
+.descriptions h3{
+  font-size:14px;
+}
+.btn.btn-default.chng_link{
+font-size:8px;
+}
+#forgot_pw_box{
+  padding: 30px;
+}
+#forgot_pw div{
+  margin-left: 145pxs
+}
+li.button.small_gray{
+margin: 0 0 0 50px;
+}
+#current_user{
+  text-align:center;
+  text-transform: 
+  capitalize;color: #666;} 
