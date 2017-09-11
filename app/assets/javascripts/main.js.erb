@@ -1029,15 +1029,26 @@ map.on('locationerror', onLocationError);
 
 
                     if (users) {
-
+                        console.log('Users');
+                        console.log(users);
 
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
+                            $.each(item, function(index, obj){
+                                trHTML += '<tr><td class="id_user"> ' +
+                                    obj.id + ' </td><td>' + obj.first_name +
+                                    '</td><td>' + obj.last_name + '</td><td>' +
+                                    '<button class="btnassing">' + 'assign' +
+                                    '</button>' + '</tr>';
 
-                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            })
+
+                            console.log(i);
+                            console.log(item);
                         });
+                        console.log(trHTML);
 
                         $('#location').append(trHTML);
 
@@ -1067,15 +1078,26 @@ map.on('locationerror', onLocationError);
 
 
                     if (users) {
-
+                        console.log('Users');
+                        console.log(users);
 
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
+                            $.each(item, function(index, obj){
+                                trHTML += '<tr><td class="id_user"> ' +
+                                    obj.id + ' </td><td>' + obj.first_name +
+                                    '</td><td>' + obj.last_name + '</td><td>' +
+                                    '<button class="btnassing">' + 'assign' +
+                                    '</button>' + '</tr>';
 
-                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            })
+
+                            console.log(i);
+                            console.log(item);
                         });
+                        console.log(trHTML);
 
                         $('#location').append(trHTML);
 
