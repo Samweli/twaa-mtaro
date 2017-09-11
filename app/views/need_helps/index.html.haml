@@ -1,23 +1,15 @@
-%h1 Listing need_helps
+%h3 = t("tables.need_help_details.title")
 
 %table
   %tr
-    %th Help needed
-    %th Gid
-    %th User
-    %th
-    %th
-    %th
+    %th = t("tables.need_help_details.help_needed")
+    %th = t("tables.need_help_details.street")
+    %th = t("tables.need_help_details.leader_name")
 
   - @need_helps.each do |need_help|
     %tr
       %td= need_help.help_needed
-      %td= need_help.gid
-      %td= need_help.user_id
-      %td= link_to 'Show', need_help
-      %td= link_to 'Edit', edit_need_help_path(need_help)
-      %td= link_to 'Destroy', need_help, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= need_help.user.street.street_name
+      %td= need_help.user.fullname
 
 %br
-
-= link_to 'New Need help', new_need_help_path
