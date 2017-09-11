@@ -1029,8 +1029,6 @@ map.on('locationerror', onLocationError);
 
 
                     if (users) {
-                        console.log('Users');
-                        console.log(users);
 
                         createPopup(msg, drainLocation);
                         var trHTML = '';
@@ -1045,10 +1043,7 @@ map.on('locationerror', onLocationError);
 
                             })
 
-                            console.log(i);
-                            console.log(item);
                         });
-                        console.log(trHTML);
 
                         $('#location').append(trHTML);
 
