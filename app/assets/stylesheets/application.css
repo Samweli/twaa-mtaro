@@ -274,7 +274,7 @@ border-radius: 5px 5px 5px 5px;
   color: #444;
 }
 .font_10 {font-size: 10px;}
-.font_12,.pen_lightgray{
+.font_12{
       font-size: 12px;
           }
 .font_14 {font-size: 15px;}
@@ -385,9 +385,10 @@ ul.horizontal_items > li,ul#profile {
 
 ul.horizontal_items > li label,ul#profile > li label {
     display: inline-block;
-    width: 130px;
+    width: 140px;
     zoom: 1;
     *display: inline;
+    font-size: 13px;
 }
 
 #sidebar_content ul.horizontal_items > li label, ul#profile > li label  {
