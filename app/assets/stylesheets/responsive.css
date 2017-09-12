@@ -877,7 +877,13 @@ h4{
  #add_claim.btn.info_adopt{
   margin-left: 18px;
  }
+li  .btn.btn-success.cat-btn{
+
+padding-right: 9px;
+padding-left: 10px;
+}
  /*leaf lwt control*/
+
 .leaflet-control-layers label{
   font-size: 16px;
   font-weight: normal;
