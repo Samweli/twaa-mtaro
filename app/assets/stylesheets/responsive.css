@@ -861,7 +861,6 @@ h4{
 #testdiv{
   width: 400px;
 }
-
 .font_1 {
   font-size: 14px;
     margin: 7px;
@@ -871,14 +870,7 @@ h4{
     width:146px;
     padding: 6px;
 }
-/*    #assign.btn.info_adopt,
- #add_claim.btn.info_adopt,
- a .btn.btn-success.cat-btn
- {
-  padding-left: 20px;
-    padding-right: 20px;
-  }*/
-    #assign.btn.info_adopt,
+#assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
   margin-left: 18px;
  }
