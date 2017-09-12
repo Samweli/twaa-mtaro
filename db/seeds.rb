@@ -48,5 +48,19 @@ if ENV["users"]
     p "created #{User.count} users"
 end
 
+if ENV["need_help_categories"]
+  # need help categories
+  categories = [
+                "Vifaa Vinahitajika",
+                "Mtaro Unahitaji Marekebisho",
+                "Mkandarasi wa kukusanya taka anahitajika",
+                "Nyingine"
+                ]
+  4.times do |key|
+    NeedHelpCategory.create(category_name: categories[key])
+  end
+  p "created #{NeedHelpCategory.count} need help categories"
+end
+
 
 
