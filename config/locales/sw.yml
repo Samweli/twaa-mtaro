@@ -59,6 +59,8 @@ sw:
     drain_number: "Namba ya %{thing} ni"
     help_question: "unaweza kusafisha hiyo mitaro?"
     missing: "Haujauona mtaro wako?"
+    need_help: "Mtaro huu unahitaji Msaada "
+    need_help_details: "bonyeza hapa kujua zaidi"
     notify: "Mtaro huu bado haujachukuliwa."
     notify_all: "Julisha wengine kuwa umesafisha mtaro wako"
     thing: "mtaro"
@@ -80,6 +82,7 @@ sw:
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
+    need_help_category: "Aina ya Msaada"
     need_help_submit: "Wasilisha"
   labels:
     address: "Anwani ya mtaa"
@@ -159,6 +162,11 @@ sw:
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
   tables:
     need_help: "Msaada"
+    need_help_details:
+      help_needed: "Msaada unao hitajika"
+      leader_name: "Jina la kiongozi wa mtaa"
+      street: "Jina la mtaa"
+      title: "Maelezo Ya Misaada/Msaada unao hitajika"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"

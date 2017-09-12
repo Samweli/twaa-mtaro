@@ -121,10 +121,7 @@ $(function () {
 
       /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
-        console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
-        console.log('this is the current locale');
-        console.log(locale);
 
         var url;
         if (type) {
@@ -269,7 +266,6 @@ map.on('locationerror', onLocationError);
             map.closePopup();
             return false;
         }
-        //if (bDebug) console.info(e.latLng);
         var locale = urlParam('locale');
         var dataToReturn;
 
@@ -550,7 +546,6 @@ map.on('locationerror', onLocationError);
                     updateSidebar();
                     fetchDrainInfo();
                     window.location.href = window.location.hostname;
-                    console.log(window.location.href);
                     window.location.reload();
 
                 }
@@ -651,7 +646,6 @@ map.on('locationerror', onLocationError);
                     updateSidebar();
                     fetchDrainInfo();
                     window.location.href = window.location.hostname;
-                    console.log(window.location.href);
                     window.location.reload();
 
                 }
@@ -698,10 +692,6 @@ map.on('locationerror', onLocationError);
             beforeSend: function () {
             },
             error: function (jqXHR) {
-
-             console.log('an error occured');
-
-
             },
             success: function (data) {
                 updateSidebar();
@@ -835,10 +825,10 @@ map.on('locationerror', onLocationError);
                 'locale': locale
             },
             error: function (jqXHR) {
-                //if (bDebug) console.error(jqXHR);
+
             },
             success: function (data) {
-                //if (bDebug) console.info(data);
+
                 $('#username').replaceWith(data['user_badge']);
                 $('#drain_list').replaceWith(data['drain_list']);
                 $('#address_box').replaceWith(data['address_box']);
@@ -952,7 +942,7 @@ map.on('locationerror', onLocationError);
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
-                        if (bDebug) console.error(data);
+
                     },
                     success: function (data) {
                         refreshKML("all");
@@ -988,7 +978,7 @@ map.on('locationerror', onLocationError);
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
-                        if (bDebug) console.error(data);
+
                     },
                     success: function (data) {
                         refreshKML("all");
@@ -1072,7 +1062,6 @@ map.on('locationerror', onLocationError);
                 success: function (msg) {
                     getUsers();
 
-
                     if (users) {
                         console.log('Users');
                         console.log(users);
@@ -1083,15 +1072,12 @@ map.on('locationerror', onLocationError);
                         $.each(users, function (i, item) {
                             $.each(item, function(index, obj){
                                 trHTML += '<tr><td class="id_user"> ' +
-                                    obj.id + ' </td><td>' + obj.first_name +
-                                    '</td><td>' + obj.last_name + '</td><td>' +
-                                    '<button class="btnassing">' + 'assign' +
-                                    '</button>' + '</tr>';
+                                obj.id + ' </td><td>' + obj.first_name +
+                                '</td><td>' + obj.last_name + '</td><td>' +
+                                '<button class="btnassing">' + 'assign' +
+                                '</button>' + '</tr>';
 
                             })
-
-                            console.log(i);
-                            console.log(item);
                         });
                         console.log(trHTML);
 
@@ -1125,7 +1111,7 @@ map.on('locationerror', onLocationError);
                 },
                 error: function (jqXHR) {
                     data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
+
                     hideSpinner();
                 },
                 success: function (data) {
@@ -1153,7 +1139,7 @@ map.on('locationerror', onLocationError);
                 },
                 error: function (jqXHR) {
                     data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
+
                 },
                 success: function (data) {
 
@@ -1165,6 +1151,27 @@ map.on('locationerror', onLocationError);
             return false;
         });
 
+        /* displays drain help details inside a popup */
+        $('body').on('click', '#need_help_details', function () {
+
+            var locale = urlParam('locale');
+
+            $.ajax({
+                type: 'GET',
+                url: 'need_helps',
+                data: {
+                    'locale': locale,
+                    'gid': $(this).attr('data-help-details-id')
+                },
+                success: function (msg) {
+
+                    createPopup(msg, drain_pos);
+                }
+
+            });
+            return false;
+        });
+
         $('#drain_help').on('click', function (e) {
             var submitButton = $("input[type='submit']", this);
             i = $(e.target);
@@ -1172,7 +1179,6 @@ map.on('locationerror', onLocationError);
             var locale = urlParam('locale');
             submitButton.attr('disabled', 'disabled');
             showSpinner();
-            console.log(activeObjectId);
 
             $.ajax({
                 type: 'POST',
@@ -1183,6 +1189,7 @@ map.on('locationerror', onLocationError);
                     'authenticity_token': $('input[name="authenticity_token"]', this).val(),
                     'need_help': {
                         'help_needed': $('#need_help_help_needed').val(),
+                        'need_help_category_id': $('#need_help_need_help_category_id').val(),
                         'user_id': $(this).attr('data-moid'),
                         'gid': id
                     },
@@ -1203,7 +1210,6 @@ map.on('locationerror', onLocationError);
                         },
                         error: function (jqXHR) {
                             data = $.parseJSON(jqXHR.responseText);
-                            if (bDebug) console.error(data);
                         },
                         success: function (data) {
 
@@ -1289,42 +1295,6 @@ map.on('locationerror', onLocationError);
         return false;
     });
 
-    // function update_drain_view(activeObjectId){
-
-    //     console.info(kmlLayer);
-    //     console.info(kmlLayer.setStyle({weight: 6}));
-
-    //     kmlLayer.eachLayer(function(e){
-    //         console.log('inside');
-    //         console.log(e);
-    //     });
-    //     kmlLayer.eachLayer(function(e){
-    //         console.log('in each')
-    //         feature_layer = e.layer;
-    //         var mtaro = e.layer.feature.properties;
-
-    //         console.log(mtaro.description);
-
-    //         if(mtaro.description == activeObjectId){
-    //             console.log('match');
-
-    //             selected = e.layer
-    //             selected.bringToFront()
-    //             // check for past selected drain and 
-    //             // return its style as always
-    //             if (selected_drain){
-    //                 selected_drain.setStyle({weight: 2.5});
-    //             }
-    //             // Style selected
-    //             selected.setStyle({weight: 6});
-    //             selected_drain = selected;
-
-    //         }
-    //         // increase size of the clicked drain
-           
-    //     });
-    // }
-
     $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
@@ -1356,7 +1326,6 @@ map.on('locationerror', onLocationError);
     function updateNotification(){
         var notification_msg = $('.notice').text();
         $('.notice').hide();
-        console.log(notification_msg);
         if(notification_msg){
 
             //add a new style 'foo'

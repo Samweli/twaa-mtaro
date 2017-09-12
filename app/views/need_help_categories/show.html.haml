@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Category name:
+  = @need_help_category.category_name
+
+= link_to 'Edit', edit_need_help_category_path(@need_help_category)
+\|
+= link_to 'Back', need_help_categories_path

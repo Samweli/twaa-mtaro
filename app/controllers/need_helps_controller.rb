@@ -3,7 +3,7 @@ class NeedHelpsController < ApplicationController
   # GET /need_helps
   # GET /need_helps.json
   def index
-    @need_helps = NeedHelp.all
+    @need_helps = NeedHelp.find_all_by_gid(params[:gid])
 
     respond_to do |format|
       format.html # index.html.erb

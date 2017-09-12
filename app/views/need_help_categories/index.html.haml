@@ -1,0 +1,19 @@
+%h1 Listing need_help_categories
+
+%table
+  %tr
+    %th Category name
+    %th
+    %th
+    %th
+
+  - @need_help_categories.each do |need_help_category|
+    %tr
+      %td= need_help_category.category_name
+      %td= link_to 'Show', need_help_category
+      %td= link_to 'Edit', edit_need_help_category_path(need_help_category)
+      %td= link_to 'Destroy', need_help_category, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Need help category', new_need_help_category_path
