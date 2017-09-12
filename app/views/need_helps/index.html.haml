@@ -1,10 +1,10 @@
-%h3 = t("tables.need_help_details.title")
+%h3= t("tables.need_help_details.title")
 
 %table
   %tr
-    %th = t("tables.need_help_details.help_needed")
-    %th = t("tables.need_help_details.street")
-    %th = t("tables.need_help_details.leader_name")
+    %th= t("tables.need_help_details.help_needed")
+    %th= t("tables.need_help_details.street")
+    %th= t("tables.need_help_details.leader_name")
 
   - @need_helps.each do |need_help|
     %tr
