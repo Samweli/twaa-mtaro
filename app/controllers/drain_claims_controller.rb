@@ -52,6 +52,9 @@ class DrainClaimsController < ApplicationController
     @my_drain =  DrainClaim.find_by_gid(@drain.id)
     @shoveled_by_me = true
     @claims = claims
+    if @drain.need_help == true
+      Rails.logger.debug("This is the description #{@drain.need_helps}")
+    end
 
     if user_signed_in?
       @claim_owner = DrainClaim.find_by_user_id_and_gid(current_user.id,params[:id])

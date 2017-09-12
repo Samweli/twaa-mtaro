@@ -4,6 +4,7 @@ class CreateNeedHelps < ActiveRecord::Migration
       t.string :help_needed
       t.integer :gid
       t.integer :user_id
+      t.integer :need_help_category_id
 
       t.timestamps
     end
