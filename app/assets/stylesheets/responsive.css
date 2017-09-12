@@ -516,8 +516,8 @@ table #abandon_link ,
    }
        #assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
-  margin-left: 8px;
- }
+/*  margin-left: 8px;
+*/ }
 }
 
 @media (max-device-width: 480px) and (orientation: landscape) {
@@ -568,10 +568,7 @@ margin-left: 248PX;
     background-color: #6495ED;
     color: #333;
   }
-.btn {
-    margin: 0 10px 5px 20px;
-     
-}
+
 .input-text {
     border: 1px solid #ccc;
     border-radius: 4px 4px 4px 4px;
@@ -609,7 +606,6 @@ h2 {
 .btn {
     display: inline-block;
     padding: 6px 5px;
-    margin: 0 10px 5px 18px;
     border-radius: 4px;
     line-height: 1.42857143;
     font-size: 11px;
@@ -681,6 +677,7 @@ h4{
     padding-left: 15px;
     padding-right: 15px;
       margin-left: 10px;
+      margin-bottom: 6px;
     
   }
 #location{
