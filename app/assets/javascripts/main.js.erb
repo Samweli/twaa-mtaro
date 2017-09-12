@@ -29,15 +29,29 @@ $(function () {
                                 maxZoom: 20
     });
 
-    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,'+
+                  ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
       
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
         attribution:osmAttr,
         maxZoom: 19
-      });
+    });
 
-    // map.addLayer(customOsmBright);
+    var inundationAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
+                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
+                           '© <a href="https://www.ramanihuria.org">Ramani Huria</a>'+
+                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
+                           'Improve this map</a></strong>'
 
+    var inundation = new L.tileLayer( 'https://api.mapbox.com/styles/v1/samtwesa/'+
+                    'cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token='+
+                    'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                    'F1zCcOYqpXWd4C9l9xqvEQ'
+                    ,{ 
+                        attribution: inundationAttribution,
+                        maxZoom: 18
+    });
+      
     var mapOptions = {
         center: center,
         zoom: 13,
@@ -72,19 +86,6 @@ $(function () {
 
    L.control.layers(baseMaps).addTo(map);
   
-  // var hananasif = L.tileLayer( 
-  //   'https://api.mapbox.com/styles/v1/samtwesa/cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ',
-  // {     
-  //       minZoom: 13,
-  //       maxZoom: 18,
-  //       attribution:osmAttr
-  //  });
-
-   // map.addLayer(hananasif);
-   
-
-   // map.addLayer(osm);
-
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
       if (results == null) {
