@@ -29,9 +29,13 @@ class Api::V1::DrainsController < Api::V1::BaseController
       end
 
       unless @drains.blank?
-        respond_with(@drains) do |format|
-          format.kml {render}
-        end
+        render(
+            json: ActiveModel::ArraySerializer.new(
+                @drains,
+                each_serializer: Api::V1::DrainSerializer,
+                root: 'drains',
+            )
+        )
       else
         render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
       end
