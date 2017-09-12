@@ -58,6 +58,8 @@ en:
     tagline: "Claim responsibility for cleaning drains before it floods."
     tos: "By signing up, you agree to the %{tos}."
     missing: "Don't see your drain on the map?"
+    need_help: "This drain needs help "
+    need_help_details: "click here for more details"
     notify: "Nobody has adopted this drain yet."
     claim: "Claim the drains that you'll clean this season."
     ask_help: "Ask for help if you need an extra hand this season."
@@ -81,6 +83,7 @@ en:
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
   forms:
     need_help: "tell us what kind of help is needed"
+    need_help_category: "Help type"
     need_help_submit: "Send"
   labels:
     address: "Street address"
@@ -159,6 +162,11 @@ en:
     no_value: "No"
   tables:
     need_help: "Needs help"
+    need_help_details:
+      help_needed: "Needed Help"
+      leader_name: "Street leader's name"
+      street: "Street Name"
+      title: "Details For Needed Help"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"
