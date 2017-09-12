@@ -9,4 +9,9 @@ class CreateNeedHelps < ActiveRecord::Migration
       t.timestamps
     end
   end
+  def self.down
+    if ActiveRecord::Base.connection.table_exists? :need_helps
+      drop_table :need_helps
+    end
+  end
 end
