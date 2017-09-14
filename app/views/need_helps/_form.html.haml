@@ -12,4 +12,6 @@
   .field
     = f.text_area :help_needed,:size => "60x6", placeholder: t("forms.need_help")
   .actions#drain_help{:data => {:moid=>current_user.id}}
+    #warn
+      = t("defaults.need_help")
     = f.submit t("forms.need_help_submit")
