@@ -1173,12 +1173,17 @@ map.on('locationerror', onLocationError);
         });
 
         $('#drain_help').on('click', function (e) {
+            if($('#need_help_help_needed').val().length == 0 && !window.confirm('Ujaweka maelezo ya msaada, ombi lako litumwe?') ){
+                return false;
+            }
+
             var submitButton = $("input[type='submit']", this);
             i = $(e.target);
             var id = activeObjectId;
             var locale = urlParam('locale');
             submitButton.attr('disabled', 'disabled');
             showSpinner();
+
 
             $.ajax({
                 type: 'POST',
