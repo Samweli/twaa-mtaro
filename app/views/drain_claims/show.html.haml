@@ -25,16 +25,16 @@
       = @drain.address
       %span.font12
         = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
-        = @drain.gid
-    - if  @drain.need_help == true
-      - if  @drain.cleared == false
+        = @drain.try(:gid)
+    - if  @drain.try(:need_help) == true
+      - if  @drain.try(:cleared) == false
         %p.font_14.color_warn.center
         = t("defaults.need_help")
         = t("defaults.dirty")
       - else
         %p.font_14.color_warn.center
         = t("defaults.need_help")
-        = @drain.need_help
+        = @drain.try(:need_help)
         %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
           = t("defaults.need_help_details")
     - elsif @claims.empty?
@@ -45,7 +45,7 @@
         = t('captions.taken') + ':'
 
       #people_list.users
-      - if user_signed_in? && current_user.role == 2
+      - if user_signed_in? && current_user.try(:role) == 2
         %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
           %tr
             %th
@@ -58,18 +58,18 @@
               = t("defaults.actions")
           - @claims.each do |c|
             %tr
-              %td= c.user.short_name
+              %td= c.try(:user).try(:short_name)
               %td
                 - if c.shoveled?
                   = t("buttons.clean")
                 - else
                   = t("buttons.dirty")
               %td.hide_column
-                - if user_signed_in? && current_user.id == c.user.id
-                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.shoveled)}}
+                - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
+                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled))}}
                     = t("buttons.change_status")
               %td
-                %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.id}}
+                %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.try(:id)}}
                   = t("buttons.change")
       - else
         %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
@@ -83,7 +83,7 @@
                 = t("defaults.change_status")
           - @claims.each do |c|
             %tr
-              %td= c.user.short_name
+              %td= c.try(:user).try(:short_name)
               %td
                 - if c.shoveled?
                   = t("buttons.clean")
@@ -93,18 +93,18 @@
                 /  = t("buttons.unknown_status")
               - if user_signed_in?  
                 %td.hide_column
-                  - if user_signed_in? && current_user.id == c.user.id
-                    %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.shoveled)}}
+                  - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
+                    %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled))}}
                       = t("buttons.change_status")
 
-  - if user_signed_in? && current_user.role == 2
+  - if user_signed_in? && current_user.try(:role) == 2
     %div
       %ul.horizontal_items
-        %li{:id => "help", :data => {:moid=>@drain.gid}}
+        %li{:id => "help", :data => {:moid=>@drain.try(:gid)}}
           = button_tag t("captions.need_help"), :class => "btn btn-primary cat-btn"
-        %li{:id => "unclean", :data => {:moid=>@drain.gid}}
+        %li{:id => "unclean", :data => {:moid=>@drain.try(:gid)}}
           = button_tag t("captions.unclean"), :class => "btn btn-warning cat-btn"
-        %li{ :id => "clean", :data => {:moid=>@drain.gid}}
+        %li{ :id => "clean", :data => {:moid=>@drain.try(:gid)}}
           = button_tag t("captions.clean"), :class => "btn btn-success cat-btn"
         - if @claims.empty?
           %button#assign.btn.info_adopt
@@ -115,7 +115,7 @@
   - else
     - if @drain.cleared?
       = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
-    - elsif @drain.cleared == nil and @drain.need_help == nil
+    - elsif @drain.cleared == nil and @drain.try(:need_help) == nil
       = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - elsif @drain.need_help?
       = button_tag t("captions.need_help"), :class => "btn btn-need_help btn-block cat-btn"
