@@ -68,6 +68,7 @@ sw:
     this_thing: "hii %{thing}"
     tagline: "Chukua jukumu la kusafisha mtaro unapokua na uchafu."
     tos: "Kwa kujisajili, unakubali %{tos}."
+    view_need_help: " ona zaidi"
     welcome: "Karibu Dar es salaam"
     my_drains: "Mitaro yangu"
     user: "Jina"
