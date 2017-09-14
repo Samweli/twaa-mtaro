@@ -150,9 +150,14 @@
     width: 100%;
   }
 
-input, select, option, button, input[type="submit"] {
+input, select,  button, input[type="submit"] {
   font-size: 0.7em;
   padding: 6px;
+  display: inline;
+  background-color: #fff;
+}
+option{
+   padding: 6px;
   display: inline;
   background-color: #fff;
 }
@@ -244,7 +249,7 @@ input, select, option, button{
   #need_help{
     height: 100%;
   }
- textarea{
+ select, textarea{
     width: 99%;
   }
   .btn.btn-help.pull-right{
@@ -367,8 +372,11 @@ table #abandon_link , #abandon_link th, #abandon_link td {
     background-image: url(../assets/layers.png);
   width: 26px;
   height: 26px;
+  } 
+select
+  {
+    width: 75%;
   }
-  
 }
 
 
