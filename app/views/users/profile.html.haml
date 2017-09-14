@@ -4,20 +4,20 @@
 			#user_profile
 
 				%p#profile_picture
-					= current_user.profile_name
+					= current_user.try(:profile_name)
 		
 				%h3#current_user 
-					= current_user.fullname
+					= current_user.try(:fullname)
 				.details
 					%p
-						= current_user.email
+						= current_user.try(:email)
 					%p
-						= current_user.sms_number
+						= current_user.try(:sms_number)
 
 					- if current_user.organization?
 						%p
 							= t("captions.organization")
-							= current_user.organization
+							= current_user.try(:organization)
 					- else
 					%p
 						= render :partial => 'users/edit_profile'	
