@@ -21,13 +21,18 @@
 
   .descriptions
     %h4
-      = t('defaults.address') + ':'
+      = t("defaults.address") + ':'
       = @drain.address
       %span.font12
         = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
         = @drain.gid
     - if  @drain.need_help == true
-      %p.font_14.color_warn.center
+      - if  @drain.cleared == false
+        %p.font_14.color_warn.center
+        = t("defaults.need_help")
+        = t("defaults.dirty")
+      - else
+        %p.font_14.color_warn.center
         = t("defaults.need_help")
         = @drain.need_help
         %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}

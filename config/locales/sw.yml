@@ -57,6 +57,7 @@ sw:
     change_status: "Badili hali"
     claim: "Twaa mitaro utakayoweza kusafisha "
     drain_number: "Namba ya %{thing} ni"
+    dirty: " Pia huu mtaro ni mchafu"
     help_question: "unaweza kusafisha hiyo mitaro?"
     missing: "Haujauona mtaro wako?"
     need_help: "Mtaro huu unahitaji Msaada "
