@@ -130,7 +130,7 @@
 /*css for popup in map for larger screen*/
 .btn.btn-warning.btn-block.cat-btn:hover:not(:disabled), 
 .btn.btn-success.btn-block.cat-btn:hover:not(:disabled)
-.btn.btn-primary:hover:not(:disabled){
+.btn.btn-primary.btn-block.cat-btn:hover:not(:disabled){
 }
 
 .font_h3 {
@@ -276,7 +276,8 @@ h2{
     padding-right: 0;
   }
   .btn.btn-warning.btn-block.cat-btn,
-  .btn.btn-success.btn-block.cat-btn{
+  .btn.btn-success.btn-block.cat-btn,
+  .btn.btn-need_help.btn-block.cat-btn{
   font-size: 10px;
   font-weight: 100;
 }
@@ -827,7 +828,8 @@ h2 {
 #info_box.center p,ul.features li,
 .btn.btn-clean.btn-block.cat-btn, 
 .btn.btn-unclean.btn-block.cat-btn,
-.btn.btn-unknown.btn-block.cat-btn{
+.btn.btn-unknown.btn-block.cat-btn,
+.btn.btn-need_help.btn-block.cat-btn{
   font-size: 16px;
 }
 .btn {

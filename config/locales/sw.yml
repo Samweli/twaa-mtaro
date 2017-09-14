@@ -41,6 +41,7 @@ sw:
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"
     unclean: "Sio msafi"
+    unknown: "haujulikani"
     add: "ongeza"
     taken: "Umechukuliwa na"
     adopt_table: "Mitaro niliouchukuwa"

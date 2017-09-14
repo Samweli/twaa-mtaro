@@ -44,6 +44,7 @@ en:
     public: "(may be visible to other users)"
     taken: "Adopted by "
     unclean: "Not clean"
+    unknown: "unknown"
     adopt_table: "Drains I Adopted"
     cleaned: "Cleaned"
     help: "need_help"
