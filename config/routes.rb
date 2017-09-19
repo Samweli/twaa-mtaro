@@ -33,6 +33,11 @@ AdoptADrain::Application.routes.draw do
   #api
   namespace :api do
     namespace :v1 do
+      devise_scope :user do
+        post 'registrations' => 'registrations#create', :as => 'register'
+        post 'sessions' => 'sessions#create', :as => 'login'
+        delete 'sessions' => 'sessions#destroy', :as => 'logout'
+      end
       resources :users, only: [:index, :create, :show, :update, :destroy]
       resources :drains,only: [:index, :create, :show, :update, :destroy]
     end
