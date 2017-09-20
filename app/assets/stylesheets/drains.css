@@ -176,3 +176,7 @@ div.card-unclean {
 .drain_social_media{
   display:none;
 }
+#street{
+  text-decoration: underline;
+  color: #90b3f1;
+}
