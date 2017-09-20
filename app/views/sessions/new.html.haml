@@ -13,10 +13,8 @@
           = f.password_field "password", :class => 'user_password'
         %li{:style => 'margin-top: 10px;'}
           = f.label "remember_me", f.check_box("remember_me", :checked => true).html_safe + t("labels.remember_me"), :class => 'user_remember_me font_1 font_12'
-          = f.submit t("buttons.sign_in"), :style => 'margin-left: 100px'
+          = f.submit t("buttons.sign_in")
       
       %p.font_1.link_1.center= link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
       
-      %p.font_1.link_1.center
-        = t("labels.user_new")
-        %br= link_to t("links.sign_up"), '#', :id => "sign_up_link"
+      %p.font_1.link_1.center= link_to t("links.sign_up"), '#', :id => "sign_up_link"

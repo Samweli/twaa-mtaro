@@ -1,3 +1,5 @@
+
+
 div.card-unclean {
     width: 270px;
     box-shadow: 0 4px 8px 0 rgba(46, 138, 138, 1), 0 6px 20px 0 rgba(0, 0, 0, 1);
@@ -75,16 +77,16 @@ div.card-unclean {
 .legend {
     line-height: 10px;
     color: #555;
-    width:120px;
 }
 
 .legend i {
-    width: 18px;
-    height: 18px;
+    width: 28px;
+    height: 6px;
     float: left;
     margin-right: 8px;
     opacity: 0.7;
     border-radius: 2px;
+    margin-top: 6px;
 }
 
 .legend h3 {
