@@ -107,15 +107,17 @@ class UsersController < Devise::RegistrationsController
               "and login with "\
               "your number and password #{@user.password}."
       else
-         msg = "Umesajiliwa kwenye tovuti ya Twaa mtaro imetengenezwa,"\
-               "ingia http://twaamtaro.org"\
+         msg = "Umesajiliwa kwenye tovuti ya Twaa mtaro, Akaunti yako imetengenezwa, "\
+               "ingia http://twaamtaro.org "\
                "kwa kutumia namba yako ya simu na nywila #{@user.password}."
       end
     else
       if I18n.locale == :en
-        msg = "Your twaa mtaro account details have been updated. "
+        msg = "Your twaa mtaro account details have been updated. "\
+              "Contact us if you didn't update them."
       else
-         msg = "Taarifa za akaunti yako ya twaa mtaro zimebadilishwa."
+         msg = "Taarifa za akaunti yako ya twaa mtaro zimebadilishwa. "\
+               "Wasiliana nasi, kama sio wewe uliyefanya hivi."
       end
     end
     
