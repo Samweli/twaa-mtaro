@@ -81,7 +81,6 @@
   margin-right: 15px;
 }
 .btn {
-    margin: 0 10px 5px 20px;
     text-align: center;
     color: white; 
     font-size: 1em;     
@@ -235,6 +234,9 @@ input, select, option, button{
     -webkit-border-color: #6495ed;
     -o-border-color: #6495ED;
 }
+.btn {
+    margin:0;     
+}
 #actions_box,#need_help{
  
   width: 210px;
@@ -299,10 +301,10 @@ h4{
 .info {
     font: 10px/12px Arial, Helvetica, sans-serif;   
 }
-    #assign.btn.info_adopt,
+/*    #assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
   margin-left: 25px;
- }
+ }*/
 #forgot_pw_box,
 #sign_up_box,
 #testdiv, 
@@ -342,14 +344,14 @@ table #abandon_link , #abandon_link th, #abandon_link td {
   padding: 0;
 }
  #add_claim.btn.info_adopt,
- a .btn.btn-success.cat-btn
+ li .btn.btn-success.cat-btn
  {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 8px;
+    padding-right: 10px;
   }
 
   button#assign.btn.info_adopt,
-  a .btn.btn-warning.cat-btn{
+  li .btn.btn-warning.cat-btn{
      padding-left: 10px;
     padding-right: 10px;
       }
@@ -383,6 +385,7 @@ tr td, tr th{
     padding: 0px;
     text-align: center;
 }
+
 .btn.btn-update{
   background-color: #6495ED;
   color: #333;
@@ -513,7 +516,7 @@ table #abandon_link ,
    }
        #assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
-  margin-left: 16px;
+  margin-left: 8px;
  }
 }
 
@@ -565,7 +568,10 @@ margin-left: 248PX;
     background-color: #6495ED;
     color: #333;
   }
-
+.btn {
+    margin: 0 10px 5px 20px;
+     
+}
 .input-text {
     border: 1px solid #ccc;
     border-radius: 4px 4px 4px 4px;
@@ -861,7 +867,6 @@ h4{
 #testdiv{
   width: 400px;
 }
-
 .font_1 {
   font-size: 14px;
     margin: 7px;
@@ -871,31 +876,23 @@ h4{
     width:146px;
     padding: 6px;
 }
-    #assign.btn.info_adopt,
- #add_claim.btn.info_adopt,
- a .btn.btn-success.cat-btn
- {
-  padding-left: 20px;
-    padding-right: 20px;
-  }
-    #assign.btn.info_adopt,
+#assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
   margin-left: 18px;
  }
  /*leaf lwt control*/
- .leaflet-control-layers label{
+.leaflet-control-layers label{
   font-size: 16px;
   font-weight: normal;
   font-family: sans-serif;
 
  }
- .leaflet-control-layers-toggle {
+.leaflet-control-layers-toggle {
   width: 36px;
   height: 36px;
   }
-  #sign_link{
+#sign_link{
     margin-left: 20px;
     font-size: 14px;
   }
-  .
   }

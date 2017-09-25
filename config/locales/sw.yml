@@ -57,6 +57,7 @@ sw:
     change_status: "Badili hali"
     claim: "Twaa mitaro utakayoweza kusafisha "
     drain_number: "Namba ya %{thing} ni"
+    dirty: " Pia huu mtaro ni mchafu"
     help_question: "unaweza kusafisha hiyo mitaro?"
     missing: "Haujauona mtaro wako?"
     need_help: "Mtaro huu unahitaji Msaada "
@@ -67,6 +68,7 @@ sw:
     this_thing: "hii %{thing}"
     tagline: "Chukua jukumu la kusafisha mtaro unapokua na uchafu."
     tos: "Kwa kujisajili, unakubali %{tos}."
+    view_need_help: " ona zaidi"
     welcome: "Karibu Dar es salaam"
     my_drains: "Mitaro yangu"
     user: "Jina"
@@ -82,7 +84,7 @@ sw:
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
-    need_help_category: "Kundi La Msaada"
+    need_help_category: "Aina ya Msaada"
     need_help_submit: "Wasilisha"
   labels:
     address: "Anwani ya mtaa"
