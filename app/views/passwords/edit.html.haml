@@ -1,4 +1,4 @@
-#forgot_pw_box{:style => 'padding: 30px'}
+#forgot_pw_box
   %h2
     = t("titles.edit_profile")
   = form_for resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :put, :class => 'form wide'} do |f|

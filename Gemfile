@@ -24,6 +24,7 @@ gem 'social-share-button', '~> 0.1.6'
 gem 'test-unit', '~> 3.0'
 gem 'therubyracer'
 gem 'twilio-ruby', '4.13.0'
+gem 'faker'
 
 
 platforms :jruby do
@@ -46,7 +47,6 @@ end
 
 group :development do
   gem 'nifty-generators'
-  gem 'faker'
 end
 
 group :test do

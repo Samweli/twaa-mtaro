@@ -2,6 +2,7 @@ class Drain < ActiveRecord::Base
   set_table_name 'mitaro_dar'
 
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
+  has_many :need_helps, :class_name => 'NeedHelp', :foreign_key => "gid"
  
   validates_presence_of :lat, :lng
   

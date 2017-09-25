@@ -4,7 +4,7 @@
     %nav.navbar
       .container-fluid
         .navbar-header
-          %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+          %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse"}
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
@@ -43,7 +43,7 @@
     .map_wrapper
       #map_canvas
 
-#osw_widget{:style => "position: fixed; left: 345px; bottom: 0px; z-index: 90000000"}
+#osw_widget
 #spinner
   %p
     = image_tag "loading2.gif"
@@ -54,6 +54,6 @@
         #footer_content
           #service_logos.center
             = link_to t("links.city"), 'http://www.twaamtaro.org', :target => '_blank'
-          #feedback.font_12.link_1{:style => "text-align:center"}
+          #feedback.font_12.link_1
             = link_to t("links.terms"), tos_path, :target => '_blank'
          

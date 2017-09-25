@@ -10,13 +10,13 @@ $(function () {
                            ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
                            '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
                            'Improve this map</a></strong>'
-   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
+    var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
                             'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
                             'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
                             'F1zCcOYqpXWd4C9l9xqvEQ'
                             ,{
-                                attribution:mapboxAttribution,
-                                maxZoom: 22
+                                attribution: mapboxAttribution,
+                                maxZoom: 20
     });
 
     // map layer for satellite imagery
@@ -26,22 +26,37 @@ $(function () {
                             'F1zCcOYqpXWd4C9l9xqvEQ'
                             ,{ 
                                 attribution: mapboxAttribution,
-                                maxZoom: 22
+                                maxZoom: 20
     });
 
-    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,'+
+                  ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
       
     var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-        attribution:osmAttr
-      });
+        attribution:osmAttr,
+        maxZoom: 19
+    });
 
-    // map.addLayer(customOsmBright);
+    var inundationAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'+
+                           ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
+                           '© <a href="https://www.ramanihuria.org">Ramani Huria</a>'+
+                           '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
+                           'Improve this map</a></strong>'
 
+    var inundation = new L.tileLayer( 'https://api.mapbox.com/styles/v1/samtwesa/'+
+                    'cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token='+
+                    'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
+                    'F1zCcOYqpXWd4C9l9xqvEQ'
+                    ,{ 
+                        attribution: inundationAttribution,
+                        maxZoom: 18
+    });
+      
     var mapOptions = {
         center: center,
         zoom: 13,
         minZoom: 7,
-        maxZoom: 23,
+        maxZoom: 20,
         doubleClickZoom: true,
         layers:[ osm, satelliteLayer, customOsmBright]
     }
@@ -71,19 +86,6 @@ $(function () {
 
    L.control.layers(baseMaps).addTo(map);
   
-  // var hananasif = L.tileLayer( 
-  //   'https://api.mapbox.com/styles/v1/samtwesa/cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ',
-  // {     
-  //       minZoom: 13,
-  //       maxZoom: 18,
-  //       attribution:osmAttr
-  //  });
-
-   // map.addLayer(hananasif);
-   
-
-   // map.addLayer(osm);
-
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
       if (results == null) {
@@ -119,10 +121,7 @@ $(function () {
 
       /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
-        console.info("Rendering drains of [%s, %s]", c.lat, c.lng)
         var locale = urlParam('locale');
-        console.log('this is the current locale');
-        console.log(locale);
 
         var url;
         if (type) {
@@ -267,7 +266,6 @@ map.on('locationerror', onLocationError);
             map.closePopup();
             return false;
         }
-        //if (bDebug) console.info(e.latLng);
         var locale = urlParam('locale');
         var dataToReturn;
 
@@ -335,6 +333,9 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '#sign_in_link', function () {
 
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide');
+        
+
 
         $.ajax({
             type: 'GET',
@@ -352,10 +353,32 @@ map.on('locationerror', onLocationError);
     });
 
 
+    /* displays need help form inside a popup */
+    $('body').on('click', '#help', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/need_helps/new',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+
+                createPopup(msg, drain_pos);
+            }
+
+        });
+        return false;
+    });
+
+
   /* displays user profile inside a popup */
     $('body').on('click', '#my_profile', function () {
 
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide');
 
         $.ajax({
             type: 'GET',
@@ -377,6 +400,7 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '#edit_profile_form', function () {
 
         var locale = urlParam('locale');
+       
 
         $.ajax({
             type: 'GET',
@@ -396,6 +420,7 @@ map.on('locationerror', onLocationError);
 
     function newClaim() {
         var locale = urlParam('locale');
+    
 
         $.ajax({
             type: 'GET',
@@ -414,6 +439,7 @@ map.on('locationerror', onLocationError);
   /* displays sign_up form inside a popup */
     $('body').on('click', '#sign_up_link', function () {
         var locale = urlParam('locale');
+        $('.navbar-collapse').collapse('hide')
 
         $.ajax({
             type: 'GET',
@@ -520,7 +546,6 @@ map.on('locationerror', onLocationError);
                     updateSidebar();
                     fetchDrainInfo();
                     window.location.href = window.location.hostname;
-                    console.log(window.location.href);
                     window.location.reload();
 
                 }
@@ -621,7 +646,6 @@ map.on('locationerror', onLocationError);
                     updateSidebar();
                     fetchDrainInfo();
                     window.location.href = window.location.hostname;
-                    console.log(window.location.href);
                     window.location.reload();
 
                 }
@@ -668,10 +692,6 @@ map.on('locationerror', onLocationError);
             beforeSend: function () {
             },
             error: function (jqXHR) {
-
-             console.log('an error occured');
-
-
             },
             success: function (data) {
                 updateSidebar();
@@ -805,10 +825,10 @@ map.on('locationerror', onLocationError);
                 'locale': locale
             },
             error: function (jqXHR) {
-                //if (bDebug) console.error(jqXHR);
+
             },
             success: function (data) {
-                //if (bDebug) console.info(data);
+
                 $('#username').replaceWith(data['user_badge']);
                 $('#drain_list').replaceWith(data['drain_list']);
                 $('#address_box').replaceWith(data['address_box']);
@@ -922,7 +942,7 @@ map.on('locationerror', onLocationError);
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
-                        if (bDebug) console.error(data);
+
                     },
                     success: function (data) {
                         refreshKML("all");
@@ -958,7 +978,7 @@ map.on('locationerror', onLocationError);
                     },
                     error: function (jqXHR) {
                         data = $.parseJSON(jqXHR.responseText);
-                        if (bDebug) console.error(data);
+
                     },
                     success: function (data) {
                         refreshKML("all");
@@ -1001,13 +1021,19 @@ map.on('locationerror', onLocationError);
 
                     if (users) {
 
-
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
+                            $.each(item, function(index, obj){
+                                trHTML += '<tr><td class="id_user"> ' +
+                                    obj.id + ' </td><td>' + obj.first_name +
+                                    '</td><td>' + obj.last_name + '</td><td>' +
+                                    '<button class="btnassing">' + 'assign' +
+                                    '</button>' + '</tr>';
 
-                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                            })
+
                         });
 
                         $('#location').append(trHTML);
@@ -1036,17 +1062,26 @@ map.on('locationerror', onLocationError);
                 success: function (msg) {
                     getUsers();
 
-
                     if (users) {
-
+                        console.log('Users');
+                        console.log(users);
 
                         createPopup(msg, drainLocation);
                         var trHTML = '';
 
                         $.each(users, function (i, item) {
+                            $.each(item, function(index, obj){
+                                trHTML += '<tr><td class="id_user"> ' +
 
-                            trHTML += '<tr><td class="id_user"> ' + item.id + ' </td><td>' + item.first_name + '</td><td>' + item.last_name + '</td><td>' + '<button class="btnassing">' + 'assign' + '</button>' + '</tr>';
+                                obj.id + ' </td><td>' + obj.first_name +
+                                '</td><td>' + obj.last_name + '</td><td>' +
+                                '<button class="btnassing">' + 'assign' +
+                                '</button>' + '</tr>';
+
+                            })
+
                         });
+                        console.log(trHTML);
 
                         $('#location').append(trHTML);
 
@@ -1063,6 +1098,7 @@ map.on('locationerror', onLocationError);
         $('#clean').on('click', function () {
             var id = $(this).attr('data-moid');
             var locale = urlParam('locale');
+
             showSpinner();
 
             $.ajax({
@@ -1077,7 +1113,7 @@ map.on('locationerror', onLocationError);
                 },
                 error: function (jqXHR) {
                     data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
+
                     hideSpinner();
                 },
                 success: function (data) {
@@ -1105,12 +1141,91 @@ map.on('locationerror', onLocationError);
                 },
                 error: function (jqXHR) {
                     data = $.parseJSON(jqXHR.responseText);
-                    if (bDebug) console.error(data);
+
                 },
                 success: function (data) {
 
                     refreshKML("all");
                     fetchDrainInfo(id, drain_pos);
+
+                }
+            });
+            return false;
+        });
+
+        /* displays drain help details inside a popup */
+        $('body').on('click', '#need_help_details', function () {
+
+            var locale = urlParam('locale');
+
+            $.ajax({
+                type: 'GET',
+                url: 'need_helps',
+                data: {
+                    'locale': locale,
+                    'gid': $(this).attr('data-help-details-id')
+                },
+                success: function (msg) {
+
+                    createPopup(msg, drain_pos);
+                }
+
+            });
+            return false;
+        });
+
+        $('#drain_help').on('click', function (e) {
+            if($('#need_help_help_needed').val().length == 0 && !window.confirm('Ujaweka maelezo ya msaada, ombi lako litumwe?') ){
+                return false;
+            }
+
+            var submitButton = $("input[type='submit']", this);
+            i = $(e.target);
+            var id = activeObjectId;
+            var locale = urlParam('locale');
+            submitButton.attr('disabled', 'disabled');
+            showSpinner();
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/need_helps.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                    'need_help': {
+                        'help_needed': $('#need_help_help_needed').val(),
+                        'need_help_category_id': $('#need_help_need_help_category_id').val(),
+                        'user_id': $(this).attr('data-moid'),
+                        'gid': id
+                    },
+                   'locale': locale
+                },
+                error: function (jqXHR) {
+                },
+                success: function (data) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/drains/' + id,
+                        data: {
+                            'moid': id,
+                            'authenticity_token': AUTH_TOKEN,
+                            '_method': 'put',
+                            'need_help': true,
+                            'locale': locale
+                        },
+                        error: function (jqXHR) {
+                            data = $.parseJSON(jqXHR.responseText);
+                        },
+                        success: function (data) {
+
+                            refreshKML("all");
+                            fetchDrainInfo(id, drain_pos);
+
+                        }
+                    });
+
 
                 }
             });
@@ -1123,30 +1238,37 @@ map.on('locationerror', onLocationError);
         $('#cleaned').on('click', function () {
             showSpinner();
             refreshKML("cleaned");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#uncleaned').on('click', function () {
             showSpinner();
             refreshKML("uncleaned");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#need_help').on('click', function () {
             showSpinner();
             refreshKML("need_help");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#unknown').on('click', function () {
             showSpinner();
             refreshKML("unknown");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#all').on('click', function () {
             showSpinner();
             refreshKML("all");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#adopted').on('click', function () {
             showSpinner();
             refreshKML("adopted");
+            $('.navbar-collapse').collapse('hide')
         });
         $('#not_adopted').on('click', function () {
             showSpinner();
             refreshKML("not_adopted");
+            $('.navbar-collapse').collapse('hide')
         });
         
         $('#address_button').on('click', function () {
@@ -1180,42 +1302,6 @@ map.on('locationerror', onLocationError);
         return false;
     });
 
-    // function update_drain_view(activeObjectId){
-
-    //     console.info(kmlLayer);
-    //     console.info(kmlLayer.setStyle({weight: 6}));
-
-    //     kmlLayer.eachLayer(function(e){
-    //         console.log('inside');
-    //         console.log(e);
-    //     });
-    //     kmlLayer.eachLayer(function(e){
-    //         console.log('in each')
-    //         feature_layer = e.layer;
-    //         var mtaro = e.layer.feature.properties;
-
-    //         console.log(mtaro.description);
-
-    //         if(mtaro.description == activeObjectId){
-    //             console.log('match');
-
-    //             selected = e.layer
-    //             selected.bringToFront()
-    //             // check for past selected drain and 
-    //             // return its style as always
-    //             if (selected_drain){
-    //                 selected_drain.setStyle({weight: 2.5});
-    //             }
-    //             // Style selected
-    //             selected.setStyle({weight: 6});
-    //             selected_drain = selected;
-
-    //         }
-    //         // increase size of the clicked drain
-           
-    //     });
-    // }
-
     $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
@@ -1240,13 +1326,13 @@ map.on('locationerror', onLocationError);
         var latlng = L.latLng(lat, lng);
 
         map.setView(latlng, 17);
+        $('.navbar-collapse').collapse('hide')
     });
 
 
     function updateNotification(){
         var notification_msg = $('.notice').text();
         $('.notice').hide();
-        console.log(notification_msg);
         if(notification_msg){
 
             //add a new style 'foo'

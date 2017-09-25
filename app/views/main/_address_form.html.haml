@@ -16,9 +16,10 @@
     /   = link_to t("defaults.missing"),
     /       'http://webapps.twaamtaro.org/twaamtaro/adopt.jsp',
     /       :target => '_blank'
+    
 
     #sidebar_login.font_14.radius_4
-      %ul.horizontal_items.item_separator.pen_lightgray{:style => "font-size: 12px"}
+      %ul.horizontal_items.item_separator.pen_lightgray
         - unless user_signed_in?
           %li.sign_links= link_to t("links.sign_in_short"), '#', :id => "sign_in_link"
           %span.sign_links
@@ -26,9 +27,9 @@
           %li.sign_links= link_to t("links.register"), '#', :id => "sign_up_link"
           %span.sign_links
             |
-        - if I18n.locale == :en 
+        - if I18n.try(:locale) == :en
           %li.locale= link_to_unless_current "Swahili", :locale => "sw"
-        - elsif  I18n.locale == :sw 
+        - elsif  I18n.try(:locale) == :sw
           %li.locale= link_to_unless_current "English", :locale => "en"
         %li.horizontal_items.item_separator.pen_lightgray
           - if user_signed_in?

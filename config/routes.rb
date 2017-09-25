@@ -1,4 +1,10 @@
 AdoptADrain::Application.routes.draw do
+  resources :need_help_categories
+
+
+  resources :need_helps
+
+
   resources :authentications
 
   devise_for :users, :controllers => {
