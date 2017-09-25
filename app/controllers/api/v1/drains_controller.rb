@@ -52,4 +52,10 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
   end
 
+  def street_drains
+    drains = Drain.includes(:claims).find_all(params[:id])
+    render :json => drains
+
+  end
+
 end
