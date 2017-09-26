@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number:true}
+  before_save :ensure_authentication_token
+  devise :database_authenticatable,:token_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number:true}
   attr_accessible :email, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
   validates_presence_of :first_name, :last_name, :street_id,:sms_number
   has_many :drain_claims
@@ -33,7 +34,6 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  before_create :generate_authentication_token
 
   def generate_authentication_token
     loop do
