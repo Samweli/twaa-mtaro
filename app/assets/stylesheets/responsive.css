@@ -206,6 +206,9 @@ option{
     width: 100% auto;
 
   }
+  span#name{
+    font-weight: bold;
+  }
 
 /* media query for mobile screen */
 @media (max-width: 625px) {
