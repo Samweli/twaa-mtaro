@@ -44,6 +44,7 @@ en:
     public: "(may be visible to other users)"
     taken: "Adopted by "
     unclean: "Not clean"
+    unknown: "unknown"
     adopt_table: "Drains I Adopted"
     cleaned: "Cleaned"
     help: "need_help"
@@ -85,7 +86,7 @@ en:
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
   forms:
     need_help: "tell us what kind of help is needed"
-    need_help_category: "Help type"
+    need_help_category: "Help type:"
     need_help_submit: "Send"
   labels:
     address: "Street address"
