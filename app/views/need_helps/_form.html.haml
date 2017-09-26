@@ -6,7 +6,6 @@
         %ul
           - @need_help.errors.full_messages.each do |msg|
             %li= msg
-
     .field
       = f.label :need_help_category_id, t("forms.need_help_category")
       = f.collection_select(:need_help_category_id, NeedHelpCategory.all, :id, :category_name)

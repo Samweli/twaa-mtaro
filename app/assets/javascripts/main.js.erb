@@ -10,7 +10,7 @@ $(function () {
                            ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '+
                            '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">'+
                            'Improve this map</a></strong>'
-   var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
+    var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/'+
                             'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token='+
                             'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.'+
                             'F1zCcOYqpXWd4C9l9xqvEQ'
@@ -1173,12 +1173,17 @@ map.on('locationerror', onLocationError);
         });
 
         $('#drain_help').on('click', function (e) {
+            if($('#need_help_help_needed').val().length == 0 && !window.confirm('Ujaweka maelezo ya msaada, ombi lako litumwe?') ){
+                return false;
+            }
+
             var submitButton = $("input[type='submit']", this);
             i = $(e.target);
             var id = activeObjectId;
             var locale = urlParam('locale');
             submitButton.attr('disabled', 'disabled');
             showSpinner();
+
 
             $.ajax({
                 type: 'POST',
