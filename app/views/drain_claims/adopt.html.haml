@@ -14,8 +14,8 @@
           = t("notices.actions")
       - @street_users.each do |u|
         %tr
-          %td= u.first_name
-          %td= u.last_name
+          %td= u.try(:first_name)
+          %td= u.try(:last_name)
           %td= button_tag t("captions.assign"), :class => "btnassing", :data => {:user_id => u.id}
   %div.link_add_user
     %a#add_user
