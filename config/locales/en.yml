@@ -37,6 +37,7 @@ en:
     current_password: "(we need your current password to confirm your changes)"
     clean: "Clean"
     add: "add"
+    assign: "Assign"
     drain_status: "This %{thing} has been not adopted"
     need_help: "Needs help"
     password: "(leave blank if you don't want to change it)"
