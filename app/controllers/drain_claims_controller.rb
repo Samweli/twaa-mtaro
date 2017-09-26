@@ -68,6 +68,7 @@ class DrainClaimsController < ApplicationController
   end
 
   def adopt
+    @street_users = User.find_all_by_street_id(current_user.street_id)
     render :adopt
   end
 
