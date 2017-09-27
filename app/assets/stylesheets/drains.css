@@ -34,9 +34,6 @@ div.card-unclean {
     border: 2px solid #46b8da;
 }
 
-.id_user {
-    display: none;
-}
 
 .hide_column {}
 
@@ -175,4 +172,8 @@ div.card-unclean {
 
 .drain_social_media{
   display:none;
+}
+#street{
+  text-decoration: underline;
+  color: #90b3f1;
 }

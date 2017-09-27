@@ -41,7 +41,9 @@ sw:
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"
     unclean: "Sio msafi"
+    unknown: "haujulikani"
     add: "ongeza"
+    assign: "Gawia"
     taken: "Umechukuliwa na"
     adopt_table: "Mitaro niliouchukuwa"
     cleaned: "msafi"
@@ -84,7 +86,7 @@ sw:
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
-    need_help_category: "Aina ya Msaada"
+    need_help_category: "Aina ya Msaada:"
     need_help_submit: "Wasilisha"
   labels:
     address: "Anwani ya mtaa"
