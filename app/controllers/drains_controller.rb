@@ -17,9 +17,9 @@ class DrainsController < ApplicationController
           @drains = Drain.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
           @drains = Drain.where_custom(:need_help => true)
-         elsif params[:type] == 'unknown'
+        elsif params[:type] == 'unknown'
           @drains = Drain.where(:cleared => nil, :need_help => nil).
-          select('*, ST_AsKML(the_geom) AS "kml"')
+              select('*, ST_AsKML(the_geom) AS "kml"')
         elsif params[:type] == 'adopted'
           @drains = Drain.where_custom_conditions(:claims_count, "> 0")
         elsif params[:type] == 'not_adopted'
@@ -51,6 +51,8 @@ class DrainsController < ApplicationController
     end
   end
 
+
+
   def find_closest
     gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
 
@@ -75,23 +77,23 @@ class DrainsController < ApplicationController
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if(user.role == 1)
+      if (user.role == 1)
         if not claim
-          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 
+          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
         else
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
           street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
           reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
-                                :last_name => user.last_name , :id => drain.gid, :status => status) 
+                                  :last_name => user.last_name, :id => drain.gid, :status => status)
           notify_user = t('messages.user_notify', :id => drain.gid, :status => status)
           sms_service.send_sms(
-            reply_street_leader, 
-            street_leader.sms_number);
+              reply_street_leader,
+              street_leader.sms_number);
           sms_service.send_sms(
-            notify_user, 
-            user.sms_number);
+              notify_user,
+              user.sms_number);
         end
 
       else
@@ -102,19 +104,19 @@ class DrainsController < ApplicationController
 
         claim = DrainClaim.find_by_gid(drain.gid)
 
-        reply_street_leader = t('messages.leader_notify' , :id => drain.gid, :status => status)
+        reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(
-          reply_street_leader, 
-          user.sms_number);
+            reply_street_leader,
+            user.sms_number);
 
         if claim
           normal_user = User.find_by_id(claim.user_id)
           notify_user = t('messages.leader_to_user', :id => drain.gid, :status => status)
           sms_service.send_sms(
-          notify_user, 
-          normal_user.sms_number);
-        end     
-        
+              notify_user,
+              normal_user.sms_number);
+        end
+
       end
 
     elsif params.has_key?(:need_help)

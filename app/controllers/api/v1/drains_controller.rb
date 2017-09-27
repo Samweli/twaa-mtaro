@@ -52,4 +52,34 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
   end
 
+  def street_drains
+
+    if params.has_key?(:type)
+      if params[:type] == 'adopted'
+        drains = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => params[:id]).select('mitaro_dar.*')
+      else
+        if params[:type] == 'cleaned'
+          drains = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => params[:id], 'mitaro_dar.cleared' => true).select('mitaro_dar.*')
+        elsif params[:type] == 'uncleaned'
+          drains = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => params[:id], 'mitaro_dar.cleared' => false).select('mitaro_dar.*')
+        elsif params[:type] == 'need_help'
+          drains = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => params[:id], 'mitaro_dar.need_help' => true).select('mitaro_dar.*')
+        end
+      end
+
+      unless drains.blank?
+        render(
+            json: ActiveModel::ArraySerializer.new(
+                drains,
+                each_serializer: Api::V1::DrainSerializer,
+                root: 'drains',
+            )
+        )
+      else
+        render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
+      end
+    end
+
+  end
+
 end

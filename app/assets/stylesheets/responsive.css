@@ -81,7 +81,6 @@
   margin-right: 15px;
 }
 .btn {
-    margin: 0 10px 5px 20px;
     text-align: center;
     color: white; 
     font-size: 1em;     
@@ -96,6 +95,14 @@
   background-color: #5cb85c;
   border-color: #4cae4c;
   border-radius: 4px;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #5cb85c;
+    -ms-border-color: #5cb85c;
+    -webkit-border-color: #5cb85c;
+    -o-border-color: #5cb85c;;
 }
 .btn-unclean{
    color: #fff;
@@ -108,13 +115,22 @@
   background-color: #CB7D50;
   border-color: #CB7D50;
   border-radius: 4px;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #CB7D50;
+    -ms-border-color: #CB7D50;
+    -webkit-border-color: #CB7D50;
+    -o-border-color: #CB7D50;;
 }
 #page{
   float: right;
 }
 /*css for popup in map for larger screen*/
 .btn.btn-warning.btn-block.cat-btn:hover:not(:disabled), 
-.btn.btn-success.btn-block.cat-btn:hover:not(:disabled){
+.btn.btn-success.btn-block.cat-btn:hover:not(:disabled)
+.btn.btn-primary:hover:not(:disabled){
 }
 
 .font_h3 {
@@ -209,12 +225,39 @@ input, select, option, button{
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
-#actions_box{
+.btn {
+    margin:0;     
+}
+#actions_box,#need_help{
+ 
   width: 210px;
+  }
+  #need_help{
+    height: 100%;
+  }
+ textarea{
+    width: 99%;
+  }
+  .btn.btn-help.pull-right{
+margin-left: 140px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+    background-color:#6495ED; 
+    color: #333;
   }
 .font_14 {
     font-size: 12px;
+    margin: 6px;
   }
 h3{
   font-size: 13px;
@@ -249,14 +292,19 @@ h4{
   font-size: 9.7px;
 }
 .legend i {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 6px;
     font-size: 6px;
+    margin-top: 6px;
   }
 
 .info {
     font: 10px/12px Arial, Helvetica, sans-serif;   
 }
+/*    #assign.btn.info_adopt,
+ #add_claim.btn.info_adopt{
+  margin-left: 25px;
+ }*/
 #forgot_pw_box,
 #sign_up_box,
 #testdiv, 
@@ -283,6 +331,10 @@ table #abandon_link , #abandon_link th, #abandon_link td {
      width: 90px;
      margin-bottom: 12px;
      padding: 4px;
+     -moz-border: 1px solid gray;
+     -webkit-border: 1px solid gray;
+     -o-border: 1px solid gray;
+     -ms-border: 1px solid gray
 }
 .font_1 {
   font-size: 10px;
@@ -292,19 +344,30 @@ table #abandon_link , #abandon_link th, #abandon_link td {
   padding: 0;
 }
  #add_claim.btn.info_adopt,
- a .btn.btn-success.cat-btn
+ li .btn.btn-success.cat-btn
  {
-    padding-left: 15px;
-    padding-right: 15px;
-    margin: 0px;
+    padding-left: 8px;
+    padding-right: 10px;
   }
 
   button#assign.btn.info_adopt,
-  a .btn.btn-warning.cat-btn{
+  li .btn.btn-warning.cat-btn{
      padding-left: 10px;
     padding-right: 10px;
-    margin: 0px;
       }
+
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+
+ }
+ .leaflet-control-layers-toggle {
+    background-image: url(../assets/layers.png);
+  width: 26px;
+  height: 26px;
+  }
   
 }
 
@@ -322,12 +385,21 @@ tr td, tr th{
     padding: 0px;
     text-align: center;
 }
+
 .btn.btn-update{
   background-color: #6495ED;
   color: #333;
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
 ul#user_profile > li{
   list-style-type:none;
@@ -350,6 +422,14 @@ table #abandon_link ,
      margin-bottom: 12px;
      margin-right: 15px;
      padding: 0;
+     -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border: 1px solid gray;
+    -ms-border: 1px solid gray;
+    -webkit-border: 1px solid gray;
+    -o-border-border: 1px solid gray;
 }
 .btn.btn-edit{
   background-color: #6495ED;
@@ -357,6 +437,14 @@ table #abandon_link ,
   border-color: #6495ED;
   border-radius: 4px;
   cursor: pointer;
+  -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-color: #6495ED;
+    -ms-border-color: #6495ED;
+    -webkit-border-color: #6495ed;
+    -o-border-color: #6495ED;
 }
 
 #address_box{
@@ -426,6 +514,10 @@ table #abandon_link ,
     font-size: 10px;
     color: #666;
    }
+       #assign.btn.info_adopt,
+ #add_claim.btn.info_adopt{
+  margin-left: 8px;
+ }
 }
 
 @media (max-device-width: 480px) and (orientation: landscape) {
@@ -467,6 +559,18 @@ ul#user_profile > li{
  #address_box {
   margin:0; 
   
+}
+ .btn.btn-help.pull-right{
+margin-left: 248PX;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 14px;
+    background-color: #6495ED;
+    color: #333;
+  }
+.btn {
+    margin: 0 10px 5px 20px;
+     
 }
 .input-text {
     border: 1px solid #ccc;
@@ -524,7 +628,7 @@ h2 {
     position: relative;
   }
 .legend {
-    width:130px;
+    width:125px;
     padding: 6px;
 }
 .legend h3{
@@ -560,10 +664,13 @@ h4{
   width: 370px;
 }
 .form input[type="submit"] {
-  font-size: 12px;
+  font-size: 13px;
+    float: left;
+    margin-left: 75px;
   }
 .font_1 {
   font-size: 13px;
+  margin:7px;
 }
 /*after sign to the map*/
    #assign.btn.info_adopt,
@@ -686,14 +793,24 @@ th, td {
     font-size: 14px;
     color: #666;
    }
- 
+   /*leaf lwt control*/
+ .leaflet-control-layers label{
+  font-size: 13px;
+  font-weight: normal;
+  font-family: sans-serif;
+
+ }
+ .leaflet-control-layers-toggle {
+  width: 30px;
+  height: 30px;
+  }
 }
 
   /*medium query for larger screen*/
 @media (min-width:  1200px){
   .navbar-brand img{
     width: 99%;
-    height: 72px;
+    height: 78px;
   }
 /*for the drain list*/
 h2 {
@@ -750,22 +867,32 @@ h4{
 #testdiv{
   width: 400px;
 }
-.form input[type="submit"] {
-  font-size: 15px;
-  }
 .font_1 {
   font-size: 14px;
+    margin: 7px;
+   text-align:center;
 }
 .legend {
-    width:160px;
+    width:146px;
     padding: 6px;
 }
-    #assign.btn.info_adopt,
- #add_claim.btn.info_adopt,
- a .btn.btn-success.cat-btn
- {
-  padding-left: 20px;
-    padding-right: 20px;
-  }
+#assign.btn.info_adopt,
+ #add_claim.btn.info_adopt{
+  margin-left: 18px;
+ }
+ /*leaf lwt control*/
+.leaflet-control-layers label{
+  font-size: 16px;
+  font-weight: normal;
+  font-family: sans-serif;
 
+ }
+.leaflet-control-layers-toggle {
+  width: 36px;
+  height: 36px;
+  }
+#sign_link{
+    margin-left: 20px;
+    font-size: 14px;
+  }
   }

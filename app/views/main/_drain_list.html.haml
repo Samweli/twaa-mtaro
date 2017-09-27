@@ -3,9 +3,9 @@
     #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
       %p
       %span=t('labels.street')
-      %span{:style => "color: #337ab7;"}
+      %span#street
       = current_user.street.street_name 
-    - if @my_drains.size > 0
+    - if @my_drains.try(:size) > 0
       %table.font_12.pen_gray.link_1.hidden-xs
         %thead
           %tr
@@ -15,22 +15,22 @@
         %tbody
         - @my_drains.each do |s|
           %tr
-            %td.address= link_to s.drain.address, "#{s.drain.gid}", :class => 'view_drain', 'data-gid' => s.drain.gid, 'data-lat' => s.drain.lat, 'data-lng' =>s.drain.lng
-            %td= yesno(s.drain.cleared)
-            %td= yesno(s.drain.need_help)
+            %td.address= link_to s.try(:drain).try(:address), "#{s.try(:drain).try(:gid)}", :class => 'view_drain', 'data-gid' => s.try(:drain).try(:gid), 'data-lat' => s.try(:drain).try(:lat), 'data-lng' =>s.try(:drain).try(:lng)
+            %td= yesno(s.try(:drain).try(:cleared))
+            %td= yesno(s.try(:drain).try(:need_help))
       #pagination.font_12.link_1.hidden-xs
         = paginate @my_drains, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
     #info_box.center.hidden-xs
-      %h2.font_bold{:style => 'margin: 0'}
+      %h2.font_bold
         = t("defaults.welcome")
         %br
           = t("titles.main", :thing => t("defaults.thing").titleize)
-      %p{:style => "margin-top:0; padding:0; margin-bottom:6px;"}
+      %p
         = t("defaults.aware")
         %br
           = t("defaults.help_question")
       
-      %ul.features.hidden-sm.hidden-xs{:style => "margin-top:0;margin-bottom:6px;"}
+      %ul.features.hidden-sm.hidden-xs
         %li= t("defaults.claim")
         %li= t("defaults.ask_help")
