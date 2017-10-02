@@ -52,6 +52,11 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
   end
 
+  def show
+    drain = Drain.find_by_gid(params[:id])
+    render(json: Api::V1::DrainSerializer.new(drain).to_json)
+  end
+
   def street_drains
 
     if params.has_key?(:type)
