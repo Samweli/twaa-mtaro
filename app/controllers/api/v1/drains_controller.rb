@@ -107,4 +107,36 @@ class Api::V1::DrainsController < Api::V1::BaseController
         :not_adopted => notadopted_drains
     }
   end
+
+  def ranking
+    streets = Street.all
+    data = Hash.new
+    ranking_data = []
+
+
+    streets.each do |s|
+      data["street"] = s
+      data["details"] = street_drain_data(s.id)
+      ranking_data[s.id] = data
+
+    end
+
+    render :json => {:ranking => ranking_data}
+  end
+
+  private
+
+  def street_drain_data(id)
+    drains_adopted = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => id).size
+    drains_cleaned = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => id, 'mitaro_dar.cleared' => true).size
+    drains_uncleaned = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => id, 'mitaro_dar.cleared' => false).size
+    drains_need_help = Street.joins(users: [{drain_claims: :drain}]).where('streets.id' => id, 'mitaro_dar.need_help' => true).size
+
+    return {:adopted => drains_adopted,
+            :cleaned => drains_cleaned,
+            :uncleaned => drains_uncleaned,
+            :need_help => drains_need_help
+    }
+  end
+
 end
