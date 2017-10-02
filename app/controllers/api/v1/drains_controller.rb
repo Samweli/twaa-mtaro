@@ -82,4 +82,24 @@ class Api::V1::DrainsController < Api::V1::BaseController
 
   end
 
+  def data
+    all_drains = Drain.count
+    cleaned_drains = Drain.where(:cleared => true).size
+    uncleaned_drains = Drain.where(:cleared => false).size
+    need_help_drains = Drain.where(:need_help => true).size
+    unknown_drains = Drain.where(:cleared => nil, :need_help => nil).size
+    adopted_drains = Drain.where("claims_count > '0'").size
+    notadopted_drains = Drain.where("claims_count = '0'").size
+
+
+    render :json => {
+        :all => all_drains,
+        :uncleaned => uncleaned_drains,
+        :cleaned => cleaned_drains,
+        :need_help => need_help_drains,
+        :unknown => unknown_drains,
+        :adopted => adopted_drains,
+        :not_adopted => notadopted_drains
+    }
+  end
 end

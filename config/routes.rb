@@ -45,8 +45,10 @@ AdoptADrain::Application.routes.draw do
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
       end
       resources :users, only: [:index, :create, :show, :update, :destroy]
+      get '/drains/data' => 'drains#data'
       resources :drains,only: [:index, :create, :show, :update, :destroy]
       get 'street_drains/:id' => 'drains#street_drains'
+
     end
   end
 end

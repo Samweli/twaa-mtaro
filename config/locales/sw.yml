@@ -42,6 +42,7 @@ sw:
     public: "(inaweza kuonekana kwa watumiaji wengine)"
     unclean: "Sio msafi"
     add: "ongeza"
+    assign: "Gawia"
     taken: "Umechukuliwa na"
     adopt_table: "Mitaro niliouchukuwa"
     cleaned: "msafi"
