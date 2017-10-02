@@ -942,6 +942,79 @@ map.on('locationerror', onLocationError);
         });
 
 
+        $('#user_forgot_password_link').on('click', function() {
+            $.ajax({
+                type: 'GET',
+                url: '/forgot_password',
+                success: function(data) {
+                    createPopup(data, map.getCenter());
+
+                }
+            });
+            return false;
+        });
+
+
+        $('body').on('click', '.button_forgot_password', function() {
+            var f = $(this).closest('form.forgot_pw_form');
+            var submitButton = $("input[type='submit']", f);
+            var uemail = $('.user_email', f);
+            var errors = [];
+
+
+            submitButton.attr('disabled', 'disabled');
+            if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+                markError(uemail, errors);
+            } else {
+                unmarkError(uemail);
+            }
+            if(errors.length > 0) {
+                submitButton.removeAttr('disabled');
+                errors[0].focus();
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/password.json',
+                    data: {
+                        'commit': submitButton.val(),
+                        'utf8': '✓',
+                        'authenticity_token': $('input[name="authenticity_token"]', f).val(),
+                        'user': {
+                            'email': uemail.val()
+                        }
+                    },
+                    beforeSend: function() {
+                    },
+                    error: function(jqXHR) {
+                        //hideSpinner();
+                        //showInfoWindow();
+                        submitButton.removeAttr('disabled');
+                        markError(uemail, errors);
+                        uemail.focus();
+                    },
+                    success: function() {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/users/sign_in',
+                            data: {
+                                'user': {
+                                    'email': uemail.val()
+                                },
+                                'flash': {
+                                    'notice': "<%= I18n.t("notices.password_reset") %>"
+                                }
+                            },
+                            success: function(data) {
+                                createPopup(data, map.getCenter());
+                            }
+                        });
+                    }
+                });
+            }
+            return false;
+        });
+
+
         $('#abandon_link').on('click','.chng_link', function () {
             var locale = urlParam('locale');
             if (window.confirm('Are you sure that you want to change status?')) {
