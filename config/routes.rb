@@ -46,9 +46,9 @@ AdoptADrain::Application.routes.draw do
       end
       resources :users, only: [:index, :create, :show, :update, :destroy]
       get '/drains/data' => 'drains#data'
-      resources :drains,only: [:index, :create, :show, :update, :destroy]
       get 'street_drains/:id' => 'drains#street_drains'
-
+      resources :drains,only: [:index, :create, :show, :update, :destroy]
+      resources :streets,only: [:index, :create, :show, :update, :destroy]
     end
   end
 end
