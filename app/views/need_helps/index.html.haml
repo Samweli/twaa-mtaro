@@ -1,11 +1,12 @@
 %h3= t("tables.need_help_details.title")
 
-%table
-  %tr
-    %th= t("tables.need_help_details.help_needed")
-    %th= t("tables.need_help_details.street")
-    %th= t("tables.need_help_details.leader_name")
-
+%table.font_12.pen_gray.link_1
+  %thead
+    %tr
+      %th= t("tables.need_help_details.help_needed")
+      %th= t("tables.need_help_details.street")
+      %th= t("tables.need_help_details.leader_name")
+  %tbody
   - @need_helps.each do |need_help|
     %tr
       %td= need_help.help_needed
