@@ -374,6 +374,7 @@ table #abandon_link , #abandon_link th, #abandon_link td {
 }
 .form input[type="submit"] {
   padding: 0;
+
 }
  #add_claim.btn.info_adopt,
  li .btn.btn-success.cat-btn
@@ -587,6 +588,11 @@ ul#user_profile > li{
   position: fixed;
 
 }
+.user_remember_me.font_12{
+  margin-left: 84px;
+  margin-top: 10px;
+  text-align: center;
+}
 .navbar-brand img{
     width: 97%;
     height: 50%;
@@ -701,7 +707,6 @@ h4{
 .form input[type="submit"] {
   font-size: 13px;
     float: left;
-    margin-left: 75px;
   }
 .font_1 {
   font-size: 13px;
@@ -845,6 +850,12 @@ th, td {
   width: 30px;
   height: 30px;
   }
+  p.font_14.center > a{
+    cursor: pointer;
+  }
+  p.font_14.center{
+    color: #333;
+  }
 }
 
   /*medium query for larger screen*/
@@ -863,7 +874,7 @@ h2 {
 #info_box.center p,ul.features li,
 .btn.btn-clean.btn-block.cat-btn, 
 .btn.btn-unclean.btn-block.cat-btn,
-.btn.btn-unknown.btn-block.cat-btn,
+/*.btn.btn-unknown.btn-block.cat-btn,*/
 .btn.btn-need_help.btn-block.cat-btn{
   font-size: 16px;
 }
@@ -940,7 +951,7 @@ padding-left: 10px;
   height: 36px;
   }
 #sign_link{
-    margin-left: 20px;
+    margin-left: 70px;
     font-size: 14px;
   }
   }
