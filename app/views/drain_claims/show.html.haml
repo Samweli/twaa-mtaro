@@ -22,10 +22,13 @@
   .descriptions
     %h4
       = t("defaults.address") + ':'
-      = @drain.address
-      %span.font12
-        = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+      - if @drain.try(:address)
+        = @drain.try(:address) +', '
         = @drain.try(:gid)
+      - else
+        %span.font12
+          = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+          = @drain.try(:gid)
     - if  @drain.try(:need_help) == true
       - if  @drain.try(:cleared) == false
         %p.font_14.color_warn.center

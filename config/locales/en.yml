@@ -71,7 +71,7 @@ en:
     welcome: "Welcome to Dar es salaam"
     aware: "Are you required to clean the drain near your home or business?"
     help_question: "but how about helping others out?"
-    drain_number: "The number of %{thing} is"
+    drain_number: "The %{thing} number is"
     my_drains: "Drains I Adopted"
     user: "User_name"
     status: "Status"
