@@ -23,6 +23,7 @@ AdoptADrain::Application.routes.draw do
   get 'address' => 'addresses#show', :as => 'address'
   get 'address_report' => 'addresses#report'
   get 'tos' => 'main#tos'
+  get 'user_list' => 'drain_claims#user_list'
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
   get 'drain_claims/adopt' => 'drain_claims#adopt'
