@@ -37,10 +37,10 @@
         %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
           = t("defaults.view_need_help")
       - else
-        %p.font_14.color_warn.center
-        = t("defaults.need_help")
-        %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
-          = t("defaults.need_help_details")
+        %p.font_14.center
+          = t("defaults.need_help")
+          %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
+            = t("defaults.need_help_details")
     - elsif @claims.empty?
       %p.font_14.color_warn.center
         = t("defaults.notify")
