@@ -90,6 +90,12 @@ span#street{
     color: white; 
     font-size: 1em;     
 }
+ p.font_14.center > a{
+    cursor: pointer;
+  }
+  p.font_14.center{
+    color: #333;
+  }
 .btn-group{
   margin-left: 65px;
   font-size: 13px;
@@ -205,6 +211,9 @@ option{
     bottom: 0%;
     width: 100% auto;
 
+  }
+  span#name{
+    font-weight: bold;
   }
 
 /* media query for mobile screen */
@@ -371,6 +380,7 @@ table #abandon_link , #abandon_link th, #abandon_link td {
 }
 .form input[type="submit"] {
   padding: 0;
+
 }
  #add_claim.btn.info_adopt,
  li .btn.btn-success.cat-btn
@@ -401,6 +411,13 @@ select
   {
     width: 100%;
   }
+  table.font_12.pen_gray.link_1.page{
+
+    border-collapse: collapse;
+     width: 270px;
+     margin: 10px 0 12px 0;
+     text-align: center;
+}
 }
 
 
@@ -478,7 +495,11 @@ table #abandon_link ,
     -webkit-border-color: #6495ed;
     -o-border-color: #6495ED;
 }
+table.font_12.pen_gray.link_1.page{
 
+    border-collapse: collapse;
+     margin: 10px 0 12px 0;
+}
 #address_box{
   margin-left: 10px;
   margin-right: 15px;
@@ -555,6 +576,7 @@ span#street{
  #add_claim.btn.info_adopt{
 /*  margin-left: 8px;
 */ }
+
 }
 
 @media (max-device-width: 480px) and (orientation: landscape) {
@@ -583,6 +605,11 @@ ul#user_profile > li{
   overflow: hidden;
   position: fixed;
 
+}
+.user_remember_me.font_12{
+  margin-left: 84px;
+  margin-top: 10px;
+  text-align: center;
 }
 .navbar-brand img{
     width: 97%;
@@ -698,7 +725,6 @@ h4{
 .form input[type="submit"] {
   font-size: 13px;
     float: left;
-    margin-left: 75px;
   }
 .font_1 {
   font-size: 13px;
@@ -795,6 +821,12 @@ table.font_12.pen_gray.link_1{
      width: 280px;
      margin: 10px 0 12px 25px;
 }
+table.font_12.pen_gray.link_1.page{
+
+    border-collapse: collapse;
+     width: 320px;
+     margin: 10px 0 12px 0;
+}
 table, .font_12.pen_gray.link_1 th, .font_12.pen_gray.link_1 td {
     border: 1px solid #9c9696;
     border-collapse: collapse;
@@ -842,6 +874,12 @@ th, td {
   width: 30px;
   height: 30px;
   }
+  p.font_14.center > a{
+    cursor: pointer;
+  }
+  p.font_14.center{
+    color: #333;
+  }
 }
 
   /*medium query for larger screen*/
@@ -860,7 +898,7 @@ h2 {
 #info_box.center p,ul.features li,
 .btn.btn-clean.btn-block.cat-btn, 
 .btn.btn-unclean.btn-block.cat-btn,
-.btn.btn-unknown.btn-block.cat-btn,
+/*.btn.btn-unknown.btn-block.cat-btn,*/
 .btn.btn-need_help.btn-block.cat-btn{
   font-size: 16px;
 }
@@ -924,7 +962,6 @@ li  .btn.btn-success.cat-btn{
 padding-right: 9px;
 padding-left: 10px;
 }
- /*leaf lwt control*/
 
 .leaflet-control-layers label{
   font-size: 16px;
@@ -937,7 +974,7 @@ padding-left: 10px;
   height: 36px;
   }
 #sign_link{
-    margin-left: 20px;
+    margin-left: 70px;
     font-size: 14px;
   }
   }
