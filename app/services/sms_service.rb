@@ -46,4 +46,34 @@ class SmsService
    	return number
   end
 
+  # Filters sent message content to get the sms params
+  # Params: content String
+  # returns: Array
+  def categorize_sms_content(content)
+
+  	content = content.strip
+
+  	if (content.include? '#')
+  		if(content.include? ' ')
+  			updated_content = content.split(/\s*#\s*/)
+  		else
+  			updated_content = content.split('#')
+  		end
+  		if (updated_content.length == 1)
+  			return updated_content[0].delete! ' #'
+  		end
+  		return updated_content
+  	elsif (content.include? ' ')
+  		split_content = content.split(/\s* \s*/)
+  		if (split_content.length < 3)
+  			return split_content 
+  		else
+  			return [split_content[0], split_content[1]]
+  		end
+	end
+	return content
+  end
+
+  		
+
 end
