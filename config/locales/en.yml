@@ -139,7 +139,7 @@ en:
     drain_dirty: "Thanks for updating drain status to dirty."
     unknown: "Sorry, we could not understand your message."
     error: "There is a problem in receiving drains details, please try again later."
-    drain_unknown: "We could retrieve you drain, maybe you haven't adopted a drain."
+    drain_unknown: "We could retrieve your drain, maybe you haven't adopted a drain."
     thanks: "Thanks for your notification."
     user_to_leader: "%{first_name} %{last_name} has updated status of drain with number %{id} to %{status}."
     user_notify: "You have successfully updated drain with number %{id} to %{status}."

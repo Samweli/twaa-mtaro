@@ -46,7 +46,7 @@ class SmsService
    	return number
   end
 
-  # Filters sent message content to get the sms params
+  # Filter sent message content to get the sms params
   # Params: content String
   # returns: Array
   def categorize_sms_content(content)
@@ -72,6 +72,69 @@ class SmsService
   		end
 	end
 	return content
+  end
+
+  # Create the require response after updates in the model
+  # Params: user User, drain_status Array or String
+  # returns: String
+
+  def generate_message(user, drain_status)
+    message = ''
+    if user
+      drain_status = categorize_sms_content(drain_status)
+      puts drain_status
+      if(drain_status.instance_of?(Array))
+        drain_id = drain_status[1]
+        drain_status = drain_status[0]
+        drain_claim = DrainClaim.find_by_user_id_and_gid(user.id, drain_id)
+      else
+        puts 'inside else'
+        drain_claim = DrainClaim.find_by_user_id(user.id)
+        puts drain_claim
+        puts DrainClaim.all
+        puts user.id
+      end
+
+      clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
+      dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
+       'not clean', 'Not clean'].map(&:downcase)
+      need_help_keywords = ['msaada','Msaada', 'need_help', 'Need_help'].map(&:downcase)
+
+      drain_status = drain_status.downcase
+
+        unless drain_claim.blank?
+          if (clean_keywords.include? drain_status)
+            drain_claim.shoveled = true
+            # drain.need_help = false
+            message = I18n.t('messages.drain_cleaned')
+
+          elsif (dirt_keywords.include? drain_status)
+            drain_claim.shoveled = false
+            # drain.need_help = false
+            message = I18n.t('messages.drain_dirty')
+
+          elsif (need_help_keywords.include? drain_status)
+            drain_claim.shoveled = false
+            # drain.need_help = true
+            message = I18n.t('messages.thanks')
+          else
+            message = I18n.t('messages.unknown')
+          end
+
+          if (drain_claim.save(validate: false))
+
+          else
+            message = I18n.t('messages.error')
+          end
+
+        else
+          message = I18n.t('messages.drain_unknown')
+        end
+    else
+      message = I18n.t('messages.user_not_found', :site => I18n.t('defaults.site'));
+    end
+
+    return message
   end
 
   		

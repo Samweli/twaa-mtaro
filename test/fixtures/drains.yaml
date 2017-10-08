@@ -1,0 +1,14 @@
+
+one:
+  gid: 1
+  cleared: False
+  need_help: False
+  claims_count: 1
+  address: "Sheki Road"
+
+two:
+  gid: 2
+  cleared: False
+  need_help: False
+  claims_count: 1
+  address: "Kawe Road"
