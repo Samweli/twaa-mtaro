@@ -92,7 +92,7 @@ class SmsService
         drain_status = drain_status[0]
         drain_claim = DrainClaim.find_by_user_id_and_gid(user.id, drain_id)
       else
-        drain_claim = DrainClaim.find_by_user_id(user.id)
+        drain_claim = DrainClaim.where(:user_id => user.id)
         if (!drain_claim.instance_of?(DrainClaim))
           #TODO function to determine user language
           I18n.locale = 'sw'

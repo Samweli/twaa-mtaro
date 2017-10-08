@@ -134,7 +134,7 @@ sw:
     clear_status: "msafi"
     dirt_status: "sio msafi"
     drain_share: "shirikisha"
-    drain_cleaned: "Asante, kwa kusafisha mtaro."
+    drain_cleaned: "Asante, kwa kutoa taarifa kuwa mtaro ni msafi."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
     unknown: "Samahani hatukuweza kutambua maana ya ujumbe wako."
     many_drains: "Una mitaro zaidi ya mmoja, tuma ujumbe ukiwa na namba ya mtaro: mfano, Clean #234"
