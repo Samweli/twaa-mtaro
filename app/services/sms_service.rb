@@ -80,41 +80,46 @@ class SmsService
 
   def generate_message(user, drain_status)
     message = ''
+    clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
+    dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
+       'not clean', 'Not clean'].map(&:downcase)
+    need_help_keywords = ['msaada','Msaada', 'need help', 'Need help'].map(&:downcase)
+
     if user
       drain_status = categorize_sms_content(drain_status)
-      puts drain_status
       if(drain_status.instance_of?(Array))
         drain_id = drain_status[1]
         drain_status = drain_status[0]
         drain_claim = DrainClaim.find_by_user_id_and_gid(user.id, drain_id)
       else
-        puts 'inside else'
         drain_claim = DrainClaim.find_by_user_id(user.id)
-        puts drain_claim
-        puts DrainClaim.all
-        puts user.id
+        if (drain_claim.size > 1)
+          #TODO function to determine user language
+          I18n.locale = 'sw'
+          message = I18n.t('messages.many_drains')
+          I18n.locale = 'en'
+          message = message + '\n\n' + I18n.t('messages.many_drains')
+          return message
+        end
       end
-
-      clean_keywords = ['msafi', 'Msafi', 'clean', 'Clean'].map(&:downcase)
-      dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
-       'not clean', 'Not clean'].map(&:downcase)
-      need_help_keywords = ['msaada','Msaada', 'need_help', 'Need_help'].map(&:downcase)
-
       drain_status = drain_status.downcase
 
         unless drain_claim.blank?
           if (clean_keywords.include? drain_status)
+            change_locale(clean_keywords, drain_status)
             drain_claim.shoveled = true
             # drain.need_help = false
             message = I18n.t('messages.drain_cleaned')
 
           elsif (dirt_keywords.include? drain_status)
+            change_locale(dirt_keywords, drain_status)
             drain_claim.shoveled = false
             # drain.need_help = false
             message = I18n.t('messages.drain_dirty')
 
           elsif (need_help_keywords.include? drain_status)
-            drain_claim.shoveled = false
+            change_locale(need_help_keywords, drain_status)
+            # drain_claim.shoveled = false
             # drain.need_help = true
             message = I18n.t('messages.thanks')
           else
@@ -137,6 +142,13 @@ class SmsService
     return message
   end
 
+  def change_locale(keywords, status)
+    if (status == keywords[0] or status == keywords[1])
+      I18n.locale = 'sw'
+    else
+      I18n.locale = 'en'
+    end
+  end
   		
 
 end

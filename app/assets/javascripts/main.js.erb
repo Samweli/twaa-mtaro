@@ -1232,7 +1232,7 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
-        $('#address').val($(this).text());
+        $('#address').val(activeObjectId);
 
         $('#address_button')[0].click();
 
