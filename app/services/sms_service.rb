@@ -93,7 +93,7 @@ class SmsService
         drain_claim = DrainClaim.find_by_user_id_and_gid(user.id, drain_id)
       else
         drain_claim = DrainClaim.find_by_user_id(user.id)
-        if (drain_claim.size > 1)
+        if (!drain_claim.instance_of?(DrainClaim))
           #TODO function to determine user language
           I18n.locale = 'sw'
           message = I18n.t('messages.many_drains')
