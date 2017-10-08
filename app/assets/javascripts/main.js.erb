@@ -85,6 +85,10 @@ $(function () {
    };
 
    L.control.layers(baseMaps).addTo(map);
+
+   // Click standard layer to override unusual maps tiles load
+
+   $( "input[name='leaflet-base-layers']" )[2].click();
   
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
