@@ -137,7 +137,7 @@ sw:
     drain_cleaned: "Asante, kwa kutoa taarifa kuwa mtaro ni msafi."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
     unknown: "Samahani hatukuweza kutambua maana ya ujumbe wako."
-    many_drains: "Una mitaro zaidi ya mmoja, tuma ujumbe ukiwa na namba ya mtaro: mfano, Clean #234"
+    many_drains: "Una mitaro zaidi ya mmoja, tuma ujumbe ukiwa na namba ya mtaro: mfano, Msafi #234"
     error: "Kuna tatizo upokeaji wa taarifa za mtaro, Jaribu tena baadae."
     drain_unknown: "Samahani hatukuweza kutambua mtaro wako."
     thanks: "Asante kwa taarifa"

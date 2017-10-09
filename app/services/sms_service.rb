@@ -84,6 +84,7 @@ class SmsService
     dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
        'not clean', 'Not clean'].map(&:downcase)
     need_help_keywords = ['msaada','Msaada', 'need help', 'Need help'].map(&:downcase)
+    street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
     if user
       drain_status = categorize_sms_content(drain_status)
@@ -98,7 +99,7 @@ class SmsService
           I18n.locale = 'sw'
           message = I18n.t('messages.many_drains')
           I18n.locale = 'en'
-          message = message + '\n\n' + I18n.t('messages.many_drains')
+          message = message + "   " + I18n.t('messages.many_drains')
           return message
         end
       end
@@ -108,17 +109,28 @@ class SmsService
           if (clean_keywords.include? drain_status)
             change_locale(clean_keywords, drain_status)
             drain_claim.shoveled = true
+            if(user == street_leader)
+              drain = Drain.find_by_gid(drain_claim.try(:gid))
+              drain.cleared = true
+              drain.save(validate: false)
+            end
             # drain.need_help = false
             message = I18n.t('messages.drain_cleaned')
 
           elsif (dirt_keywords.include? drain_status)
             change_locale(dirt_keywords, drain_status)
             drain_claim.shoveled = false
+            if(user == street_leader)
+              drain = Drain.find_by_gid(drain_claim.try(:gid))
+              drain.cleared = false
+              drain.save(validate: false)
+            end
             # drain.need_help = false
             message = I18n.t('messages.drain_dirty')
 
           elsif (need_help_keywords.include? drain_status)
             change_locale(need_help_keywords, drain_status)
+
             # drain_claim.shoveled = false
             # drain.need_help = true
             message = I18n.t('messages.thanks')
