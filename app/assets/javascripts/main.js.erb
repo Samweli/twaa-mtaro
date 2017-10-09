@@ -910,6 +910,22 @@ map.on('locationerror', onLocationError);
     });
 
 
+    $('#paginator').on('click', function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'drain_claims/adopt',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, drainLocation);
+            }
+        });
+        return false;
+    });
+
     function bind(pos) {
 
         $('#abandon_link').on('click','.abdn_link', function () {
@@ -1051,7 +1067,7 @@ map.on('locationerror', onLocationError);
         });
 
 
-      /*Function for adoping a drain */
+      /*Function for adopting a drain */
         $('#location').on('click', '.btnassing', function () {
             user_id = $(this).attr('data-user-id');
             assignDrain(pos);
@@ -1060,7 +1076,7 @@ map.on('locationerror', onLocationError);
 
 
         /* adding more claims on a drain */
-        $('#add_claim').on('click', function () {
+        $('body').on('click', '#add_claim, #assign', function() {
             var locale = urlParam('locale');
 
             $.ajax({
@@ -1071,28 +1087,12 @@ map.on('locationerror', onLocationError);
                 },
                 success: function (msg) {
                     createPopup(msg, drainLocation);
+
                 }
             });
             return false;
         });
 
-
-      /* displays a form for assigning drains to users */
-        $('#assign').on('click', function () {
-            var locale = urlParam('locale');
-
-            $.ajax({
-                type: 'GET',
-                url: 'drain_claims/adopt',
-                data: {
-                    'locale': locale
-                },
-                success: function (msg) {
-                    createPopup(msg, drainLocation);
-                }
-            });
-            return false;
-        });
 
 
         $('#clean').on('click', function () {
@@ -1318,6 +1318,8 @@ map.on('locationerror', onLocationError);
 
         return false;
     });
+
+
 
     $('body').on('click', '#view_street', 
         function (e) {

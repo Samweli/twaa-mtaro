@@ -68,8 +68,25 @@ class DrainClaimsController < ApplicationController
   end
 
   def adopt
-    @street_users = User.find_all_by_street_id(current_user.street_id)
+
+    @street_users = Kaminari.paginate_array(
+        User.find_all_by_street_id(current_user.street_id)
+    ).page(params[:page]).per(2)
     render :adopt
+  end
+
+  def user_list
+    @street_users = Kaminari.paginate_array(
+        User.find_all_by_street_id(current_user.street_id)
+    ).page(params[:page]).per(2)
+    user_list = render_to_string :partial => 'user_list'
+
+    respond_to do |format|
+      format.js   { render :locals => { :user_list => user_list } }
+      format.json {
+        render :json => { :user_list => user_list}
+      }
+    end
   end
 
   def destroy
