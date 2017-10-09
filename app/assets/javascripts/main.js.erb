@@ -1331,8 +1331,11 @@ map.on('locationerror', onLocationError);
 
 
     function updateNotification(){
-        var notification_msg = $('.notice').text();
-        $('.notice').hide();
+
+        var notification_msg = $('#notice').text();
+        console.log('update notification called');
+        console.log(notification_msg);
+        $('#notice').hide();
         if(notification_msg){
 
             //add a new style 'foo'
@@ -1373,8 +1376,6 @@ map.on('locationerror', onLocationError);
     }
 
     /* Updates claims status */
-
-
     get_categories();
     updateNotification();
 
