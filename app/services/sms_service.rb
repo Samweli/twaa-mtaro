@@ -109,7 +109,7 @@ class SmsService
           if (clean_keywords.include? drain_status)
             change_locale(clean_keywords, drain_status)
             drain_claim.shoveled = true
-            if(user == street_leader)
+            if(user.id == street_leader.id)
               drain = Drain.find_by_gid(drain_claim.try(:gid))
               drain.cleared = true
               drain.save(validate: false)
@@ -120,7 +120,7 @@ class SmsService
           elsif (dirt_keywords.include? drain_status)
             change_locale(dirt_keywords, drain_status)
             drain_claim.shoveled = false
-            if(user == street_leader)
+            if(user.id == street_leader.id)
               drain = Drain.find_by_gid(drain_claim.try(:gid))
               drain.cleared = false
               drain.save(validate: false)

@@ -107,8 +107,8 @@ class DrainsController < ApplicationController
         drain.save(validate: false)
 
         claim = DrainClaim.find_by_gid(drain.gid)
-
-        if (user == street_leader)
+        # check if it street leader who is updating drain status
+        if (user.id == street_leader.id)
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
         end

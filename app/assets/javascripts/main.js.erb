@@ -948,7 +948,10 @@ map.on('locationerror', onLocationError);
 
         $('#abandon_link').on('click','.chng_link', function () {
             var locale = urlParam('locale');
-            if (window.confirm('Are you sure that you want to change status?')) {
+            var message_en = 'Are you sure that you want to change status?';
+            var message_sw ='Una thibitisha kubadili hali ya huu mtaro ?';
+            var confirmation_message = locale === 'en'? message_en : message_sw
+            if (window.confirm(confirmation_message)) {
                 var shoveled;
                 if($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio"){
                     shoveled = false;
