@@ -41,6 +41,7 @@ sw:
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"
     unclean: "Sio msafi"
+    unknown: "haujulikani"
     add: "ongeza"
     assign: "Gawia"
     taken: "Umechukuliwa na"
@@ -85,7 +86,7 @@ sw:
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
-    need_help_category: "Aina ya Msaada"
+    need_help_category: "Aina ya Msaada:"
     need_help_submit: "Wasilisha"
   labels:
     address: "Anwani ya mtaa"
@@ -136,6 +137,7 @@ sw:
     drain_cleaned: "Asante, kwa kusafisha mtaro."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
     unknown: "Samahani hatukuweza kutambua maana ya ujumbe wako."
+    many_drains: "Una mitaro zaidi ya mmoja, tuma ujumbe ukiwa na namba ya mtaro: mfano, Clean #234"
     error: "Kuna tatizo upokeaji wa taarifa za mtaro, Jaribu tena baadae."
     drain_unknown: "Samahani hatukuweza kutambua mtaro wako."
     thanks: "Asante kwa taarifa"

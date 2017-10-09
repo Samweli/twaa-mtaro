@@ -85,6 +85,10 @@ $(function () {
    };
 
    L.control.layers(baseMaps).addTo(map);
+
+   // Click standard layer to override unusual maps tiles load
+
+   $( "input[name='leaflet-base-layers']" )[2].click();
   
   var urlParam = function(name) {
       var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -1189,7 +1193,7 @@ map.on('locationerror', onLocationError);
 
             $.ajax({
                 type: 'POST',
-                url: '/need_helps.json',
+                url: '/need_helps',
                 data: {
                     'commit': submitButton.val(),
                     'utf8': '✓',
@@ -1305,7 +1309,7 @@ map.on('locationerror', onLocationError);
     $('body').on('click', '.view_drain',
      function (e) {
         activeObjectId = $(this).attr('data-gid');
-        $('#address').val($(this).text());
+        $('#address').val(activeObjectId);
 
         $('#address_button')[0].click();
 

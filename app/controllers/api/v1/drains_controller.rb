@@ -52,10 +52,12 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
   end
 
+
   def show
     drain = Drain.find_by_gid(params[:id])
     render(json: Api::V1::DrainSerializer.new(drain).to_json)
   end
+
 
   def street_drains
 
@@ -86,6 +88,7 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
 
   end
+
 
   def data
     all_drains = Drain.count
@@ -136,5 +139,4 @@ class Api::V1::DrainsController < Api::V1::BaseController
             :need_help => drains_need_help}
     }
   end
-
 end

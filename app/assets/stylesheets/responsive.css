@@ -76,6 +76,11 @@
   text-align: center;
   color: #616060;
 }
+span#street{
+  text-align: center;
+    color: #337ab7;
+    text-decoration-line: underline;
+}
 #address_box{
   margin-left: 10px;
   margin-right: 15px;
@@ -85,6 +90,12 @@
     color: white; 
     font-size: 1em;     
 }
+ p.font_14.center > a{
+    cursor: pointer;
+  }
+  p.font_14.center{
+    color: #333;
+  }
 .btn-group{
   margin-left: 65px;
   font-size: 13px;
@@ -105,14 +116,25 @@
     -o-border-color: #5cb85c;;
 }
 .btn-unclean{
-   color: #fff;
-  background-color: #f0ad4e;
-  border-color: #eea236;
+  color: #333;
+  background-color: #fff;
+  border: 2px solid #eea236;
   border-radius: 4px;
 }
+.btn.btn-unclean.btn-block.cat-btn{
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #eea236;
+    border-radius: 4px;
+}
+.btn.btn-unknown.btn-block.cat-btn{
+    color: #333;
+    background-color: #fff;
+    /*border-color: #CB7D50;*/
+    border: 2px solid #cb7d50;
+}
 .btn-unknown {
- color: #fff;
-  background-color: #CB7D50;
+  background-color: #fff;
   border-color: #CB7D50;
   border-radius: 4px;
   -moz-border-radius: 4px;
@@ -129,8 +151,15 @@
 }
 /*css for popup in map for larger screen*/
 .btn.btn-warning.btn-block.cat-btn:hover:not(:disabled), 
-.btn.btn-success.btn-block.cat-btn:hover:not(:disabled)
-.btn.btn-primary:hover:not(:disabled){
+.btn.btn-success.btn-block.cat-btn:hover:not(:disabled),
+.btn.btn-primary.btn-block.cat-btn:hover:not(:disabled),
+.btn.btn-unclean.btn-block.cat-btn:hover:not (:disabled){
+}
+.btn.btn-success.btn-block.cat-btn,
+.btn.btn-warning.btn-block.cat-btn,
+.btn.btn-primary.btn-block.cat-btn,
+.btn.btn-unclean.btn-block.cat-btn{
+    cursor:default;
 }
 
 .font_h3 {
@@ -150,9 +179,14 @@
     width: 100%;
   }
 
-input, select, option, button, input[type="submit"] {
+input, select,  button, input[type="submit"] {
   font-size: 0.7em;
   padding: 6px;
+  display: inline;
+  background-color: #fff;
+}
+option{
+   padding: 6px;
   display: inline;
   background-color: #fff;
 }
@@ -177,6 +211,9 @@ input, select, option, button, input[type="submit"] {
     bottom: 0%;
     width: 100% auto;
 
+  }
+  span#name{
+    font-weight: bold;
   }
 
 /* media query for mobile screen */
@@ -235,16 +272,16 @@ input, select, option, button{
     -o-border-color: #6495ED;
 }
 .btn {
-    margin:0;     
+    margin: 8px;     
 }
-#actions_box,#need_help{
+#actions_box,#need_help_form{
  
   width: 210px;
   }
-  #need_help{
+  #need_help_form{
     height: 100%;
   }
- textarea{
+ select, textarea{
     width: 99%;
   }
   .btn.btn-help.pull-right{
@@ -271,7 +308,8 @@ h2{
     padding-right: 0;
   }
   .btn.btn-warning.btn-block.cat-btn,
-  .btn.btn-success.btn-block.cat-btn{
+  .btn.btn-success.btn-block.cat-btn,
+  .btn.btn-need_help.btn-block.cat-btn{
   font-size: 10px;
   font-weight: 100;
 }
@@ -342,6 +380,7 @@ table #abandon_link , #abandon_link th, #abandon_link td {
 }
 .form input[type="submit"] {
   padding: 0;
+
 }
  #add_claim.btn.info_adopt,
  li .btn.btn-success.cat-btn
@@ -367,8 +406,18 @@ table #abandon_link , #abandon_link th, #abandon_link td {
     background-image: url(../assets/layers.png);
   width: 26px;
   height: 26px;
+  } 
+select
+  {
+    width: 100%;
   }
-  
+  table.font_12.pen_gray.link_1.page{
+
+    border-collapse: collapse;
+     width: 270px;
+     margin: 10px 0 12px 0;
+     text-align: center;
+}
 }
 
 
@@ -446,7 +495,11 @@ table #abandon_link ,
     -webkit-border-color: #6495ed;
     -o-border-color: #6495ED;
 }
+table.font_12.pen_gray.link_1.page{
 
+    border-collapse: collapse;
+     margin: 10px 0 12px 0;
+}
 #address_box{
   margin-left: 10px;
   margin-right: 15px;
@@ -469,6 +522,11 @@ table #abandon_link ,
   text-align: center;
   color: #616060;
   font-size: 10px;
+}
+span#street{
+  text-align: center;
+    color: #337ab7;
+    text-decoration-line: underline;
 }
 #social_media p{
   margin: 2px 0 2px 10px; 
@@ -516,8 +574,9 @@ table #abandon_link ,
    }
        #assign.btn.info_adopt,
  #add_claim.btn.info_adopt{
-  margin-left: 8px;
- }
+/*  margin-left: 8px;
+*/ }
+
 }
 
 @media (max-device-width: 480px) and (orientation: landscape) {
@@ -547,6 +606,11 @@ ul#user_profile > li{
   position: fixed;
 
 }
+.user_remember_me.font_12{
+  margin-left: 84px;
+  margin-top: 10px;
+  text-align: center;
+}
 .navbar-brand img{
     width: 97%;
     height: 50%;
@@ -568,10 +632,7 @@ margin-left: 248PX;
     background-color: #6495ED;
     color: #333;
   }
-.btn {
-    margin: 0 10px 5px 20px;
-     
-}
+
 .input-text {
     border: 1px solid #ccc;
     border-radius: 4px 4px 4px 4px;
@@ -609,7 +670,6 @@ h2 {
 .btn {
     display: inline-block;
     padding: 6px 5px;
-    margin: 0 10px 5px 18px;
     border-radius: 4px;
     line-height: 1.42857143;
     font-size: 11px;
@@ -650,7 +710,6 @@ h4{
 .btn.btn-unclean.btn-block.cat-btn,
 .btn.btn-unknown.btn-block.cat-btn{
   font-size: 13px;
-  color: white;
   font-weight: 500;
   cursor: default;
 
@@ -666,7 +725,6 @@ h4{
 .form input[type="submit"] {
   font-size: 13px;
     float: left;
-    margin-left: 75px;
   }
 .font_1 {
   font-size: 13px;
@@ -681,6 +739,7 @@ h4{
     padding-left: 15px;
     padding-right: 15px;
       margin-left: 10px;
+      margin-bottom: 6px;
     
   }
 #location{
@@ -751,11 +810,22 @@ tr td, tr th{
   text-align: center;
   color: #616060;
 }
+span#street{
+  text-align: center;
+    color: #337ab7;
+    text-decoration-line: underline;
+}
 table.font_12.pen_gray.link_1{
   
     border-collapse: collapse;
      width: 280px;
      margin: 10px 0 12px 25px;
+}
+table.font_12.pen_gray.link_1.page{
+
+    border-collapse: collapse;
+     width: 320px;
+     margin: 10px 0 12px 0;
 }
 table, .font_12.pen_gray.link_1 th, .font_12.pen_gray.link_1 td {
     border: 1px solid #9c9696;
@@ -804,6 +874,12 @@ th, td {
   width: 30px;
   height: 30px;
   }
+  p.font_14.center > a{
+    cursor: pointer;
+  }
+  p.font_14.center{
+    color: #333;
+  }
 }
 
   /*medium query for larger screen*/
@@ -822,7 +898,8 @@ h2 {
 #info_box.center p,ul.features li,
 .btn.btn-clean.btn-block.cat-btn, 
 .btn.btn-unclean.btn-block.cat-btn,
-.btn.btn-unknown.btn-block.cat-btn{
+/*.btn.btn-unknown.btn-block.cat-btn,*/
+.btn.btn-need_help.btn-block.cat-btn{
   font-size: 16px;
 }
 .btn {
@@ -880,7 +957,12 @@ h4{
  #add_claim.btn.info_adopt{
   margin-left: 18px;
  }
- /*leaf lwt control*/
+li  .btn.btn-success.cat-btn{
+
+padding-right: 9px;
+padding-left: 10px;
+}
+
 .leaflet-control-layers label{
   font-size: 16px;
   font-weight: normal;
@@ -892,7 +974,7 @@ h4{
   height: 36px;
   }
 #sign_link{
-    margin-left: 20px;
+    margin-left: 70px;
     font-size: 14px;
   }
   }
