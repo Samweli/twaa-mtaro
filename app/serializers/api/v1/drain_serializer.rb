@@ -3,4 +3,5 @@ attributes :gid, :cleared, :need_help, :address, :waterway, :covered, :depth,
            :width, :blockage, :tunnel, :diameter, :ditch, :drain, :name, :bridge,
            :height, :surface, :smoothness, :oneway, :lat, :lng,
            :zipcode, :claims_count
+
 end
