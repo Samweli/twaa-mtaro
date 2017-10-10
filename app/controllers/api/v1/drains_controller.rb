@@ -13,7 +13,8 @@ class Api::V1::DrainsController < Api::V1::BaseController
         elsif params[:type] == 'uncleaned'
           @drains = Drain.where_custom(:cleared => false)
         elsif params[:type] == 'need_help'
-          @drains = Drain.where_custom(:need_help => true)
+          @drains = Drain.joins(:need_helps => :need_help_category).where(:need_help => true)
+                    .select('*')
         elsif params[:type] == 'unknown'
           @drains = Drain.where(:cleared => nil, :need_help => nil).
               select('*, ST_AsKML(the_geom) AS "kml"')
@@ -29,13 +30,26 @@ class Api::V1::DrainsController < Api::V1::BaseController
       end
 
       unless @drains.blank?
-        render(
-            json: ActiveModel::ArraySerializer.new(
-                @drains,
-                each_serializer: Api::V1::DrainSerializer,
-                root: 'drains',
-            )
-        )
+        if params[:type] == 'need_help'
+          render(
+              json: ActiveModel::ArraySerializer.new(
+                  @drains,
+                  each_serializer: Api::V1::NeedHelpDrainSerializer,
+                  root: 'drains',
+              )
+          )
+        else
+          render(
+              json: ActiveModel::ArraySerializer.new(
+                  @drains,
+                  each_serializer: Api::V1::DrainSerializer,
+                  root: 'drains',
+              )
+          )
+        end
+
+
+
       else
         render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
       end
