@@ -1,13 +1,13 @@
 class ChangeDrains < ActiveRecord::Migration
   def up
-    change_table :mitaro_dar do |t|
-      t.boolean :cleared
-      t.boolean :need_help
-      t.string  :address
-      t.string :zipcode
-      t.index :cleared
-      t.integer :claims_count, :default => 0
-    end
+    # change_table :mitaro_dar do |t|
+    #   t.boolean :cleared
+    #   t.boolean :need_help
+    #   t.string  :address
+    #   t.string :zipcode
+    #   t.index :cleared
+    #   t.integer :claims_count, :default => 0
+    # end
   end
 
   def down

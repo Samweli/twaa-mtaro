@@ -22,22 +22,25 @@
   .descriptions
     %h4
       = t("defaults.address") + ':'
-      = @drain.address
-      %span.font12
-        = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+      - if @drain.try(:address)
+        = @drain.try(:address) +', '
         = @drain.try(:gid)
+      - else
+        %span.font12
+          = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+          = @drain.try(:gid)
     - if  @drain.try(:need_help) == true
       - if  @drain.try(:cleared) == false
         %p.font_14.color_warn.center
-        = t("defaults.need_help")
+        = t("defaults.need_help") + '. '
         = t("defaults.dirty")
         %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
           = t("defaults.view_need_help")
       - else
-        %p.font_14.color_warn.center
-        = t("defaults.need_help")
-        %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
-          = t("defaults.need_help_details")
+        %p.font_14.center
+          = t("defaults.need_help") + ' '
+          %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
+            = t("defaults.need_help_details")
     - elsif @claims.empty?
       %p.font_14.color_warn.center
         = t("defaults.notify")
@@ -119,7 +122,7 @@
     - elsif @drain.cleared == nil and @drain.try(:need_help) == nil
       = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - elsif @drain.need_help?
-      = button_tag t("captions.need_help"), :class => "btn btn-need_help btn-block cat-btn"
+      = button_tag t("captions.need_help"), :class => "btn btn-primary btn-block cat-btn"
     - else
       = button_tag t("captions.unclean"), :class  => "btn btn-unclean btn-block cat-btn"
 

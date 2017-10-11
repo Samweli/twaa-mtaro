@@ -29,11 +29,8 @@
         %li
           = f.label :password_confirmation, t("labels.password_confirm")
           = f.password_field :password_confirmation
-
-
-      %ul.horizontal_items.font_12
         %li
-          = f.submit t("buttons.register"), :class => "btn btn-submit"
+          = f.submit t("buttons.register")
           = link_to t("links.sign_in"), '#', :id => "sign_link" 
     
         

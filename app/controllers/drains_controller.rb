@@ -27,7 +27,11 @@ class DrainsController < ApplicationController
         elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]
-          @drains = Drain.where_custom(:gid => value)
+          if (value.to_i == 0)
+            @drains = Drain.where_custom(:address => value)
+          else
+            @drains = Drain.where_custom(:gid => value)
+          end
         end
       end
 
@@ -73,6 +77,7 @@ class DrainsController < ApplicationController
     user = current_user
 
     claim = drain.claims.find_by_user_id(user.id)
+    street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
     if params.has_key?(:shoveled)
 
@@ -83,8 +88,7 @@ class DrainsController < ApplicationController
         else
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
-          street_leader = User.find_by_role_and_street_id(2, user.street_id)
-
+          
           reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
                                   :last_name => user.last_name, :id => drain.gid, :status => status)
           notify_user = t('messages.user_notify', :id => drain.gid, :status => status)
@@ -103,6 +107,11 @@ class DrainsController < ApplicationController
         drain.save(validate: false)
 
         claim = DrainClaim.find_by_gid(drain.gid)
+
+        if (user == street_leader)
+          claim.update_attribute(:shoveled, shoveled)
+          claim.save(validate: false)
+        end
 
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(
