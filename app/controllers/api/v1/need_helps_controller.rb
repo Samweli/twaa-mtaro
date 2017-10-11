@@ -16,26 +16,13 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     @need_help = NeedHelp.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @need_help }
     end
   end
 
-  # GET /need_helps/new
-  # GET /need_helps/new.json
-  def new
-    @need_help = NeedHelp.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @need_help }
-    end
-  end
 
-  # GET /need_helps/1/edit
-  def edit
-    @need_help = NeedHelp.find(params[:id])
-  end
+
 
   # POST /need_helps
   # POST /need_helps.json
@@ -44,10 +31,8 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
 
     respond_to do |format|
       if @need_help.save
-        format.html { redirect_to @need_help, notice: 'Need help was successfully created.' }
         format.json { render json: @need_help, status: :created, location: @need_help }
       else
-        format.html { render action: "new" }
         format.json { render json: @need_help.errors, status: :unprocessable_entity }
       end
     end
@@ -60,10 +45,8 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
 
     respond_to do |format|
       if @need_help.update_attributes(params[:need_help])
-        format.html { redirect_to @need_help, notice: 'Need help was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
         format.json { render json: @need_help.errors, status: :unprocessable_entity }
       end
     end
@@ -76,7 +59,6 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     @need_help.destroy
 
     respond_to do |format|
-      format.html { redirect_to need_helps_url }
       format.json { head :no_content }
     end
   end
