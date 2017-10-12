@@ -6,7 +6,8 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     @need_helps = NeedHelp.all
 
     respond_to do |format|
-      format.json { render :json => @need_helps.to_json(:include => :need_help_category) }
+      format.json { render :json => @need_helps.to_json(:include => [:need_help_category,
+                                                                     :user =>{:include => :street}]) }
     end
   end
 
