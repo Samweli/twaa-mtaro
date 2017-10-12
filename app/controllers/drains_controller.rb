@@ -112,7 +112,7 @@ class DrainsController < ApplicationController
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
         end
-
+        
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(
             reply_street_leader,
