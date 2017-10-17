@@ -49,6 +49,7 @@ AdoptADrain::Application.routes.draw do
       get '/drains/data' => 'drains#data'
       get '/drains/ranking' => 'drains#ranking'
       get 'street_drains/:id' => 'drains#street_drains'
+      post '/users/remind' => 'users#remind'
       resources :drains,only: [:index, :create, :show, :update, :destroy]
       resources :streets,only: [:index, :create, :show, :update, :destroy]
       resources :need_helps,only: [:index, :create, :show, :update, :destroy]
