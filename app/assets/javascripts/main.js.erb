@@ -67,11 +67,9 @@ $(function () {
     var drainLocation;
     var activeObjectId;
     var user_id;
-    var users;
     var pos;
     var drain_pos;
     var selected_drain;
-    var bDebug = true;
 
   /* Creating map*/
 
@@ -422,24 +420,6 @@ map.on('locationerror', onLocationError);
     });
 
 
-    function newClaim() {
-        var locale = urlParam('locale');
-    
-
-        $.ajax({
-            type: 'GET',
-            url: 'drain_claims/new',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-                createPopup(msg, map.getCenter());
-                ajaxJS(msg);
-            }
-        });
-        return false;
-    }
-
   /* displays sign_up form inside a popup */
     $('body').on('click', '#sign_up_link', function () {
         var locale = urlParam('locale');
@@ -471,7 +451,7 @@ map.on('locationerror', onLocationError);
                 'locale': locale
             },
             success: function (msg) {
-                createPopup(msg, map.getCenter());
+                createPopup(msg, drain_pos);
                 ajaxJS(msg);
             }
         });
@@ -1037,7 +1017,10 @@ map.on('locationerror', onLocationError);
 
         $('#abandon_link').on('click','.chng_link', function () {
             var locale = urlParam('locale');
-            if (window.confirm('Are you sure that you want to change status?')) {
+            var message_en = 'Are you sure that you want to change status?';
+            var message_sw ='Una thibitisha kubadili hali ya huu mtaro ?';
+            var confirmation_message = locale === 'en'? message_en : message_sw
+            if (window.confirm(confirmation_message)) {
                 var shoveled;
                 if($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio"){
                     shoveled = false;
