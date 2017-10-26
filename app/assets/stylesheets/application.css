@@ -1010,8 +1010,7 @@ ul.features.hidden-sm.hidden-xs,
 }
 #testdiv .users{
   max-height:200px; 
-  width:450px;
-  overflow:auto;}
+  width:450px;  }
 #sign_up_box  ul.horizontal_items.font_12.center,{
     "margin-top: 15px;
 }

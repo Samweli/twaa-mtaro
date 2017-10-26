@@ -22,7 +22,7 @@ if ENV["streets"]
                 street_name: street[:street_name],
                 ward_name: street[:ward_name],
                 municipal_name: street[:district],
-                city_name: street[:street_name],
+                city_name: street[:city_name],
                 lat: street[:coordinates][0],
                 lng: street[:coordinates][1]
       )

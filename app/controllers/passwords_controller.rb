@@ -5,12 +5,15 @@ class PasswordsController < Devise::PasswordsController
   end
   
   def create
+
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
+    Rails.logger.debug("parameter #{params[resource_name]}")
     if resource.errors.empty?
       render(:json => {"success" => true})
     else
       render(:json => {"errors" => resource.errors}, :status => 500)
     end
+    Rails.logger.debug("sent email #{self.resource.errors}")
   end
 
   def edit
