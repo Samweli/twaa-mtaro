@@ -56,7 +56,6 @@ class DrainsController < ApplicationController
   end
 
 
-
   def find_closest
     gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
 
@@ -112,8 +111,10 @@ class DrainsController < ApplicationController
         claim = DrainClaim.find_by_gid(drain.gid)
 
         if (user == street_leader)
-          claim.update_attribute(:shoveled, shoveled)
-          claim.save(validate: false)
+          if claim
+            claim.update_attribute(:shoveled, shoveled)
+            claim.save(validate: false)
+          end
         end
 
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
