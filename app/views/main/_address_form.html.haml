@@ -38,10 +38,10 @@
             %li
               = link_to t("links.sign_out"), destroy_user_session_path, :id => 'sign_out_link_main'
             %span.signout_links
-            %li
-              - if flash[:notice]
-                #notice=flash[:notice]
+              |
             %li
               %a#my_profile
                 = t("buttons.my_profile")
+                -if flash[:notice]
+                  #notice=flash[:notice]
 
