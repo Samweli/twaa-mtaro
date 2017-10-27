@@ -33,7 +33,8 @@ protected
   end
 
   def set_locale
+    Rails.logger.debug("this is the default locale #{I18n.default_locale}")
 
-    I18n.locale = params[:locale] || "sw"
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 end

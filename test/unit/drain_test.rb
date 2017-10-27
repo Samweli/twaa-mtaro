@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NeedHelpCategoryTest < ActiveSupport::TestCase
+class DrainTest < ActiveSupport::TestCase
   test "the truth" do
     assert true
   end

@@ -26,7 +26,7 @@ class UsersController < Devise::RegistrationsController
   def update
     if resource.update_with_password(params[resource_name])
       sign_in(resource_name, resource, :bypass => true)
-      flash[:notice] = "Profile updated!"
+
 
       sms_service = SmsService.new();
       msg = text_message('update');
@@ -37,9 +37,9 @@ class UsersController < Devise::RegistrationsController
 
     else
       clean_up_passwords(resource)
-      flash[:notice] = "Profile not updated due to errors"
 
     end
+    flash[:notice] = t("notices.profile")
     redirect_to(:controller => "main", :action => "index")
   end
 

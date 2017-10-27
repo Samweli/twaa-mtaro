@@ -15,6 +15,9 @@
           = f.label :organization, t("labels.organization"), :id => "user_organization_label"
           = f.text_field :organization
         %li
+          = f.label :street, t("labels.street")
+          = f.collection_select(:street_id, Street.all, :id, :street_name)
+        %li
           = f.label :sms_number, t("labels.voice_number"), :id => "user_voice_number_label"
           = f.text_field :sms_number
         %li
