@@ -20,7 +20,7 @@ class SmsService
   def new_sms_updates(content, tonumber)
 	# Loop over messages and print out a property for each one
 	@client.messages.list.each do |message|
-	puts message.body
+	Rails.logger.debug(message.body)
 	end
   end
 
