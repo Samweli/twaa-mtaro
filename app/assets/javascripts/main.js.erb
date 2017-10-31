@@ -72,22 +72,11 @@ $(function () {
 
 
 
-    $('body').on('click', '#view_street',
-        function (e) {
-            var lat = $(this).attr('data-lat');
-            var lng = $(this).attr('data-lng');
-            var latlng = L.latLng(lat, lng);
-
-            map.setView(latlng, 17);
-            $('.navbar-collapse').collapse('hide')
-        });
 
 
-    function updateNotification() {
+    window.updateNotification = function () {
 
         var notification_msg = $('#notice').text();
-        console.log('update notification called');
-        console.log(notification_msg);
         $('#notice').hide();
         if (notification_msg) {
 
@@ -128,7 +117,6 @@ $(function () {
         }
     }
 
-    /* Updates claims status */
     get_categories();
     updateNotification();
 
