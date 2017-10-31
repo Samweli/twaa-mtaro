@@ -83,5 +83,86 @@ $(function () {
     }
 
 
+    /* updating drain status to clean */
+
+    $('body').on('click','#clean', function () {
+        var id = $(this).attr('data-moid');
+        var locale = urlParam('locale');
+
+        showSpinner();
+
+        $.ajax({
+            type: 'POST',
+            url: '/drains/' + id,
+            data: {
+                'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': true,
+                'locale': locale
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+
+                hideSpinner();
+            },
+            success: function (data) {
+                refreshKML("all");
+                fetchDrainInfo(id, drain_pos);
+            }
+        });
+        return false;
+    });
+
+
+      /*updating drain status to unclean */
+
+    $('body').on('click','#unclean', function () {
+        var id = $(this).attr('data-moid');
+        var locale = urlParam('locale');
+        showSpinner();
+
+        $.ajax({
+            type: 'POST',
+            url: '/drains/' + id,
+            data: {
+                'moid': $(this).attr('data-moid'),
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'put',
+                'shoveled': false,
+                'locale': locale
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+
+            },
+            success: function (data) {
+
+                refreshKML("all");
+                fetchDrainInfo(id, drain_pos);
+
+            }
+        });
+        return false;
+    });
+
+    /* zooms to a specific drain and shows it on map */
+    $('body').on('click', '.view_drain',
+        function (e) {
+            activeObjectId = $(this).attr('data-gid');
+            $('#address').val(activeObjectId);
+
+            $('#address_button')[0].click();
+
+            var lat = $(this).attr('data-lat');
+            var lng = $(this).attr('data-lng');
+            var latlng = L.latLng(lat, lng);
+            map.setView(latlng, 19);
+
+
+            return false;
+        });
+
+
 
 }); // end of function

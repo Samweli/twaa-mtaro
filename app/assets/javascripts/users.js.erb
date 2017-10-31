@@ -422,6 +422,101 @@ $(function () {
         return false;
     });
 
+      /*shows form for entering password reset details */
+    $('body').on('click','#user_forgot_password_link', function () {
+        $.ajax({
+            type: 'GET',
+            url: '/forgot_password',
+            success: function (data) {
+                createPopup(data, map.getCenter());
+
+            }
+        });
+        return false;
+    });
+
+    /* function for reseting user password*/
+    $('body').on('click', '.button_forgot_password', function () {
+        var f = $(this).closest('form.forgot_pw_form');
+        var submitButton = $("input[type='submit']", f);
+        var uemail = $('.user_email', f);
+        var errors = [];
+
+
+        submitButton.attr('disabled', 'disabled');
+        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            markError(uemail, errors);
+        } else {
+            unmarkError(uemail);
+        }
+        if (errors.length > 0) {
+            submitButton.removeAttr('disabled');
+            errors[0].focus();
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/users/password.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', f).val(),
+                    'user': {
+                        'email': uemail.val()
+                    }
+                },
+                beforeSend: function () {
+                },
+                error: function (jqXHR) {
+                    //hideSpinner();
+                    //showInfoWindow();
+                    submitButton.removeAttr('disabled');
+                    markError(uemail, errors);
+                    uemail.focus();
+                },
+                success: function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/users/sign_in',
+                        data: {
+                            'user': {
+                                'email': uemail.val()
+                            },
+                            'flash': {
+                                'notice': "<%= I18n.t("notices.password_reset") %>"
+                            }
+                        },
+                        success: function (data) {
+                            createPopup(data, map.getCenter());
+                        }
+                    });
+                }
+            });
+        }
+        return false;
+    });
+
+    /* searching table of users */
+
+    $('body').on('keyup', '#myInput', function () {
+
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("location");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+        return false;
+    });
 
 
 }); // end of function

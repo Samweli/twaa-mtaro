@@ -19,4 +19,113 @@ $(function () {
         return false;
     });
 
-});
+
+    window.bind = function (pos) {
+
+
+        /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
+        $('#abandon_link').on('click', '.abdn_link', function () {
+            var locale = urlParam('locale');
+            var message_en = 'Are you sure that you want to abandon this drain?';
+            var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
+            var confirmation_message = locale === 'en' ? message_en : message_sw
+            if (window.confirm(confirmation_message)) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/drain_claims/' + $(this).attr('data-moid'),
+                    data: {
+                        'gid': activeObjectId,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'delete',
+                        'locale': locale
+                    },
+                    error: function (jqXHR) {
+                        data = $.parseJSON(jqXHR.responseText);
+
+                    },
+                    success: function (data) {
+                        refreshKML("all");
+                        fetchDrainInfo(activeObjectId, drain_pos);
+                    }
+                });
+            }
+            return false;
+        });
+
+          /* function for users to update status of their claims to clean or unclean */
+
+        $('#abandon_link').on('click', '.chng_link', function () {
+            var locale = urlParam('locale');
+            var message_en = 'Are you sure that you want to change status?';
+            var message_sw = 'Una thibitisha kubadili hali ya huu mtaro ?';
+            var confirmation_message = locale === 'en' ? message_en : message_sw
+            if (window.confirm(confirmation_message)) {
+                var shoveled;
+                if ($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio") {
+                    shoveled = false;
+                }
+                else {
+                    shoveled = true;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/drains/' + activeObjectId,
+                    data: {
+                        'gid': activeObjectId,
+                        'shoveled': shoveled,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'put',
+                        'locale': locale
+
+                    },
+                    error: function (jqXHR) {
+                        data = $.parseJSON(jqXHR.responseText);
+
+                    },
+                    success: function (data) {
+                        refreshKML("all");
+                        fetchDrainInfo(activeObjectId, pos);
+                    }
+                });
+            }
+            return false;
+        });
+
+
+        /*Assigns drain to a selected/clicked user from the list  */
+        $('#location').on('click', '.btnassing', function () {
+            user_id = $(this).attr('data-user-id');
+            assignDrain(pos);
+            return false;
+        });
+
+
+        /* displays a list of users who can made adopt a selected drain */
+        $('body').on('click', '#add_claim, #assign', function () {
+            var locale = urlParam('locale');
+
+            $.ajax({
+                type: 'GET',
+                url: 'drain_claims/adopt',
+                data: {
+                    'locale': locale
+                },
+                success: function (msg) {
+                    createPopup(msg, drainLocation);
+
+                }
+            });
+            return false;
+        });
+
+
+
+
+
+
+    }
+
+
+}); // end of function
