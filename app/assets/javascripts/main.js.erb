@@ -177,7 +177,6 @@ $(function () {
             return false;
         }
         var locale = urlParam('locale');
-        var dataToReturn;
 
         $.ajax({
             type: 'GET',
@@ -203,14 +202,7 @@ $(function () {
 
     }
 
-    function showSpinner() {
-        $('#spinner').show();
-    }
 
-    function hideSpinner() {
-        $('#spinner').hide();
-
-    }
 
     function showInfoWindow() {
         $('#info_window').show();
