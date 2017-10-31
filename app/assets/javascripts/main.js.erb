@@ -251,19 +251,7 @@ $(function () {
 
     });
 
-    // Refreshs drain details on a popup
 
-    $('body').on('click', '#refresh_link', function (e) {
-
-        drain_gid = $(this).attr('data_gid');
-
-        if (drain_pos == null) {
-            drain_pos = map.getCenter();
-        }
-        showSpinner();
-        fetchDrainInfo(drain_gid, drain_pos);
-
-    });
 
 
     $('#paginator').on('click', function () {
