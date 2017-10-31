@@ -5,8 +5,9 @@ add here all functions that depend on map
 */
 
 
-
+// global variables
 var popup;
+var drain_pos;
 
 
 $(function(){
@@ -110,4 +111,44 @@ $(function(){
         bind(pos);
     }
 
-});
+
+    /*
+    *  fetches and displays information associated with specified drain
+    * */
+
+    window.fetchDrainInfo = function (gid, pos) {
+
+        if (gid == undefined) {
+            // do nothing
+            map.closePopup();
+            return false;
+        }
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/drain_claims/' + gid,
+            data: {
+                'locale': locale
+            },
+            error: function () {
+            },
+            success: function (data) {
+
+                // Updating variable for info window position
+                drain_pos = pos;
+
+                createPopup(data, pos);
+                if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
+                    $('#abandon_link').find('.hide_column').hide();
+                }
+                hideSpinner();
+            }
+
+        });
+
+    }
+
+
+
+}); /* end of function*/

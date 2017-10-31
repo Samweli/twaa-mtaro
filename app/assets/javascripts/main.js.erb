@@ -8,7 +8,7 @@ $(function () {
     var activeObjectId;
     var user_id;
     var pos;
-    var drain_pos;
+    /*var drain_pos;*/
     var selected_drain;
     var map = getMap();
 
@@ -169,38 +169,7 @@ $(function () {
     refreshKML("all");
     addLegend();
 
-    function fetchDrainInfo(gid, pos) {
 
-        if (gid == undefined) {
-            // do nothing
-            map.closePopup();
-            return false;
-        }
-        var locale = urlParam('locale');
-
-        $.ajax({
-            type: 'GET',
-            url: '/drain_claims/' + gid,
-            data: {
-                //'id': activeObjectId
-                'locale': locale
-            },
-            error: function (jqXHR) {
-            },
-            success: function (data) {
-                // Updating variable for info window position
-                drain_pos = pos;
-
-                createPopup(data, pos);
-                if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
-                    $('#abandon_link').find('.hide_column').hide();
-                }
-                hideSpinner();
-            }
-
-        });
-
-    }
 
 
 
