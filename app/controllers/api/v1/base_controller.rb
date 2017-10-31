@@ -14,7 +14,7 @@ class Api::V1::BaseController < ApplicationController
 
   def api_error(status: 500, errors: [])
     unless Rails.env.production?
-      puts errors.full_messages if errors.respond_to? :full_messages
+      Rails.logger.debug(errors.full_messages) if errors.respond_to? :full_messages
     end
     head status: status and return if errors.empty?
 

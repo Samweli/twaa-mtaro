@@ -92,7 +92,7 @@ en:
   labels:
     address: "Street address"
     city_state: "City"
-    current_password: "current_password"
+    current_password: "Current password"
     email: "Email"
     first_name: "First name"
     last_name: "Last name"
@@ -109,7 +109,7 @@ en:
     remember_me_short: "Remember me"
     sms_number: "Mobile phone number"
     street: "My Street"
-    search: "Search the names.."
+    search: "Search the names..."
     user_existing: "Already have an account?"
     user_new: "Don't have an account here?"
     voice_number: "phone number"

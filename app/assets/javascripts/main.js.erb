@@ -10,14 +10,8 @@ $(function () {
         $('#info_window').show();
     }
 
-    function unmarkError(i) {
-        $(i).removeClass('error');
-    }
 
-    function markError(i, e) {
-        e.push(i);
-        $(i).addClass('error');
-    }
+
 
 
     /* displays need help form inside a popup */
@@ -40,85 +34,6 @@ $(function () {
         return false;
     });
 
-    /* stardardizes the phonenumber */
-    function standardizePhoneNumber(num) {
-        var country_code = "255";
-        if (num.startsWith("0")) {
-            var standard_number = country_code.concat(num.slice(1))
-            return standard_number;
-        }
-        else {
-            return num;
-        }
-    }
-
-
-    /* signs in registered users */
-    $('body').on('submit', 'form.sign_in_form', function (e) {
-        i = $(e.target);
-        var submitButton = $("input[type='submit']", i);
-        var usms_number = $('.user_sms_number', i);
-        var upwd = $('.user_password', i);
-        var err_msg = $('.error_msg', i);
-        var errors = [];
-
-        var locale = urlParam('locale');
-
-
-        e.preventDefault();
-        submitButton.attr('disabled', 'disabled');
-        /*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-                    markError(uemail, errors);
-                } else {
-                    unmarkError(uemail);
-                }*/
-        if (upwd.val().length < 6 || upwd.val().length > 20) {
-            markError(upwd, errors);
-        } else {
-            unmarkError(upwd);
-        }
-        if (errors.length > 0) {
-            submitButton.removeAttr('disabled');
-            errors[0].focus();
-        }
-        else {
-            $.ajax({
-                type: 'POST',
-                url: '/users/sign_in.json',
-                data: {
-                    'commit': submitButton.val(),
-                    'utf8': '✓',
-                    'authenticity_token': $('input[name="authenticity_token"]', i).val(),
-                    'user': {
-                        'sms_number': standardizePhoneNumber(usms_number.val()),
-                        'password': upwd.val(),
-                        'remember_me': $('.user_remember_me', i).val()
-                    },
-                    'locale': locale
-                },
-                beforeSend: function () {
-                },
-                error: function (jqXHR) {
-                    data = $.parseJSON(jqXHR.responseText);
-                    submitButton.removeAttr('disabled');
-                    err_msg.html('<h2>' + data.errors.password + '</h2>');
-                    popup.setContent($('#IWCONTENT')[0]);
-                    uemail.focus();
-
-                },
-                success: function (data) {
-                    $('.sign_links').remove();
-                    updateSidebar();
-                    fetchDrainInfo();
-                    window.location.href = window.location.hostname;
-                    window.location.reload();
-
-                }
-            });
-        }
-
-        return false;
-    });
 
 
     /* signs up new users */
@@ -362,27 +277,7 @@ $(function () {
     });
 
 
-    function updateSidebar() {
-        var locale = urlParam('locale');
 
-        $.ajax({
-            type: 'GET',
-            url: '/sidebar',
-            dataType: 'json',
-            data: {
-                'locale': locale
-            },
-            error: function (jqXHR) {
-
-            },
-            success: function (data) {
-
-                $('#username').replaceWith(data['user_badge']);
-                $('#drain_list').replaceWith(data['drain_list']);
-                $('#address_box').replaceWith(data['address_box']);
-            }
-        });
-    }
 
 
     function assignDrain(pos) {

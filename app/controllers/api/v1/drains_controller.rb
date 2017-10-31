@@ -134,9 +134,9 @@ class Api::V1::DrainsController < Api::V1::BaseController
     return {
         street: drains_street,
         details: {:adopted => drains_adopted,
-            :cleaned => drains_cleaned,
-            :uncleaned => drains_uncleaned,
-            :need_help => drains_need_help}
+                  :cleaned => drains_cleaned,
+                  :uncleaned => drains_uncleaned,
+                  :need_help => drains_need_help}
     }
   end
 end
