@@ -93,9 +93,103 @@ $(function () {
 
 
     /*
+    Todo: Add explanatory comments here
+    * */
+    function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+
+        L.marker(e.latlng).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+        L.circle(e.latlng, radius).addTo(map);
+    }
+
+
+    map.on('locationfound', onLocationFound);
+
+    function onLocationError(e) {
+        alert(e.message);
+    }
+
+    map.on('locationerror', onLocationError);
+
+
+    /*
+    Adds Legend on openstreetmp
+    * */
+    // Adding Legend
+    function addLegend() {
+        var legend = L.control({position: 'topright'});
+
+        legend.onAdd = function (map) {
+
+            var locale = urlParam('locale');
+            var colour_map;
+            var div;
+
+            if (locale == 'sw') {
+                colour_map = {
+                    'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
+                    'Haijulikani': "#CB7D50"
+                }
+
+                div = L.DomUtil.create('div', 'info legend'),
+                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
+                    labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3 > Alama </h3>';
+
+            } else {
+                colour_map = {
+                    'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
+                    'Unknown': "#CB7D50"
+                }
+
+                div = L.DomUtil.create('div', 'info legend'),
+                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
+
+                    labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3> Legend </h3>';
+            }
+
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < colours.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colour_map[colours[i]] + '"></i> ' +
+                    colours[i] + '<br><br>';
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+
+        var scroll = L.control({position: 'bottomright'});
+
+        scroll.onAdd = function (map) {
+
+            scroll.addTo(map);
+
+        }
+    }
+
+
+
+
+
+
+    /*
     add all shared fuctions that depend on map below here
     * */
 
+
+
+
+
+
+    /*gets the instance of map object */
     window.getMap = function () {
         return map;
     }
@@ -234,6 +328,13 @@ $(function () {
         map.addLayer(kmlLayer);
 
     }
+
+
+
+    /*executing functions*/
+    refreshKML("all");
+    addLegend();
+
 
 
 }); /* end of function*/
