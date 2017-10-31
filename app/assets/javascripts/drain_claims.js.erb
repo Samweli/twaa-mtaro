@@ -1,0 +1,22 @@
+$(function () {
+
+    /*
+    Paginates the list of users read to be assigned drain
+    * */
+    $('#paginator').on('click', function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'drain_claims/adopt',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, drainLocation);
+            }
+        });
+        return false;
+    });
+
+});
