@@ -1,16 +1,9 @@
 $(function () {
 
 
-    //kml layer with drains
-    /*var kmlLayer;*/
-    /*var popup;*/
-/*    var drainLocation;
-    var activeObjectId;*/
     var user_id;
     var pos;
-    /*var drain_pos;*/
-    /*var selected_drain;*/
-    var map = getMap();
+
 
 
     function showInfoWindow() {
@@ -25,42 +18,6 @@ $(function () {
         e.push(i);
         $(i).addClass('error');
     }
-
-
-    /* executes javascript for recaptcha */
-    function ajaxJS(data) {
-
-        $(data).find('script').each(function () {
-            $.ajax({
-                url: this.src,
-                dataType: "script",
-                success: function () {
-                }
-            });
-        });
-    }
-
-    /* displays sign_in form inside a popup */
-    $('body').on('click', '#sign_in_link', function () {
-
-        var locale = urlParam('locale');
-        $('.navbar-collapse').collapse('hide');
-
-
-        $.ajax({
-            type: 'GET',
-            url: '/users/sign_in',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-
-                createPopup(msg, map.getCenter());
-            }
-
-        });
-        return false;
-    });
 
 
     /* displays need help form inside a popup */
@@ -82,90 +39,6 @@ $(function () {
         });
         return false;
     });
-
-
-    /* displays user profile inside a popup */
-    $('body').on('click', '#my_profile', function () {
-
-        var locale = urlParam('locale');
-        $('.navbar-collapse').collapse('hide');
-
-        $.ajax({
-            type: 'GET',
-            url: '/profile',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-
-                createPopup(msg, map.getCenter());
-            }
-
-        });
-        return false;
-    });
-
-
-    /* displays edit profile form inside a popup */
-    $('body').on('click', '#edit_profile_form', function () {
-
-        var locale = urlParam('locale');
-
-
-        $.ajax({
-            type: 'GET',
-            url: '/users/edit',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-
-                createPopup(msg, map.getCenter());
-            }
-
-        });
-        return false;
-    });
-
-
-    /* displays sign_up form inside a popup */
-    $('body').on('click', '#sign_up_link', function () {
-        var locale = urlParam('locale');
-        $('.navbar-collapse').collapse('hide')
-
-        $.ajax({
-            type: 'GET',
-            url: '/users/sign_up',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-                createPopup(msg, map.getCenter());
-                ajaxJS(msg);
-            }
-        });
-        return false;
-    });
-
-
-    /* for adding users in assigning drains */
-    $('body').on('click', '#add_user', function () {
-        var locale = urlParam('locale');
-
-        $.ajax({
-            type: 'GET',
-            url: '/add',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-                createPopup(msg, drain_pos);
-                ajaxJS(msg);
-            }
-        });
-        return false;
-    });
-
 
     /* stardardizes the phonenumber */
     function standardizePhoneNumber(num) {

@@ -12,6 +12,7 @@ add here all functions that depend on map
   var drainLocation;
   var activeObjectId;
   var selected_drain;
+  var map;
 
 
 $(function () {
@@ -77,7 +78,7 @@ $(function () {
 
     /* Creating map*/
 
-    var map = new L.Map('map_canvas', mapOptions);
+     map = new L.Map('map_canvas', mapOptions);
 
     // Add basemaps and their menu
     var baseMaps = {
