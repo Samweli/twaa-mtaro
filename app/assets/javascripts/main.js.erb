@@ -1,11 +1,9 @@
 $(function () {
 
 
-
-
     //kml layer with drains
     var kmlLayer;
-    var popup;
+    /*var popup;*/
     var drainLocation;
     var activeObjectId;
     var user_id;
@@ -16,23 +14,9 @@ $(function () {
 
 
 
-   // Click standard layer to override unusual maps tiles load
-
-   $( "input[name='leaflet-base-layers']" )[2].click();
-  
-  var urlParam = function(name) {
-      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-      if (results == null) {
-          return 'en';
-      }
-      else {
-          return results[1] || 0;
-      }
-  }
-
     var refreshKML = function (type) {
 
-      /* Styling mitaro */
+        /* Styling mitaro */
         var customLayer = L.geoJson(null, {
             style: function (feature) {
                 switch (feature.properties.styleUrl) {
@@ -53,7 +37,7 @@ $(function () {
             map.removeLayer(kmlLayer);
         }
 
-      /* dyamically loading mitaro using the center coordinates */
+        /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
         var locale = urlParam('locale');
 
@@ -65,7 +49,7 @@ $(function () {
         }
         showSpinner();
 
-      /* Loading KML*/
+        /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer)
             .on('ready', function () {
                 hideSpinner();
@@ -79,7 +63,7 @@ $(function () {
 
             }).addTo(map);
 
-      /* Listens to clicks on drains*/
+        /* Listens to clicks on drains*/
         kmlLayer.on('click', function (e) {
             var mtaro = e.layer.feature.properties;
             // increase size of the clicked drain
@@ -87,41 +71,42 @@ $(function () {
             selected.bringToFront()
             // check for past selected drain and 
             // return its style as always
-            if (selected_drain){
+            if (selected_drain) {
                 selected_drain.setStyle({weight: 2.5});
             }
             // Style selected
             selected.setStyle({weight: 6});
             selected_drain = selected;
-            
+
             activeObjectId = mtaro.description;
             drainLocation = e.latlng;
             // Fetching drain info
             fetchDrainInfo(mtaro.description, drainLocation);
         });
 
-      /*add KML layer to map*/
+        /*add KML layer to map*/
         map.addLayer(kmlLayer);
 
     }
 
-function onLocationFound(e) {
-    var radius = e.accuracy / 2;
+    function onLocationFound(e) {
+        var radius = e.accuracy / 2;
 
-    L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.marker(e.latlng).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-    L.circle(e.latlng, radius).addTo(map);
-}
+        L.circle(e.latlng, radius).addTo(map);
+    }
 
 
-map.on('locationfound', onLocationFound);
+    map.on('locationfound', onLocationFound);
 
-function onLocationError(e) {
-    alert(e.message);
-}
+    function onLocationError(e) {
+        alert(e.message);
+    }
 
-map.on('locationerror', onLocationError);
+    map.on('locationerror', onLocationError);
+
     // Adding Legend
     function addLegend() {
         var legend = L.control({position: 'topright'});
@@ -133,8 +118,10 @@ map.on('locationerror', onLocationError);
             var div;
 
             if (locale == 'sw') {
-                colour_map = {'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
-                              'Haijulikani': "#CB7D50" }
+                colour_map = {
+                    'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
+                    'Haijulikani': "#CB7D50"
+                }
 
                 div = L.DomUtil.create('div', 'info legend'),
                     colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
@@ -143,8 +130,10 @@ map.on('locationerror', onLocationError);
                 div.innerHTML += '<h3 > Alama </h3>';
 
             } else {
-                colour_map = {'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
-                              'Unknown': "#CB7D50"}
+                colour_map = {
+                    'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
+                    'Unknown': "#CB7D50"
+                }
 
                 div = L.DomUtil.create('div', 'info legend'),
                     colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
@@ -169,29 +158,16 @@ map.on('locationerror', onLocationError);
 
         var scroll = L.control({position: 'bottomright'});
 
-        scroll .onAdd = function (map) {
+        scroll.onAdd = function (map) {
 
-        scroll.addTo(map);
+            scroll.addTo(map);
 
+        }
     }
-}
 
 
     refreshKML("all");
     addLegend();
-
-  /* popup Window for displaying details of Mtaro */
-    function createPopup(msg, pos) {
-        if (pos == null) {
-            pos = map.getCenter();
-
-        }
-        popup = L.popup({maxWidth: 960})
-            .setLatLng(pos)
-            .setContent(msg)
-            .openOn(map);
-        bind(pos);
-    }
 
     function fetchDrainInfo(gid, pos) {
 
@@ -217,7 +193,7 @@ map.on('locationerror', onLocationError);
                 drain_pos = pos;
 
                 createPopup(data, pos);
-                if($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No'){
+                if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
                     $('#abandon_link').find('.hide_column').hide();
                 }
                 hideSpinner();
@@ -250,7 +226,7 @@ map.on('locationerror', onLocationError);
     }
 
 
-  /* executes javascript for recaptcha */
+    /* executes javascript for recaptcha */
     function ajaxJS(data) {
 
         $(data).find('script').each(function () {
@@ -263,12 +239,11 @@ map.on('locationerror', onLocationError);
         });
     }
 
-  /* displays sign_in form inside a popup */
+    /* displays sign_in form inside a popup */
     $('body').on('click', '#sign_in_link', function () {
 
         var locale = urlParam('locale');
         $('.navbar-collapse').collapse('hide');
-        
 
 
         $.ajax({
@@ -308,7 +283,7 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* displays user profile inside a popup */
+    /* displays user profile inside a popup */
     $('body').on('click', '#my_profile', function () {
 
         var locale = urlParam('locale');
@@ -330,11 +305,11 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* displays edit profile form inside a popup */
+    /* displays edit profile form inside a popup */
     $('body').on('click', '#edit_profile_form', function () {
 
         var locale = urlParam('locale');
-       
+
 
         $.ajax({
             type: 'GET',
@@ -352,7 +327,7 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* displays sign_up form inside a popup */
+    /* displays sign_up form inside a popup */
     $('body').on('click', '#sign_up_link', function () {
         var locale = urlParam('locale');
         $('.navbar-collapse').collapse('hide')
@@ -372,7 +347,7 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* for adding users in assigning drains */
+    /* for adding users in assigning drains */
     $('body').on('click', '#add_user', function () {
         var locale = urlParam('locale');
 
@@ -392,10 +367,10 @@ map.on('locationerror', onLocationError);
 
 
     /* stardardizes the phonenumber */
-    function standardizePhoneNumber(num){
-        var country_code ="255";
-        if(num.startsWith("0")){
-          var  standard_number = country_code.concat(num.slice(1))
+    function standardizePhoneNumber(num) {
+        var country_code = "255";
+        if (num.startsWith("0")) {
+            var standard_number = country_code.concat(num.slice(1))
             return standard_number;
         }
         else {
@@ -404,7 +379,7 @@ map.on('locationerror', onLocationError);
     }
 
 
-  /* signs in registered users */
+    /* signs in registered users */
     $('body').on('submit', 'form.sign_in_form', function (e) {
         i = $(e.target);
         var submitButton = $("input[type='submit']", i);
@@ -418,11 +393,11 @@ map.on('locationerror', onLocationError);
 
         e.preventDefault();
         submitButton.attr('disabled', 'disabled');
-/*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
-            markError(uemail, errors);
-        } else {
-            unmarkError(uemail);
-        }*/
+        /*        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+                    markError(uemail, errors);
+                } else {
+                    unmarkError(uemail);
+                }*/
         if (upwd.val().length < 6 || upwd.val().length > 20) {
             markError(upwd, errors);
         } else {
@@ -441,7 +416,7 @@ map.on('locationerror', onLocationError);
                     'utf8': '✓',
                     'authenticity_token': $('input[name="authenticity_token"]', i).val(),
                     'user': {
-                        'sms_number':standardizePhoneNumber(usms_number.val()) ,
+                        'sms_number': standardizePhoneNumber(usms_number.val()),
                         'password': upwd.val(),
                         'remember_me': $('.user_remember_me', i).val()
                     },
@@ -472,7 +447,7 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* signs up new users */
+    /* signs up new users */
     $('body').on('submit', '#sign_up_form', function () {
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
@@ -573,7 +548,7 @@ map.on('locationerror', onLocationError);
     });
 
 
-  /* updates an existing user */
+    /* updates an existing user */
     $('body').on('submit', '#edit_profile_form', function () {
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
@@ -618,13 +593,13 @@ map.on('locationerror', onLocationError);
         return false;
     });
 
-  /* signs up new users for assigning drains */
+    /* signs up new users for assigning drains */
     $('body').on('submit', '#new_user', function (e) {
         e.preventDefault();
         var locale = urlParam('locale');
         var gen_password = Math.random() // Generate random number, eg: 0.123456
-                           .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
-                           .slice(-8);// Cut off last 8 characters : "yo82mvyr"
+            .toString(36) // Convert  to base-36 : "0.4fzyo82mvyr"
+            .slice(-8);// Cut off last 8 characters : "yo82mvyr"
 
         var submitButton = $("input[type='submit']", this);
         var uemail = $('#user_email');
@@ -739,8 +714,8 @@ map.on('locationerror', onLocationError);
     function assignDrain(pos) {
         var locale = urlParam('locale');
         var success_message_en = 'You have successfully assigned this drain! ';
-        var success_message_sw ='Umefanikiwa kugawia huu mtaro! ';
-        var success_message = locale === 'en'? success_message_en : success_message_sw
+        var success_message_sw = 'Umefanikiwa kugawia huu mtaro! ';
+        var success_message = locale === 'en' ? success_message_en : success_message_sw
 
         $.ajax({
             type: 'POST',
@@ -798,26 +773,28 @@ map.on('locationerror', onLocationError);
 
     // Shows social media links, for sharing drain info
 
-    $('body').on('click','.share_link', function(e){
-       drain_gid = $(this).attr('data_gid');
+    $('body').on('click', '.share_link', function (e) {
+        drain_gid = $(this).attr('data_gid');
 
-       if($(".drain_social_media").css("display") == 'none'){
-        $(".drain_social_media").css( {position:"relative", display: "block"
-        , left: '10%' });
-       }
-       else{
-            $(".drain_social_media").css( {display: "none"});
-       }
+        if ($(".drain_social_media").css("display") == 'none') {
+            $(".drain_social_media").css({
+                position: "relative", display: "block"
+                , left: '10%'
+            });
+        }
+        else {
+            $(".drain_social_media").css({display: "none"});
+        }
 
     });
 
     // Refreshs drain details on a popup
 
-    $('body').on('click','#refresh_link', function(e){
+    $('body').on('click', '#refresh_link', function (e) {
 
         drain_gid = $(this).attr('data_gid');
 
-        if(drain_pos == null){
+        if (drain_pos == null) {
             drain_pos = map.getCenter();
         }
         showSpinner();
@@ -842,13 +819,13 @@ map.on('locationerror', onLocationError);
         return false;
     });
 
-    function bind(pos) {
+    window.bind = function (pos) {
 
-        $('#abandon_link').on('click','.abdn_link', function () {
+        $('#abandon_link').on('click', '.abdn_link', function () {
             var locale = urlParam('locale');
             var message_en = 'Are you sure that you want to abandon this drain?';
-            var message_sw ='Una thibitisha kubadili mgao wa huu mtaro ?';
-            var confirmation_message = locale === 'en'? message_en : message_sw
+            var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
+            var confirmation_message = locale === 'en' ? message_en : message_sw
             if (window.confirm(confirmation_message)) {
 
                 $.ajax({
@@ -866,7 +843,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        fetchDrainInfo(activeObjectId,pos);
+                        fetchDrainInfo(activeObjectId, pos);
                     }
                 });
             }
@@ -874,11 +851,11 @@ map.on('locationerror', onLocationError);
         });
 
 
-        $('#user_forgot_password_link').on('click', function() {
+        $('#user_forgot_password_link').on('click', function () {
             $.ajax({
                 type: 'GET',
                 url: '/forgot_password',
-                success: function(data) {
+                success: function (data) {
                     createPopup(data, map.getCenter());
 
                 }
@@ -887,7 +864,7 @@ map.on('locationerror', onLocationError);
         });
 
 
-        $('body').on('click', '.button_forgot_password', function() {
+        $('body').on('click', '.button_forgot_password', function () {
             var f = $(this).closest('form.forgot_pw_form');
             var submitButton = $("input[type='submit']", f);
             var uemail = $('.user_email', f);
@@ -895,12 +872,12 @@ map.on('locationerror', onLocationError);
 
 
             submitButton.attr('disabled', 'disabled');
-            if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
                 markError(uemail, errors);
             } else {
                 unmarkError(uemail);
             }
-            if(errors.length > 0) {
+            if (errors.length > 0) {
                 submitButton.removeAttr('disabled');
                 errors[0].focus();
             } else {
@@ -915,16 +892,16 @@ map.on('locationerror', onLocationError);
                             'email': uemail.val()
                         }
                     },
-                    beforeSend: function() {
+                    beforeSend: function () {
                     },
-                    error: function(jqXHR) {
+                    error: function (jqXHR) {
                         //hideSpinner();
                         //showInfoWindow();
                         submitButton.removeAttr('disabled');
                         markError(uemail, errors);
                         uemail.focus();
                     },
-                    success: function() {
+                    success: function () {
                         $.ajax({
                             type: 'GET',
                             url: '/users/sign_in',
@@ -936,7 +913,7 @@ map.on('locationerror', onLocationError);
                                     'notice': "<%= I18n.t("notices.password_reset") %>"
                                 }
                             },
-                            success: function(data) {
+                            success: function (data) {
                                 createPopup(data, map.getCenter());
                             }
                         });
@@ -947,14 +924,14 @@ map.on('locationerror', onLocationError);
         });
 
 
-        $('#abandon_link').on('click','.chng_link', function () {
+        $('#abandon_link').on('click', '.chng_link', function () {
             var locale = urlParam('locale');
             var message_en = 'Are you sure that you want to change status?';
-            var message_sw ='Una thibitisha kubadili hali ya huu mtaro ?';
-            var confirmation_message = locale === 'en'? message_en : message_sw
+            var message_sw = 'Una thibitisha kubadili hali ya huu mtaro ?';
+            var confirmation_message = locale === 'en' ? message_en : message_sw
             if (window.confirm(confirmation_message)) {
                 var shoveled;
-                if($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio"){
+                if ($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio") {
                     shoveled = false;
                 }
                 else {
@@ -978,7 +955,7 @@ map.on('locationerror', onLocationError);
                     },
                     success: function (data) {
                         refreshKML("all");
-                        fetchDrainInfo(activeObjectId,pos);
+                        fetchDrainInfo(activeObjectId, pos);
                     }
                 });
             }
@@ -986,7 +963,7 @@ map.on('locationerror', onLocationError);
         });
 
 
-      /*Function for adopting a drain */
+        /*Function for adopting a drain */
         $('#location').on('click', '.btnassing', function () {
             user_id = $(this).attr('data-user-id');
             assignDrain(pos);
@@ -995,7 +972,7 @@ map.on('locationerror', onLocationError);
 
 
         /* adding more claims on a drain */
-        $('body').on('click', '#add_claim, #assign', function() {
+        $('body').on('click', '#add_claim, #assign', function () {
             var locale = urlParam('locale');
 
             $.ajax({
@@ -1011,7 +988,6 @@ map.on('locationerror', onLocationError);
             });
             return false;
         });
-
 
 
         $('#clean').on('click', function () {
@@ -1094,7 +1070,7 @@ map.on('locationerror', onLocationError);
         });
 
         $('#drain_help').on('click', function (e) {
-            if($('#need_help_help_needed').val().length == 0 && !window.confirm('Ujaweka maelezo ya msaada, ombi lako litumwe?') ){
+            if ($('#need_help_help_needed').val().length == 0 && !window.confirm('Ujaweka maelezo ya msaada, ombi lako litumwe?')) {
                 return false;
             }
 
@@ -1119,7 +1095,7 @@ map.on('locationerror', onLocationError);
                         'user_id': $(this).attr('data-moid'),
                         'gid': id
                     },
-                   'locale': locale
+                    'locale': locale
                 },
                 error: function (jqXHR) {
                 },
@@ -1189,7 +1165,7 @@ map.on('locationerror', onLocationError);
             refreshKML("not_adopted");
             $('.navbar-collapse').collapse('hide')
         });
-        
+
         $('#address_button').on('click', function () {
             showSpinner();
             var address = $('#address').val();
@@ -1198,7 +1174,7 @@ map.on('locationerror', onLocationError);
         });
     }
 
-  /* searching table of users */
+    /* searching table of users */
 
     $('body').on('keyup', '#myInput', function () {
 
@@ -1222,42 +1198,40 @@ map.on('locationerror', onLocationError);
     });
 
     $('body').on('click', '.view_drain',
-     function (e) {
-        activeObjectId = $(this).attr('data-gid');
-        $('#address').val(activeObjectId);
-
-        $('#address_button')[0].click();
-
-         var lat = $(this).attr('data-lat');
-         var lng = $(this).attr('data-lng');
-         var latlng = L.latLng(lat, lng);
-         map.setView(latlng, 19);
-
-
-
-        return false;
-    });
-
-
-
-    $('body').on('click', '#view_street', 
         function (e) {
-        var lat = $(this).attr('data-lat');
-        var lng = $(this).attr('data-lng');
-        var latlng = L.latLng(lat, lng);
+            activeObjectId = $(this).attr('data-gid');
+            $('#address').val(activeObjectId);
 
-        map.setView(latlng, 17);
-        $('.navbar-collapse').collapse('hide')
-    });
+            $('#address_button')[0].click();
+
+            var lat = $(this).attr('data-lat');
+            var lng = $(this).attr('data-lng');
+            var latlng = L.latLng(lat, lng);
+            map.setView(latlng, 19);
 
 
-    function updateNotification(){
+            return false;
+        });
+
+
+    $('body').on('click', '#view_street',
+        function (e) {
+            var lat = $(this).attr('data-lat');
+            var lng = $(this).attr('data-lng');
+            var latlng = L.latLng(lat, lng);
+
+            map.setView(latlng, 17);
+            $('.navbar-collapse').collapse('hide')
+        });
+
+
+    function updateNotification() {
 
         var notification_msg = $('#notice').text();
         console.log('update notification called');
         console.log(notification_msg);
         $('#notice').hide();
-        if(notification_msg){
+        if (notification_msg) {
 
             //add a new style 'foo'
             $.notify.addStyle('foo', {
@@ -1300,30 +1274,26 @@ map.on('locationerror', onLocationError);
     get_categories();
     updateNotification();
 
-    
-
-
-
 
 });  /* end of function */
 
-$(document).ready(function(){
+$(document).ready(function () {
     $("#page").click(function () {
         $("#myDiv").fadeToggle("slow");
     });
 });
-$(window).resize(function() {
-if( $(window).width() > 768 ) {
-    $('#myDiv').show();
-    $('#page').hide();
-} else {
+$(window).resize(function () {
+    if ($(window).width() > 768) {
+        $('#myDiv').show();
+        $('#page').hide();
+    } else {
 
-}
+    }
 
-if( $(window).width() <767 ) {
-    $('#myDiv').hide();
-    $('#page').show();
-} else {
+    if ($(window).width() < 767) {
+        $('#myDiv').hide();
+        $('#page').show();
+    } else {
 
-}
+    }
 });

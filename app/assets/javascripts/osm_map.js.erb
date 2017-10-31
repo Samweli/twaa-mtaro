@@ -1,6 +1,12 @@
 /*
 This file contains all logic that involve the openstreetmap
+
+add here all functions that depend on map
 */
+
+
+
+var popup;
 
 
 $(function(){
@@ -77,8 +83,31 @@ $(function(){
 
     L.control.layers(baseMaps).addTo(map);
 
+    // Click standard layer to override unusual maps tiles load
+    $( "input[name='leaflet-base-layers']" )[2].click();
+
+
+
+    /*
+    add all shared fuctions that depend on map below here
+    * */
+
     window.getMap = function () {
         return map;
+    }
+
+
+    /* popup Window for displaying details of Mtaro */
+    window.createPopup = function (msg, pos) {
+        if (pos == null) {
+            pos = map.getCenter();
+
+        }
+        popup = L.popup({maxWidth: 960})
+            .setLatLng(pos)
+            .setContent(msg)
+            .openOn(map);
+        bind(pos);
     }
 
 });
