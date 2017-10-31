@@ -1,0 +1,23 @@
+$(function () {
+
+    /* displays need help form inside a popup */
+    $('body').on('click', '#help', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/need_helps/new',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+
+                createPopup(msg, drain_pos);
+            }
+
+        });
+        return false;
+    });
+
+}); // end of function
