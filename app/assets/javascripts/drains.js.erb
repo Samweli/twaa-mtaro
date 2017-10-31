@@ -1,3 +1,7 @@
+
+  //global variables
+  var user_id;
+
 $(function () {
 
     // Refreshs drain details on a popup
@@ -12,4 +16,72 @@ $(function () {
         fetchDrainInfo(drain_gid, drain_pos);
 
     });
+
+
+    /*
+    function for assigning drain to users
+    * */
+
+    window.assignDrain = function (pos) {
+        var locale = urlParam('locale');
+        var success_message_en = 'You have successfully assigned this drain! ';
+        var success_message_sw = 'Umefanikiwa kugawia huu mtaro! ';
+        var success_message = locale === 'en' ? success_message_en : success_message_sw
+
+        $.ajax({
+            type: 'POST',
+            url: '/drain_claims',
+            data: {
+                'gid': activeObjectId,
+                'user_id': user_id,
+                'authenticity_token': AUTH_TOKEN,
+                'locale': locale
+            },
+            error: function (jqXHR) {
+                data = $.parseJSON(jqXHR.responseText);
+                alert(data.errors);
+            },
+            success: function (data) {
+                refreshKML("all");
+                fetchDrainInfo(activeObjectId, pos);
+                //add a new style 'foo'
+                $.notify.addStyle('foo', {
+                    html: "<div>" +
+                    "<div class='clearfix'>" +
+                    "<div class='title' data-notify-html='title'>" +
+                    success_message +
+                    "</div>" +
+                    "<button class='buttons no'>&#10006;</button>" +
+                    "</div>" +
+                    "</div>"
+                });
+
+                //listen for click events from this style
+                $(document).on('click', '.notifyjs-foo-base .no', function () {
+                    //programmatically trigger propogating hide event
+                    $(this).trigger('notify-hide');
+
+
+                });
+                $(document).on('click', '.notifyjs-foo-base .yes', function () {
+                    //show button text
+                    alert($(this).text() + " clicked!");
+                    //hide notification
+                    $(this).trigger('notify-hide');
+                });
+
+
+                $.notify({}, {
+                    style: 'foo',
+                    autoHide: true,
+                    clickToHide: false,
+                    position: 'top right'
+                });
+
+            }
+        });
+    }
+
+
+
 }); // end of function
