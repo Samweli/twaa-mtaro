@@ -4,7 +4,9 @@
 $(function () {
 
 
-/*helper functions for showing errors in forms */
+  /*
+  helper functions for showing errors in forms
+  * */
     function markError(i, e) {
         e.push(i);
         $(i).addClass('error');
@@ -15,7 +17,17 @@ $(function () {
     }
 
 
-    /* stardardizes the phonenumber */
+    /*
+    shows an info window
+    * */
+    function showInfoWindow() {
+        $('#info_window').show();
+    }
+
+
+    /*
+    stardardizes the phonenumber
+     *  */
     function standardizePhoneNumber(num) {
         var country_code = "255";
         if (num.startsWith("0")) {
@@ -59,6 +71,108 @@ $(function () {
         });
         return false;
     });
+
+    /* signs up new users */
+    $('body').on('submit', '#sign_up_form', function () {
+        var submitButton = $("input[type='submit']", this);
+        var uemail = $('#user_email');
+        var ufname = $('#user_first_name');
+        var ulname = $('#user_last_name');
+        var uPhone = $('#user_sms_number');
+        var uStreet = $('#user_street_id');
+        var upwd = $('#user_password');
+        var upwdc = $('#user_password_confirmation');
+        var errors = [];
+
+        var locale = urlParam('locale');
+
+
+        submitButton.attr('disabled', 'disabled');
+        if (ufname.val() === '') {
+            markError(ufname, errors);
+        } else {
+            unmarkError(ufname);
+        }
+        if (ulname.val() === '') {
+            markError(ulname, errors);
+        } else {
+            unmarkError(ulname);
+        }
+        if (!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+            markError(uemail, errors);
+        } else {
+            unmarkError(uemail);
+        }
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(uPhone.val())) {
+            markError(uPhone, errors);
+        } else {
+            unmarkError(uPhone);
+        }
+        if (upwd.val().length < 6 || upwd.val().length > 20) {
+            markError(upwd, errors);
+        } else {
+            unmarkError(upwd);
+        }
+        if (upwdc.val().length < 6 || upwdc.val().length > 20) {
+            markError(upwdc, errors);
+        } else {
+            unmarkError(upwdc);
+        }
+        if (errors.length > 0) {
+            submitButton.removeAttr('disabled');
+            errors[0].focus();
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/users.json',
+                data: {
+                    'commit': submitButton.val(),
+                    'utf8': '✓',
+                    'authenticity_token': $('input[name="authenticity_token"]', this).val(),
+                    'recaptcha_challenge_field': $('#recaptcha_challenge_field').val(),
+                    'recaptcha_response_field': $('#recaptcha_response_field').val(),
+                    'user': {
+                        'email': uemail.val(),
+                        'first_name': ufname.val(),
+                        'last_name': ulname.val(),
+                        'sms_number': standardizePhoneNumber(uPhone.val()),
+                        'street_id': uStreet.val(),
+                        'password': upwd.val(),
+                        'password_confirmation': upwdc.val(),
+                    },
+                    'locale': locale
+                },
+                beforeSend: function () {
+                },
+                error: function (jqXHR) {
+                    data = $.parseJSON(jqXHR.responseText);
+                    hideSpinner();
+                    showInfoWindow();
+                    submitButton.removeAttr('disabled');
+                    if (data) {
+                        createPopup(data.html, map.getCenter());
+                        popup.setContent($('#IWCONTENT')[0]);
+                        ajaxJS(data.html);
+                    }
+
+                },
+                success: function (data) {
+                    $('.sign_links').remove();
+                    updateSidebar();
+                    fetchDrainInfo();
+                    window.location.href = window.location.hostname;
+                    window.location.reload();
+
+                }
+            });
+
+        }
+
+        return false;
+    });
+
+
 
 
     /* shows for adding users in assigning drains */
