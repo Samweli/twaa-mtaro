@@ -45,11 +45,14 @@ AdoptADrain::Application.routes.draw do
         post 'sessions' => 'sessions#create', :as => 'login'
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
       end
-      resources :users, only: [:index, :create, :show, :update, :destroy]
+
       get '/drains/data' => 'drains#data'
       get '/drains/ranking' => 'drains#ranking'
       get 'street_drains/:id' => 'drains#street_drains'
+      get '/users/new_leaders' => 'users#leader_requests'
+      post '/users/verify' => 'users#verify_leader'
       post '/users/remind' => 'users#remind'
+      resources :users, only: [:index, :create, :show, :update, :destroy]
       resources :drains,only: [:index, :create, :show, :update, :destroy]
       resources :streets,only: [:index, :create, :show, :update, :destroy]
       resources :need_helps,only: [:index, :create, :show, :update, :destroy]
