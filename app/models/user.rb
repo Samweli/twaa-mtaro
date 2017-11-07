@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
+  def assign_role(user_id,role_id)
+      user_role = Assignment.new(:role_id =>role_id,:user_id =>user_id)
+      user_role.save
+  end
 
   def generate_authentication_token
     loop do
