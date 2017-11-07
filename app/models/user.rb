@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number: true}
-  attr_accessible :email, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
+  attr_accessible :email, :admin, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
   validates_presence_of :first_name, :last_name, :street_id, :sms_number
   has_many :drain_claims
   has_many :assignments
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def role?(role)
-    roles.any? { |r| r.name.underscore.to_sym == role }
+    roles.any? {|r| r.name.underscore.to_sym == role}
   end
 
   def apply_omniauth(omniauth)
@@ -40,9 +40,18 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  def assign_role(user_id,role_id)
-      user_role = Assignment.new(:role_id =>role_id,:user_id =>user_id)
-      user_role.save
+  def self.assign_role(user_id, role_id)
+    user_role = Assignment.new(:role_id => role_id, :user_id => user_id)
+    user_role.save
+  end
+
+  def self.request_account(user_id)
+    user = User.find(user_id)
+    user.update_attribute(:admin,true)
+  end
+
+  def self.leader_requests
+    User.find_all_by_admin(true)
   end
 
   def generate_authentication_token
