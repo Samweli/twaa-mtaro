@@ -18,6 +18,7 @@ sw:
     need_help: "%{count} Misaada"
     send_reminder: "Kumbusha kusafisha kwa kutuma ujumbe"
     my_profile: "Habari Zangu"
+    request_account: "Kuwa Kiongozi"
     register: "Jisajili sasa"
     sign_in: "kuingia"
     sign_out: "Ondoka"

@@ -12,6 +12,7 @@ AdoptADrain::Application.routes.draw do
     get 'users' => 'users#index'
     get 'add' => 'users#add'
     get 'profile' => 'users#profile'
+    post 'users/account' => 'users#account'
     post 'createuser' => 'users#createuser'
     put 'update' => 'users#update'
   end

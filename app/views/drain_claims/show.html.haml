@@ -49,7 +49,7 @@
         = t('captions.taken') + ':'
 
       #people_list.users
-      - if user_signed_in? && current_user.try(:role) == 2
+      - if user_signed_in? && current_user.is_leader(2)
         %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
           %tr
             %th
@@ -101,7 +101,7 @@
                     %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled))}}
                       = t("buttons.change_status")
 
-  - if user_signed_in? && current_user.try(:role) == 2
+  - if user_signed_in? && current_user.is_leader(2)
     = render :partial => 'drains/drain_actions'
   - else
     - if @drain.cleared?

@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
     request_account(user_id,nil)
   end
 
+  def is_leader(role_id)
+    self.roles.include? Role.find(role_id)
+  end
+
   def self.request_account(user_id, role_id)
     user = User.find(user_id)
     user.update_attribute(:role_requested,role_id)

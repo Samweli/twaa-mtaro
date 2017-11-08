@@ -516,5 +516,23 @@ $(function () {
         return false;
     });
 
+    // requesting leader account
+    $('body').on('click', '#account', function (){
+        $.ajax({
+            type: 'POST',
+            url: '/users/account',
+            data: {
+                'user_id': 1,
+                'role_id': 2
+            },
+            success: function (data) {
+                console.log('can request account');
+                console.log(data)
+            }
+        });
+    })
+
+
+
 
 }); // end of function
