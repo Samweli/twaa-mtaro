@@ -20,21 +20,31 @@ class Api::V1::UsersController < Api::V1::BaseController
     render(json: Api::V1::UserSerializer.new(user).to_json)
   end
 
-  def create
-    user = User.create(first_name: params[:first_name],
-                       sms_number: params[:sms_number],
-                       last_name: params[:last_name],
-                       password: params[:password],email: params[:email],
-                       street_id: params[:street_id])
-    return api_error(status: 422, errors: user.errors) unless user.valid?
+  def remind
+    user = User.find_all_by_street_id_and_role(params[:street_id], 2)
+    user.each do |u|
+      sms_service = SmsService.new();
+      msg = params[:message]
+      sms_service.send_sms(
+          msg,
+          u.sms_number);
 
-    user.save!
+    end
 
-    render(
-        json: Api::V1::UserSerializer.new(user).to_json,
-        status: 201,
-        location: api_v1_user_path(user.id)
-    )
+    render :status => 200,
+           :json => {:success => true,
+                     :info => "Reminder sent"}
+
+  end
+
+  def verify_leader
+    User.assign_role(params[:user_id], params[:role_id])
+    render :json => { :succsess => true}
+  end
+
+  def leader_requests
+    user_requests = User.leader_requests
+    render :json => {:leaders => user_requests}
   end
 
   def update
@@ -43,7 +53,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if !user.update_attributes(first_name: params[:first_name],
                                sms_number: params[:sms_number],
                                last_name: params[:last_name],
-                               password: params[:password],email: params[:email],
+                               password: params[:password], email: params[:email],
                                street_id: params[:street_id])
       return api_error(status: 422, errors: user.errors)
     end
@@ -71,8 +81,25 @@ class Api::V1::UsersController < Api::V1::BaseController
   def create_params
     params.require(:user)
   end
+
   def update_params
     create_params
+  end
+
+  def text_message(type)
+    if type == 'remind'
+      if I18n.locale == :en
+        msg = " Your Ward Executive officer reminds you to make more efforts on supervising"\
+              "Drain Clealiness on Your Street "\
+              "Failure to compliy with this requirement Administratize Adminstrative procedures will follow."
+      else
+        msg = "Mtendaji Wa kata Yako Anakuhimiza kuongeza juhudi katika kusimamia usafi wa mitaro mtaani kwako, "\
+               "Kushindwa kuongeza juhudi katika usafi kutasababisha taratibu za kiutawala kufuatwa"\
+               "Tafadhali ongeza juhudi ili kujiepusha na hatua zitakazo chukuliwa."
+      end
+    end
+
+    return msg
   end
 
 end

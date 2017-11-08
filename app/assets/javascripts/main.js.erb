@@ -702,23 +702,6 @@ map.on('locationerror', onLocationError);
         return false;
     });
 
-
-    /*Getting all users */
-    function getUsers() {
-        var locale = urlParam('locale');
-
-        $.ajax({
-            type: 'GET',
-            url: 'users',
-            data: {
-                'locale': locale
-            },
-            success: function (msg) {
-                users = msg;
-            }
-        });
-    }
-
   /* signs up new users for assigning drains */
     $('body').on('submit', '#new_user', function (e) {
         e.preventDefault();
@@ -839,6 +822,9 @@ map.on('locationerror', onLocationError);
 
     function assignDrain(pos) {
         var locale = urlParam('locale');
+        var success_message_en = 'You have successfully assigned this drain! ';
+        var success_message_sw ='Umefanikiwa kugawia huu mtaro! ';
+        var success_message = locale === 'en'? success_message_en : success_message_sw
 
         $.ajax({
             type: 'POST',
@@ -854,13 +840,14 @@ map.on('locationerror', onLocationError);
                 alert(data.errors);
             },
             success: function (data) {
-                map.closePopup();
+                refreshKML("all");
+                fetchDrainInfo(activeObjectId, pos);
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {
                     html: "<div>" +
                     "<div class='clearfix'>" +
                     "<div class='title' data-notify-html='title'>" +
-                    "You have successfully assigned this drain" +
+                    success_message +
                     "</div>" +
                     "<button class='buttons no'>&#10006;</button>" +
                     "</div>" +
@@ -871,8 +858,7 @@ map.on('locationerror', onLocationError);
                 $(document).on('click', '.notifyjs-foo-base .no', function () {
                     //programmatically trigger propogating hide event
                     $(this).trigger('notify-hide');
-                    refreshKML("all");
-                    fetchDrainInfo(activeObjectId, pos);
+
 
                 });
                 $(document).on('click', '.notifyjs-foo-base .yes', function () {
@@ -882,13 +868,12 @@ map.on('locationerror', onLocationError);
                     $(this).trigger('notify-hide');
                 });
 
-                var h5 = $("<h5/>").append("You have successfully assigned a dran !")
 
                 $.notify({}, {
                     style: 'foo',
-                    autoHide: false,
+                    autoHide: true,
                     clickToHide: false,
-                    position: 'top center'
+                    position: 'top right'
                 });
 
             }
@@ -925,11 +910,30 @@ map.on('locationerror', onLocationError);
     });
 
 
+    $('#paginator').on('click', function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'drain_claims/adopt',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                createPopup(msg, drainLocation);
+            }
+        });
+        return false;
+    });
+
     function bind(pos) {
 
         $('#abandon_link').on('click','.abdn_link', function () {
             var locale = urlParam('locale');
-            if (window.confirm('Are you sure that you want to abandon this drain?')) {
+            var message_en = 'Are you sure that you want to abandon this drain?';
+            var message_sw ='Una thibitisha kubadili mgao wa huu mtaro ?';
+            var confirmation_message = locale === 'en'? message_en : message_sw
+            if (window.confirm(confirmation_message)) {
 
                 $.ajax({
                     type: 'POST',
@@ -947,6 +951,79 @@ map.on('locationerror', onLocationError);
                     success: function (data) {
                         refreshKML("all");
                         fetchDrainInfo(activeObjectId,pos);
+                    }
+                });
+            }
+            return false;
+        });
+
+
+        $('#user_forgot_password_link').on('click', function() {
+            $.ajax({
+                type: 'GET',
+                url: '/forgot_password',
+                success: function(data) {
+                    createPopup(data, map.getCenter());
+
+                }
+            });
+            return false;
+        });
+
+
+        $('body').on('click', '.button_forgot_password', function() {
+            var f = $(this).closest('form.forgot_pw_form');
+            var submitButton = $("input[type='submit']", f);
+            var uemail = $('.user_email', f);
+            var errors = [];
+
+
+            submitButton.attr('disabled', 'disabled');
+            if(!/[\w\.%\+\]+@[\w\]+\.+[\w]{2,}/.test(uemail.val())) {
+                markError(uemail, errors);
+            } else {
+                unmarkError(uemail);
+            }
+            if(errors.length > 0) {
+                submitButton.removeAttr('disabled');
+                errors[0].focus();
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/password.json',
+                    data: {
+                        'commit': submitButton.val(),
+                        'utf8': '✓',
+                        'authenticity_token': $('input[name="authenticity_token"]', f).val(),
+                        'user': {
+                            'email': uemail.val()
+                        }
+                    },
+                    beforeSend: function() {
+                    },
+                    error: function(jqXHR) {
+                        //hideSpinner();
+                        //showInfoWindow();
+                        submitButton.removeAttr('disabled');
+                        markError(uemail, errors);
+                        uemail.focus();
+                    },
+                    success: function() {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/users/sign_in',
+                            data: {
+                                'user': {
+                                    'email': uemail.val()
+                                },
+                                'flash': {
+                                    'notice': "<%= I18n.t("notices.password_reset") %>"
+                                }
+                            },
+                            success: function(data) {
+                                createPopup(data, map.getCenter());
+                            }
+                        });
                     }
                 });
             }
@@ -990,24 +1067,17 @@ map.on('locationerror', onLocationError);
         });
 
 
-      /*Function for adoping a drain */
+      /*Function for adopting a drain */
         $('#location').on('click', '.btnassing', function () {
-            // get the current row
-            var currentRow = $(this).closest("tr");
-
-            var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-            var data = col1;
-            user_id = col1;
+            user_id = $(this).attr('data-user-id');
             assignDrain(pos);
             return false;
         });
 
 
-
-        /* adding more claims */
-        $('#add_claim').on('click', function () {
+        /* adding more claims on a drain */
+        $('body').on('click', '#add_claim, #assign', function() {
             var locale = urlParam('locale');
-            getUsers();
 
             $.ajax({
                 type: 'GET',
@@ -1016,83 +1086,13 @@ map.on('locationerror', onLocationError);
                     'locale': locale
                 },
                 success: function (msg) {
-                    getUsers();
-
-
-                    if (users) {
-
-                        createPopup(msg, drainLocation);
-                        var trHTML = '';
-
-                        $.each(users, function (i, item) {
-                            $.each(item, function(index, obj){
-                                trHTML += '<tr><td class="id_user"> ' +
-                                    obj.id + ' </td><td>' + obj.first_name +
-                                    '</td><td>' + obj.last_name + '</td><td>' +
-                                    '<button class="btnassing">' + 'assign' +
-                                    '</button>' + '</tr>';
-
-                            })
-
-                        });
-
-                        $('#location').append(trHTML);
-
-                    }
-
-
+                    createPopup(msg, drainLocation);
 
                 }
             });
             return false;
         });
 
-
-      /* displays a form for assigning drains to users */
-        $('#assign').on('click', function () {
-            var locale = urlParam('locale');
-            getUsers();
-
-            $.ajax({
-                type: 'GET',
-                url: 'drain_claims/adopt',
-                data: {
-                    'locale': locale
-                },
-                success: function (msg) {
-                    getUsers();
-
-                    if (users) {
-                        console.log('Users');
-                        console.log(users);
-
-                        createPopup(msg, drainLocation);
-                        var trHTML = '';
-
-                        $.each(users, function (i, item) {
-                            $.each(item, function(index, obj){
-                                trHTML += '<tr><td class="id_user"> ' +
-
-                                obj.id + ' </td><td>' + obj.first_name +
-                                '</td><td>' + obj.last_name + '</td><td>' +
-                                '<button class="btnassing">' + 'assign' +
-                                '</button>' + '</tr>';
-
-                            })
-
-                        });
-                        console.log(trHTML);
-
-                        $('#location').append(trHTML);
-
-                    }
-
-
-
-                }
-            });
-            return false;
-        });
 
 
         $('#clean').on('click', function () {
@@ -1314,10 +1314,12 @@ map.on('locationerror', onLocationError);
          var latlng = L.latLng(lat, lng);
          map.setView(latlng, 19);
 
-         // update_drain_view(activeObjectId);
+
 
         return false;
     });
+
+
 
     $('body').on('click', '#view_street', 
         function (e) {

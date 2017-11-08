@@ -22,7 +22,7 @@ class MainController < ApplicationController
   
   def get_my_drains
     if user_signed_in?
-      @my_drains = current_user.drain_claims.includes(:drain).page(params[:page]).per(10)
+      @my_drains = current_user.drain_claims.includes(:drain).page(params[:page]).per(2)
     end
   end
 

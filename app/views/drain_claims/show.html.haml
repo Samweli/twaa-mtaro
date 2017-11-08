@@ -59,7 +59,7 @@
               = t("defaults.actions")
           - @claims.each do |c|
             %tr
-              %td= c.try(:user).try(:short_name)
+              %td= c.try(:user).try(:fullname)
               %td
                 - if c.shoveled?
                   = t("buttons.clean")
@@ -84,7 +84,7 @@
                 = t("defaults.change_status")
           - @claims.each do |c|
             %tr
-              %td= c.try(:user).try(:short_name)
+              %td= c.try(:user).try(:fullname)
               %td
                 - if c.shoveled?
                   = t("buttons.clean")
