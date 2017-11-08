@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number: true}
-  attr_accessible :email, :admin, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
+  attr_accessible :email, :admin, :role_requested, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
   validates_presence_of :first_name, :last_name, :street_id, :sms_number
   has_many :drain_claims
   has_many :assignments
@@ -43,15 +43,16 @@ class User < ActiveRecord::Base
   def self.assign_role(user_id, role_id)
     user_role = Assignment.new(:role_id => role_id, :user_id => user_id)
     user_role.save
+    request_account(user_id,nil)
   end
 
-  def self.request_account(user_id)
+  def self.request_account(user_id, role_id)
     user = User.find(user_id)
-    user.update_attribute(:admin,true)
+    user.update_attribute(:role_requested,role_id)
   end
 
   def self.leader_requests
-    User.find_all_by_admin(true)
+    User.where(:role_requested => !nil)
   end
 
   def generate_authentication_token
