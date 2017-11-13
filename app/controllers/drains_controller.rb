@@ -81,10 +81,8 @@ class DrainsController < ApplicationController
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if (user.role == 1)
-        if not claim
-          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
-        else
+      if (user.is_leader(1))
+        unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
 
