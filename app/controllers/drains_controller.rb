@@ -81,10 +81,8 @@ class DrainsController < ApplicationController
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if (user.role == 1)
-        if not claim
-          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
-        else
+      if not (user.is_leader(2))
+        unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
 
@@ -110,8 +108,10 @@ class DrainsController < ApplicationController
 
         # check if it is street leader who is updating drain status
         if (user.id == street_leader.id)
-          claim.update_attribute(:shoveled, shoveled)
-          claim.save
+          if claim
+            claim.update_attribute(:shoveled, shoveled)
+            claim.save(validate: false)
+          end
         end
 
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)

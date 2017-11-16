@@ -1,0 +1,37 @@
+$(function () {
+    /*shows drains of a specific street*/
+    $('body').on('click', '#view_street',
+        function (e) {
+            var lat = $(this).attr('data-lat');
+            var lng = $(this).attr('data-lng');
+            var latlng = L.latLng(lat, lng);
+
+            map.setView(latlng, 17);
+            $('.navbar-collapse').collapse('hide')
+        });
+
+
+    /* adding a drains to a street*/
+$('body').on('click','#add_drain', function() {
+    var gid = $(this).attr('gid');
+    var street_id = $(this).attr('street');
+
+    $.ajax({
+        type: 'POST',
+        url: 'streets/add_drain',
+        data: {'gid': gid,
+              'street_id': street_id
+              },
+        error: function (err) {
+            console.log("error occured");
+            console.log(err);
+        },
+        success: function (data) {
+            console.log("success");
+            console.log(data);
+            fetchDrainInfo(gid, drain_pos)
+        }
+    });
+});
+
+}); // end of function

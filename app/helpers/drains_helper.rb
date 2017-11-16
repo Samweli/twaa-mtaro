@@ -21,4 +21,12 @@ module DrainsHelper
   
   end
 
+  def added(street_id,gid)
+    drain = Drain.find_by_gid_and_street_id(gid,street_id)
+    if drain
+      return true
+    end
+    return false
+  end
+
 end

@@ -3,7 +3,8 @@ class Drain < ActiveRecord::Base
 
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
   has_many :need_helps, :class_name => 'NeedHelp', :foreign_key => "gid"
- 
+  has_and_belongs_to_many :streets
+
   validates_presence_of :lat, :lng
   
   include Geokit::Geocoders

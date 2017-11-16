@@ -44,4 +44,9 @@
                 = t("buttons.my_profile")
                 -if flash[:notice]
                   #notice=flash[:notice]
+              |
+            %li
+              %a
+                - unless current_user.is_leader(2)
+                  = render :partial => 'users/request_account' 
 

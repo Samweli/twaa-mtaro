@@ -12,6 +12,11 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  def account
+    User.request_account(params[:user_id], params[:role_id])
+    render :json => {:success => true}
+  end
+
   def edit
     render :edit
   end
@@ -46,6 +51,7 @@ class UsersController < Devise::RegistrationsController
   def create
     build_resource
     if resource.save
+      User.assign_role(resource.id, 1)
       sign_in resource
       session[:omniauth] = nil unless @user.new_record?
       render(:json => {"message" => "you have signed up successfully"}, :status => 200) and return
