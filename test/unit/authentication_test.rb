@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NeedHelpCategoryTest < ActiveSupport::TestCase
+class AuthenticationTest < ActiveSupport::TestCase
   test "the truth" do
     assert true
   end

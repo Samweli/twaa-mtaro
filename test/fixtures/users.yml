@@ -1,17 +1,19 @@
 ---
-erik:
-  name: Erik Michaels-Ober
-  organization: Code for America
-  email: erik@example.com
-  voice_number: 1234567890
+edward:
+  id: 3
+  first_name: Edward
+  last_name: Anderson
+  organization: ICT Specialist
+  email: edward@example.com
   sms_number: 1234567890
   encrypted_password: "$2a$10$KF/JMZ494ZLhWLgHZeBTf.cSL4l0Wjij4gIZP7BzkueAC1p4nW0ma"
 
-dan:
-  name: Dan Melton
-  organization: Code for America
-  email: dan@example.com
-  voice_number: 1234567890
-  sms_number: 1234567890
+sam:
+  id: 2
+  first_name: Samweli 
+  last_name: Mwakisambwe
+  organization: Dev
+  email: sam@example.com
+  sms_number: 1234567895
   encrypted_password: "$2a$10$KF/JMZ494ZLhWLgHZeBTf.cSL4l0Wjij4gIZP7BzkueAC1p4nW0ma"
 

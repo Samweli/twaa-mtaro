@@ -32,9 +32,9 @@ class DrainClaimsController < ApplicationController
     #end
     sms_service = SmsService.new();
     if I18n.locale == :en
-      msg = "You have claimed drain number #{@drain.gid} located at #{@drain.address}"
+      msg = "You have been assigned drain with number #{@drain.gid} located at #{@drain.address}."
     else
-      msg = "Umetwaa mtaro number #{@drain.gid} unaopatikana #{@drain.address}"
+      msg = "Umepewa mtaro wenye namba #{@drain.gid} unaopatikana #{@drain.address} kwa ajili ya usafi."
     end
     user = User.find_by_id(params[:user_id])
 

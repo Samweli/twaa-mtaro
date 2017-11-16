@@ -42,4 +42,6 @@
             %li
               %a#my_profile
                 = t("buttons.my_profile")
+                -if flash[:notice]
+                  #notice=flash[:notice]
 
