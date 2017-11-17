@@ -110,8 +110,10 @@ class DrainsController < ApplicationController
 
         # check if it is street leader who is updating drain status
         if (user.id == street_leader.id)
-          claim.update_attribute(:shoveled, shoveled)
-          claim.save
+          if claim
+            claim.update_attribute(:shoveled, shoveled)
+            claim.save(validate: false)
+          end
         end
 
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
