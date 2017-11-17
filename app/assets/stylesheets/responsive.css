@@ -978,3 +978,15 @@ padding-left: 10px;
     font-size: 14px;
   }
   }
+/*
+On larger screens*/
+/*
+@media (min-width: 1351px) {
+  
+  .col-lg-4 {
+    width: 26.333337%;
+  }
+  .col-lg-8{
+    width: 73.666663%;
+  }
+}*/
