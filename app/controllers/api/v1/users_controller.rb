@@ -24,7 +24,7 @@ class Api::V1::UsersController < Api::V1::BaseController
    user = User.find_all_by_street_id_and_role(params[:street_id],2)
    user.each do |u|
      sms_service = SmsService.new();
-     msg = text_message('remind')
+     msg = params[:message]
      sms_service.send_sms(
          msg,
          u.sms_number);

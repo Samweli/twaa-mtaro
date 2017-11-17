@@ -1,0 +1,341 @@
+/*
+This file contains all logic that involve the openstreetmap
+
+add here all functions that depend on map
+*/
+
+
+  // global variables
+  var popup;
+  var drain_pos;
+  var kmlLayer;
+  var drainLocation;
+  var activeObjectId;
+  var selected_drain;
+  var map;
+
+
+$(function () {
+    var center = new L.LatLng(-6.817523270254579, 39.25610303878784);
+
+
+    // Map background layers
+
+    var mapboxAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>' +
+        ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+        '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">' +
+        'Improve this map</a></strong>'
+    var customOsmBright = new L.TileLayer('https://api.mapbox.com/styles/v1/samtwesa/' +
+        'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token=' +
+        'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
+        'F1zCcOYqpXWd4C9l9xqvEQ'
+        , {
+            attribution: mapboxAttribution,
+            maxZoom: 20
+        });
+
+    // map layer for satellite imagery
+    var satelliteLayer = new L.TileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/' +
+        'tiles/256/{z}/{x}/{y}?access_token=' +
+        'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
+        'F1zCcOYqpXWd4C9l9xqvEQ'
+        , {
+            attribution: mapboxAttribution,
+            maxZoom: 20
+        });
+
+    var osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
+        ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+
+    var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: osmAttr,
+        maxZoom: 19
+    });
+
+    var inundationAttribution = '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>' +
+        ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+        '© <a href="https://www.ramanihuria.org">Ramani Huria</a>' +
+        '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">' +
+        'Improve this map</a></strong>'
+
+    var inundation = new L.tileLayer('https://api.mapbox.com/styles/v1/samtwesa/' +
+        'cj670gav2029o2rmrrg886sj7/tiles/256/{z}/{x}/{y}?access_token=' +
+        'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
+        'F1zCcOYqpXWd4C9l9xqvEQ'
+        , {
+            attribution: inundationAttribution,
+            maxZoom: 18
+        });
+
+    var mapOptions = {
+        center: center,
+        zoom: 13,
+        minZoom: 7,
+        maxZoom: 20,
+        doubleClickZoom: true,
+        layers: [osm, satelliteLayer, customOsmBright]
+    }
+
+    /* Creating map*/
+
+     map = new L.Map('map_canvas', mapOptions);
+
+    // Add basemaps and their menu
+    var baseMaps = {
+        "Openstreetmap": osm,
+        "Satellite": satelliteLayer,
+        "Standard": customOsmBright
+    };
+
+    L.control.layers(baseMaps).addTo(map);
+
+    // Click standard layer to override unusual maps tiles load
+    $("input[name='leaflet-base-layers']")[2].click();
+
+
+    /*
+    Todo: Add explanatory comments here
+    * */
+    function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+
+        L.marker(e.latlng).addTo(map)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+        L.circle(e.latlng, radius).addTo(map);
+    }
+
+
+    map.on('locationfound', onLocationFound);
+
+    function onLocationError(e) {
+        alert(e.message);
+    }
+
+    map.on('locationerror', onLocationError);
+
+
+    /*
+    Adds Legend on openstreetmp
+    * */
+    // Adding Legend
+    function addLegend() {
+        var legend = L.control({position: 'topright'});
+
+        legend.onAdd = function (map) {
+
+            var locale = urlParam('locale');
+            var colour_map;
+            var div;
+
+            if (locale == 'sw') {
+                colour_map = {
+                    'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
+                    'Haijulikani': "#CB7D50"
+                }
+
+                div = L.DomUtil.create('div', 'info legend'),
+                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
+                    labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3 > Alama </h3>';
+
+            } else {
+                colour_map = {
+                    'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
+                    'Unknown': "#CB7D50"
+                }
+
+                div = L.DomUtil.create('div', 'info legend'),
+                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
+
+                    labels = [];
+                // Adding legend header
+                div.innerHTML += '<h3> Legend </h3>';
+            }
+
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < colours.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + colour_map[colours[i]] + '"></i> ' +
+                    colours[i] + '<br><br>';
+            }
+
+            return div;
+        };
+
+        legend.addTo(map);
+
+        var scroll = L.control({position: 'bottomright'});
+
+        scroll.onAdd = function (map) {
+
+            scroll.addTo(map);
+
+        }
+    }
+
+
+
+
+
+
+    /*
+    add all shared fuctions that depend on map below here
+    * */
+
+
+
+
+
+
+    /*gets the instance of map object */
+    window.getMap = function () {
+        return map;
+    }
+
+
+    /* popup Window for displaying details of Mtaro */
+    window.createPopup = function (msg, pos) {
+        if (pos == null) {
+            pos = map.getCenter();
+
+        }
+        popup = L.popup({maxWidth: 960})
+            .setLatLng(pos)
+            .setContent(msg)
+            .openOn(map);
+        bind(pos);
+    }
+
+
+    /*
+    *  fetches and displays information associated with specified drain
+    * */
+
+    window.fetchDrainInfo = function (gid, pos) {
+
+        if (gid == undefined) {
+            // do nothing
+            map.closePopup();
+            return false;
+        }
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/drain_claims/' + gid,
+            data: {
+                'locale': locale
+            },
+            error: function () {
+            },
+            success: function (data) {
+
+                // Updating variable for info window position
+                drain_pos = pos;
+
+                createPopup(data, pos);
+                if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
+                    $('#abandon_link').find('.hide_column').hide();
+                }
+                hideSpinner();
+            }
+
+        });
+
+    }
+
+
+    /*
+    refreshes kml layer of drains on the openstreetmap
+    * */
+
+    window.refreshKML = function (type) {
+
+        /* Styling mitaro */
+        var customLayer = L.geoJson(null, {
+            style: function (feature) {
+                switch (feature.properties.styleUrl) {
+                    case '#unclear':
+                        return {color: "#dd9031", opacity: 0.9, weight: 2.5};
+                    // case '#adopted':
+                    //     return {color: "gray", opacity: 1, weight: 2.5};
+                    case '#needs_help':
+                        return {color: "#6495ed", opacity: 0.8, weight: 2.5};
+                    case '#cleared':
+                        return {color: "green", opacity: 0.9, weight: 2.5};
+                    case '#unknown':
+                        return {color: "#CB7D50", opacity: 0.9, weight: 2.1}
+                }
+            }
+        });
+        if (kmlLayer) {
+            map.removeLayer(kmlLayer);
+        }
+
+        /* dyamically loading mitaro using the center coordinates */
+        var c = map.getCenter();
+        var locale = urlParam('locale');
+
+        var url;
+        if (type) {
+            url = 'drains.kml?locale=' + locale + '&type=' + type;
+        } else {
+            url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
+        }
+        showSpinner();
+
+        /* Loading KML*/
+        kmlLayer = omnivore.kml(url, null, customLayer)
+            .on('ready', function () {
+                hideSpinner();
+            })
+            .on('error', function (jqXHR) {
+                hideSpinner();
+                data = $.parseJSON(jqXHR.error.responseText);
+
+                msg = '<h2>' + data.errors.address + '</h2>';
+                createPopup(msg, map.getCenter());
+
+            }).addTo(map);
+
+        /* Listens to clicks on drains*/
+        kmlLayer.on('click', function (e) {
+            var mtaro = e.layer.feature.properties;
+
+            // increase size of the clicked drain
+            selected = e.layer
+            selected.bringToFront()
+
+            // check for past selected drain and
+            // return its style as always
+            if (selected_drain) {
+                selected_drain.setStyle({weight: 2.5});
+            }
+
+            // Style selected
+            selected.setStyle({weight: 6});
+            selected_drain = selected;
+
+            activeObjectId = mtaro.description;
+            drainLocation = e.latlng;
+            // Fetching drain info
+            fetchDrainInfo(mtaro.description, drainLocation);
+        });
+
+        /*add KML layer to map*/
+        map.addLayer(kmlLayer);
+
+    }
+
+
+
+    /*executing functions*/
+    refreshKML("all");
+    addLegend();
+
+
+
+}); /* end of function*/

@@ -1,0 +1,14 @@
+$(function () {
+    /*shows drains of a specific street*/
+    $('body').on('click', '#view_street',
+        function (e) {
+            var lat = $(this).attr('data-lat');
+            var lng = $(this).attr('data-lng');
+            var latlng = L.latLng(lat, lng);
+
+            map.setView(latlng, 17);
+            $('.navbar-collapse').collapse('hide')
+        });
+
+
+}); // end of function

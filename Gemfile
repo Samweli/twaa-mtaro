@@ -50,6 +50,7 @@ group :development do
 end
 
 group :test do
+  gem "shoulda"
   gem 'simplecov'
 #  gem 'sqlite3'
   gem 'webmock'
