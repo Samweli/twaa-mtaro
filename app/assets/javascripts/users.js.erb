@@ -467,8 +467,6 @@ $(function () {
                 beforeSend: function () {
                 },
                 error: function (jqXHR) {
-                    //hideSpinner();
-                    //showInfoWindow();
                     submitButton.removeAttr('disabled');
                     markError(uemail, errors);
                     uemail.focus();
