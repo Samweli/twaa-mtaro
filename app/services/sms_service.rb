@@ -11,7 +11,7 @@ class SmsService
 	tonumber = format(tonumber);
 	
 	@client.messages.create({
-	  :from => '+16786195792',
+	  :from => '+14256540807',
 	  :to => tonumber,
 	  :body => content,
 	})
@@ -133,6 +133,18 @@ class SmsService
 
             # drain_claim.shoveled = false
             # drain.need_help = true
+            if(user.id == street_leader.id)
+              need_help = {
+                        'help_needed': "",
+                        'need_help_category_id': 1,
+                        'user_id': user.id,
+                        'gid': drain_claim.try(:gid)
+                    }
+                @need_help = NeedHelp.new(need_help)
+                if @need_help.save
+                   drain.need_help = true
+                end
+            end
             message = I18n.t('messages.thanks')
           else
             message = I18n.t('messages.unknown')
@@ -161,6 +173,4 @@ class SmsService
       I18n.locale = 'en'
     end
   end
-  		
-
 end
