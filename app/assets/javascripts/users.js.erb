@@ -522,7 +522,7 @@ $(function () {
             type: 'POST',
             url: '/users/account',
             data: {
-                'user_id': 1,
+                'user_id': $(this).attr('user_id'),
                 'role_id': 2
             },
             success: function (data) {

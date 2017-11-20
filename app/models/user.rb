@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     request_account(user_id,nil)
   end
 
-  def is_leader(role_id)
+  def has_role(role_id)
     self.roles.include? Role.find(role_id)
   end
 
