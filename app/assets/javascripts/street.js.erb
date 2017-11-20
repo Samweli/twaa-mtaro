@@ -23,12 +23,8 @@ $('body').on('click','#add_drain', function() {
               'street_id': street_id
               },
         error: function (err) {
-            console.log("error occured");
-            console.log(err);
         },
         success: function (data) {
-            console.log("success");
-            console.log(data);
             fetchDrainInfo(gid, drain_pos)
         }
     });
