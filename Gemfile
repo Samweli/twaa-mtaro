@@ -17,7 +17,7 @@ gem 'kaminari'
 gem 'omniauth-facebook'
 gem "paranoia", "~> 1.0"
 gem 'pg'
-gem 'rack-contrib'
+gem 'rack-contrib', :git => "https://github.com/rack/rack-contrib.git", :branch => "master"
 gem 'rack-cors', :require => 'rack/cors'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'rest-client'
