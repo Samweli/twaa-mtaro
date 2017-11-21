@@ -130,6 +130,9 @@ class SmsService
 
           elsif (need_help_keywords.include? drain_status)
             change_locale(need_help_keywords, drain_status)
+
+            # drain_claim.shoveled = false
+            # drain.need_help = true
             if(user.id == street_leader.id)
               need_help = {
                         'help_needed': "",
@@ -142,8 +145,6 @@ class SmsService
                    drain.need_help = true
                 end
             end
-
-           
             message = I18n.t('messages.thanks')
           else
             message = I18n.t('messages.unknown')
@@ -172,6 +173,4 @@ class SmsService
       I18n.locale = 'en'
     end
   end
-  		
-
 end

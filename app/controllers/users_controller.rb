@@ -12,6 +12,11 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  def account
+    User.request_account(params[:user_id], params[:role_id])
+    render :json => {:success => true}
+  end
+
   def edit
     render :edit
   end
