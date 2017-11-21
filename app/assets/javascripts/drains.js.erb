@@ -163,6 +163,22 @@ $(function () {
             return false;
         });
 
+    function set_priority() {
+        $.ajax({
+            type: 'POST',
+            url: '/drains/flood',
+            data: {
+                'drain_id': 746
+            },
+            error: function (jqXHR) {
+                console.log('error occurred')
+            },
+            success: function (data) {
+                console.log('success it worked')
+            }
+        });
+    }
 
+set_priority()
 
 }); // end of function
