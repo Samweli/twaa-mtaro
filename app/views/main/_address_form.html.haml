@@ -47,6 +47,6 @@
               |
             %li
               %a
-                - if current_user.roles.empty?
+                - unless current_user.has_role(2)
                   = render :partial => 'users/request_account' 
 

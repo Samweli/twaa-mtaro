@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number: true}
-
   attr_accessible :email, :admin, :role_requested, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
   validates_presence_of :first_name, :last_name, :street_id, :sms_number
   has_many :drain_claims
@@ -24,7 +23,6 @@ class User < ActiveRecord::Base
   end
 
   def role?(role)
-
     roles.any? {|r| r.name.underscore.to_sym == role}
   end
 
@@ -48,6 +46,7 @@ class User < ActiveRecord::Base
     request_account(user_id,nil)
   end
 
+
   def has_role(role_id)
     self.roles.include? Role.find(role_id)
   end
@@ -59,7 +58,6 @@ class User < ActiveRecord::Base
 
   def self.leader_requests
     User.where(:role_requested => !nil)
-
   end
 
   def generate_authentication_token
