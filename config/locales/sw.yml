@@ -35,7 +35,7 @@ sw:
     add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
     clean: "Msafi"
-    add_drain: "Ongeza Mtraro Kwenye Mtaa"
+    add_drain: "Ongeza mtaro kwenye mtaa"
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
     drain_status: "Huu %{thing} hauna mhusika yoyote"
     need_help: "Msaada unahitajika"
@@ -174,7 +174,7 @@ sw:
       help_needed: "Msaada unao hitajika"
       leader_name: "Jina la kiongozi wa mtaa"
       street: "Jina la mtaa"
-      title: "Maelezo Ya Misaada/Msaada unao hitajika"
+      title: "Maelezo ya misaada/msaada unaohitajika"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"
@@ -185,10 +185,10 @@ sw:
     adopt: "chukua hii %{thing}"
     adopted: "%{thing_name} imechukuliwa"
     byline: "na %{name}"
-    caption: "Hakikishia kwamba unahitajika kusafi %{thing} karibu na nyumbani kwako au biashara yako,pia vyema pia kuwasaidia wengine"
+    caption: "Hakikishia kwamba unahitajika kusafisha %{thing} karibu na nyumbani kwako au biashara yako,pia vyema pia kuwasaidia wengine"
     main: "Twaa %{thing}"
-    edit_profile: "Hariri Wasifu kwenye"
-    need_help: "Eleza Msaada Unaohitaji"
+    edit_profile: "Hariri wasifu kwenye"
+    need_help: "Eleza msaada unaohitaji"
     ofline: "wa %{organization}"
     thank_you: " Asante kwa kutwaa huu %{thing}!"
     register_now: "Jisajili sasa!"
@@ -199,7 +199,7 @@ sw:
     drain_category: "Mgawanyo wa Mitaro" 
     drain_details: "Taarifa za Mtaro"
     site_share_message: "Twaa mtaro | Dar es salaam"
-    drain_share_message: "%{username} anasafisha mtaro unaopatikan %{address}"
+    drain_share_message: "%{username} anasafisha mtaro unaopatikana %{address}"
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME
