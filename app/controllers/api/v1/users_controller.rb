@@ -42,8 +42,8 @@ class Api::V1::UsersController < Api::V1::BaseController
     render :json => { :succsess => true}
   end
 
-  def leader_requests
-    user_requests = User.leader_requests
+  def requested_roles
+    user_requests = User.role_requests(params[:role_name])
     render :json => {:leaders => user_requests}
   end
 

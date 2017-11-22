@@ -2,6 +2,7 @@ class SmsService
   def initialize()
   	@account_sid = ENV['SMS_ACCOUNT_SID']
 	@auth_token = ENV['SMS_AUTH_TOKEN']
+    @from_number = ENV['SMS_FROM_PHONE_NUMBER']
 	@client = Twilio::REST::Client.new @account_sid, @auth_token
 
   end
@@ -11,7 +12,7 @@ class SmsService
 	tonumber = format(tonumber);
 	
 	@client.messages.create({
-	  :from => '+14256540807',
+	  :from => @from_number,
 	  :to => tonumber,
 	  :body => content,
 	})
