@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def self.leader_requests
-    User.where(:role_requested => !nil)
+    User.where("role_requested IS NOT NULL")
   end
 
   def generate_authentication_token
