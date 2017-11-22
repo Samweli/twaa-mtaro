@@ -47,6 +47,6 @@
               |
             %li
               %a
-                - unless current_user.is_leader(2)
+                - unless current_user.has_role(2)
                   = render :partial => 'users/request_account' 
 
