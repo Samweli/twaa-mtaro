@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DrainTest < ActiveSupport::TestCase
-  test "the truth" do
-    assert true
-  end
+  should have_many(:set_priorities)
+  should have_many(:priorities).through(:set_priorities)
 end

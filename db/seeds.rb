@@ -75,5 +75,15 @@ if ENV["roles"]
   p "created #{Role.count} roles"
 end
 
+if ENV["priorities"]
+  # seeding priorities
+  priorities = [
+      "flood prone"
+  ]
+  1.times do |key|
+    Priority.create(name: priorities[key])
+  end
+  p "created #{Priority.count} roles"
+end
 
 
