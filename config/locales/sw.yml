@@ -39,6 +39,7 @@ sw:
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
     drain_status: "Huu %{thing} hauna mhusika yoyote"
     need_help: "Msaada unahitajika"
+    flood_prone: "waweza leta mafuriko"
     password: "(acha nafasi wazi kama huhitaji kubadili nenosiri )"
     private: "(binafsi)"
     public: "(inaweza kuonekana kwa watumiaji wengine)"

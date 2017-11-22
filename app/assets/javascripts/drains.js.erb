@@ -163,12 +163,12 @@ $(function () {
             return false;
         });
 
-    function set_priority() {
+    $('body').on('click','#priority', function() {
         $.ajax({
             type: 'POST',
             url: '/drains/flood',
             data: {
-                'drain_id': 746
+                'drain_id': $(this).attr('data-moid')
             },
             error: function (jqXHR) {
                 console.log('error occurred')
@@ -177,8 +177,9 @@ $(function () {
                 console.log('success it worked')
             }
         });
-    }
+    })
 
-set_priority()
+
+
 
 }); // end of function
