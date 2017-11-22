@@ -65,11 +65,13 @@ end
 if ENV["roles"]
   # seeding roles
   roles = [
-      "weo",
+
+      "citizen",
       "veo",
-      "citizen"
+      "weo",
+      "community_member"
   ]
-  3.times do |key|
+  5.times do |key|
     Role.create(name: roles[key])
   end
   p "created #{Role.count} roles"
