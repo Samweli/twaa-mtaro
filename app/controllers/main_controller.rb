@@ -36,7 +36,7 @@ class MainController < ApplicationController
     @adopted = format_number(Drain.count(:conditions => 'claims_count > 0'))
     @not_adopted = format_number(Drain.count(:conditions => 'claims_count = 0'))
 
-    puts "adopted #{@adopted}, #{@not_adopted}"
+     Rails.logger.debug("adopted #{@adopted}, #{@not_adopted}")
 
   end
 

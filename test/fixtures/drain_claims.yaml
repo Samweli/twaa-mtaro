@@ -1,0 +1,18 @@
+
+one:
+  id: 1
+  user_id: 1
+  gid: 1
+  shoveled: False
+
+two:
+  id: 2
+  user_id: 2
+  gid: 2
+  shoveled: False
+
+three:
+  id: 3
+  user_id: 1
+  gid: 2
+  shoveled: False

@@ -1,10 +1,6 @@
 AdoptADrain::Application.routes.draw do
   resources :need_help_categories
-
-
   resources :need_helps
-
-
   resources :authentications
 
   devise_for :users, :controllers => {
@@ -16,6 +12,7 @@ AdoptADrain::Application.routes.draw do
     get 'users' => 'users#index'
     get 'add' => 'users#add'
     get 'profile' => 'users#profile'
+    post 'users/account' => 'users#account'
     post 'createuser' => 'users#createuser'
     put 'update' => 'users#update'
   end
@@ -27,6 +24,7 @@ AdoptADrain::Application.routes.draw do
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
   get 'drain_claims/adopt' => 'drain_claims#adopt'
+  post '/streets/add_drain' => 'streets#add_drain'
 
   match '/auth/:provider/callback' => 'authentications#create'
 

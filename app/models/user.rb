@@ -46,13 +46,18 @@ class User < ActiveRecord::Base
     request_account(user_id,nil)
   end
 
+
+  def has_role(role_id)
+    self.roles.include? Role.find(role_id)
+  end
+
   def self.request_account(user_id, role_id)
     user = User.find(user_id)
     user.update_attribute(:role_requested,role_id)
   end
 
   def self.leader_requests
-    User.where(:role_requested => !nil)
+    User.where("role_requested IS NOT NULL")
   end
 
   def generate_authentication_token

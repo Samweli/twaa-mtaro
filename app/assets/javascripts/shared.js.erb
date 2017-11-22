@@ -1,0 +1,61 @@
+/*
+
+Add here all functions that are shared across multiple files
+
+*/
+
+
+$(function () {
+
+    /*
+    gets and adds locale value in every ajax request
+    * */
+     window.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results == null) {
+            return 'en';
+        }
+        else {
+            return results[1] || 0;
+        }
+    }
+
+  /*
+  responsible for showing and hiding spinner
+  * */
+
+    window.showSpinner = function () {
+        $('#spinner').show();
+    }
+
+    window.hideSpinner = function () {
+        $('#spinner').hide();
+
+    }
+
+
+    /*updates the sidebar */
+    window.updateSidebar = function () {
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: '/sidebar',
+            dataType: 'json',
+            data: {
+                'locale': locale
+            },
+            error: function (jqXHR) {
+
+            },
+            success: function (data) {
+
+                $('#username').replaceWith(data['user_badge']);
+                $('#drain_list').replaceWith(data['drain_list']);
+                $('#address_box').replaceWith(data['address_box']);
+            }
+        });
+    }
+
+
+});

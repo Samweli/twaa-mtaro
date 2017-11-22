@@ -27,7 +27,11 @@ class DrainsController < ApplicationController
         elsif params[:type].include? "address"
           values = params[:type].split('=')
           value = values[1]
-          @drains = Drain.where_custom(:gid => value)
+          if (value.to_i == 0)
+            @drains = Drain.where_custom(:address => value)
+          else
+            @drains = Drain.where_custom(:gid => value)
+          end
         end
       end
 
@@ -52,7 +56,6 @@ class DrainsController < ApplicationController
   end
 
 
-
   def find_closest
     gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
 
@@ -73,17 +76,15 @@ class DrainsController < ApplicationController
     user = current_user
 
     claim = drain.claims.find_by_user_id(user.id)
+    street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if (user.role == 1)
-        if not claim
-          render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
-        else
+      if not (user.is_leader(2))
+        unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
-          street_leader = User.find_by_role_and_street_id(2, user.street_id)
 
           reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
                                   :last_name => user.last_name, :id => drain.gid, :status => status)
@@ -97,12 +98,21 @@ class DrainsController < ApplicationController
         end
 
       else
-
+        if claim
+          claim.update_attribute(:shoveled, shoveled)
+          claim.save(validate: false)
+        end
         drain.cleared = shoveled
         drain.need_help = false if shoveled
         drain.save(validate: false)
 
-        claim = DrainClaim.find_by_gid(drain.gid)
+        # check if it is street leader who is updating drain status
+        if (user.id == street_leader.id)
+          if claim
+            claim.update_attribute(:shoveled, shoveled)
+            claim.save(validate: false)
+          end
+        end
 
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(
