@@ -55,7 +55,9 @@ class User < ActiveRecord::Base
     user = User.find(user_id)
     user.update_attribute(:role_requested,role_id)
   end
-
+  
+  # TODO generalize this method, from leader_requests to 
+  #  role_requests(role)
   def self.leader_requests
     User.where("role_requested IS NOT NULL")
   end

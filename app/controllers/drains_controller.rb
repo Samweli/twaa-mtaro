@@ -136,5 +136,9 @@ class DrainsController < ApplicationController
     redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]
   end
 
+  def set_flood_prone
+    Drain.set_flood_prone(params[:drain_id])
+    render :json => {:success => true}
+  end
 
 end

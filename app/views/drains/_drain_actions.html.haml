@@ -3,6 +3,8 @@
   %ul.horizontal_items
     %li{:id => "help", :data => {:moid=>@drain.try(:gid)}}
       = button_tag t("captions.need_help"), :class => "btn btn-primary cat-btn"
+    %li{:id => "priority", :data => {:moid=>@drain.try(:gid)}}
+      = render :partial => 'drains/flood_prone_button'
     %li{:id => "unclean", :data => {:moid=>@drain.try(:gid)}}
       = button_tag t("captions.unclean"), :class => "btn btn-warning cat-btn"
     %li{ :id => "clean", :data => {:moid=>@drain.try(:gid)}}
