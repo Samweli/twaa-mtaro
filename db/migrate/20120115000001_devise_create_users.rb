@@ -9,8 +9,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :sms_number, :null => false, :default =>""
       t.boolean :admin, :default => false
       t.integer :claims_count, :default => 0
-      t.integer :role, :default => 1
-      t.integer :role_requested
       t.integer :max_claims
       t.integer :street_id
       t.string :encrypted_password, :null => false, :default => ""
