@@ -37,7 +37,7 @@ en:
     add_user: "Add new user"
     current_password: "(we need your current password to confirm your changes)"
     clean: "Clean"
-    add_drain: "Add drain to street"
+    add_drain: "Add drain to %{street} street"
     add: "add"
     assign: "Assign"
     drain_status: "This %{thing} has been not adopted"

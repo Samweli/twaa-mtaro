@@ -35,7 +35,7 @@ sw:
     add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
     clean: "Msafi"
-    add_drain: "Ongeza mtaro kwenye mtaa"
+    add_drain: "Ongeza mtaro kwenye mtaa wa %{street}"
     current_password: "(tunahitaji nenosiri lako la sasa ili kuthibitisha mabadiliko yako)"
     drain_status: "Huu %{thing} hauna mhusika yoyote"
     need_help: "Msaada unahitajika"
