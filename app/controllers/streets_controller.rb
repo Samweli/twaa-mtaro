@@ -7,4 +7,15 @@ class StreetsController < ApplicationController
 
     render :json => {:success => "let look at the db"}
   end
+
+  def index
+    puts "index called inside streets controller"
+    @streets = Street.all
+    if params[:search]
+      @streets = Street.search(params[:search])
+    else
+      @streets = Street.all
+    end
+    render :json => { :streets => @streets}
+  end
 end
