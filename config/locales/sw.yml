@@ -18,7 +18,8 @@ sw:
     need_help: "%{count} Misaada"
     send_reminder: "Kumbusha kusafisha kwa kutuma ujumbe"
     my_profile: "Habari Zangu"
-    request_account: "Kuwa Kiongozi"
+    request_account: "Omba nafasi yako:"
+    account_submit: "Tuma ombi"
     register: "Jisajili sasa"
     sign_in: "kuingia"
     sign_out: "Ondoka"
@@ -117,6 +118,7 @@ sw:
     voice_number: "Namba ya simu"
     facebook_sign_in: "Anza kutumia akaunti yako ya Facebook"
     recaptcha: "Tafadhali thibitisha code hapa chini"
+    leader: "Kuwa kiongozi"
   links:
     accessibility: "Upatikanaji"
     city: "Dar es Salaam"

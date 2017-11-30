@@ -21,9 +21,13 @@
 					- else
 					%p
 						= render :partial => 'users/edit_profile'	
+				#change_role
+					- unless current_user.has_role(2)
+						= render :partial => 'users/request_account'	
+		        	
 	- else
 
 
-
+			                	 
 
 

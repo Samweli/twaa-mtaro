@@ -76,6 +76,10 @@
   text-align: center;
   color: #616060;
 }
+#change_role{
+    color: #666;
+
+  }
 span#street{
   text-align: center;
     color: #337ab7;
@@ -220,6 +224,10 @@ option{
 @media (max-width: 625px) {
   #myDiv{
     display: none;
+  }
+  #change_role{
+    color: #666;
+    font-size: 10px;
   }
 button {
   padding: 3px;
@@ -648,7 +656,13 @@ margin-left: 248PX;
 .btn-submit{
   float: right;
 }
-
+#roles_button{
+  font-size: 13px;
+  margin-right: 12.2em;
+}
+#change_role{
+  font-size: 13px; 
+  }
 /*for drain list*/
 #info_box.center p,ul.features li{
   font-size: 13px;
