@@ -6,6 +6,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require plugins/jquery.browser
+//= require plugins/jquery.easy-autocomplete.min
+//= require plugins/leaflet-omnivore
+//= require plugins/notify.min
+//= require plugins/leaflet
+//= require plugins/leaflet-src
+//= require plugins/omnivore
 //= require social-share-button
 //= require shared
 //= require osm_map
