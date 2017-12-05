@@ -518,6 +518,7 @@ $(function () {
 
     // requesting leader account
     $('body').on('submit', '#account', function (e){
+        showSpinner();
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -527,8 +528,9 @@ $(function () {
                 'role_id': $('#user_role_id').val()
             },
             success: function (data) {
-                console.log('can request account');
-                console.log(data)
+                fetchDrainInfo();
+                hideSpinner();
+                console.log(data);
             }
         });
     })
