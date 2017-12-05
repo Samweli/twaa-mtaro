@@ -1,25 +1,30 @@
 #drain_list
   - if user_signed_in?
-    #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
-      %p
-      %span#name=t('labels.street')
-      %span#street
-      = current_user.street.street_name 
-    - if @my_drains.try(:size) > 0
-      %table.font_12.pen_gray.link_1.hidden-xs
-        %thead
-          %tr
-            %th= t('defaults.my_drains')
-            %th= t('buttons.clean')
-            %th= t('tables.need_help')
-        %tbody
-        - @my_drains.each do |s|
-          %tr
-            %td.address= link_to s.try(:drain).try(:address), "#{s.try(:drain).try(:gid)}", :class => 'view_drain', 'data-gid' => s.try(:drain).try(:gid), 'data-lat' => s.try(:drain).try(:lat), 'data-lng' =>s.try(:drain).try(:lng)
-            %td= yesno(s.try(:drain).try(:cleared))
-            %td= yesno(s.try(:drain).try(:need_help))
-      #pagination.font_12.link_1.hidden-xs
-        = paginate @my_drains, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
+    #drain_list1
+      #user_badge.link_1.center
+      %div.font_h3.font_bold{:style => "margin:none;color: #333;text-align:center;"}
+        = t("notices.welcome")
+        = current_user.try(:fullname)
+      #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
+        %p
+        %span#name=t('labels.street')
+        %span#street
+        = current_user.street.street_name 
+      - if @my_drains.try(:size) > 0
+        %table.font_12.pen_gray.link_1.hidden-xs
+          %thead
+            %tr
+              %th= t('defaults.my_drains')
+              %th= t('buttons.clean')
+              %th= t('tables.need_help')
+          %tbody
+          - @my_drains.each do |s|
+            %tr
+              %td.address= link_to s.try(:drain).try(:address), "#{s.try(:drain).try(:gid)}", :class => 'view_drain', 'data-gid' => s.try(:drain).try(:gid), 'data-lat' => s.try(:drain).try(:lat), 'data-lng' =>s.try(:drain).try(:lng)
+              %td= yesno(s.try(:drain).try(:cleared))
+              %td= yesno(s.try(:drain).try(:need_help))
+        #pagination.font_12.link_1.hidden-xs
+          = paginate @my_drains, :params => {:controller => 'main', :action => 'sidebar'}, :remote => true
   - else
     #info_box.center.hidden-xs
       %h2.font_bold
