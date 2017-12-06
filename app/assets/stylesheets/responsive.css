@@ -280,8 +280,8 @@ input, select, option, button{
     -o-border-color: #6495ED;
 }
 .btn {
-    margin: 8px;     
-}
+/*    margin: 8px;     
+*/}
 #actions_box,#need_help_form{
  
   width: 210px;
@@ -919,8 +919,8 @@ h2 {
 .btn {
     display: inline-block;
     padding: 6px 5px;
-    margin: 0 10px 5px 18px;
-    border-radius: 4px;
+/*    margin: 0 10px 5px 18px;
+*/    border-radius: 4px;
     line-height: 1.42857143;
     font-size: 13px;
 }
