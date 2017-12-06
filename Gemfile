@@ -19,6 +19,7 @@ gem "paranoia", "~> 1.0"
 gem 'pg'
 gem 'rack-contrib', :git => "https://github.com/rack/rack-contrib.git", :branch => "master"
 gem 'rack-cors', :require => 'rack/cors'
+gem 'ransack'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'rest-client'
 gem 'social-share-button', '~> 0.1.6'

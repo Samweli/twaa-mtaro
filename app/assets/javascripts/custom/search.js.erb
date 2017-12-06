@@ -1,0 +1,45 @@
+var searched_item;
+
+$(function () {
+    function log( message ) {
+        $( "<div>" ).text( message ).prependTo( "#log" );
+        $( "#log" ).scrollTop( 0 );
+    }
+    $("#address").autocomplete({
+
+        source: function (request, response) {
+            $.ajax({
+                type: "GET",
+                url: "search.json",
+                data: {
+                    q: request.term
+                },
+                beforeSend: function (data) {
+                    console.log('data to be sent');
+                },
+                error: function (data) {
+                    console.log("error occured")
+                    console.log(data)
+                },
+                success: function (data) {
+                    console.log("ajax works");
+                    console.log(data.streets[0]);
+                    response(data.streets);
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, selected_ui) {
+            searched_item =selected_ui;
+            console.log("item selected");
+            console.log(selected_ui.item.lat);
+
+            var lat = selected_ui.item.lat;
+            var lng = selected_ui.item.lng;
+            var latlng = L.latLng(lat, lng);
+
+            map.setView(latlng, 17);
+        }
+        }
+    );
+});

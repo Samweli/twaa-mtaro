@@ -24,7 +24,7 @@ AdoptADrain::Application.routes.draw do
   get 'sidebar' => 'main#sidebar'
   get '/sms/new' => 'sms#new'
   get 'drain_claims/adopt' => 'drain_claims#adopt'
-  get '/streets/search' => 'streets#search'
+  get '/search' => 'streets#search'
   post 'drains/flood' => 'drains#set_flood_prone'
   post '/streets/add_drain' => 'streets#add_drain'
 
