@@ -13,7 +13,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     )
   end
 
-
   def show
     user = User.find(params[:id])
 
@@ -40,7 +39,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def verify_leader
     User.assign_role(params[:user_id], params[:role_id])
-    render :json => { :succsess => true}
+    render :json => { :success => true}
   end
 
   def requested_roles

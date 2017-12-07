@@ -22,9 +22,6 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
   end
 
 
-
-
-
   # POST /need_helps
   # POST /need_helps.json
   def create

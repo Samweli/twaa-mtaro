@@ -82,7 +82,8 @@ class DrainsController < ApplicationController
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if !(user.has_role(2) )
+
+      if !(user.has_role(2))
         unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)

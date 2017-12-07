@@ -46,6 +46,9 @@
 #spinner
   %p
     = image_tag "loading2.gif"
+    / .progress
+    /   .progress-bar.progress-bar-striped.progress-bar-success.active{"role" => "progressbar", "aria-valuenow" => "0","aria-valuemin" => "0", "aria-valuemax" => "100", "style" => "width:40%"}
+    /     #progress-value="0%"
 .row
   .col-md-12.col-sm-12
     .container_fluid

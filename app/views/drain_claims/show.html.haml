@@ -18,7 +18,6 @@
       .drain_social_media
         = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
 
-
   .descriptions
     %h4
       = t("defaults.address") + ':'
