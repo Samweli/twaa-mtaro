@@ -1,3 +1,2 @@
-= button_tag t("captions.add_drain"),
-:class => "btn btn-success btn-block cat-btn",
+= button_tag t("captions.add_drain",:street => current_user.street.try(:street_name)),:class => "btn btn-warning btn-block cat-btn",:style => "margin:none;color: #333;text-align:center;border: 1.5px solid #CB7D50;cursor:pointer;",
  :id => "add_drain", :gid => @drain.gid, :street => current_user.street.id
