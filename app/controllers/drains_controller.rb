@@ -76,12 +76,13 @@ class DrainsController < ApplicationController
     user = current_user
 
     claim = drain.claims.find_by_user_id(user.id)
-    street_leader = User.find_by_role_and_street_id(2, user.street_id)
+    street_leader = User.joins(:roles).where(roles: { id: 2 })
+                        .find_by_street_id(user.street_id)
 
     if params.has_key?(:shoveled)
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if not (user.is_leader(2))
+      if !(user.has_role(2))
         unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
@@ -91,10 +92,10 @@ class DrainsController < ApplicationController
           notify_user = t('messages.user_notify', :id => drain.gid, :status => status)
           sms_service.send_sms(
               reply_street_leader,
-              street_leader.sms_number);
+              street_leader.sms_number)
           sms_service.send_sms(
               notify_user,
-              user.sms_number);
+              user.sms_number)
         end
 
       else
