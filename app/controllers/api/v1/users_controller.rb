@@ -23,11 +23,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     user = User.joins(:roles).where(roles: { id: 2 })
                .find_by_street_id(params[:street_id])
     user.each do |u|
-      sms_service = SmsService.new();
+      sms_service = SmsService.new()
       msg = params[:message]
       sms_service.send_sms(
           msg,
-          u.sms_number);
+          u.sms_number)
 
     end
 
