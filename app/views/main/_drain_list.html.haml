@@ -9,7 +9,8 @@
         %p
         %span#name=t('labels.street')
         %span#street
-        = current_user.street.street_name 
+
+        = link_to current_user.street.street_name 
       - if @my_drains.try(:size) > 0
         %table.font_12.pen_gray.link_1.hidden-xs
           %thead

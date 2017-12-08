@@ -85,6 +85,9 @@ span#street{
     color: #337ab7;
     text-decoration-line: underline;
 }
+span#name{
+  padding-right: 5px;
+}
 #address_box{
   margin-left: 10px;
   margin-right: 15px;
