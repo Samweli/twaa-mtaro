@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   def self.role_requests(requested_role)
     requested_role = Role.find_by_name(requested_role)
     if requested_role
-      User.find_by_role_requested(requested_role.id)
+      User.find_all_by_role_requested(requested_role.id)
     else
       User.where("role_requested IS NOT NULL")
     end
