@@ -13,7 +13,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     )
   end
 
-
   def show
     user = User.find(params[:id])
 
@@ -21,7 +20,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def remind
-    user = User.find_all_by_street_id_and_role(params[:street_id], 2)
+    user = User.joins(:roles).where(roles: { id: 2 })
+               .find_by_street_id(params[:street_id])
     user.each do |u|
       sms_service = SmsService.new();
       msg = params[:message]
@@ -39,11 +39,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def verify_leader
     User.assign_role(params[:user_id], params[:role_id])
-    render :json => { :succsess => true}
+    render :json => { :success => true}
   end
 
-  def leader_requests
-    user_requests = User.leader_requests
+  def requested_roles
+    user_requests = User.role_requests(params[:role_name])
     render :json => {:leaders => user_requests}
   end
 

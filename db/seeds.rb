@@ -85,7 +85,7 @@ if ENV["priorities"]
   1.times do |key|
     Priority.create(name: priorities[key])
   end
-  p "created #{Priority.count} roles"
+  p "created #{Priority.count} priority"
 end
 
 

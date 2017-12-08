@@ -48,7 +48,7 @@ AdoptADrain::Application.routes.draw do
       get '/drains/data' => 'drains#data'
       get '/drains/ranking' => 'drains#ranking'
       get 'street_drains/:id' => 'drains#street_drains'
-      get '/users/new_leaders' => 'users#leader_requests'
+      post '/users/role_requests' => 'users#requested_roles'
       post '/users/verify' => 'users#verify_leader'
       post '/users/remind' => 'users#remind'
       resources :users, only: [:index, :create, :show, :update, :destroy]
