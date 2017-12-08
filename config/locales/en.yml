@@ -43,7 +43,7 @@ en:
     assign: "Assign"
     drain_status: "This %{thing} has been not adopted"
     need_help: "Needs help"
-    flood_prone: "flood prone"
+    flood_prone: "Flood prone"
     password: "(leave blank if you don't want to change it)"
     private: "(private)"
     public: "(may be visible to other users)"

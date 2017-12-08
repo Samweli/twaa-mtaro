@@ -13,7 +13,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     )
   end
 
-
   def show
     user = User.find(params[:id])
 
@@ -24,11 +23,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     user = User.joins(:roles).where(roles: { id: 2 })
                .find_by_street_id(params[:street_id])
     user.each do |u|
-      sms_service = SmsService.new();
+      sms_service = SmsService.new()
       msg = params[:message]
       sms_service.send_sms(
           msg,
-          u.sms_number);
+          u.sms_number)
 
     end
 
@@ -40,13 +39,26 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def verify_leader
     User.assign_role(params[:user_id], params[:role_id])
-    render :json => { :succsess => true}
+    render :json => { :success => true}
+  end
+
+  def deny
+    User.deny_role(params[:user_id] )
+    render :json => { :success => true}
   end
 
   def requested_roles
     user_requests = User.role_requests(params[:role_name])
-    render :json => {:leaders => user_requests}
+
+    render(
+        json: ActiveModel::ArraySerializer.new(
+            user_requests,
+            each_serializer: Api::V1::UserSerializer,
+            root: 'leaders'
+        )
+    )
   end
+
 
   def update
     user = User.find(params[:id])

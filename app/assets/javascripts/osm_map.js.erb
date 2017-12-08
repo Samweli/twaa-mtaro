@@ -286,9 +286,22 @@ $(function () {
             url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
         showSpinner();
+        /* Track progress of addition of layers to the map */
+        // progress_percentage = 0;
+        // map.on('layeradd', function(e){
+        //     console.log('on load map' +progress_percentage);
+        //     progress_percentage +=  ((1/8865)* 100);
+        //     $('.progress-bar').attr('aria-valuenow', progress_percentage);
+        //     $('#progress-value').text(progress_percentage +"%");
+        // });
 
         /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer)
+            .on('onload', function(e){
+                // console.log('on load');
+                // $('.progress-bar').attr('aria-valuenow') == 50;
+                // $('.progress-bar').text("50%");
+            })
             .on('ready', function () {
                 hideSpinner();
             })
