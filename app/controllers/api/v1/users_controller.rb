@@ -42,10 +42,23 @@ class Api::V1::UsersController < Api::V1::BaseController
     render :json => { :success => true}
   end
 
+  def deny
+    User.deny_role(params[:user_id] )
+    render :json => { :success => true}
+  end
+
   def requested_roles
     user_requests = User.role_requests(params[:role_name])
-    render :json => {:leaders => user_requests}
+
+    render(
+        json: ActiveModel::ArraySerializer.new(
+            user_requests,
+            each_serializer: Api::V1::UserSerializer,
+            root: 'leaders'
+        )
+    )
   end
+
 
   def update
     user = User.find(params[:id])
