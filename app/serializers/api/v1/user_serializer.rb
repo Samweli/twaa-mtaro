@@ -1,5 +1,6 @@
 class Api::V1::UserSerializer < Api::V1::BaseSerializer
-  attributes :id, :email, :first_name, :last_name, :organization, :sms_number
+  attributes :id, :email, :first_name, :last_name, :organization, :sms_number,
+             :role_requested
 
   has_many :roles, through: :assignments, embed: :objects
   has_one :street, embed: :objects

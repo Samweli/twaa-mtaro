@@ -21,6 +21,11 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     end
   end
 
+  def update_status
+    NeedHelp.status(params[:need_help_id], params[:status])
+    render :json => {:success => true}
+  end
+
 
   # POST /need_helps
   # POST /need_helps.json
