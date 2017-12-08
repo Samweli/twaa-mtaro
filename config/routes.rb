@@ -50,6 +50,7 @@ AdoptADrain::Application.routes.draw do
       get 'street_drains/:id' => 'drains#street_drains'
       post '/users/role_requests' => 'users#requested_roles'
       post '/users/verify' => 'users#verify_leader'
+      post '/users/deny' => 'users#deny'
       post '/users/remind' => 'users#remind'
       resources :users, only: [:index, :create, :show, :update, :destroy]
       resources :drains,only: [:index, :create, :show, :update, :destroy]

@@ -4,4 +4,8 @@ attributes :gid, :cleared, :need_help, :address, :waterway, :covered, :depth,
            :height, :surface, :smoothness, :oneway, :lat, :lng,
            :zipcode, :claims_count
 
+
+  has_many :streets, embed: :objects
+  has_many :priorities, through: :set_priorities, embed: :objects
+
 end
