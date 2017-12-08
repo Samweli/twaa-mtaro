@@ -52,6 +52,7 @@ AdoptADrain::Application.routes.draw do
       post '/users/verify' => 'users#verify_leader'
       post '/users/deny' => 'users#deny'
       post '/users/remind' => 'users#remind'
+      post '/need_helps/status' => 'need_helps#update_status'
       resources :users, only: [:index, :create, :show, :update, :destroy]
       resources :drains,only: [:index, :create, :show, :update, :destroy]
       resources :streets,only: [:index, :create, :show, :update, :destroy]
