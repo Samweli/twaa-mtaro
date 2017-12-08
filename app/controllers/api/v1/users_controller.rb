@@ -20,7 +20,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def remind
-    user = User.find_all_by_street_id_and_role(params[:street_id], 2)
+    user = User.joins(:roles).where(roles: { id: 2 })
+               .find_by_street_id(params[:street_id])
     user.each do |u|
       sms_service = SmsService.new();
       msg = params[:message]
