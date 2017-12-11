@@ -3703,6 +3703,7 @@ tbody.collapse.in {
 .btn-group-vertical > .btn {
   position: relative;
   float: left;
+  margin: 0 10px 5px 18px;
 }
 .btn-group > .btn:hover,
 .btn-group-vertical > .btn:hover,

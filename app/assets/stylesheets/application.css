@@ -377,8 +377,8 @@ ul.horizontal_items.font_bold,ul#profile{
 ul.horizontal_items > li,ul#profile {
   list-style-type: none;
   display: inline-block;
-  margin: 0 5px 5px 0;
-  padding: 0;
+/*  margin: 0 5px 5px 0;
+*/  padding: 0;
 /*  vertical-align: middle;
 */  zoom: 1;
   *display: inline;

@@ -95,7 +95,7 @@ $(function () {
 
 
         /*Assigns drain to a selected/clicked user from the list  */
-        $('#location').on('click', '.btnassing', function () {
+        $('body').on('click', '#btn_asisign', function () {
             user_id = $(this).attr('data-user-id');
             assignDrain(pos);
             return false;

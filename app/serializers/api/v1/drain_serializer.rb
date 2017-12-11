@@ -4,6 +4,11 @@ attributes :gid, :cleared, :need_help, :address, :waterway, :covered, :depth,
            :height, :surface, :smoothness, :oneway, :lat, :lng, :label, :value,
            :zipcode, :claims_count
 
+has_many :streets, embed: :objects
+has_many :priorities, through: :set_priorities, embed: :objects
+
+
+
 def name
   object.gid
 end
@@ -14,4 +19,5 @@ end
 def value
   object.gid
 end
+
 end

@@ -8,11 +8,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     build_resource
     if resource.save
       sign_in resource
-      render :status => 200,
-             :json => { :success => true,
-                        :info => "Registered",
-                        :data => { :user => resource,
-                                   :auth_token => current_user.authentication_token } }
+      render(json: Api::V1::SessionSerializer.new(current_user, root: 'users').to_json )
     else
       render :status => :unprocessable_entity,
              :json => { :success => false,
