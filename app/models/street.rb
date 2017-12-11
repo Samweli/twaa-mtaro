@@ -3,4 +3,8 @@ class Street < ActiveRecord::Base
    validates_presence_of :street_name, :ward_name
    has_and_belongs_to_many :drains
    has_many :users
+
+  def self.search(search)
+    where("street_name LIKE ?", "%#{search}%")
+  end
 end

@@ -60,10 +60,24 @@ $(function () {
 
         /* searching for  drains */
         $('#address_button').on('click', function () {
-            showSpinner();
-            var address = $('#address').val();
-            refreshKML("address=" + address);
+            console.log('inside search function');
+            var locale = urlParam('locale');
 
+            $.ajax({
+                type: 'GET',
+                url: 'streets',
+                data: {
+                    'commit': $("input[type='submit']", this).val(),
+                    'locale': locale,
+                    'search': $('#search').val()
+                },
+                success: function (msg) {
+                    console.log( msg);
+                    console.log('success')
+                }
+            });
+            return false;
+            showSpinner();
         });
     }
 

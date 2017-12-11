@@ -4,7 +4,7 @@
     = hidden_field_tag :city_state, "Dar es salaam, TZ", :class => 'form-group'
     =# hidden_field_tag :limit, params[:limit] || 40
     =# label_tag :address, t("labels.address"), :id => "address_label"
-    = text_field_tag :address, params[:address], :class => "input-text"
+    = text_field_tag :address, params[:address], :class => "input-text", :data => {:behavior => "autocomplete"}, :local => true
     = submit_tag t("buttons.find"), :id => 'address_button', :class => "default btn-submit pull-right"
 
   / %form.sidebar-form{:action => "#", :method => "get"}

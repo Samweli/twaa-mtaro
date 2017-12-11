@@ -6,7 +6,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require plugins/jquery-ui/jquery-ui
+//= require plugins/jquery.browser
+//= require plugins/leaflet-omnivore
+//= require plugins/notify.min
+//= require plugins/leaflet
+//= require plugins/leaflet-src
+//= require plugins/omnivore
 //= require social-share-button
-//= require shared
-//= require osm_map
+//= require custom/shared.js.erb
+//= require custom/osm_map.js.erb
 //= require_tree .
