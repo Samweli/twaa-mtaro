@@ -64,11 +64,15 @@ end
 
 if ENV["roles"]
   # seeding roles
+  Role.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('roles')
+
   roles = [
 
       "citizen",
       "veo",
       "weo",
+      "meo",
       "community_member"
   ]
   5.times do |key|
