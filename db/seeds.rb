@@ -65,7 +65,8 @@ end
 if ENV["roles"]
   # seeding roles
   Role.destroy_all
-  Role.reset_pk_sequence
+  ActiveRecord::Base.connection.reset_pk_sequence!('roles')
+
   roles = [
 
       "citizen",
