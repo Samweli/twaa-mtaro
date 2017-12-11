@@ -4,6 +4,7 @@ ruby "2.2.3"
 gem 'rails', '~> 3.2.13'
 
 gem 'active_model_serializers', '0.9.2'
+gem 'activerecord-reset-pk-sequence'
 gem 'arel'
 gem 'browser'
 gem 'devise', '2.2.2'

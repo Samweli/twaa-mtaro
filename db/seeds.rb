@@ -64,11 +64,14 @@ end
 
 if ENV["roles"]
   # seeding roles
+  Role.destroy_all
+  Role.reset_pk_sequence
   roles = [
 
       "citizen",
       "veo",
       "weo",
+      "meo",
       "community_member"
   ]
   5.times do |key|
