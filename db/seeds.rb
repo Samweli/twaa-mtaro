@@ -1,28 +1,63 @@
 if ENV["streets"]
+
+  Municipal.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('municipals')
+
+  municipals = {}
+
+  municipals['kinondoni'] = { municipal_name: 'Kinondoni', city_name: 'Dar es salaam',
+                          coordinates: [-6.799429907878084, 39.265130886060518]}
+
+
+  municipals.each do |key, municipal|
+    Municipal.create(
+        municipal_name: municipal[:municipal_name],
+        city_name: municipal[:city_name],
+        lat: municipal[:coordinates][0],
+        lng: municipal[:coordinates][1]
+    )
+  end
+  p "created #{Municipal.count} municipals"
+
+  Ward.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('wards')
+
+  wards = {}
+
+  wards['hananasifu'] = { ward_name: 'Hananasifu', municipal_id: 1,
+                            coordinates: [-6.799429907878084, 39.265130886060518]}
+
+
+  wards.each do |key, ward|
+    Ward.create(
+        ward_name: ward[:ward_name],
+        municipal_id: ward[:municipal_id],
+        lat: ward[:coordinates][0],
+        lng: ward[:coordinates][1]
+    )
+  end
+  p "created #{Ward.count} wards"
+
+
   Street.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('streets')
 
   streets = {}
 
-  streets['hananasifu'] = {street_name: 'hananasifu', ward_name: 'Hananasifu',
-                           district: 'Kinondoni', city_name: 'Dar es salaam',
+  streets['hananasifu'] = {street_name: 'hananasifu', ward_id: 1,
                            coordinates: [-6.799429907878084, 39.265130886060518]}
-  streets['mkunguni_a'] = {street_name: 'Mkunguni A', ward_name: 'Hananasifu',
-                           district: 'Kinondoni', city_name: 'Dar es salaam',
+  streets['mkunguni_a'] = {street_name: 'Mkunguni A', ward_id: 1,
                            coordinates: [-6.796600784727144, 39.267133521736113]}
-  streets['mkunguni_b'] = {street_name: 'Mkunguni B', ward_name: 'Hananasifu',
-                           district: 'Kinondoni', city_name: 'Dar es salaam',
+  streets['mkunguni_b'] = {street_name: 'Mkunguni B', ward_id: 1,
                            coordinates: [-6.792270587998448, 39.271825132477105]}
-  streets['kisutu'] = {street_name: 'Kisutu', ward_name: 'Hananasifu',
-                       district: 'Kinondoni', city_name: 'Dar es salaam',
+  streets['kisutu'] = {street_name: 'Kisutu', ward_id: 1,
                        coordinates: [-6.789987652323617, 39.266577246148536]}
 
 
   streets.each do |key, street|
     Street.create(
         street_name: street[:street_name],
-        ward_name: street[:ward_name],
-        municipal_name: street[:district],
-        city_name: street[:city_name],
+        ward_id: street[:ward_id],
         lat: street[:coordinates][0],
         lng: street[:coordinates][1]
     )
@@ -30,26 +65,12 @@ if ENV["streets"]
   p "created #{Street.count} streets"
 end
 
-if ENV["users"]
-# Users
-  3.times do |n|
-    first_name = Faker::Name.name
-    last_name = Faker::Name.name
-    email = "example-#{n+1}@twaamtaro.org"
-    sms_number = "07123456#{n+1}"
-    password = "password"
-    User.create!(first_name: first_name,
-                 email: email,
-                 sms_number: sms_number,
-                 last_name: last_name,
-                 street_id: 1,
-                 password: "password")
-  end
-  p "created #{User.count} users"
-end
+
 
 if ENV["need_help_categories"]
   # need help categories
+  NeedHelpCategory.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('need_help_categories')
   categories = [
       "Vifaa Vinahitajika",
       "Mtaro Unahitaji Marekebisho",
@@ -83,6 +104,8 @@ end
 
 if ENV["priorities"]
   # seeding priorities
+  Priority.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!('priorities')
   priorities = [
       "flood prone"
   ]

@@ -1,10 +1,7 @@
 class Street < ActiveRecord::Base
-   attr_accessible :street_name, :ward_name, :municipal_name, :city_name, :lat, :lng, :id
-   validates_presence_of :street_name, :ward_name
+   attr_accessible :street_name, :ward_id, :lat, :lng, :id
+   validates_presence_of :street_name
    has_and_belongs_to_many :drains
    has_many :users
 
-  def self.search(search)
-    where("street_name LIKE ?", "%#{search}%")
-  end
 end
