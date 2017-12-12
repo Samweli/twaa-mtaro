@@ -1,0 +1,21 @@
+%h1 Listing wards
+
+%table
+  %tr
+    %th Ward name
+    %th Municipal
+    %th
+    %th
+    %th
+
+  - @wards.each do |ward|
+    %tr
+      %td= ward.ward_name
+      %td= ward.municipal
+      %td= link_to 'Show', ward
+      %td= link_to 'Edit', edit_ward_path(ward)
+      %td= link_to 'Destroy', ward, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Ward', new_ward_path

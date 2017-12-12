@@ -1,4 +1,7 @@
 AdoptADrain::Application.routes.draw do
+
+  resources :wards
+  resources :municipals
   resources :need_help_categories
   resources :need_helps
   resources :authentications
