@@ -10,6 +10,12 @@ class Api::V1::MunicipalsController < Api::V1::BaseController
     end
   end
 
+  def wards
+    wards = Ward.find_all_by_municipal_id(params[:id])
+    render json: wards, root: 'wards'
+  end
+
+
   # GET /municipals/1
   # GET /municipals/1.json
   def show

@@ -49,18 +49,27 @@ AdoptADrain::Application.routes.draw do
         delete 'sessions' => 'sessions#destroy', :as => 'logout'
       end
 
-      get '/drains/data' => 'drains#data'
-      get '/drains/ranking' => 'drains#ranking'
-      get 'street_drains/:id' => 'drains#street_drains'
       post '/users/role_requests' => 'users#requested_roles'
       post '/users/verify' => 'users#verify_leader'
       post '/users/deny' => 'users#deny'
       post '/users/remind' => 'users#remind'
-      post '/need_helps/status' => 'need_helps#update_status'
       resources :users, only: [:index, :create, :show, :update, :destroy]
+
+      get '/drains/data' => 'drains#data'
+      get '/drains/ranking' => 'drains#ranking'
       resources :drains,only: [:index, :create, :show, :update, :destroy]
+
+      get 'street_drains/:id' => 'drains#street_drains'
       resources :streets,only: [:index, :create, :show, :update, :destroy]
+
+      post '/need_helps/status' => 'need_helps#update_status'
       resources :need_helps,only: [:index, :create, :show, :update, :destroy]
+
+      get 'municipals/:id/wards' => 'municipals#wards'
+      resources :municipals,only: [:index, :create, :show, :update, :destroy]
+
+      get 'wards/:id/streets' => 'wards#streets'
+      resources :wards,only: [:index, :create, :show, :update, :destroy]
 
     end
   end

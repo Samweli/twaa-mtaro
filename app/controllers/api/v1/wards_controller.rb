@@ -10,6 +10,11 @@ class Api::V1::WardsController < Api::V1::BaseController
     end
   end
 
+  def streets
+    streets = Street.find_all_by_ward_id(params[:id])
+    render json: streets, root: 'streets'
+  end
+
   # GET /wards/1
   # GET /wards/1.json
   def show
