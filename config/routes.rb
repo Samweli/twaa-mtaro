@@ -62,7 +62,9 @@ AdoptADrain::Application.routes.draw do
       get 'street_drains/:id' => 'drains#street_drains'
       resources :streets,only: [:index, :create, :show, :update, :destroy]
 
+
       post '/need_helps/status' => 'need_helps#update_status'
+      post '/need_helps/search' => 'need_helps#search'
       resources :need_helps,only: [:index, :create, :show, :update, :destroy]
 
       get 'municipals/:id/wards' => 'municipals#wards'

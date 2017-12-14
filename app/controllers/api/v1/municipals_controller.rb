@@ -4,10 +4,7 @@ class Api::V1::MunicipalsController < Api::V1::BaseController
   def index
     @municipals = Municipal.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @municipals }
-    end
+	render json: @municipals
   end
 
   def wards
