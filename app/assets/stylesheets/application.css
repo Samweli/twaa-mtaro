@@ -347,7 +347,6 @@ ul, menu, dir {
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
-    -webkit-padding-start: 40px;
 }
 li{
   list-style-type: disc;
@@ -359,18 +358,17 @@ ul, menu, dir {
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
-    -webkit-padding-start: 40px;
 }
 li{
   list-style-type: disc;
 }
 
-ul.horizontal_items,ul#profile {
+ul.horizontal_items,ul.horizontal_item,ul#profile {
     padding: 0;
     margin: 5px 0 0 0;
     clear: both;
 }
-ul.horizontal_items.font_bold,ul#profile{
+ul.horizontal_items.font_bold,ul.horizontal_item.font_bold,ul#profile{
   font-size: 14px;
 }
 
@@ -383,8 +381,17 @@ ul.horizontal_items > li,ul#profile {
 */  zoom: 1;
   *display: inline;
 }
+ul.horizontal_item > li{
+ list-style-type: none;
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  padding: 0;
+ zoom: 1;
+  *display: inline;
+}
 
-ul.horizontal_items > li label,ul#profile > li label {
+ul.horizontal_items > li label,ul#profile > li label,
+ul.horizontal_item > li label{
     display: inline-block;
     width: 140px;
     zoom: 1;
@@ -392,8 +399,12 @@ ul.horizontal_items > li label,ul#profile > li label {
     font-size: 13px;
 }
 
-#sidebar_content ul.horizontal_items > li label, ul#profile > li label  {
+#sidebar_content ul.horizontal_items > li label
+,ul#profile > li label  {
   width: 85px;
+  
+}
+ul.horizontal_item > li label{
   font-size: 13px;
   color: #888;
 }
@@ -408,7 +419,11 @@ ul.horizontal_items > li label,ul#profile > li label {
 .horizontal_items input[type="text"],
 .horizontal_items input[type="password"],
 .horizontal_items textarea,
-.horizontal_items select {
+.horizontal_items select,
+.horizontal_item input[type="text"],
+.horizontal_item input[type="password"],
+.horizontal_item textarea,
+.horizontal_item select  {
     width: 200px !important;
 }
 
@@ -615,7 +630,6 @@ ul.actions_menu li:hover {
     font: 13px/18px Helvetica Neue, Helvetica, Arial, sans-serif !important;
     margin: 0;
     padding: 5px;
-    width: 360px;
 }
 
 form.wide label {
@@ -639,7 +653,7 @@ form input[type="submit"] {
     background-color: #337ab7;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid #469df5;
     display: inline-block;
     color: #ffffff;
