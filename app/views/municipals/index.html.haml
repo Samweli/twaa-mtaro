@@ -1,0 +1,21 @@
+%h1 Listing municipals
+
+%table
+  %tr
+    %th Municipal name
+    %th City name
+    %th
+    %th
+    %th
+
+  - @municipals.each do |municipal|
+    %tr
+      %td= municipal.municipal_name
+      %td= municipal.city_name
+      %td= link_to 'Show', municipal
+      %td= link_to 'Edit', edit_municipal_path(municipal)
+      %td= link_to 'Destroy', municipal, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Municipal', new_municipal_path

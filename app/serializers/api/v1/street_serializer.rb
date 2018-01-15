@@ -1,7 +1,6 @@
 class Api::V1::StreetSerializer < Api::V1::BaseSerializer
 
-  attributes :street_name, :ward_name, :municipal_name,
-             :city_name, :lat, :lng, :name, :label, :value
+  attributes :street_name, :ward_id, :lat, :lng, :name, :label, :value
 
   def name
     object.street_name

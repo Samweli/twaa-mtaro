@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Municipal name:
+  = @municipal.municipal_name
+%p
+  %b City name:
+  = @municipal.city_name
+
+= link_to 'Edit', edit_municipal_path(@municipal)
+\|
+= link_to 'Back', municipals_path
