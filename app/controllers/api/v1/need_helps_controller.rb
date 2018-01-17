@@ -32,7 +32,7 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
   end
 
   def update_status
-    NeedHelp.status(params[:need_help_id], params[:status])
+    NeedHelp.status(params[:need_help_id], params[:status], params[:description])
     render :json => {:success => true}
   end
 

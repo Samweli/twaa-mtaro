@@ -8,15 +8,15 @@ class NeedHelp < ActiveRecord::Base
   belongs_to :user
   belongs_to :need_help_category
 
-  def self.status(need_help_id, status)
+  def self.status(need_help_id, status, description)
     need_help = NeedHelp.find(need_help_id)
     need_help.update_attributes(:status => status)
     updatated_at = NeedHelp.find(need_help_id).updated_at
     if (status == "pending")
-      need_help.update_attributes(:pending => updatated_at)
+      need_help.update_attributes(:pending => updatated_at, :pending_description => description)
 
     elsif (status == "resolved")
-      need_help.update_attributes(:resolved => updatated_at)
+      need_help.update_attributes(:resolved => updatated_at, :resolved_description => description)
     end
   end
 end
