@@ -1,8 +1,9 @@
 class NeedHelp < ActiveRecord::Base
   acts_as_paranoid
-  attr_accessible :gid, :help_needed, :user_id,:need_help_category_id, :status,
-                  :pending, :resolved
-  validates_presence_of :gid, :user_id,:need_help_category_id
+  attr_accessible :gid, :help_needed, :user_id, :need_help_category_id, :status,
+                  :pending, :resolved, :pending_description,
+                  :resolved_description
+  validates_presence_of :gid, :user_id, :need_help_category_id
   belongs_to :drain, :class_name => 'Drain', :foreign_key => "gid"
   belongs_to :user
   belongs_to :need_help_category
