@@ -4,6 +4,7 @@ class AddStatusDescriptionsToNeedHelps < ActiveRecord::Migration
       t.string :pending_description
       t.string :resolved_description
     end
+    change_column :need_helps, :status, :string, :default => 'submitted'
   end
 
   def down
