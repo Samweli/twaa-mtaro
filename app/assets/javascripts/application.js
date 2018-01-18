@@ -16,4 +16,5 @@
 //= require social-share-button
 //= require custom/shared.js.erb
 //= require custom/osm_map.js.erb
+//= require custom/users.js.erb
 //= require_tree .
