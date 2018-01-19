@@ -14,9 +14,15 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
   def search
 
     if(params[:status])
-      results = NeedHelp.joins({user: [street: [{ward: :municipal}]]}, :need_help_category)
-                    .where( ['municipal_name = ? OR ward_name = ? OR street_name = ? AND status = ?',
-                             "#{params[:municipal_name]}","#{params[:ward_name]}","#{params[:street_name]}","#{params[:status]}"])
+      if(params[:municipal_name] or params[:ward_name] or params[:street_name])
+        results = NeedHelp.joins({user: [street: [{ward: :municipal}]]}, :need_help_category)
+                      .where( ['municipal_name = ? OR ward_name = ? OR street_name = ? AND status = ?',
+                               "#{params[:municipal_name]}","#{params[:ward_name]}","#{params[:street_name]}","#{params[:status]}"])
+      else
+        results = NeedHelp.joins({user: [street: [{ward: :municipal}]]}, :need_help_category)
+                      .where( ['municipal_name = ? OR ward_name = ? OR street_name = ? OR status = ?',
+                               "#{params[:municipal_name]}","#{params[:ward_name]}","#{params[:street_name]}","#{params[:status]}"])
+      end
     else
       results = NeedHelp.joins({user: [street: [{ward: :municipal}]]}, :need_help_category)
                     .where( ['municipal_name = ? OR ward_name = ? OR street_name = ? OR status = ?',
