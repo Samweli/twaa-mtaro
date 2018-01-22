@@ -4,7 +4,7 @@
     %h2= t("titles.sign_in")
   
     .signin
-      %ul.horizontal_items
+      %ul#signin_page
         %li
           = f.label :sms_number, t("labels.sms_number")
           = f.text_field :sms_number, :class => 'user_sms_number'

@@ -2,4 +2,4 @@
 	%p
 		= t("buttons.request_account")
 		= f.collection_select(:role_id, Role.all, :id, :name)
-	= submit_tag t("buttons.account_submit"), :id => 'roles_button', :class => "btn btn-submit"
+	= submit_tag t("buttons.account_submit"), :id => 'roles_button', :class => "btn btn-submit pull-left"
