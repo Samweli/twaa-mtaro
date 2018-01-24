@@ -4,7 +4,11 @@ module DrainsHelper
       if s.cleared
         "#cleared"
       else
-        "#unclear"
+        if not s.priorities.nil?
+          "#priority"
+        else
+          "#unclear"
+        end
       end
     # elsif s.claims_count > 0
     #   "#adopted"
@@ -21,7 +25,7 @@ module DrainsHelper
   
   end
 
-  def added(street_id,gid)
+  def added(street_id, gid)
     drain = Drain.find_by_gid_and_street_id(gid,street_id)
     if drain
       return true

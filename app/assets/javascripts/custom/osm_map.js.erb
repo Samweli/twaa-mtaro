@@ -131,11 +131,11 @@ $(function () {
             if (locale == 'sw') {
                 colour_map = {
                     'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
-                    'Haijulikani': "#CB7D50"
+                    'Haijulikani': "#CB7D50", 'Korofi': "#d43f3a"
                 }
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
+                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani', "Korofi"],
                     labels = [];
                 // Adding legend header
                 div.innerHTML += '<h3 > Alama </h3>';
@@ -143,11 +143,11 @@ $(function () {
             } else {
                 colour_map = {
                     'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
-                    'Unknown': "#CB7D50"
+                    'Unknown': "#CB7D50", 'Flood prone': "#d43f3a"
                 }
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
+                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown', 'Flood prone'],
 
                     labels = [];
                 // Adding legend header
@@ -267,7 +267,9 @@ $(function () {
                     case '#cleared':
                         return {color: "green", opacity: 0.9, weight: 2.5};
                     case '#unknown':
-                        return {color: "#CB7D50", opacity: 0.9, weight: 2.1}
+                        return {color: "#CB7D50", opacity: 0.9, weight: 2.1};
+                    case '#priority':
+                        return {color: "#d43f3a", opacity: 0.9, weight: 2.1};
                 }
             }
         });

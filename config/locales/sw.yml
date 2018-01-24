@@ -32,6 +32,7 @@ sw:
     all: "%{count} Yote"
     adopted: "%{count} Imetwaaliwa"
     not_adopted: "%{count} Haijatwaaliwa"
+    flood_prone: "%{count} Korofi"
   captions:
     add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"

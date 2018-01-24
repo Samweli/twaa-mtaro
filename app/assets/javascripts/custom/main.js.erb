@@ -57,6 +57,12 @@ $(function () {
             $('.navbar-collapse').collapse('hide')
         });
 
+        $('#flood_prone').on('click', function () {
+            showSpinner();
+            refreshKML("priority");
+            $('.navbar-collapse').collapse('hide')
+        });
+
 
         /* searching for  drains */
         $('#address_button').on('click', function () {

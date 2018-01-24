@@ -30,6 +30,7 @@ en:
     uncleaned: "%{count} Dirty"
     need_help: "%{count} Needs help"
     unknown: "%{count} Unknown"
+    flood_prone: "%{count} Flood prone"
     all: "%{count} All"
     adopted: "%{count} Adopted"
     not_adopted: "%{count} Not Adopted"

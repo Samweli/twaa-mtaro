@@ -364,9 +364,10 @@ $(function () {
                 success: function () {
                     $('.sign_links').remove();
                     updateSidebar();
-                    fetchDrainInfo();
-                    window.location.href = window.location.hostname;
-                    window.location.reload();
+                    map.closePopup();
+                    // fetchDrainInfo();
+                    // window.location.href = window.location.hostname;
+                    // window.location.reload();
 
                 }
             });

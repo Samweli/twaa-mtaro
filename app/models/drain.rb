@@ -128,6 +128,9 @@ class Drain < ActiveRecord::Base
 
   def self.set_flood_prone(drain_id)
     set_flood_prone = SetPriority.new(:drain_id => drain_id, :priority_id => 1)
+    drain = Drain.find_by_gid(drain_id)
+    drain.update_attribute(:priority, true)
+    drain.save
     set_flood_prone.save
   end
 
