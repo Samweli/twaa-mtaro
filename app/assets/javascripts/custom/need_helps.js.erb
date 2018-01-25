@@ -47,7 +47,9 @@ $(function () {
 
     /*function for creating need help details */
     $('body').on('click', '#drain_help', function (e) {
-
+        console.log('location information');
+        console.log(drainLocation.lat);
+        console.log(drainLocation.lng);
         var locale = urlParam('locale');
         var warning_message_en = 'Are you sure you do not need to add description? ';
         var warning_message_sw = 'Ujaweka maelezo ya msaada, ombi lako litumwe?';
@@ -76,7 +78,9 @@ $(function () {
                     'help_needed': $('#need_help_help_needed').val(),
                     'need_help_category_id': $('#need_help_need_help_category_id').val(),
                     'user_id': $(this).attr('data-moid'),
-                    'gid': id
+                    'gid': id,
+                    'lat': drainLocation.lat,
+                    'long': drainLocation.lng
                 },
                 'locale': locale
             },
