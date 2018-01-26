@@ -142,6 +142,15 @@ class DrainsController < ApplicationController
 
   def set_flood_prone
     Drain.set_flood_prone(params[:drain_id])
+    sms_service = SmsService.new()
+    user = current_user
+    status = t("messages.flood_prone_status")
+    reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
+
+    sms_service.send_sms(
+            reply_street_leader,
+            user.sms_number);
+
     render :json => {:success => true}
   end
 

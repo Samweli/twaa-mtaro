@@ -1,10 +1,9 @@
 class SmsService
   def initialize()
   	@account_sid = ENV['SMS_ACCOUNT_SID']
-	@auth_token = ENV['SMS_AUTH_TOKEN']
+	  @auth_token = ENV['SMS_AUTH_TOKEN']
     @from_number = ENV['SMS_FROM_PHONE_NUMBER']
-	@client = Twilio::REST::Client.new @account_sid, @auth_token
-
+	  @client = Twilio::REST::Client.new @account_sid, @auth_token
   end
 
   def send_sms(content, tonumber)

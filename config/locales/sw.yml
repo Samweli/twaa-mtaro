@@ -82,6 +82,7 @@ sw:
     status: "Hali"
     actions: "Ondoa"
     site: "http://twaamtaro.org"
+    priority: "Huu ni mtaro korofi"
   errors:
     error: "Drain"
     auth_failed: "Namba ya mtumiaji or nenosiri sio sahihi."
@@ -139,6 +140,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "msafi"
     dirt_status: "sio msafi"
+    flood_prone_status: "korofi"
     drain_share: "shirikisha"
     drain_cleaned: "Asante, kwa kutoa taarifa kuwa mtaro ni msafi."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."

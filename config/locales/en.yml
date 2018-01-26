@@ -83,6 +83,7 @@ en:
     actions: "Remove"
     unknown: "Unknown"
     site: "http://twaamtaro.org"
+    priority: "This drain is flood prone"
   errors:
     error: "Drain"
     auth_failed: "Phone number or password is incorrect."
@@ -138,6 +139,7 @@ en:
   messages:
     clear_status: "clean"
     dirt_status: "not clean"
+    flood_prone_status: "flood prone"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
     drain_share: "share"
