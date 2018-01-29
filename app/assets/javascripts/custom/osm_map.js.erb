@@ -5,14 +5,14 @@ add here all functions that depend on map
 */
 
 
-  // global variables
-  var popup;
-  var drain_pos;
-  var kmlLayer;
-  var drainLocation;
-  var activeObjectId;
-  var selected_drain;
-  var map;
+// global variables
+var popup;
+var drain_pos;
+var kmlLayer;
+var drainLocation;
+var activeObjectId;
+var selected_drain;
+var map;
 
 
 $(function () {
@@ -78,7 +78,7 @@ $(function () {
 
     /* Creating map*/
 
-     map = new L.Map('map_canvas', mapOptions);
+    map = new L.Map('map_canvas', mapOptions);
 
     // Add basemaps and their menu
     var baseMaps = {
@@ -176,17 +176,9 @@ $(function () {
     }
 
 
-
-
-
-
     /*
     add all shared fuctions that depend on map below here
     * */
-
-
-
-
 
 
     /*gets the instance of map object */
@@ -285,10 +277,18 @@ $(function () {
             url = 'drains.kml?locale=' + locale + '&lat=' + c.lat + '&lng=' + c.lng + '&r=' + (new Date()).valueOf();
         }
         showSpinner();
+        /* Track progress of addition of layers to the map */
+        // progress_percentage = 0;
+        // map.on('layeradd', function(e){
+        //     console.log('on load map' +progress_percentage);
+        //     progress_percentage +=  ((1/8865)* 100);
+        //     $('.progress-bar').attr('aria-valuenow', progress_percentage);
+        //     $('#progress-value').text(progress_percentage +"%");
+        // });
 
         /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer)
-            .on('onload', function(e){
+            .on('onload', function (e) {
             })
             .on('ready', function () {
                 hideSpinner();
@@ -332,11 +332,9 @@ $(function () {
     }
 
 
-
     /*executing functions*/
     refreshKML("all");
     addLegend();
-
 
 
 }); /* end of function*/
