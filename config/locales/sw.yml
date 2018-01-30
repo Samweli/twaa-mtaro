@@ -90,6 +90,7 @@ sw:
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
+    sms_not_sent: "Meseji haijaenda, namba ya mtumiaji inaweza kuwa imekosewa"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
     need_help_category: "Aina ya Msaada:"
@@ -174,6 +175,7 @@ sw:
     yes_value: "Ndio"
     no_value: "Hapana"
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
+    success: "Imefanikiwa"
   tables:
     need_help: "Msaada"
     need_help_details:

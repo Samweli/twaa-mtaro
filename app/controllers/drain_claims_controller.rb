@@ -38,7 +38,7 @@ class DrainClaimsController < ApplicationController
     end
     user = User.find_by_id(params[:user_id])
 
-    sms_service.send_sms(
+    message = sms_service.send_sms(
       msg, 
       user.sms_number);
 
@@ -61,9 +61,6 @@ class DrainClaimsController < ApplicationController
     else
       @claim_owner =nil
     end
-
-
-
 
   end
 

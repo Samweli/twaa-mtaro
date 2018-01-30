@@ -22,6 +22,8 @@ $(function () {
     * */
 
     window.assignDrain = function (pos) {
+        console.log("assign drain called");
+        
         var locale = urlParam('locale');
         var success_message_en = 'You have successfully assigned this drain! ';
         var success_message_sw = 'Umefanikiwa kugawia huu mtaro! ';
@@ -41,7 +43,8 @@ $(function () {
                 alert(data.errors);
             },
             success: function (data) {
-                refreshKML("all");
+                // No need to refresh, Improving performance
+                // refreshKML("all");
                 fetchDrainInfo(activeObjectId, pos);
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {

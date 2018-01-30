@@ -6,19 +6,27 @@ class SmsService
 	  @client = Twilio::REST::Client.new @account_sid, @auth_token
   end
 
+
+  # Send sms to the specified number
   def send_sms(content, tonumber)
-	# set up a client to talk to the Twilio REST API
 	tonumber = format(tonumber);
-	
-	@client.messages.create({
+	begin
+    @client.messages.create({
 	  :from => @from_number,
 	  :to => tonumber,
 	  :body => content,
-	})
+    })
+  rescue Twilio::REST::RequestError => e
+    return I18n.t("errors.sms_not_sent")
+  else
+    return I18n.t("notice.success")
   end
 
+  end
+
+  
+  # Loop over messages and print out a property for each one
   def new_sms_updates(content, tonumber)
-	# Loop over messages and print out a property for each one
 	@client.messages.list.each do |message|
 	Rails.logger.debug(message.body)
 	end

@@ -45,7 +45,8 @@ $(function () {
 
                     },
                     success: function (data) {
-                        refreshKML("all");
+                        // No need to refresh, improving perfomance, 
+                        // refreshKML("all");
                         fetchDrainInfo(activeObjectId, drain_pos);
                     }
                 });
@@ -85,7 +86,8 @@ $(function () {
 
                     },
                     success: function (data) {
-                        refreshKML("all");
+                        // No need to refresh, improving perfomance, 
+                        // refreshKML("all");
                         fetchDrainInfo(activeObjectId, pos);
                     }
                 });
@@ -93,14 +95,7 @@ $(function () {
             return false;
         });
 
-
-        /*Assigns drain to a selected/clicked user from the list  */
-        $('body').on('click', '#btn_asisign', function () {
-            user_id = $(this).attr('data-user-id');
-            assignDrain(pos);
-            return false;
-        });
-
+       
 
         /* displays a list of users who can made adopt a selected drain */
         $('body').on('click', '#add_claim, #assign', function () {
@@ -115,15 +110,28 @@ $(function () {
                 success: function (msg) {
                     createPopup(msg, drainLocation);
 
+                    // bind events to the received html 
+                    bind_assign(pos);
+
                 }
             });
             return false;
         });
 
 
+    }
+    
+     /* Function assigns drain to a selected/clicked user from the list 
 
+     */
+    window.bind_assign = function(pos){
+    
+        $('body').on('click', '.btnassing', function (e) {
+            user_id = $(this).attr('data-user-id');
+            assignDrain(pos);
 
-
+            return false;
+        });
 
     }
 
