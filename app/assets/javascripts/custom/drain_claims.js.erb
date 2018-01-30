@@ -13,7 +13,7 @@ $(function () {
                 'locale': locale
             },
             success: function (msg) {
-                createPopup(msg, drainLocation);
+                updatePopup(msg, drainLocation);
             }
         });
         return false;
@@ -47,7 +47,7 @@ $(function () {
                     success: function (data) {
                         // No need to refresh, improving perfomance, 
                         // refreshKML("all");
-                        fetchDrainInfo(activeObjectId, drain_pos);
+                        fetchDrainInfo(activeObjectId, drain_pos, "update");
                     }
                 });
             }
@@ -88,7 +88,7 @@ $(function () {
                     success: function (data) {
                         // No need to refresh, improving perfomance, 
                         // refreshKML("all");
-                        fetchDrainInfo(activeObjectId, pos);
+                        fetchDrainInfo(activeObjectId, pos, "update");
                     }
                 });
             }
@@ -99,6 +99,7 @@ $(function () {
 
         /* displays a list of users who can made adopt a selected drain */
         $('body').on('click', '#add_claim, #assign', function () {
+            console.log("adopt called")
             var locale = urlParam('locale');
 
             $.ajax({
@@ -108,7 +109,7 @@ $(function () {
                     'locale': locale
                 },
                 success: function (msg) {
-                    createPopup(msg, drainLocation);
+                    updatePopup(msg, drainLocation);
 
                     // bind events to the received html 
                     bind_assign(pos);

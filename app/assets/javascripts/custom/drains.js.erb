@@ -13,7 +13,7 @@ $(function () {
             drain_pos = map.getCenter();
         }
         showSpinner();
-        fetchDrainInfo(drain_gid, drain_pos);
+        fetchDrainInfo(drain_gid, drain_pos, "update");
 
     });
 
@@ -22,8 +22,7 @@ $(function () {
     * */
 
     window.assignDrain = function (pos) {
-        console.log("assign drain called");
-        
+
         var locale = urlParam('locale');
         var success_message_en = 'You have successfully assigned this drain! ';
         var success_message_sw = 'Umefanikiwa kugawia huu mtaro! ';
@@ -45,7 +44,7 @@ $(function () {
             success: function (data) {
                 // No need to refresh, Improving performance
                 // refreshKML("all");
-                fetchDrainInfo(activeObjectId, pos);
+                fetchDrainInfo(activeObjectId, pos, "update");
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {
                     html: "<div>" +
@@ -110,7 +109,7 @@ $(function () {
             },
             success: function (data) {
                 refreshKML("all");
-                fetchDrainInfo(id, drain_pos);
+                fetchDrainInfo(id, drain_pos, "update");
             }
         });
         return false;
@@ -141,7 +140,7 @@ $(function () {
             success: function (data) {
 
                 refreshKML("all");
-                fetchDrainInfo(id, drain_pos);
+                fetchDrainInfo(id, drain_pos, "update");
 
             }
         });

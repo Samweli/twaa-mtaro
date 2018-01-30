@@ -10,6 +10,7 @@ class SmsService
   # Send sms to the specified number
   def send_sms(content, tonumber)
 	tonumber = format(tonumber);
+
 	begin
     @client.messages.create({
 	  :from => @from_number,
@@ -17,10 +18,12 @@ class SmsService
 	  :body => content,
     })
   rescue Twilio::REST::RequestError => e
-    return I18n.t("errors.sms_not_sent")
+    message =  I18n.t("errors.sms_not_sent")
   else
-    return I18n.t("notice.success")
+    message = I18n.t("notice.success")
   end
+
+  return message
 
   end
 

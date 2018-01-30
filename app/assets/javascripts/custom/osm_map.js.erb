@@ -196,7 +196,7 @@ $(function () {
     }
 
 
-    /* popup Window for displaying details of Mtaro */
+    /* popup window for displaying details of drain */
     window.createPopup = function (msg, pos) {
         if (pos == null) {
             pos = map.getCenter();
@@ -209,18 +209,32 @@ $(function () {
         bind(pos);
     }
 
+    /* replacing given popup window */
+    window.updatePopup = function (msg, pos){
+        if (pos == null) {
+            pos = map.getCenter();
+
+        }
+        popup = L.popup({maxWidth: 960})
+            .setLatLng(pos)
+            .setContent(msg)
+            .openOn(map);
+    }
+
+
 
     /*
     *  fetches and displays information associated with specified drain
     * */
 
-    window.fetchDrainInfo = function (gid, pos) {
+    window.fetchDrainInfo = function (gid, pos, action) {
 
         if (gid == undefined) {
             // do nothing
             map.closePopup();
             return false;
         }
+        showSpinner();
         var locale = urlParam('locale');
 
         $.ajax({
@@ -236,7 +250,11 @@ $(function () {
                 // Updating variable for info window position
                 drain_pos = pos;
 
-                createPopup(data, pos);
+                if(action == "create"){
+                   createPopup(data, pos);
+                }else{
+                   updatePopup(data, pos); 
+                }
                 if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
                     $('#abandon_link').find('.hide_column').hide();
                 }
@@ -337,7 +355,7 @@ $(function () {
             activeObjectId = mtaro.description;
             drainLocation = e.latlng;
             // Fetching drain info
-            fetchDrainInfo(mtaro.description, drainLocation);
+            fetchDrainInfo(mtaro.description, drainLocation, "create");
         });
 
         /*add KML layer to map*/

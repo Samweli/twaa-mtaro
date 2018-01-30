@@ -9,7 +9,7 @@ class DrainClaimsController < ApplicationController
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
             # use id of drain as gid in drain claims table
-    if (@claim = DrainClaim.find_or_initialize_by_gid_and_user_id(@drain.gid, params[:user_id])).new_record?
+    if (@claim = DrainClaim.find_or_initialize_by_gid_user_id_and_shoveled(@drain.gid, params[:user_id], @drain.try(:cleared))).new_record?
       if @drain.lat.nil?
         gc = Address.geocode("#{@drain.address}, Dar es salaam")
         if gc && gc.success
