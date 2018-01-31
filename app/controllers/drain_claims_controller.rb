@@ -60,7 +60,6 @@ class DrainClaimsController < ApplicationController
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
       if !(user.has_role(2))
-        unless claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
 
@@ -73,8 +72,6 @@ class DrainClaimsController < ApplicationController
           sms_service.send_sms(
               notify_user,
               user.sms_number)
-        end
-
       else
         if claim
           claim.update_attribute(:shoveled, shoveled)
