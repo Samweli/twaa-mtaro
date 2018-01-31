@@ -69,8 +69,6 @@ $(function () {
                     shoveled = true;
                 }
 
-                console.log('claim id: ' + $(this).attr('data-claim'));
-
                 $.ajax({
                     type: 'POST',
                     url: '/drain_claims/' + $(this).attr('data-claim'),

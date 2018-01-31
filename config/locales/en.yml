@@ -197,6 +197,7 @@ en:
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
     need_help: "Describe The Help You Need"
+    need_help_edit: "Edit need help request"
     ofline: "of %{organization}"
     thank_you: "Thank you for adopting this %{thing}!"
     register_now: "Register Now!"

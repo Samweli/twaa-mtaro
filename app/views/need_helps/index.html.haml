@@ -15,7 +15,7 @@
       %td= need_help.user.street.street_name
       %td= need_help.user.fullname
       %td
-        %button
+        %button{:id => "needhelp_edit_form", :data => {:needhelp => need_help.id}}
           = t("tables.need_help_details.edit")
       %td
         %button{:id => "delete_needhelp", :data => {:needhelp => need_help.id}}

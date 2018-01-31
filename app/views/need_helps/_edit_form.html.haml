@@ -1,0 +1,20 @@
+#need_help_edit_form
+  = form_for  @need_help do |f|
+    - if @need_help.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@need_help.errors.count, "error")} prohibited this need_help from being saved:"
+        %ul
+          - @need_help.errors.full_messages.each do |msg|
+            %li= msg
+    .field
+      = f.label :need_help_category_id, t("forms.need_help_category")
+      = f.collection_select(:need_help_category_id, NeedHelpCategory.all, :id, :category_name)
+    .field
+      = f.text_area :help_needed,:size => "60x6", placeholder: t("forms.need_help")
+    .actions
+      %ul.horizontal_items.font_12
+        %li
+          = f.submit t("forms.need_help_submit"),
+           :class => "btn btn-help pull-right",
+           :id => "edit_need_help",
+            :data => {:needhelp=> @need_help.id, :moid => current_user.id}

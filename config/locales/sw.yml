@@ -209,6 +209,7 @@ sw:
     main: "Twaa %{thing}"
     edit_profile: "Hariri wasifu kwenye"
     need_help: "Eleza msaada unaohitaji"
+    need_help_edit: "Fanya marekebisho ya ombi lako"
     ofline: "wa %{organization}"
     thank_you: " Asante kwa kutwaa huu %{thing}!"
     register_now: "Jisajili sasa!"
