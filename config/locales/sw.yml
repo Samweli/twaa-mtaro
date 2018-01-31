@@ -193,6 +193,8 @@ sw:
       leader_name: "Jina la kiongozi wa mtaa"
       street: "Jina la mtaa"
       title: "Maelezo ya misaada/msaada unaohitajika"
+      edit: "Rekebisha"
+      delete: "Futa"
   terms:
     list_one: "Tovuti hii haipo  kwa ajili ya matumizi yoyote ya taarifa  yasiyofaa au yasiyosahihi ,"
     list_two: "Hakuna wajibu wa mtu yeyote kutumia taarifa hizi,"

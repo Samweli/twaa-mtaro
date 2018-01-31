@@ -181,6 +181,8 @@ en:
       leader_name: "Street leader's name"
       street: "Street Name"
       title: "Details For Needed Help"
+      edit: "Edit"
+      delete: "Delete"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"

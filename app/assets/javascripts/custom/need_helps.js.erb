@@ -27,29 +27,52 @@ $(function () {
     $('body').on('click', '#need_help_details', function () {
 
         var locale = urlParam('locale');
+        var gid =  $(this).attr('data-help-details-id');
+
+        showNeedHelpDetails(locale,gid)
+        return false;
+    });
+
+    // deletes a need help request
+    $('body').on('click', '#delete_needhelp', function () {
+        var locale = urlParam('locale');
+        $.ajax({
+            type: 'POST',
+            url: '/need_helps/' + $(this).attr('data-needhelp'),
+            data: {
+                'authenticity_token': AUTH_TOKEN,
+                '_method': 'delete',
+                'locale': locale
+
+            },
+            error: function (jqXHR) {
+            },
+            success: function (data) {
+                showNeedHelpDetails(locale,activeObjectId)
+            }
+        });
+    })
+
+    function showNeedHelpDetails(locale,gid){
+
 
         $.ajax({
             type: 'GET',
             url: 'need_helps',
             data: {
                 'locale': locale,
-                'gid': $(this).attr('data-help-details-id')
+                'gid': gid
             },
             success: function (msg) {
-
                 createPopup(msg, drain_pos);
             }
 
         });
-        return false;
-    });
+    }
 
 
     /*function for creating need help details */
     $('body').on('click', '#drain_help', function (e) {
-        console.log('location information');
-        console.log(drainLocation.lat);
-        console.log(drainLocation.lng);
         var locale = urlParam('locale');
         var warning_message_en = 'Are you sure you do not need to add description? ';
         var warning_message_sw = 'Ujaweka maelezo ya msaada, ombi lako litumwe?';
