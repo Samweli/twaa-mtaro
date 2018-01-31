@@ -198,9 +198,10 @@ $(function () {
 
     /* popup window for displaying details of drain */
     window.createPopup = function (msg, pos) {
+        console.log("create popup called");
+        
         if (pos == null) {
             pos = map.getCenter();
-
         }
         popup = L.popup({maxWidth: 960})
             .setLatLng(pos)
@@ -211,10 +212,11 @@ $(function () {
 
     /* replacing given popup window */
     window.updatePopup = function (msg, pos){
+        console.log("updated popup called");
         if (pos == null) {
             pos = map.getCenter();
-
         }
+        popup = null
         popup = L.popup({maxWidth: 960})
             .setLatLng(pos)
             .setContent(msg)
@@ -222,9 +224,8 @@ $(function () {
     }
 
 
-
     /*
-    *  fetches and displays information associated with specified drain
+    *  Fetches and displays information associated with specified drain
     * */
 
     window.fetchDrainInfo = function (gid, pos, action) {

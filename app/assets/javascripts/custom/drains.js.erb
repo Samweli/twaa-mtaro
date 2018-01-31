@@ -45,6 +45,7 @@ $(function () {
                 // No need to refresh, Improving performance
                 // refreshKML("all");
                 fetchDrainInfo(activeObjectId, pos, "update");
+                
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {
                     html: "<div>" +
@@ -108,7 +109,8 @@ $(function () {
                 hideSpinner();
             },
             success: function (data) {
-                refreshKML("all");
+                // No need to refresh, Improving performance
+                // refreshKML("all");
                 fetchDrainInfo(id, drain_pos, "update");
             }
         });
@@ -138,8 +140,8 @@ $(function () {
 
             },
             success: function (data) {
-
-                refreshKML("all");
+                // No need to refresh, Improving performance
+                // refreshKML("all");
                 fetchDrainInfo(id, drain_pos, "update");
 
             }
@@ -165,15 +167,18 @@ $(function () {
         });
 
     $('body').on('click','#priority', function() {
+        var drain_id = $(this).attr('data-moid');
+
         $.ajax({
             type: 'POST',
             url: '/drains/flood',
             data: {
-                'drain_id': $(this).attr('data-moid')
+                'drain_id': drain_id
             },
             error: function (jqXHR) {
             },
             success: function (data) {
+                fetchDrainInfo(drain_id, drain_pos, "update");
             }
         });
     })

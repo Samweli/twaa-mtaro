@@ -22,41 +22,54 @@ $(function () {
 
     window.bind = function (pos) {
 
+        console.log("called bind");
 
-        /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
-        $('#abandon_link').on('click', '.abdn_link', function () {
-            var locale = urlParam('locale');
-            var message_en = 'Are you sure that you want to abandon this drain?';
-            var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
-            var confirmation_message = locale === 'en' ? message_en : message_sw
-            if (window.confirm(confirmation_message)) {
+        bind_abandon();
+        bind_change_claim();
+        bind_user_adopt(pos);       
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/drain_claims/' + $(this).attr('data-moid'),
-                    data: {
-                        'gid': activeObjectId,
-                        'authenticity_token': AUTH_TOKEN,
-                        '_method': 'delete',
-                        'locale': locale
-                    },
-                    error: function (jqXHR) {
-                        data = $.parseJSON(jqXHR.responseText);
+    }
 
-                    },
-                    success: function (data) {
-                        // No need to refresh, improving perfomance, 
-                        // refreshKML("all");
-                        fetchDrainInfo(activeObjectId, drain_pos, "update");
-                    }
-                });
-            }
+    /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
+        window.bind_abandon = function(pos){
+
+            $('body').on('click', '.abdn_link', function () {
+                console.log("generated click on abnd link");
+                var locale = urlParam('locale');
+                var message_en = 'Are you sure that you want to abandon this drain?';
+                var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
+                var confirmation_message = locale === 'en' ? message_en : message_sw
+                if (window.confirm(confirmation_message)) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/drain_claims/' + $(this).attr('data-moid'),
+                        data: {
+                            'gid': activeObjectId,
+                            'authenticity_token': AUTH_TOKEN,
+                            '_method': 'delete',
+                            'locale': locale
+                        },
+                        error: function (jqXHR) {
+                            data = $.parseJSON(jqXHR.responseText);
+
+                        },
+                        success: function (data) {
+                            // No need to refresh, improving perfomance, 
+                            // refreshKML("all");
+                            fetchDrainInfo(activeObjectId, drain_pos, "update");
+                        }
+                    });
+                }
             return false;
         });
+        }
 
           /* function for users to update status of their claims to clean or unclean */
 
-        $('#abandon_link').on('click', '.chng_link', function () {
+        window.bind_change_claim = function(pos){ 
+            $('body').on('click', '.chng_link', function () {
+                console.log("generated click chang link");
             var locale = urlParam('locale');
             var message_en = 'Are you sure that you want to change status?';
             var message_sw = 'Una thibitisha kubadili hali ya huu mtaro ?';
@@ -94,33 +107,33 @@ $(function () {
             }
             return false;
         });
-
-       
+        }
 
         /* displays a list of users who can made adopt a selected drain */
-        $('body').on('click', '#add_claim, #assign', function () {
-            console.log("adopt called")
-            var locale = urlParam('locale');
+        window.bind_user_adopt = function(pos){
 
-            $.ajax({
-                type: 'GET',
-                url: 'drain_claims/adopt',
-                data: {
-                    'locale': locale
-                },
-                success: function (msg) {
-                    updatePopup(msg, drainLocation);
+            $('body').on('click', '#add_claim, #assign', function () {
+                console.log("adopt called")
+                var locale = urlParam('locale');
 
-                    // bind events to the received html 
-                    bind_assign(pos);
+                $.ajax({
+                    type: 'GET',
+                    url: 'drain_claims/adopt',
+                    data: {
+                        'locale': locale
+                    },
+                    success: function (msg) {
+                        updatePopup(msg, drainLocation);
 
-                }
+                        // bind events to the received html 
+                        bind_assign(pos);
+
+                    }
+                });
+                return false;
             });
-            return false;
-        });
+        }
 
-
-    }
     
      /* Function assigns drain to a selected/clicked user from the list 
 
