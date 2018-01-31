@@ -1,6 +1,9 @@
 # Please maintain alphabetical order
 
 en:
+  activerecord:
+    errors:
+      email: "Email has already been taken"
   buttons:
     abandon: "Abandon this %{thing}"
     adopt: "Adopt!"

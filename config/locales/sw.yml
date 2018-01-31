@@ -1,5 +1,18 @@
 # Please maintain alphabetical order
 sw:
+  activerecord:
+    attributes:
+      user:
+        email: "Barua pepe"
+        sms_number: "Namba ya simu"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+             taken: "imesha tumika tayari"
+            sms_number:
+              taken: "imesha tumika"
   buttons:
     abandon: "kuachana na hii %{thing}"
     adopt: "Twaa!"
@@ -85,6 +98,8 @@ sw:
     error: "Drain"
     auth_failed: "Namba ya mtumiaji or nenosiri sio sahihi."
     drain_notfound: "%{error} haupo "
+    messages:
+      not_saved: "Kuna matatizo yanazuia usajili wako"
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"

@@ -69,7 +69,7 @@
                   = t("buttons.dirty")
               %td.hide_column
                 - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
-                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled))}}
+                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
                     = t("buttons.change_status")
               %td
                 %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.try(:id)}}

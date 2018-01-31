@@ -71,7 +71,7 @@ $(function () {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/drains/' + activeObjectId,
+                    url: '/drain_claims/' + $(this).attr('data-claim'),
                     data: {
                         'gid': activeObjectId,
                         'shoveled': shoveled,
