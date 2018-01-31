@@ -5,14 +5,14 @@ add here all functions that depend on map
 */
 
 
-  // global variables
-  var popup;
-  var drain_pos;
-  var kmlLayer;
-  var drainLocation;
-  var activeObjectId;
-  var selected_drain;
-  var map;
+// global variables
+var popup;
+var drain_pos;
+var kmlLayer;
+var drainLocation;
+var activeObjectId;
+var selected_drain;
+var map;
 
 
 $(function () {
@@ -78,7 +78,7 @@ $(function () {
 
     /* Creating map*/
 
-     map = new L.Map('map_canvas', mapOptions);
+    map = new L.Map('map_canvas', mapOptions);
 
     // Add basemaps and their menu
     var baseMaps = {
@@ -118,7 +118,6 @@ $(function () {
     /*
     Adds Legend on openstreetmp
     * */
-    // Adding Legend
     function addLegend() {
         var legend = L.control({position: 'topright'});
 
@@ -177,17 +176,9 @@ $(function () {
     }
 
 
-
-
-
-
     /*
     add all shared fuctions that depend on map below here
     * */
-
-
-
-
 
 
     /*gets the instance of map object */
@@ -297,10 +288,10 @@ $(function () {
 
         /* Loading KML*/
         kmlLayer = omnivore.kml(url, null, customLayer)
-            .on('onload', function(e){
-                // console.log('on load');
-                // $('.progress-bar').attr('aria-valuenow') == 50;
-                // $('.progress-bar').text("50%");
+            .on('onload', function (e) {
+               // console.log('on load');
+              // $('.progress-bar').attr('aria-valuenow') == 50;
+              // $('.progress-bar').text("50%");
             })
             .on('ready', function () {
                 hideSpinner();
@@ -344,11 +335,9 @@ $(function () {
     }
 
 
-
     /*executing functions*/
     refreshKML("all");
     addLegend();
-
 
 
 }); /* end of function*/

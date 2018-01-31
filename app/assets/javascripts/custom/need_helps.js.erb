@@ -47,7 +47,9 @@ $(function () {
 
     /*function for creating need help details */
     $('body').on('click', '#drain_help', function (e) {
-
+        console.log('location information');
+        console.log(drainLocation.lat);
+        console.log(drainLocation.lng);
         var locale = urlParam('locale');
         var warning_message_en = 'Are you sure you do not need to add description? ';
         var warning_message_sw = 'Ujaweka maelezo ya msaada, ombi lako litumwe?';
@@ -76,7 +78,9 @@ $(function () {
                     'help_needed': $('#need_help_help_needed').val(),
                     'need_help_category_id': $('#need_help_need_help_category_id').val(),
                     'user_id': $(this).attr('data-moid'),
-                    'gid': id
+                    'gid': id,
+                    'lat': drainLocation.lat,
+                    'long': drainLocation.lng
                 },
                 'locale': locale
             },
@@ -109,5 +113,46 @@ $(function () {
         });
         return false;
     });
+
+
+    // fetches url parameters
+    var parseQueryString = function (url) {
+        var urlParams = {};
+        url.replace(
+            new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+            function ($0, $1, $2, $3) {
+                urlParams[$1] = $3;
+            }
+        );
+
+        return urlParams;
+    }
+
+    // opens a popup based on address bar url
+    $(window).load(function () {
+        var locale = urlParam('locale');
+        var urlToParse = location.search;
+        var result = parseQueryString(urlToParse);
+
+        if (result.needhelp) {
+            $.ajax({
+                type: 'GET',
+                url: '/drains/' + result.gid,
+                data: {
+                    'locale': locale
+                },
+                success: function (data) {
+                    drainLocation = new L.LatLng(data.drain.lat, data.drain.lng);
+                    activeObjectId = data.drain.gid;
+                    map.setView(drainLocation, 17);
+                    fetchDrainInfo(activeObjectId, drainLocation);
+                }
+
+            });
+            return false;
+        }
+
+    });
+
 
 }); // end of function
