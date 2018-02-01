@@ -3,6 +3,6 @@
 
 = render 'edit_form'
 
-= link_to 'Show', @need_help
 \|
-= link_to 'Back', need_helps_path
+%a{:id => "edit_back", :data => {:gid => @need_help.gid}}
+  = t("buttons.back")

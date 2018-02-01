@@ -33,6 +33,16 @@ $(function () {
         return false;
     });
 
+    // back action in need help edit form
+    $('body').on('click', '#edit_back', function () {
+        var locale = urlParam('locale');
+        var gid =  $(this).attr('data-gid');
+
+        showNeedHelpDetails(locale,gid)
+        return false;
+
+    });
+
     // deletes a need help request
     $('body').on('click', '#delete_needhelp', function () {
         var locale = urlParam('locale');
