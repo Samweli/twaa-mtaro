@@ -5,6 +5,8 @@ attributes :gid, :cleared, :need_help, :address, :waterway, :covered, :depth,
            :zipcode, :claims_count
 
 has_many :streets, embed: :objects
+has_many :wards, embed: :objects
+has_many :municipals, embed: :objects
 has_many :priorities, through: :set_priorities, embed: :objects
 
 

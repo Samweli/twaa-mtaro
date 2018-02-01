@@ -29,8 +29,10 @@ test/tmp
 test/version_tmp
 tmp/
 vendor/bundle
+vendor/cache
 ./config/initializers/recaptcha.rb
 ./config/database.yml
 config/database.yml
 db/schema.rb
 Gemfile.lock
+
