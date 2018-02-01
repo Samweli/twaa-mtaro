@@ -32,6 +32,7 @@ sw:
     all: "%{count} Yote"
     adopted: "%{count} Imetwaaliwa"
     not_adopted: "%{count} Haijatwaaliwa"
+    flood_prone: "%{count} Korofi"
   captions:
     add_user: "Sajili Mpya"
     adopted: "Onesha %{thing} wako utakaosafisha msimu huu"
@@ -81,6 +82,7 @@ sw:
     status: "Hali"
     actions: "Ondoa"
     site: "http://twaamtaro.org"
+    priority: "Huu ni mtaro korofi"
   errors:
     error: "Drain"
     auth_failed: "Namba ya mtumiaji or nenosiri sio sahihi."
@@ -88,6 +90,7 @@ sw:
     password: "Unahitaji kuingia au kusajili kabla ya kuendelea"
     not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
+    sms_not_sent: "Meseji haijaenda, namba ya mtumiaji inaweza kuwa imekosewa"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
     need_help_category: "Aina ya Msaada:"
@@ -138,6 +141,7 @@ sw:
     reply: "Umeuwekea alama ya mtaro namba kuwa"  
     clear_status: "msafi"
     dirt_status: "sio msafi"
+    flood_prone_status: "korofi"
     drain_share: "shirikisha"
     drain_cleaned: "Asante, kwa kutoa taarifa kuwa mtaro ni msafi."
     drain_dirty: "Asante, kwa kutoa taarifa kuwa mtaro ni mchafu."
@@ -171,6 +175,7 @@ sw:
     yes_value: "Ndio"
     no_value: "Hapana"
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
+    success: "Imefanikiwa"
   tables:
     need_help: "Msaada"
     need_help_details:

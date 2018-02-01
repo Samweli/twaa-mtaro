@@ -9,8 +9,8 @@
   %tbody
   - @need_helps.each do |need_help|
     %tr
-      %td= need_help.help_needed
-      %td= need_help.user.street.street_name
-      %td= need_help.user.fullname
+      %td= need_help.try(:help_needed)
+      %td= need_help.try(:user).try(:street).try(:street_name)
+      %td= need_help.try(:user).try(:fullname)
 
 %br

@@ -32,6 +32,14 @@ class DrainsController < ApplicationController
           else
             @drains = Drain.where_custom(:gid => value)
           end
+        elsif params[:type].include? "id"
+          values = params[:type].split('=')
+          value = values[1]
+          @drains = Drain.where(:gid => value).
+              select('*, ST_AsKML(the_geom) AS "kml"')
+        elsif params[:type] == 'priority'
+          @drains = Drain.where(:priority => true)
+          .select('*, ST_AsKML(the_geom) AS "kml"')
         end
       end
 
@@ -145,6 +153,15 @@ class DrainsController < ApplicationController
 
   def set_flood_prone
     Drain.set_flood_prone(params[:drain_id])
+    sms_service = SmsService.new()
+    user = current_user
+    status = t("messages.flood_prone_status")
+    reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
+
+    sms_service.send_sms(
+            reply_street_leader,
+            user.sms_number);
+
     render :json => {:success => true}
   end
 
