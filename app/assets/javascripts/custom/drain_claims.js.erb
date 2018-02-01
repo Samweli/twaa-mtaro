@@ -93,16 +93,15 @@ $(function () {
                         shoveled = true;
                     }
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/drains/' + activeObjectId,
-                        data: {
-                            'gid': activeObjectId,
-                            'shoveled': shoveled,
-                            'authenticity_token': AUTH_TOKEN,
-                            '_method': 'put',
-                            'locale': locale
-
+                   $.ajax({
+                    type: 'POST',
+                    url: '/drain_claims/' + $(this).attr('data-claim'),
+                    data: {
+                        'gid': activeObjectId,
+                        'shoveled': shoveled,
+                        'authenticity_token': AUTH_TOKEN,
+                        '_method': 'put',
+                        'locale': locale
                         },
                         error: function (jqXHR) {
                             data = $.parseJSON(jqXHR.responseText);

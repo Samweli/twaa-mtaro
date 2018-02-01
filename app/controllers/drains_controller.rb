@@ -94,7 +94,6 @@ class DrainsController < ApplicationController
                         .find_by_street_id(user.street_id)
 
     if params.has_key?(:shoveled)
-
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
       if !(user.has_role(2))
         unless claim

@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => {sms_number: true}
   attr_accessible :email, :admin, :role_requested, :first_name, :last_name, :organization, :sms_number, :password, :password_confirmation, :street_id, :remember_me
   validates_presence_of :first_name, :last_name, :street_id, :sms_number
+  validates_uniqueness_of :sms_number
+  validates_format_of :sms_number, with: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, :message => "wrong number format"
   has_many :drain_claims
   has_many :assignments
   has_many :authentications

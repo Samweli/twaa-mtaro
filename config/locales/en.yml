@@ -1,6 +1,9 @@
 # Please maintain alphabetical order
 
 en:
+  activerecord:
+    errors:
+      email: "Email has already been taken"
   buttons:
     abandon: "Abandon this %{thing}"
     adopt: "Adopt!"
@@ -183,6 +186,8 @@ en:
       leader_name: "Street leader's name"
       street: "Street Name"
       title: "Details For Needed Help"
+      edit: "Edit"
+      delete: "Delete"
   terms:
     list_one: "are not liable for any improper or incorrect use of the information on this site,"
     list_two: "assume no responsibility for anyone's use of the information,"
@@ -197,6 +202,7 @@ en:
     edit_profile: "Edit your Profile"
     main: "Adopt a %{thing}"
     need_help: "Describe The Help You Need"
+    need_help_edit: "Edit need help request"
     ofline: "of %{organization}"
     thank_you: "Thank you for adopting this %{thing}!"
     register_now: "Register Now!"

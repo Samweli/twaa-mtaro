@@ -73,7 +73,7 @@
                   = t("buttons.dirty")
               %td.hide_column
                 - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
-                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled))}}
+                  %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
                     = t("buttons.change_status")
               %td
                 %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.try(:id)}}
@@ -101,7 +101,7 @@
               - if user_signed_in?  
                 %td.hide_column
                   - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
-                    %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled))}}
+                    %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
                       = t("buttons.change_status")
 
   - if user_signed_in? && current_user.has_role(2)
@@ -109,7 +109,9 @@
   - else
     - if @drain.cleared?
       = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
-    - elsif @drain.cleared == nil and @drain.try(:need_help) == nil
+    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == nil
+      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
+    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == false
       = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - elsif @drain.need_help?
       = button_tag t("captions.need_help"), :class => "btn btn-primary btn-block cat-btn"
