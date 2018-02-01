@@ -85,10 +85,50 @@ $(function () {
         });
     }
 
+    // Update sidebar categories count when 
+    // there is drain status update
+    window.updateCategories = function(type){
 
-    /* updating drain status to clean */
+        var cleaned = $("#cleaned");
+        var uncleaned = $("#uncleaned");
+        var clean = cleaned.text();
+        var dirty = uncleaned.text();
+
+        var arrayClean = clean.split(' ');
+        var arrayDirty = dirty.split(' ');
+        
+        var countClean = arrayClean[0];
+        var countDirty = arrayDirty[0];
+
+        if (type == "clean"){
+            countClean++;
+            arrayClean[0] = countClean;
+
+            if(countDirty >= 1){
+                countDirty--;
+                arrayDirty[0] = countDirty;
+            }
+            cleaned.text(arrayClean.toString().replace(',', ' '));
+            uncleaned.text(arrayDirty.toString().replace(',', ' '));
+
+        } else if (type == "unclean"){
+            countDirty++;
+            arrayDirty[0] = countDirty;
+
+            if(countDirty >= 1){
+                countClean--;
+                arrayClean[0] = countClean;
+            }
+            cleaned.text(arrayClean.toString().replace(',', ' '));
+            uncleaned.text(arrayDirty.toString().replace(',', ' '));
+        }
+
+    }
+
+    /* Updating drain status to clean */
 
     $('body').on('click','#clean', function () {
+        console.log("called clean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
 
@@ -106,13 +146,15 @@ $(function () {
             },
             error: function (jqXHR) {
                 data = $.parseJSON(jqXHR.responseText);
-
                 hideSpinner();
             },
             success: function (data) {
                 // No need to refresh, Improving performance
                 // refreshKML("all");
                 fetchDrainInfo(id, drain_pos, "update");
+                updateCategories("clean");
+                updateDrain(id);
+               
             }
         });
         return false;
@@ -122,6 +164,7 @@ $(function () {
       /*updating drain status to unclean */
 
     $('body').on('click','#unclean', function () {
+        console.log("called unclean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
         showSpinner();
@@ -144,6 +187,8 @@ $(function () {
                 // No need to refresh, Improving performance
                 // refreshKML("all");
                 fetchDrainInfo(id, drain_pos, "update");
+                updateCategories("unclean");
+                updateDrain(id);
 
             }
         });

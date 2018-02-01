@@ -26,7 +26,7 @@ en:
     update: "Update"
     send_request: "Send Request"
     go: "Go"
-    cleaned: " %{count} Clean"
+    cleaned: "%{count} Clean"
     uncleaned: "%{count} Dirty"
     need_help: "%{count} Needs help"
     unknown: "%{count} Unknown"

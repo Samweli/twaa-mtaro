@@ -23,8 +23,6 @@ $(function () {
 
     window.bind = function (pos) {
 
-        console.log("called bind");
-
         bind_abandon(pos);
         bind_change_claim(pos);
         bind_user_adopt(pos);       
@@ -33,7 +31,6 @@ $(function () {
 
     /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
         window.bind_abandon = function(pos){
-            $('.abdn_link').unbind('click');
 
             $('body').one('click', '.abdn_link', function (e) {
                 // Stop if there is another binded click event
@@ -77,7 +74,6 @@ $(function () {
           /* function for users to update status of their claims to clean or unclean */
 
         window.bind_change_claim = function(pos){ 
-            $('.chng_link').unbind('click');
 
             $('body').one('click', '.chng_link', function (e) {
                 // Stop if there is another binded click event

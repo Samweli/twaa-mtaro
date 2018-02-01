@@ -13,6 +13,7 @@ add here all functions that depend on map
   var activeObjectId;
   var selected_drain;
   var map;
+  var feature;
 
 
 $(function () {
@@ -131,11 +132,11 @@ $(function () {
             if (locale == 'sw') {
                 colour_map = {
                     'Misafi': "green", 'Michafu': "#dd9031", 'Msaada': '#6495ed',
-                    'Haijulikani': "#CB7D50", 'Korofi': "#d43f3a"
+                    'Haijulikani': "#CB7D50"
                 }
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani', "Korofi"],
+                    colours = ['Misafi', 'Michafu', 'Msaada', 'Haijulikani'],
                     labels = [];
                 // Adding legend header
                 div.innerHTML += '<h3 > Alama </h3>';
@@ -143,11 +144,11 @@ $(function () {
             } else {
                 colour_map = {
                     'Clean': "green", 'Not clean': "#dd9031", 'Needs help': '#6495ed',
-                    'Unknown': "#CB7D50", 'Flood prone': "#d43f3a"
+                    'Unknown': "#CB7D50"
                 }
 
                 div = L.DomUtil.create('div', 'info legend'),
-                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown', 'Flood prone'],
+                    colours = ['Clean', 'Not clean', 'Needs help', 'Unknown'],
 
                     labels = [];
                 // Adding legend header
@@ -198,7 +199,6 @@ $(function () {
 
     /* popup window for displaying details of drain */
     window.createPopup = function (msg, pos) {
-        console.log("create popup called");
         
         if (pos == null) {
             pos = map.getCenter();
@@ -212,7 +212,6 @@ $(function () {
 
     /* replacing given popup window */
     window.updatePopup = function (msg, pos){
-        console.log("updated popup called");
         if (pos == null) {
             pos = map.getCenter();
         }
@@ -222,6 +221,10 @@ $(function () {
             .setContent(msg)
             .openOn(map);
         bind_user_adopt(pos);
+    }
+
+    window.updateDrain = function(id){
+        refreshKML("id="+id);
     }
 
 
@@ -293,9 +296,6 @@ $(function () {
                 }
             }
         });
-        if (kmlLayer) {
-            map.removeLayer(kmlLayer);
-        }
 
         /* dyamically loading mitaro using the center coordinates */
         var c = map.getCenter();
@@ -318,23 +318,40 @@ $(function () {
         // });
 
         /* Loading KML*/
+        if (kmlLayer) {
+            if(type.indexOf("id") != -1){
+                drain_id = type.split('=')[1];
+                kmlLayer.eachLayer(function(layer){
+                    if(layer.feature.properties.description == drain_id){
+                        // TODO fix this logic execution, remove console.log
+                        console.log("removing the layer");
+                        kmlLayer.removeLayer(layer);
+                        feature == null;
+                    }
+                });                
+            }else{
+                map.removeLayer(kmlLayer);
+            }   
+        }
+        
         kmlLayer = omnivore.kml(url, null, customLayer)
-            .on('onload', function(e){
-                // console.log('on load');
-                // $('.progress-bar').attr('aria-valuenow') == 50;
-                // $('.progress-bar').text("50%");
-            })
-            .on('ready', function () {
-                hideSpinner();
-            })
-            .on('error', function (jqXHR) {
-                hideSpinner();
-                data = $.parseJSON(jqXHR.error.responseText);
+        .on('onload', function(e){
+            // console.log('on load');
+            // $('.progress-bar').attr('aria-valuenow') == 50;
+            // $('.progress-bar').text("50%");
+        })
+        .on('ready', function () {
+            hideSpinner();
+        })
+        .on('error', function (jqXHR) {
+            hideSpinner();
+            data = $.parseJSON(jqXHR.error.responseText);
 
-                msg = '<h2>' + data.errors.address + '</h2>';
-                createPopup(msg, map.getCenter());
+            msg = '<h2>' + data.errors.address + '</h2>';
+            createPopup(msg, map.getCenter());
 
-            }).addTo(map);
+        }).addTo(map);
+
 
         /* Listens to clicks on drains*/
         kmlLayer.on('click', function (e) {

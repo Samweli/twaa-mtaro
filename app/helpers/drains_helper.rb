@@ -4,11 +4,7 @@ module DrainsHelper
       if s.cleared
         "#cleared"
       else
-        if not s.priorities.nil?
-          "#priority"
-        else
-          "#unclear"
-        end
+        "#unclear"
       end
     # elsif s.claims_count > 0
     #   "#adopted"

@@ -32,6 +32,11 @@ class DrainsController < ApplicationController
           else
             @drains = Drain.where_custom(:gid => value)
           end
+        elsif params[:type].include? "id"
+          values = params[:type].split('=')
+          value = values[1]
+          @drains = Drain.where(:gid => value).
+              select('*, ST_AsKML(the_geom) AS "kml"')
         elsif params[:type] == 'priority'
           @drains = Drain.where(:priority => true)
           .select('*, ST_AsKML(the_geom) AS "kml"')
