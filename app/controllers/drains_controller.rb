@@ -1,7 +1,7 @@
 class DrainsController < ApplicationController
   respond_to :json
   # added :update in except for testing only, TO BE REMOVED
-  before_filter :authenticate_user!, :except => [:index, :find_closest, :update]
+  before_filter :authenticate_user!, :except => [:index, :find_closest, :update, :show]
 
   def index
     # check for the type of drains to query
@@ -75,6 +75,12 @@ class DrainsController < ApplicationController
     render :json => {:gid => drain ? drain.gid : nil, :lat => gc.lat, :lng => gc.lng}
   end
 
+  def show
+    @drain = Drain.find(params[:id])
+
+    render(json: Api::V1::DrainSerializer.new(@drain).to_json)
+  end
+
   def update
     shoveled = (params.fetch(:shoveled, nil) == 'true' ? true : false)
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
@@ -84,7 +90,7 @@ class DrainsController < ApplicationController
     user = current_user
 
     claim = drain.claims.find_by_user_id(user.id)
-    street_leader = User.joins(:roles).where(roles: { id: 2 })
+    street_leader = User.joins(:roles).where(roles: {id: 2})
                         .find_by_street_id(user.street_id)
 
     if params.has_key?(:shoveled)

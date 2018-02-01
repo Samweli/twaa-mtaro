@@ -66,7 +66,6 @@ $(function () {
 
         /* searching for  drains */
         $('#address_button').on('click', function () {
-            console.log('inside search function');
             var locale = urlParam('locale');
 
             $.ajax({
@@ -78,8 +77,6 @@ $(function () {
                     'search': $('#search').val()
                 },
                 success: function (msg) {
-                    console.log( msg);
-                    console.log('success')
                 }
             });
             return false;
