@@ -52,8 +52,12 @@ $(function () {
                 console.log(data);
                 if(data.refresh){
                     refreshKML("all");
+                    fetchDrainInfo(activeObjectId, drain_pos);
                 }
-                showNeedHelpDetails(locale,activeObjectId)
+                else {
+                    showNeedHelpDetails(locale,activeObjectId)
+                }
+
             }
         });
     });

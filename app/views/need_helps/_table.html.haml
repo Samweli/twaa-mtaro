@@ -1,0 +1,37 @@
+- if @need_helps.any?{|n| my_need_help_request(n)}
+  %table.font_12.pen_gray.link_1.page
+    %thead
+      %tr
+        %th= t("tables.need_help_details.help_needed")
+        %th= t("tables.need_help_details.street")
+        %th= t("tables.need_help_details.leader_name")
+        %th= t("tables.need_help_details.edit")
+        %th= t("tables.need_help_details.delete")
+    %tbody
+    - @need_helps.each do |need_help|
+      %tr
+        %td= need_help.help_needed
+        %td= need_help.user.street.street_name
+        %td= need_help.user.fullname
+        %td
+          %button{:id => "needhelp_edit_form", :disabled => !my_need_help_request(need_help), :data => {:needhelp => need_help.id}}
+            = t("tables.need_help_details.edit")
+            = my_need_help_request(need_help)
+        %td
+          %button{:id => "delete_needhelp",:disabled => !my_need_help_request(need_help), :data => {:needhelp => need_help.id}}
+            = t("tables.need_help_details.delete")
+- else
+  %table.font_12.pen_gray.link_1.page
+    %thead
+      %tr
+        %th= t("tables.need_help_details.help_needed")
+        %th= t("tables.need_help_details.street")
+        %th= t("tables.need_help_details.leader_name")
+    %tbody
+    - @need_helps.each do |need_help|
+      %tr
+        %td= need_help.help_needed
+        %td= need_help.user.street.street_name
+        %td= need_help.user.fullname
+
+
