@@ -16,7 +16,7 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'omniauth-facebook'
 gem "paranoia", "~> 1.0"
-gem 'pg', '0.21.0'
+gem 'pg',
 gem 'rack-contrib', '1.8.0'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'ransack'
