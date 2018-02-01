@@ -13,7 +13,7 @@ $(function () {
             drain_pos = map.getCenter();
         }
         showSpinner();
-        fetchDrainInfo(drain_gid, drain_pos);
+        fetchDrainInfo(drain_gid, drain_pos, "update");
 
     });
 
@@ -22,6 +22,7 @@ $(function () {
     * */
 
     window.assignDrain = function (pos) {
+
         var locale = urlParam('locale');
         var success_message_en = 'You have successfully assigned this drain! ';
         var success_message_sw = 'Umefanikiwa kugawia huu mtaro! ';
@@ -41,8 +42,11 @@ $(function () {
                 alert(data.errors);
             },
             success: function (data) {
-                refreshKML("all");
-                fetchDrainInfo(activeObjectId, pos);
+                // No need to refresh, Improving performance
+                // refreshKML("all");
+                fetchDrainInfo(activeObjectId, pos, "update");
+                bind_assign(pos);
+                
                 //add a new style 'foo'
                 $.notify.addStyle('foo', {
                     html: "<div>" +
@@ -81,10 +85,50 @@ $(function () {
         });
     }
 
+    // Update sidebar categories count when 
+    // there is drain status update
+    window.updateCategories = function(type){
 
-    /* updating drain status to clean */
+        var cleaned = $("#cleaned");
+        var uncleaned = $("#uncleaned");
+        var clean = cleaned.text();
+        var dirty = uncleaned.text();
+
+        var arrayClean = clean.split(' ');
+        var arrayDirty = dirty.split(' ');
+        
+        var countClean = arrayClean[0];
+        var countDirty = arrayDirty[0];
+
+        if (type == "clean"){
+            countClean++;
+            arrayClean[0] = countClean;
+
+            if(countDirty >= 1){
+                countDirty--;
+                arrayDirty[0] = countDirty;
+            }
+            cleaned.text(arrayClean.toString().replace(',', ' '));
+            uncleaned.text(arrayDirty.toString().replace(',', ' '));
+
+        } else if (type == "unclean"){
+            countDirty++;
+            arrayDirty[0] = countDirty;
+
+            if(countDirty >= 1){
+                countClean--;
+                arrayClean[0] = countClean;
+            }
+            cleaned.text(arrayClean.toString().replace(',', ' '));
+            uncleaned.text(arrayDirty.toString().replace(',', ' '));
+        }
+
+    }
+
+    /* Updating drain status to clean */
 
     $('body').on('click','#clean', function () {
+        console.log("called clean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
 
@@ -102,12 +146,15 @@ $(function () {
             },
             error: function (jqXHR) {
                 data = $.parseJSON(jqXHR.responseText);
-
                 hideSpinner();
             },
             success: function (data) {
-                refreshKML("all");
-                fetchDrainInfo(id, drain_pos);
+                // No need to refresh, Improving performance
+                // refreshKML("all");
+                fetchDrainInfo(id, drain_pos, "update");
+                updateCategories("clean");
+                updateDrain(id);
+               
             }
         });
         return false;
@@ -117,6 +164,7 @@ $(function () {
       /*updating drain status to unclean */
 
     $('body').on('click','#unclean', function () {
+        console.log("called unclean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
         showSpinner();
@@ -136,9 +184,11 @@ $(function () {
 
             },
             success: function (data) {
-
-                refreshKML("all");
-                fetchDrainInfo(id, drain_pos);
+                // No need to refresh, Improving performance
+                // refreshKML("all");
+                fetchDrainInfo(id, drain_pos, "update");
+                updateCategories("unclean");
+                updateDrain(id);
 
             }
         });
@@ -163,15 +213,18 @@ $(function () {
         });
 
     $('body').on('click','#priority', function() {
+        var drain_id = $(this).attr('data-moid');
+
         $.ajax({
             type: 'POST',
             url: '/drains/flood',
             data: {
-                'drain_id': $(this).attr('data-moid')
+                'drain_id': drain_id
             },
             error: function (jqXHR) {
             },
             success: function (data) {
+                fetchDrainInfo(drain_id, drain_pos, "update");
             }
         });
     })

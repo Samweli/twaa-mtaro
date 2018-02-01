@@ -6,14 +6,13 @@ class MainController < ApplicationController
 
   def sidebar
     get_my_drains
-    drain_list = render_to_string :partial => 'drain_list.html.haml'
-    address_box = render_to_string :partial => 'address_form.html.haml'
+    drain_list = render_to_string :partial => 'drain_list.html' 
+    address_box = render_to_string :partial => 'address_form.html'
 
     respond_to do |format|
       format.js   { render :locals => { :drain_list => drain_list } }
       format.json { 
-        render :json => { :user_badge => render_to_string(:partial => 'user_badge.html.haml'),
-                          :drain_list => drain_list, :address_box => address_box}
+        render :json => {:drain_list => drain_list, :address_box => address_box}
       }
     end
   end
@@ -32,11 +31,14 @@ class MainController < ApplicationController
     @need_help = format_number(Drain.count(:conditions => 'need_help = true'))
     @unknown = format_number(Drain.where('cleared is NULL and need_help is NULL').count)
     @all = format_number(Drain.count)
+    @priorities = format_number(Priority.count)
+    puts "priorites"
+    puts @priorities
 
     @adopted = format_number(Drain.count(:conditions => 'claims_count > 0'))
     @not_adopted = format_number(Drain.count(:conditions => 'claims_count = 0'))
 
-     Rails.logger.debug("adopted #{@adopted}, #{@not_adopted}")
+    Rails.logger.debug("adopted #{@adopted}, #{@not_adopted}")
 
   end
 

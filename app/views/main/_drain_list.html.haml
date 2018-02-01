@@ -5,11 +5,11 @@
       %div.font_h3.font_bold{:style => "margin:none;color: #333;text-align:center;"}
         = t("notices.welcome")
         = current_user.try(:fullname)
-      #view_street{'data-lat' => current_user.street.lat, 'data-lng' =>current_user.street.lng}
+      #view_street{'data-lat' => current_user.try(:street).try(:lat), 'data-lng' =>current_user.try(:street).try(:lng)}
         %p
         %span#name=t('labels.street')
         %span#street
-          = current_user.street.street_name 
+          = current_user.try(:street).try(:street_name)
       - if @my_drains.try(:size) > 0
         %table.font_12.pen_gray.link_1.hidden-xs
           %thead

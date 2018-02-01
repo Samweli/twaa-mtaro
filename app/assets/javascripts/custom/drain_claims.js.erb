@@ -1,5 +1,6 @@
 $(function () {
 
+
     /*
     Paginates the list of users read to be assigned drain
     * */
@@ -13,7 +14,7 @@ $(function () {
                 'locale': locale
             },
             success: function (msg) {
-                createPopup(msg, drainLocation);
+                updatePopup(msg, drainLocation);
             }
         });
         return false;
@@ -22,54 +23,77 @@ $(function () {
 
     window.bind = function (pos) {
 
+        bind_abandon(pos);
+        bind_change_claim(pos);
+        bind_user_adopt(pos);       
 
-        /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
-        $('#abandon_link').on('click', '.abdn_link', function () {
-            var locale = urlParam('locale');
-            var message_en = 'Are you sure that you want to abandon this drain?';
-            var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
-            var confirmation_message = locale === 'en' ? message_en : message_sw
-            if (window.confirm(confirmation_message)) {
+    }
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/drain_claims/' + $(this).attr('data-moid'),
-                    data: {
-                        'gid': activeObjectId,
-                        'authenticity_token': AUTH_TOKEN,
-                        '_method': 'delete',
-                        'locale': locale
-                    },
-                    error: function (jqXHR) {
-                        data = $.parseJSON(jqXHR.responseText);
+    /*function for removing user from adopting a drain (deleting user's claim from a drain)*/
+        window.bind_abandon = function(pos){
 
-                    },
-                    success: function (data) {
-                        refreshKML("all");
-                        fetchDrainInfo(activeObjectId, drain_pos);
-                    }
-                });
-            }
+            $('body').one('click', '.abdn_link', function (e) {
+                // Stop if there is another binded click event
+                e.stopImmediatePropagation();
+                e.originalEvent.stopImmediatePropagation();
+
+                
+                var locale = urlParam('locale');
+                var message_en = 'Are you sure that you want to abandon this drain?';
+                var message_sw = 'Una thibitisha kubadili mgao wa huu mtaro ?';
+                var confirmation_message = locale === 'en' ? message_en : message_sw
+                if (window.confirm(confirmation_message)) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/drain_claims/' + $(this).attr('data-moid'),
+                        data: {
+                            'gid': activeObjectId,
+                            'authenticity_token': AUTH_TOKEN,
+                            '_method': 'delete',
+                            'locale': locale
+                        },
+                        error: function (jqXHR) {
+                            data = $.parseJSON(jqXHR.responseText);
+
+                        },
+                        success: function (data) {
+                            // No need to refresh, improving perfomance, 
+                            // refreshKML("all");
+                            fetchDrainInfo(activeObjectId, drain_pos, "update");
+                        }
+                    });
+                } else{
+                    bind_abandon(pos);
+                }
+                
             return false;
         });
+        }
 
           /* function for users to update status of their claims to clean or unclean */
 
-        $('#abandon_link').on('click', '.chng_link', function () {
-            var locale = urlParam('locale');
-            var message_en = 'Are you sure that you want to change status?';
-            var message_sw = 'Una thibitisha kubadili hali ya huu mtaro ?';
-            var confirmation_message = locale === 'en' ? message_en : message_sw
-            if (window.confirm(confirmation_message)) {
-                var shoveled;
-                if ($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio") {
-                    shoveled = false;
-                }
-                else {
-                    shoveled = true;
-                }
+        window.bind_change_claim = function(pos){ 
 
-                $.ajax({
+            $('body').one('click', '.chng_link', function (e) {
+                // Stop if there is another binded click event
+                e.stopImmediatePropagation();
+                e.originalEvent.stopImmediatePropagation();
+
+                var locale = urlParam('locale');
+                var message_en = 'Are you sure that you want to change status?';
+                var message_sw = 'Una thibitisha kubadili hali ya huu mtaro ?';
+                var confirmation_message = locale === 'en' ? message_en : message_sw
+                if (window.confirm(confirmation_message)) {
+                    var shoveled;
+                    if ($(this).attr('data-moid') == "Yes" || $(this).attr('data-moid') == "Ndio") {
+                        shoveled = false;
+                    }
+                    else {
+                        shoveled = true;
+                    }
+
+                   $.ajax({
                     type: 'POST',
                     url: '/drain_claims/' + $(this).attr('data-claim'),
                     data: {
@@ -78,52 +102,78 @@ $(function () {
                         'authenticity_token': AUTH_TOKEN,
                         '_method': 'put',
                         'locale': locale
+                        },
+                        error: function (jqXHR) {
+                            data = $.parseJSON(jqXHR.responseText);
 
-                    },
-                    error: function (jqXHR) {
-                        data = $.parseJSON(jqXHR.responseText);
-
-                    },
-                    success: function (data) {
-                        refreshKML("all");
-                        fetchDrainInfo(activeObjectId, pos);
-                    }
-                });
-            }
+                        },
+                        success: function (data) {
+                            // No need to refresh, improving perfomance, 
+                            // refreshKML("all");
+                            fetchDrainInfo(activeObjectId, pos, "update");
+                        }
+                    });
+                }
+            
             return false;
         });
-
-
-        /*Assigns drain to a selected/clicked user from the list  */
-        $('body').on('click', '#btn_asisign', function () {
-            user_id = $(this).attr('data-user-id');
-            assignDrain(pos);
-            return false;
-        });
-
+        }
 
         /* displays a list of users who can made adopt a selected drain */
-        $('body').on('click', '#add_claim, #assign', function () {
-            var locale = urlParam('locale');
+        window.bind_user_adopt = function(pos){
 
-            $.ajax({
-                type: 'GET',
-                url: 'drain_claims/adopt',
-                data: {
-                    'locale': locale
-                },
-                success: function (msg) {
-                    createPopup(msg, drainLocation);
+            $('body').one('click', '#add_claim, #assign', function (e) {
 
-                }
+                // Stop if there is another binded click event
+                e.stopImmediatePropagation();
+                e.originalEvent.stopImmediatePropagation();
+
+                var locale = urlParam('locale');
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'drain_claims/adopt',
+                    data: {
+                        'locale': locale
+                    },
+                    success: function (msg) {
+                        updatePopup(msg, drainLocation);
+
+                        // bind events to the received html 
+                        bind_assign(pos);
+
+                    }
+                });                
+
+                return false;
             });
-            return false;
+        }
+
+    
+     /* Function assigns drain to a selected/clicked user from the list 
+
+     */
+    window.bind_assign = function(pos){
+        add_click_claim(pos);
+        bind_abandon(pos);
+    }
+    
+    /* Standalone claim click event */
+    window.add_click_claim = function(pos){
+
+         $('body').one('click', '.btnassing', function (e) {
+
+           // Stop if there is another binded click event
+            e.stopImmediatePropagation();
+            e.originalEvent.stopImmediatePropagation();
+
+            $(this).unbind('click');
+            user_id = $(this).attr('data-user-id');
+            assignDrain(pos);
+           
+            return false; 
+            
         });
-
-
-
-
-
 
     }
 

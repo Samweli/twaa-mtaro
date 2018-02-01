@@ -173,3 +173,9 @@ div.card-unclean {
 .drain_social_media{
   display:none;
 }
+
+/* Customizing flood prone button*/
+
+.btn-danger.cat-btn {
+  border: 1.5px solid #d43f3a;
+}
