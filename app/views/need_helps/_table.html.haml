@@ -16,7 +16,6 @@
         %td
           %button{:id => "needhelp_edit_form", :disabled => !my_need_help_request(need_help), :data => {:needhelp => need_help.id}}
             = t("tables.need_help_details.edit")
-            = my_need_help_request(need_help)
         %td
           %button{:id => "delete_needhelp",:disabled => !my_need_help_request(need_help), :data => {:needhelp => need_help.id}}
             = t("tables.need_help_details.delete")
