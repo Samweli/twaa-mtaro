@@ -316,7 +316,7 @@ $(function () {
 
         /* Loading KML*/
         if (kmlLayer) {
-            if(type.indexOf("id") != -1){
+            if(type && type.indexOf("id") != -1){
                 drain_id = type.split('=')[1];
                 kmlLayer.eachLayer(function(layer){
                     if(layer.feature.properties.description == drain_id){
@@ -380,7 +380,15 @@ $(function () {
     }
 
     /*executing functions*/
-    refreshKML("all");
+     if ($(window).width() < 567) {
+        refreshKML();
+        map.on('moveend ', function(){
+            refreshKML();
+        });
+    } else {
+        refreshKML("all");
+    }
+    
     addLegend();
 
 
