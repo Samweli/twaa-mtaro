@@ -116,7 +116,6 @@ class DrainClaimsController < ApplicationController
     @shoveled_by_me = true
     @claims = claims
     if @drain.need_help == true
-      Rails.logger.debug("This is the description #{@drain.need_helps}")
     end
 
     if user_signed_in?
@@ -124,10 +123,6 @@ class DrainClaimsController < ApplicationController
     else
       @claim_owner =nil
     end
-
-
-
-
   end
 
   def adopt

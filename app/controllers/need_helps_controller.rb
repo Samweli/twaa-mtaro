@@ -73,12 +73,16 @@ class NeedHelpsController < ApplicationController
   # DELETE /need_helps/1
   # DELETE /need_helps/1.json
   def destroy
+    refresh_layer = false
     @need_help = NeedHelp.find(params[:id])
+    gid = @need_help.gid
     @need_help.destroy
-
-    respond_to do |format|
-      format.html { redirect_to need_helps_url }
-      format.json { head :no_content }
+    drain = Drain.find(gid)
+    if (drain.need_helps.empty?)
+      refresh_layer = true
+      drain.update_attribute(:need_help, false)
     end
+
+    render :json => {:refresh => refresh_layer}
   end
 end

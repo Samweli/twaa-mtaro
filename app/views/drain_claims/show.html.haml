@@ -105,7 +105,9 @@
   - else
     - if @drain.cleared?
       = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn"
-    - elsif @drain.cleared == nil and @drain.try(:need_help) == nil
+    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == nil
+      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
+    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == false
       = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn"
     - elsif @drain.need_help?
       = button_tag t("captions.need_help"), :class => "btn btn-primary btn-block cat-btn"

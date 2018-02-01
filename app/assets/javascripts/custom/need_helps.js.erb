@@ -48,6 +48,11 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
+                console.log('after deleting');
+                console.log(data);
+                if(data.refresh){
+                    refreshKML("all");
+                }
                 showNeedHelpDetails(locale,activeObjectId)
             }
         });
