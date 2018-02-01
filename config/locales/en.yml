@@ -29,10 +29,11 @@ en:
     update: "Update"
     send_request: "Send Request"
     go: "Go"
-    cleaned: " %{count} Clean"
+    cleaned: "%{count} Clean"
     uncleaned: "%{count} Dirty"
     need_help: "%{count} Needs help"
     unknown: "%{count} Unknown"
+    flood_prone: "%{count} Flood prone"
     all: "%{count} All"
     adopted: "%{count} Adopted"
     not_adopted: "%{count} Not Adopted"
@@ -85,6 +86,7 @@ en:
     actions: "Remove"
     unknown: "Unknown"
     site: "http://twaamtaro.org"
+    priority: "This drain is flood prone"
   errors:
     error: "Drain"
     auth_failed: "Phone number or password is incorrect."
@@ -92,6 +94,7 @@ en:
     not_found: "%{thing}(s) could not be found."
     drain_notfound: "%{error} not found"
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
+    sms_not_sent: "Problem sending sms, user phone number might be invalid"
   forms:
     need_help: "tell us what kind of help is needed"
     need_help_category: "Help type:"
@@ -140,6 +143,7 @@ en:
   messages:
     clear_status: "clean"
     dirt_status: "not clean"
+    flood_prone_status: "flood prone"
     notification: "Street leaader turned the mark of your %{thing} number "  
     reply: "have you marked your drain to"
     drain_share: "share"
@@ -174,6 +178,7 @@ en:
     share: "Share about this site"
     yes_value: "Yes"
     no_value: "No"
+    success: "Successful"
   tables:
     need_help: "Needs help"
     need_help_details:

@@ -16,7 +16,7 @@
         %tr
           %td= u.try(:first_name)
           %td= u.try(:last_name)
-          %td= button_tag t("captions.assign"), :class => "btnassing", :id => "btn_asisign", :data => {:user_id => u.id}
+          %td= button_tag t("captions.assign"), :class => "btnassing", :id => "btn_assign", :data => {:user_id => u.id}
     #pagination.font_12.link_1.hidden-xs
       = paginate @street_users, :params => {:controller => 'drain_claims', :action => 'user_list'}, :remote => true
   %div.link_add_user

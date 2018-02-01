@@ -160,9 +160,10 @@ $(function () {
                 success: function (data) {
                     $('.sign_links').remove();
                     updateSidebar();
-                    fetchDrainInfo();
-                    window.location.href = window.location.hostname;
-                    window.location.reload();
+                    map.closePopup();
+                    // fetchDrainInfo();
+                    // window.location.href = window.location.hostname;
+                    // window.location.reload();
 
                 }
             });
@@ -171,8 +172,6 @@ $(function () {
 
         return false;
     });
-
-
 
 
     /* shows for adding users in assigning drains */
@@ -186,7 +185,7 @@ $(function () {
                 'locale': locale
             },
             success: function (msg) {
-                createPopup(msg, drain_pos);
+                updatePopup(msg, drain_pos);
                 ajaxJS(msg);
             }
         });
@@ -364,9 +363,10 @@ $(function () {
                 success: function () {
                     $('.sign_links').remove();
                     updateSidebar();
-                    fetchDrainInfo();
-                    window.location.href = window.location.hostname;
-                    window.location.reload();
+                    map.closePopup();
+                    // fetchDrainInfo();
+                    // window.location.href = window.location.hostname;
+                    // window.location.reload();
 
                 }
             });
