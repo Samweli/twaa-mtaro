@@ -1,5 +1,5 @@
 #sign_up_box
-  = form_for :user, :url => user_registration_path, :html => {:id => "new_user", :class => 'form', :data => {:moid=>current_user.street.id}} do |f|
+  = form_for :user, :url => user_registration_path, :html => { :class => 'form', :data => {:moid=>current_user.street.id}} do |f|
     %h2
       = t("titles.add_user")
     .signup
@@ -16,5 +16,7 @@
         %li
           = f.label :sms_number, t("labels.sms_number")
           = f.text_field :sms_number
-        %li.submit_user
+        %li{:class => "submit_user", :id => "new_user"}
           = f.submit t("buttons.assign")
+        %li{:class => "submit_user", :id => "user_create_back"}
+          = f.submit t("buttons.back")

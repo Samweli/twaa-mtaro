@@ -194,7 +194,8 @@ $(function () {
 
 
     /* signs up new users for assigning drains */
-    $('body').on('submit', '#new_user', function (e) {
+    $('body').on('click', '#new_user', function (e) {
+        console.log('sign up new users is called');
         e.preventDefault();
         var locale = urlParam('locale');
         var gen_password = Math.random() // Generate random number, eg: 0.123456
@@ -529,6 +530,38 @@ $(function () {
             }
         });
     })
+
+    // back action in users list table
+    $('body').on('click', '#user_list_back', function () {
+        fetchDrainInfo(activeObjectId, drain_pos,"update");
+    });
+
+    $('body').on('click','#user_create_back', function () {
+
+        var locale = urlParam('locale');
+
+        $.ajax({
+            type: 'GET',
+            url: 'drain_claims/adopt',
+            data: {
+                'locale': locale
+            },
+            success: function (msg) {
+                updatePopup(msg, drainLocation);
+
+                // bind events to the received html
+                bind_assign(drain_pos);
+
+            }
+        });
+
+        return false;
+    });
+
+
+
+
+
 
 
 }); // end of function
