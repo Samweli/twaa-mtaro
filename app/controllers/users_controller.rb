@@ -65,7 +65,7 @@ class UsersController < Devise::RegistrationsController
 
     clean_up_passwords(resource)
     render(:json => {"errors" => errors,
-                     :html => render_to_string(:template => 'users/new')},
+                     :html => render_to_string(:template => 'users/new.html')},
            :status => 500)
   end
 
