@@ -110,7 +110,7 @@ $(function () {
                         success: function (data) {
                             // No need to refresh, improving perfomance, 
                             // refreshKML("all");
-                            fetchDrainInfo(activeObjectId, pos, "update");
+                            fetchDrainInfo(activeObjectId, drainLocation, "update");
                         }
                     });
                 }
@@ -140,7 +140,7 @@ $(function () {
                         updatePopup(msg, drainLocation);
 
                         // bind events to the received html 
-                        bind_assign(pos);
+                        bind_assign(drainLocation);
 
                     }
                 });                
@@ -167,7 +167,6 @@ $(function () {
             e.stopImmediatePropagation();
             e.originalEvent.stopImmediatePropagation();
 
-            $(this).unbind('click');
             user_id = $(this).attr('data-user-id');
             assignDrain(pos);
            

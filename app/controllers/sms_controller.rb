@@ -5,7 +5,6 @@ class SmsController < ApplicationController
 		drain_status = params['Body']
 		user_number = filter_number(from_number)
 
-		
 		# logic to updated drain
 		# TODO to updated, to deal with users with many drains
 
@@ -24,7 +23,9 @@ class SmsController < ApplicationController
 	private 
 
 	def filter_number(number)
-		number = number.to_s.gsub!('+','');
+		if(number.include? '+')
+			number = number.to_s.gsub!('+','');
+		end		
 		return number
 	end
 
