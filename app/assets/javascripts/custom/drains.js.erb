@@ -128,7 +128,6 @@ $(function () {
     /* Updating drain status to clean */
 
     $('body').on('click','#clean', function () {
-        console.log("called clean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
 
@@ -164,7 +163,6 @@ $(function () {
       /*updating drain status to unclean */
 
     $('body').on('click','#unclean', function () {
-        console.log("called unclean");
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
         showSpinner();

@@ -68,8 +68,6 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
-                console.log('after deleting');
-                console.log(data);
                 if(data.refresh){
                     refreshKML("all");
                     fetchDrainInfo(activeObjectId, drain_pos);
@@ -110,7 +108,6 @@ $(function () {
         var locale = urlParam('locale');
         submitButton.attr('disabled', 'disabled');
        e.preventDefault();
-       console.log('need help id:' + $(this).attr('data-needhelp'))
 
         $.ajax({
             type: 'POST',
@@ -132,10 +129,8 @@ $(function () {
 
             },
             error: function (jqXHR) {
-                console.log('update was a failure');
             },
             success: function (data) {
-                console.log('update was a success');
                 showNeedHelpDetails(locale,activeObjectId)
             }
         });
