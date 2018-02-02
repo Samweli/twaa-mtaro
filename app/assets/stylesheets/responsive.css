@@ -172,11 +172,15 @@ span#name{
 .font_h3 {
     font-size: 1.5em;
 }
-#add_user{
-  cursor: pointer;
-  padding-left: 15px;
-  font-weight: 600;
 
+.popup_link {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#add_user {
+  cursor: pointer;
+  font-weight: 600;
 }
 .col-md-8{ 
     cursor: default;
