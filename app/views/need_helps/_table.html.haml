@@ -11,8 +11,8 @@
     - @need_helps.each do |need_help|
       %tr
         %td= need_help.help_needed
-        %td= need_help.user.street.street_name
-        %td= need_help.user.fullname
+        %td= need_help.try(:user).try(:street).try(:street_name)
+        %td= need_help.try(:user).try(:fullname)
         %td
           %button{:id => "needhelp_edit_form", :disabled => !my_need_help_request(need_help), :data => {:needhelp => need_help.id}}
             = t("tables.need_help_details.edit")
@@ -30,7 +30,7 @@
     - @need_helps.each do |need_help|
       %tr
         %td= need_help.help_needed
-        %td= need_help.user.street.street_name
-        %td= need_help.user.fullname
+        %td= need_help.try(:user).try(:street).try(:street_name)
+        %td= need_help.try(:user).try(:fullname)
 
 

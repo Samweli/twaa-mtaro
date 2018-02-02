@@ -4,6 +4,8 @@ class Drain < ActiveRecord::Base
   has_many :claims, :class_name => 'DrainClaim', :foreign_key => "gid"
   has_many :need_helps, :class_name => 'NeedHelp', :foreign_key => "gid"
   has_and_belongs_to_many :streets
+  has_many :wards, :through => :streets
+  has_many :municipals, :through => :wards
   has_many :set_priorities
   has_many :priorities, through: :set_priorities
 
