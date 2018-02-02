@@ -95,7 +95,8 @@ class SmsService
     dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
        'not clean', 'Not clean'].map(&:downcase)
     need_help_keywords = ['msaada','Msaada', 'need help', 'Need help'].map(&:downcase)
-    street_leader = User.find_by_role_and_street_id(2, user.street_id)
+    street_leader = User.joins(:roles).where(roles: {id: 2})
+                        .find_by_street_id(user.street_id)
 
     if user
       drain_status = categorize_sms_content(drain_status)
@@ -147,7 +148,7 @@ class SmsService
             if(user.id == street_leader.id)
               need_help = {
                         'help_needed': "",
-                        'need_help_category_id': 1,
+                        'need_help_category_id': 4,
                         'user_id': user.id,
                         'gid': drain_claim.try(:gid)
                     }
