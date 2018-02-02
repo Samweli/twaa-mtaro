@@ -163,8 +163,7 @@ $(function () {
 
       /*updating drain status to unclean */
 
-    $('body').on('click','#unclean', function () {
-        console.log("called unclean");
+    $('body').on('click','#unclean', function () {;
         var id = $(this).attr('data-moid');
         var locale = urlParam('locale');
         showSpinner();
