@@ -226,6 +226,10 @@ sw:
     drain_details: "Taarifa za Mtaro"
     site_share_message: "Twaa mtaro | Dar es salaam"
     drain_share_message: "%{username} anasafisha mtaro unaopatikana %{address}"
+    drain_is_clean: "Mtaro huu ni msafi"
+    drain_is_dirty: "Mtaro huu ni mchafu"
+    drain_need_help: "Mtaro huu unahitaji msaada"
+    drain_unknown: "Hali ya mtaro huu haijulikani"
   sponsors:
     cfa: "code za Tanzania"   # FIXME
     city: "Mji  wa Dar es Salaam"    # FIXME
