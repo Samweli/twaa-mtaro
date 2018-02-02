@@ -1,5 +1,5 @@
 = form_for :user, :html => {:id => "account", :user_id => current_user.id } do |f|
 	%p
 		= t("buttons.request_account")
-		= f.collection_select(:role_id, Role.all, :id, :name)
+		= f.collection_select(:role_id, Role.not_my_roles(current_user), :id, :name)
 	= submit_tag t("buttons.account_submit"), :id => 'roles_button', :class => "btn btn-submit pull-left"

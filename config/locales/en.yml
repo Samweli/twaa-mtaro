@@ -215,6 +215,10 @@ en:
     drain_details: "Drain details"
     site_share_message: "Adopt a drain | Dar es salaam"
     drain_share_message: "Drain in %{address} is adopted by %{username}"
+    drain_is_clean: "This drain is clean"
+    drain_is_dirty: "This drain is dirty"
+    drain_need_help: "This drain needs help"
+    drain_unknown: "This drain status is unknown"
   sponsors:
     cfa: "Tanzania Urban Resilience Program"   # FIXME
     city: "City of Dar es salaam"    # FIXME

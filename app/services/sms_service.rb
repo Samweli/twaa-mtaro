@@ -154,6 +154,7 @@ class SmsService
                 @need_help = NeedHelp.new(need_help)
                 if @need_help.save
                    drain.need_help = true
+                   drain.save(validate: false)
                 end
             end
             message = I18n.t('messages.thanks')
