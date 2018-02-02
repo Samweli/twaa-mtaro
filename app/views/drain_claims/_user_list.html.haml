@@ -20,5 +20,8 @@
     #pagination.font_12.link_1.hidden-xs
       = paginate @street_users, :params => {:controller => 'drain_claims', :action => 'user_list'}, :remote => true
   %div.link_add_user
-    %a#add_user
+    %a{:id => "user_list_back"}
+      = t("buttons.back")
+      \|
+    %a{:id => "add_user"}
       = t("captions.add_user")

@@ -43,6 +43,16 @@ $(function () {
 
     });
 
+    // back action in need help details table
+    $('body').on('click', '#table_back', function () {
+        fetchDrainInfo(activeObjectId, drain_pos,"update");
+    });
+
+    // back action in need help create form
+    $('body').on('click', '#create_back', function () {
+        fetchDrainInfo(activeObjectId, drain_pos,"update");
+    });
+
     // deletes a need help request
     $('body').on('click', '#delete_needhelp', function () {
         var locale = urlParam('locale');
