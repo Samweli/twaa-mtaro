@@ -13,6 +13,7 @@ en:
     change_status: "change"
     change: "remove"
     clean: "Clean"
+    claim_clean: 'Has cleared?'
     dirty: "Not clean"
     edit_profile: "Edit profile"
     email_password: "Email me my password"

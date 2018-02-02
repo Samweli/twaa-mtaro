@@ -24,6 +24,7 @@ sw:
     continue: "Endelea"
     cleaned: '%{count} Misafi'
     clean: 'Msafi'
+    claim_clean: 'Amesafisha?'
     dirty: "Sio msafi"
     edit_profile: "Hariri wasifu"
     email_password: "Ntumie nenosiri kwenye barua pepe"

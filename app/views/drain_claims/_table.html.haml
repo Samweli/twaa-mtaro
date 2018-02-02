@@ -1,0 +1,47 @@
+- if user_signed_in? && current_user.has_role(2)
+  %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
+    %tr
+      %th
+        = t("defaults.user")
+      %th
+        = t("buttons.claim_clean")
+      %th.hide_column
+        = t("defaults.change_status")
+      %th
+        = t("defaults.actions")
+    - @claims.each do |c|
+      %tr
+        %td= c.try(:user).try(:fullname)
+        %td= yesno(c.shoveled)
+        %td.hide_column
+          - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
+            %button{:class => "btn btn-default chng_link", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
+              = t("buttons.change_status")
+        %td
+          %button{:class => "btn btn-default abdn_link", :data => {:moid=>c.try(:id)}}
+            = t("buttons.change")
+- else
+  %table{:id =>"abandon_link", :data=>{:hide_column =>yesno(@claim_owner)}}
+    %tr
+      %th
+        = t("defaults.user")
+      %th
+        = t("defaults.status")
+      - if user_signed_in?
+        %th.hide_column
+          = t("defaults.change_status")
+    - @claims.each do |c|
+      %tr
+        %td= c.try(:user).try(:fullname)
+        %td
+          - if c.shoveled?
+            = t("buttons.clean")
+          - else
+            = t("buttons.dirty")
+            /- elsif c.shoveled == nil
+            /  = t("buttons.unknown_status")
+        - if user_signed_in?
+          %td.hide_column
+            - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
+              %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
+                = t("buttons.change_status")
