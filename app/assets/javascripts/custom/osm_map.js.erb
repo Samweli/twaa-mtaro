@@ -13,6 +13,7 @@ add here all functions that depend on map
   var selected_drain;
   var map;
   var feature;
+  var legend_closed = false;
 
 
 $(function () {
@@ -160,6 +161,8 @@ $(function () {
                     colours[i] + '<br><br>';
             }
 
+            // giving id to the div in the legend
+            $(div).attr('id', 'close_legend')
             return div;
         };
 
@@ -320,8 +323,6 @@ $(function () {
                 drain_id = type.split('=')[1];
                 kmlLayer.eachLayer(function(layer){
                     if(layer.feature.properties.description == drain_id){
-                        // TODO fix this logic execution, remove console.log
-                        console.log("removing the layer");
                         kmlLayer.removeLayer(layer);
                         feature == null;
                     }
@@ -390,6 +391,24 @@ $(function () {
     }
     
     addLegend();
+
+     // hiding map legend when a popup opens
+    map.on('popupopen',function (e) {
+        if(!legend_closed){
+            $('#close_legend').hide();
+            legend_closed = true
+        }
+
+    });
+
+    // showing lenged when popup closes
+    map.on('popupclose',function (e) {
+        if(legend_closed){
+            $('#close_legend').show();
+            legend_closed = false;
+        }
+
+    });
 
 
 
