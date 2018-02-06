@@ -7,6 +7,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource
     if resource.save
+      User.assign_role(resource.id, 1)
       sign_in resource
       render(json: Api::V1::SessionSerializer.new(current_user, root: 'users').to_json)
     else
