@@ -180,6 +180,12 @@ en:
     yes_value: "Yes"
     no_value: "No"
     success: "Successful"
+  role:
+    citizen: "Citizen"
+    community_member: "Vulunteer"
+    veo: "Leader at sub-ward level"
+    weo: "Leader at municipal level"
+    meo: "Leader at municipal level"
   tables:
     need_help: "Needs help"
     need_help_details:
