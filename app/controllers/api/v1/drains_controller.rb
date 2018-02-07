@@ -2,14 +2,11 @@ class Api::V1::DrainsController < Api::V1::BaseController
 
   def index
     @drains = Drain.find_all_by_drain_type(params[:type], params[:page], params[:count])
-    unless @drains.blank?
-      render(
-          json: ActiveModel::ArraySerializer.new(
-              @drains,
-              each_serializer: Api::V1::DrainSerializer,
-              root: 'drains',
-          )
-      )
+    if !@drains.blank?
+      render :json => {:drains => ActiveModel::ArraySerializer.new(
+          @drains,
+          each_serializer: Api::V1::DrainSerializer
+      ), total: @drains.total_count}
     else
       render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404
     end

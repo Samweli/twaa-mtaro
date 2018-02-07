@@ -167,7 +167,7 @@ class Drain < ActiveRecord::Base
      if page && count
       paginate_drains(drains, page, count)
       else
-        drains
+        paginate_drains(drains, 1, drains.size)
      end
   end
 
@@ -175,6 +175,9 @@ class Drain < ActiveRecord::Base
     pagenated_drains = Kaminari.paginate_array(
         drains
     ).page(page).per(count)
+    @total_pages =Kaminari.paginate_array(
+        drains
+    ).total_count
     pagenated_drains
   end
 
