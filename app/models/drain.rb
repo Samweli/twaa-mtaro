@@ -10,7 +10,7 @@ class Drain < ActiveRecord::Base
   has_many :priorities, through: :set_priorities
 
   validates_presence_of :lat, :lng
-  
+
   include Geokit::Geocoders
 
   def self.find_all(limit=10000)
@@ -18,16 +18,16 @@ class Drain < ActiveRecord::Base
     SELECT s.*, ST_AsKML(the_geom) AS "kml" from mitaro_dar s LIMIT ?
     )
 
-    find_by_sql([query,limit.to_i])
+    find_by_sql([query, limit.to_i])
   end
 
   def self.where_custom(arg)
     if (arg.length == 1)
       column = arg.keys.join("") # this returns string instead of array
       column_value = arg.values
-     
-     # TODO replace "#{column}" with ? and add column variable in 
-     # find_by_sql function 
+
+      # TODO replace "#{column}" with ? and add column variable in
+      # find_by_sql function
       query = %Q(
       SELECT "mitaro_dar".*, ST_AsKML(the_geom) AS "kml" FROM mitaro_dar  
       WHERE  "#{column}" = ?
@@ -42,14 +42,14 @@ class Drain < ActiveRecord::Base
   def self.where_custom_conditions(condition, condition_value)
     query = %Q(
       SELECT "mitaro_dar".*, ST_AsKML(the_geom) AS "kml" FROM mitaro_dar  
-      WHERE  "mitaro_dar"."#{condition}" #{condition_value} 
-      )
-      find_by_sql([query])
+      WHERE  "mitaro_dar"."#{condition}" #{condition_value}
+    )
+    find_by_sql([query])
     # if (arg.length == 1)
     #   puts arg
     #   column = arg.keys.join("") # this returns string instead of array
     #   column_value = arg.values
-     
+
     #  # TODO replace "#{column}" with ? and add column variable in 
     #  # find_by_sql function 
     #   query = %Q(
@@ -80,10 +80,10 @@ class Drain < ActiveRecord::Base
       )
     )
     LIMIT ?)
-    
+
     find_by_sql([query, lng.to_f, lat.to_f, geo_buffer_size.to_f, limit.to_i])
   end
-  
+
   def reverse_geocode
     @reverse_geocode ||= MultiGeocoder.reverse_geocode([lat, lng])
   end
@@ -125,7 +125,7 @@ class Drain < ActiveRecord::Base
   end
 
   def priority?(priority)
-    priorities.any? { |p| p.name.underscore.to_sym == priority }
+    priorities.any? {|p| p.name.underscore.to_sym == priority}
   end
 
   def self.set_flood_prone(drain_id)
@@ -136,5 +136,51 @@ class Drain < ActiveRecord::Base
     set_flood_prone.save
   end
 
+  def self.find_all_by_drain_type(type, page = nil, count = nil)
+    # check for the type of drains to query
+    # TODO update all where_custom domain method to use
+    # base where with select as Domain.where(conditions).select('columns')
+    drains = nil
+    case type
+      when "all"
+        drains = Drain.find_all(10000)
+      when "cleaned"
+        drains = Drain.where_custom(:cleared => true)
+      when "uncleaned"
+        drains = Drain.where_custom(:cleared => false)
+      when "need_help"
+        drains = Drain.where_custom(:need_help => true)
+      when "unknown"
+        drains = Drain.where(:cleared => nil, :need_help => nil).
+            select('*, ST_AsKML(the_geom) AS "kml"')
+      when "adopted"
+        drains = Drain.where_custom_conditions(:claims_count, "> 0")
+      when "not_adopted"
+        drains = Drain.where_custom_conditions(:claims_count, "= 0")
+      else
+        if type.include? "address"
+          values = params[:type].split('=')
+          value = values[1]
+          drains = Drain.where_custom(:gid => value)
+        end
+    end
+     if page && count
+      paginate_drains(drains, page, count)
+      else
+        paginate_drains(drains, 1, drains.size)
+     end
+  end
+
+  def self.paginate_drains(drains, page, count)
+    pagenated_drains = Kaminari.paginate_array(
+        drains
+    ).page(page).per(count)
+    @total_pages =Kaminari.paginate_array(
+        drains
+    ).total_count
+    pagenated_drains
+  end
+
 
 end
+
