@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 ruby "2.2.3"
 
-gem 'rails', '~> 3.2.13'
+gem 'rails', '~> 4.1.11'
 
 gem 'active_model_serializers', '0.9.2'
 gem 'arel'
 gem 'browser'
-gem 'devise', '2.2.2'
+gem 'devise', '3.0.4'
 gem 'execjs'
 gem 'geokit'
 gem 'google-analytics-rails', '1.1.1'

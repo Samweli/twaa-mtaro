@@ -20,6 +20,7 @@ coverage
 db/*.sqlite3
 public/assets
 doc/
+bin/
 lib/bundler/man
 log/*.log
 pkg/
@@ -33,6 +34,7 @@ vendor/cache
 ./config/initializers/recaptcha.rb
 ./config/database.yml
 config/database.yml
+config/secrets.yml
 db/schema.rb
 Gemfile.lock
 
