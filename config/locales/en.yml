@@ -13,6 +13,7 @@ en:
     change_status: "change"
     change: "remove"
     clean: "Clean"
+    claim_clean: 'Has cleared?'
     dirty: "Not clean"
     edit_profile: "Edit profile"
     email_password: "Email me my password"
@@ -183,6 +184,12 @@ en:
     yes_value: "Yes"
     no_value: "No"
     success: "Successful"
+  role:
+    citizen: "Citizen"
+    community_member: "Volunteer"
+    veo: "Leader at sub-ward level"
+    weo: "Leader at ward level"
+    meo: "Leader at municipal level"
   tables:
     need_help: "Needs help"
     need_help_details:

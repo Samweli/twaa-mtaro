@@ -33,6 +33,26 @@ $(function () {
         return false;
     });
 
+    // back action in need help edit form
+    $('body').on('click', '#edit_back', function () {
+        var locale = urlParam('locale');
+        var gid =  $(this).attr('data-gid');
+
+        showNeedHelpDetails(locale,gid)
+        return false;
+
+    });
+
+    // back action in need help details table
+    $('body').on('click', '#table_back', function () {
+        fetchDrainInfo(activeObjectId, drain_pos,"update");
+    });
+
+    // back action in need help create form
+    $('body').on('click', '#create_back', function () {
+        fetchDrainInfo(activeObjectId, drain_pos,"update");
+    });
+
     // deletes a need help request
     $('body').on('click', '#delete_needhelp', function () {
         var locale = urlParam('locale');
@@ -48,8 +68,6 @@ $(function () {
             error: function (jqXHR) {
             },
             success: function (data) {
-                console.log('after deleting');
-                console.log(data);
                 if(data.refresh){
                     refreshKML("all");
                     fetchDrainInfo(activeObjectId, drain_pos);
@@ -90,7 +108,6 @@ $(function () {
         var locale = urlParam('locale');
         submitButton.attr('disabled', 'disabled');
        e.preventDefault();
-       console.log('need help id:' + $(this).attr('data-needhelp'))
 
         $.ajax({
             type: 'POST',
@@ -112,10 +129,8 @@ $(function () {
 
             },
             error: function (jqXHR) {
-                console.log('update was a failure');
             },
             success: function (data) {
-                console.log('update was a success');
                 showNeedHelpDetails(locale,activeObjectId)
             }
         });

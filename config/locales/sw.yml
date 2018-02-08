@@ -24,6 +24,7 @@ sw:
     continue: "Endelea"
     cleaned: '%{count} Misafi'
     clean: 'Msafi'
+    claim_clean: 'Amesafisha?'
     dirty: "Sio msafi"
     edit_profile: "Hariri wasifu"
     email_password: "Ntumie nenosiri kwenye barua pepe"
@@ -194,6 +195,12 @@ sw:
     no_value: "Hapana"
     user_not_found: "Hatukuweza kutambua akaunti yako, unaweza kujiunga hap %{site}"
     success: "Imefanikiwa"
+  role:
+    citizen: "Mwananchi"
+    community_member: "Kujitolea"
+    veo: "Kiongozi ngazi ya mtaa"
+    weo: "Kiongozi ngazi ya kata"
+    meo: "Kiongozi ngazi ya manispaa"
   tables:
     need_help: "Msaada"
     need_help_details:
