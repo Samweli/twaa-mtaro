@@ -161,6 +161,7 @@ en:
     user_not_found: "Sorry we could not find your account, please register here %{site}"
     need_help_error: "There is a problem in receiving your help request, try again later."
     need_help_thanks: "Thanks for your info, we will notify the responsible municipal and ward."
+    need_help_user_error: "You must be a sub ward or street leader to request help."
 
   notices:
     abandoned: "%{thing} abandoned!"

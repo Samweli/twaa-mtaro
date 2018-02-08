@@ -136,5 +136,9 @@ class Drain < ActiveRecord::Base
     set_flood_prone.save
   end
 
+  def has_street(street_id)
+    self.streets.include? Street.find(street_id)
+  end
+
 
 end

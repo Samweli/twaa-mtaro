@@ -122,16 +122,20 @@ class SmsService
           if (drain_claim)
             drain_claim.shoveled = true
           end
-          if(user.id == street_leader.id)
-            drain = Drain.find_by_gid(drain_id)
+          drain = Drain.find_by_gid(drain_id)
+          if(allow_updates(user, drain))
             drain.cleared = true
             drain.save(validate: false)
             message = I18n.t('messages.drain_cleaned')
           else
-            if (drain_claim.save(validate: false))
-              message = I18n.t('messages.thanks')
+            if (drain_claim)
+              if (drain_claim.save(validate: false))
+                message = I18n.t('messages.thanks')
+              else
+                message = I18n.t('messages.error')
+              end
             else
-              message = I18n.t('messages.error')
+              message = I18n.t('messages.drain_unknown')
             end
           end
           # drain.need_help = false
@@ -141,16 +145,21 @@ class SmsService
           if (drain_claim)
             drain_claim.shoveled = false
           end
-          if(user.id == street_leader.id)
-            drain = Drain.find_by_gid(drain_id)
+
+          drain = Drain.find_by_gid(drain_id)
+          if(allow_updates(user, drain))
             drain.cleared = false
             drain.save(validate: false)
             message = I18n.t('messages.drain_dirty')
           else
-            if(drain_claim.save(validate: false))
-              message = I18n.t('messages.thanks')
+             if (drain_claim)
+              if (drain_claim.save(validate: false))
+                message = I18n.t('messages.thanks')
+              else
+                message = I18n.t('messages.error')
+              end
             else
-              message = I18n.t('messages.error')
+              message = I18n.t('messages.drain_unknown')
             end
           end
         else
@@ -163,8 +172,9 @@ class SmsService
           
           # drain_claim.shoveled = false
           # drain.need_help = true
-          if(user.id == street_leader.id)
-            drain = Drain.find_by_gid(drain_id)
+          drain = Drain.find_by_gid(drain_id)
+          puts allow_updates(user, drain);
+          if(allow_updates(user, drain))
             need_help = {
                       'help_needed': '',
                       'need_help_category_id': 4,
@@ -179,6 +189,8 @@ class SmsService
             else
               message = I18n.t('messages.need_help_error')
             end
+          else
+            message = I18n.t('messages.need_help_user_error')
           end
           
         end
@@ -195,5 +207,16 @@ class SmsService
     else
       I18n.locale = 'en'
     end
+  end
+
+  def allow_updates(user, drain)
+    if user.present? && drain.present?
+      if user.has_role(2)
+        if drain.has_street(user.try(:street_id))
+          return true
+        end
+      end
+    end
+    return false
   end
 end

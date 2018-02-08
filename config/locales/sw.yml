@@ -172,6 +172,7 @@ sw:
     user_not_found: "Samahani atuifahamu akaunti yako, tafadhali jisajili hapa %{site}"
     need_help_error: "Kuna tatizo kwenye kupokea taarifa yako, jaribu tena baadae."
     need_help_thanks: "Asante kwa taarifa yako, taarifa hizi zimeshafika kwa manispaa na kiongozi wa kata husika."
+    need_help_user_error: "Kiongozi wa mtaa pekee ndiye anayeruhusiwa kuomba msaada"
   notices:
     abandoned: "%{thing} kutelekezwa!"
     adopted: "Umechukua %{thing}!"
