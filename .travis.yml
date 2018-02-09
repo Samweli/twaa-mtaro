@@ -7,7 +7,6 @@ language: ruby
 
 before_script:
   - psql -c 'create database twaamtaro_test;' -U postgres
-  - psql -c 'create table mitaro_dar (gid integer PRIMARY KEY, the_geom varchar(254));' -U postgres
   - "cp ./.travis.database.yml ./config/database.yml"
 
 script:
