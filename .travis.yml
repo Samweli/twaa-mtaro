@@ -1,10 +1,6 @@
 bundler_args: "--without assets:development:production"
 rvm:
   - 2.2.3
-  - 1.29.1
-  - rbx
-  - rbx-2.0
-  - ree
 env: "RAILS_ENV=test"
 
 language: ruby
