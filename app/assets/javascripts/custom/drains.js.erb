@@ -206,8 +206,7 @@ $(function () {
             var lng = $(this).attr('data-lng');
             var latlng = L.latLng(lat, lng);
             map.setView(latlng, 19);
-            fetchDrainInfo(activeObjectId, latlng);
-
+            fetchDrainInfo(activeObjectId,latlng);
 
             return false;
         });
