@@ -10,6 +10,7 @@ before_script:
   - "cp ./.travis.database.yml ./config/database.yml"
 
 script:
+  - bundle exec rake db:migrate
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
