@@ -14,3 +14,9 @@ script:
 
 cache: bundler
 
+# whitelist
+branches:
+  only:
+    - master
+    - development
+
