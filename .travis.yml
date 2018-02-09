@@ -5,11 +5,16 @@ env: "RAILS_ENV=test"
 
 language: ruby
 
+addons:
+  postgresql: "9.5"
+
 before_install:
+  - sudo apt-get --qq update
   - psql -c 'create database twaamtaro_test;' -U postgres
   - psql -U postgres -c "create extension postgis"
 
 before_script:
+  - echo "Building starting on `date`"
   - "cp ./.travis.database.yml ./config/database.yml"
 
 script:
