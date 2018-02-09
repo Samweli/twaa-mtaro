@@ -7,12 +7,15 @@ language: ruby
 
 before_script:
   - psql -c 'create database twaamtaro_test;' -U postgres
+  - psql -U postgres -c "create extension postgis"
   - "cp ./.travis.database.yml ./config/database.yml"
 
 script:
   - bundle exec rake db:migrate
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
+  - psql -U postgres -c 'INSERT INTO mitaro_dar (gid, the_geom)
+    VALUES ('1', ST_SRID(ST_MakePoint(39.0653, -6.8344), 4326));'
   - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
 
 cache: bundler
