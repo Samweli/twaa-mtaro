@@ -14,45 +14,21 @@
         = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
 
   .descriptions
-    %h4
-      = t("defaults.address") + ':'
-      - if @drain.try(:address)
-        = @drain.try(:address) +', '
-        = @drain.try(:gid)
-      - else
-        %span.font12
-          = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
-          = @drain.try(:gid)
 
-    - if  @drain.try(:need_help) == true
-      - if  @drain.try(:cleared) == false
-        %p.font_14.color_warn.center
-        = t("defaults.need_help") + '. '
-        = t("defaults.dirty")
-        %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
-          = t("defaults.view_need_help")
-      - elsif @drain.try(:cleared) == true
-        %p.font_14.color_warn.center
-        = t("defaults.need_help") + '. '
-        = t("defaults.clean")
-        %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
-          = t("defaults.view_need_help")
-      - else
-        %p.font_14.center
-          = t("defaults.need_help") + ' '
-          %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
-            = t("defaults.need_help_details")
-    - elsif @claims.empty?
-      %p.font_14.color_warn.center
-        = t("defaults.notify")
-    - else
-      %h3
-        = t('captions.taken') + ':'
+    / the description texts tells
+    / whether the drain needs help
+    / or is not adopted
+    = render 'drain_description'
+
+    / displaying table of users
+    / claiming the  drain conditionally
   - unless @claims.empty?
     #people_list.users
     = render 'table'
 
-    / conditionally showing drain status or action buttons
+    / conditionally showing action buttons
+    / when the current user is a sub-ward leader
+    / else just status description buttons are shown
   - if user_signed_in? && current_user.has_role(2)
     = render :partial => 'drains/drain_actions'
   - else

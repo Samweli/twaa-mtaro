@@ -39,7 +39,7 @@ class DrainsController < ApplicationController
               select('*, ST_AsKML(the_geom) AS "kml"')
         elsif params[:type] == 'priority'
           @drains = Drain.where(:priority => true)
-          .select('*, ST_AsKML(the_geom) AS "kml"')
+                        .select('*, ST_AsKML(the_geom) AS "kml"')
         end
       end
 
@@ -117,7 +117,7 @@ class DrainsController < ApplicationController
           claim.save(validate: false)
         end
         drain.cleared = shoveled
-        drain.need_help = false if shoveled
+       # drain.need_help = false if shoveled
         drain.save(validate: false)
 
         # check if it is street leader who is updating drain status
@@ -158,8 +158,8 @@ class DrainsController < ApplicationController
     reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
 
     sms_service.send_sms(
-            reply_street_leader,
-            user.sms_number);
+        reply_street_leader,
+        user.sms_number);
 
     render :json => {:success => true}
   end
