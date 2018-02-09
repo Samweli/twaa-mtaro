@@ -1,6 +1,6 @@
 class ChangeDrains < ActiveRecord::Migration
   def up
-    if RAILS.env.test?
+    if ENV['RAILS_ENV'] == 'test'
       create_drain_table()
     end
 
