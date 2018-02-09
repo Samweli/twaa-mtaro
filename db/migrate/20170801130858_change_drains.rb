@@ -2,6 +2,7 @@ class ChangeDrains < ActiveRecord::Migration
   def up
     if RAILS.env.test?
       create_drain_table()
+    end
 
     change_table :mitaro_dar do |t|
       t.boolean :cleared
