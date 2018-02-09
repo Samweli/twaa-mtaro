@@ -112,37 +112,30 @@ class DrainsController < ApplicationController
         end
 
       else
+        # check if it is street leader of the drains street
+        # who is updating drain status
+        if (updates_authentication(user, drain))
+          drain.cleared = shoveled
+          drain.need_help = false if shoveled
+          drain.save(validate: false)
+        end
+
         if claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
-        end
-        drain.cleared = shoveled
-        drain.need_help = false if shoveled
-        drain.save(validate: false)
 
-        # check if it is street leader who is updating drain status
-        if (user.id == street_leader.id)
-          if claim
-            claim.update_attribute(:shoveled, shoveled)
-            claim.save(validate: false)
-          end
-        end
-
-        reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
-        sms_service.send_sms(
-            reply_street_leader,
-            user.sms_number);
-
-        if claim
           normal_user = User.find_by_id(claim.user_id)
           notify_user = t('messages.leader_to_user', :id => drain.gid, :status => status)
           sms_service.send_sms(
               notify_user,
               normal_user.sms_number);
         end
-
+        
+        reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
+        sms_service.send_sms(
+            reply_street_leader,
+            user.sms_number);
       end
-
     elsif params.has_key?(:need_help)
       drain.update_attribute(:need_help, need_help)
     end
