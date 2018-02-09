@@ -55,12 +55,6 @@ class ChangeDrains < ActiveRecord::Migration
       t.string  "oneway",       :limit => 254
       t.decimal "lat",                         :precision => 16, :scale => 14
       t.decimal "lng",                         :precision => 16, :scale => 14
-      t.boolean "cleared"
-      t.boolean "need_help"
-      t.string  "address"
-      t.string  "zipcode"
-      t.integer "claims_count",                                                :default => 0
-      t.boolean "priority"
     end
   end
 end

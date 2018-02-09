@@ -2,8 +2,7 @@ require 'test_helper'
 
 class DrainsControllerTest < ActionController::TestCase
   test 'should get index' do
-    get :index, {:type => 'all', :format => :json}
-    puts @response.body
+    get :index, {:type => 'all', :format => :kml}
     assert_response :success
   end
 end
