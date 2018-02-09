@@ -5,9 +5,11 @@ env: "RAILS_ENV=test"
 
 language: ruby
 
-before_script:
+before_install:
   - psql -c 'create database twaamtaro_test;' -U postgres
   - psql -U postgres -c "create extension postgis"
+
+before_script:
   - "cp ./.travis.database.yml ./config/database.yml"
 
 script:
