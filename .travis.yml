@@ -23,7 +23,7 @@ before_script:
 
 script:
   - bundle exec rake db:migrate
-  - psql -U postgres -d "alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);"
+  - psql -U postgres -d "twaamtaro_test"-c "alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);"
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   # - psql -U postgres -c 'INSERT INTO mitaro_dar (gid, the_geom)
