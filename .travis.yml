@@ -1,4 +1,3 @@
-
 language: ruby
 
 dist: precise
@@ -7,7 +6,7 @@ bundler_args: "--without assets:development:production"
 
 rvm:
   - 2.2.3
-  
+
 env: "RAILS_ENV=test"
 
 addons:
@@ -15,6 +14,7 @@ addons:
 
 before_install:
   - sudo apt-get -y update
+  - gem install bundler -v 1.11.2
   - psql -c 'create database twaamtaro_test;' -U postgres
   - psql -U postgres -c "create extension postgis"
 
