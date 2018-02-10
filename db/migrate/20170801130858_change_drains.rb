@@ -12,7 +12,7 @@ class ChangeDrains < ActiveRecord::Migration
       t.index :cleared
       t.integer :claims_count, :default => 0
     end
-    change_column :mitaro_dar, :the_geom, :text
+    change_column :mitaro_dar, :the_geom, :geometry
   end
 
   def down
