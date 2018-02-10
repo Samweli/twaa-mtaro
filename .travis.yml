@@ -30,8 +30,8 @@ script:
   #   VALUES ('1', ST_SRID(ST_MakePoint(39.0653, -6.8344), 4326));'
   - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
 
-after_failure:
-  : psql -U postgres -c '\d public.mitaro_dar'
+# after_failure:
+#   : psql -U postgres -c '\d public.mitaro_dar'
 
 cache: bundler
 
