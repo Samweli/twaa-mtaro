@@ -1,11 +1,14 @@
+
+language: ruby
+
 dist: precise
 
 bundler_args: "--without assets:development:production"
+
 rvm:
   - 2.2.3
+  
 env: "RAILS_ENV=test"
-
-language: ruby
 
 addons:
   postgresql: "9.5"
