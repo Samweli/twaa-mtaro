@@ -15,7 +15,7 @@ addons:
 before_install:
   - sudo apt-get -y update
   - psql -c 'create database twaamtaro_test;' -U postgres
-  - psql -U postgres -c "create extension postgis"
+  - psql -U postgres -d 'twaamtaro_test' -c "create extension postgis"
 
 before_script:
   - echo "Building starting on `date`"
