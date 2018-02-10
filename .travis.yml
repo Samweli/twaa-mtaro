@@ -14,7 +14,6 @@ addons:
 
 before_install:
   - sudo apt-get -y update
-  - gem install bundler -v 1.11.2
   - psql -c 'create database twaamtaro_test;' -U postgres
   - psql -U postgres -c "create extension postgis"
 
@@ -24,6 +23,7 @@ before_script:
 
 script:
   - bundle exec rake db:migrate
+  - psql -U postgres -d "alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);"
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   # - psql -U postgres -c 'INSERT INTO mitaro_dar (gid, the_geom)
