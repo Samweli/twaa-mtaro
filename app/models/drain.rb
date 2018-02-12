@@ -125,6 +125,27 @@ class Drain < ActiveRecord::Base
     reverse_geocode.full_address
   end
 
+  def save_to_cleared_history
+    actions = ["cleared", "uncleared"]
+
+    if self.cleared != nil
+      drain_history = DrainHistory.new(
+          :gid => gid,
+          :user_id => 19,
+          :cleared => cleared,
+          :need_help => need_help,
+          :action => cleared ? actions[0] : actions[1],
+          :street_id => 1
+                                      )
+      drain_history.save
+    end
+  end
+
+  def update_cleared_attribute(cleared)
+    update_attribute(:cleared, cleared)
+    save_to_cleared_history
+  end
+
   def priority?(priority)
     priorities.any? {|p| p.name.underscore.to_sym == priority}
   end
@@ -169,11 +190,11 @@ class Drain < ActiveRecord::Base
           drains = Drain.where_custom(:gid => value)
         end
     end
-     if page && count
+    if page && count
       paginate_drains(drains, page, count)
-      else
-        paginate_drains(drains, 1, drains.size)
-     end
+    else
+      paginate_drains(drains, 1, drains.size)
+    end
   end
 
   def self.paginate_drains(drains, page, count)

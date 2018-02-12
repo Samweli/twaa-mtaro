@@ -84,6 +84,14 @@ class Api::V1::DrainsController < Api::V1::BaseController
     render :json => {:ranking => ranking_data}
   end
 
+  # Get /drains/history
+  # returns history of activities
+  # happened in drains
+  def history
+    historical_data = DrainHistory.all
+    render :json => {:history => historical_data}
+  end
+
   private
 
   def street_drain_data(id)
@@ -101,4 +109,6 @@ class Api::V1::DrainsController < Api::V1::BaseController
                   :need_help => drains_need_help}
     }
   end
+
+
 end

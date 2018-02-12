@@ -57,7 +57,9 @@ AdoptADrain::Application.routes.draw do
 
       get '/drains/data' => 'drains#data'
       get '/drains/ranking' => 'drains#ranking'
-      resources :drains,only: [:index, :create, :show, :update, :destroy]
+      resources :drains,only: [:index, :create, :show, :update, :history, :destroy] do
+        get 'history', :on => :collection
+      end
 
       get 'street_drains/:id' => 'drains#street_drains'
       resources :streets,only: [:index, :create, :show, :update, :destroy]
