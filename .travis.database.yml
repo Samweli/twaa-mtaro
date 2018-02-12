@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  database: twaamtaro_test
+  username: postgres
+  encoding: utf8

@@ -1,9 +1,46 @@
+language: ruby
+
+dist: precise
+
 bundler_args: "--without assets:development:production"
-script: "bundle exec rake db:create db:migrate test"
+
 rvm:
-  - 1.8.7
-  - 1.9.2
-  - rbx
-  - rbx-2.0
-  - ree
+  - 2.2.3
+
 env: "RAILS_ENV=test"
+
+addons:
+  postgresql: "9.5"
+
+before_install:
+  - sudo apt-get -y update
+  - psql -c 'create database twaamtaro_test;' -U postgres
+  - psql -U postgres -d 'twaamtaro_test' -c "create extension postgis"
+
+before_script:
+  - echo "Building starting on `date`"
+  - "cp ./.travis.database.yml ./config/database.yml"
+
+script:
+  - bundle exec rake db:migrate
+  - psql -U postgres -d 'twaamtaro_test' -c 'alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);'
+  - psql -U postgres -d 'twaamtaro_test' -c "INSERT INTO mitaro_dar (gid, the_geom) VALUES ('1', ST_SetSRID(ST_GeomFromText('MULTILINESTRING((-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932))'),4326));"
+  - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
+  # - bundle exec rake db:schema:load
+  # - bundle exec rake db:test:prepare
+  # - psql -U postgres -d 'twaamtaro_test' -c 'alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);'
+  # # - psql -U postgres -c 'INSERT INTO mitaro_dar (gid, the_geom)
+  # #   VALUES ('1', ST_SRID(ST_MakePoint(39.0653, -6.8344), 4326));'
+  # - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
+
+# after_failure:
+#   : psql -U postgres -c '\d public.mitaro_dar'
+
+cache: bundler
+
+# whitelist
+branches:
+  only:
+    - master
+    - development
+

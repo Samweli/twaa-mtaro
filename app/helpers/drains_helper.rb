@@ -31,4 +31,15 @@ module DrainsHelper
     return false
   end
 
+  def updates_authentication(user, drain)
+    if user.present? && drain.present?
+      if user.has_role(2)
+        if drain.has_street(user.try(:street_id))
+          return true
+        end
+      end
+    end
+    return false
+  end
+
 end

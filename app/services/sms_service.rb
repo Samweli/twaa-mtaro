@@ -123,7 +123,7 @@ class SmsService
             drain_claim.shoveled = true
           end
           drain = Drain.find_by_gid(drain_id)
-          if(allow_updates(user, drain))
+          if(updates_authentication(user, drain))
             drain.cleared = true
             drain.save(validate: false)
             message = I18n.t('messages.drain_cleaned')
@@ -147,7 +147,7 @@ class SmsService
           end
 
           drain = Drain.find_by_gid(drain_id)
-          if(allow_updates(user, drain))
+          if(updates_authentication(user, drain))
             drain.cleared = false
             drain.save(validate: false)
             message = I18n.t('messages.drain_dirty')
@@ -173,8 +173,8 @@ class SmsService
           # drain_claim.shoveled = false
           # drain.need_help = true
           drain = Drain.find_by_gid(drain_id)
-          puts allow_updates(user, drain);
-          if(allow_updates(user, drain))
+          puts updates_authentication(user, drain);
+          if(updates_authentication(user, drain))
             need_help = {
                       'help_needed': '',
                       'need_help_category_id': 4,
@@ -209,14 +209,14 @@ class SmsService
     end
   end
 
-  def allow_updates(user, drain)
-    if user.present? && drain.present?
-      if user.has_role(2)
-        if drain.has_street(user.try(:street_id))
-          return true
-        end
-      end
-    end
-    return false
-  end
+  # def updates_authentication(user, drain)
+  #   if user.present? && drain.present?
+  #     if user.has_role(2)
+  #       if drain.has_street(user.try(:street_id))
+  #         return true
+  #       end
+  #     end
+  #   end
+  #   return false
+  # end
 end

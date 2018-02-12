@@ -5,7 +5,9 @@ AdoptADrain::Application.routes.draw do
   resources :need_help_categories
   resources :need_helps
   resources :authentications
-
+  
+  # TODO replace the below devise with 
+  # devise_scope :user do ... end
   devise_for :users, :controllers => {
       :passwords => 'passwords',
       :registrations => 'users',

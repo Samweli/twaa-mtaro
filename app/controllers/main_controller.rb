@@ -6,8 +6,8 @@ class MainController < ApplicationController
 
   def sidebar
     get_my_drains
-    drain_list = render_to_string :partial => 'drain_list.html' 
-    address_box = render_to_string :partial => 'address_form.html'
+    drain_list = render_to_string :partial => 'drain_list', :formats => [:html] 
+    address_box = render_to_string :partial => 'address_form', :formats => [:html]
 
     respond_to do |format|
       format.js   { render :locals => { :drain_list => drain_list } }
