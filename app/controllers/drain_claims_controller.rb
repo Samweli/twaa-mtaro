@@ -21,15 +21,6 @@ class DrainClaimsController < ApplicationController
       render :json => {:errors => @claim.errors}, :status => 500 and return unless @claim.save
     end
 
-    #if params.fetch(:fb_publish, nil)
-    #  message = <<-MSG
-    #      I've adopted a drain to keep clear of snow this winter!
-    #      Join www.ChicagoShovels.org to lend a hand, track snow plows,
-    #      connect with neighbors and adopt-a-drain in your community      
-    #  MSG
-    #  
-    #  publish_facebook_status(message)
-    #end
     sms_service = SmsService.new();
     if I18n.locale == :en
       msg = "You have been assigned drain with number #{@drain.gid} located at #{@drain.address}."

@@ -136,6 +136,10 @@ class Drain < ActiveRecord::Base
     set_flood_prone.save
   end
 
+  def has_street(street_id)
+    self.streets.include? Street.find(street_id)
+  end
+
   def self.find_all_by_drain_type(type, page = nil, count = nil)
     # check for the type of drains to query
     # TODO update all where_custom domain method to use

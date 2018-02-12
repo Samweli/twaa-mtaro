@@ -8,8 +8,8 @@ class Role < ActiveRecord::Base
     all_roles = Role.select("id")
     user_roles = user.roles.select("roles.id")
 
-    all = all_roles + user_roles
-    distint = all - (all_roles & user_roles)
+    all_combined_roles = all_roles + user_roles
+    distint = all_combined_roles - (all_roles & user_roles)
 
     final_roles = Role.find_all_by_id(distint)
   end
