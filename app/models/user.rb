@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :roles, through: :assignments
   has_many :need_helps, :class_name => 'NeedHelp', :foreign_key => "user_id"
   belongs_to :street
+  has_many :drain_histories
 
   def short_name
     "#{first_name} #{last_name.chr}."

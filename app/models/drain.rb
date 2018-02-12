@@ -8,6 +8,7 @@ class Drain < ActiveRecord::Base
   has_many :municipals, :through => :wards
   has_many :set_priorities
   has_many :priorities, through: :set_priorities
+  has_many :drain_histories
 
   validates_presence_of :lat, :lng
 

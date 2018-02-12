@@ -15,13 +15,14 @@
 
   .descriptions
 
-    / the description texts tells
+    / the description text tells
     / whether the drain needs help
     / or is not adopted
     = render 'drain_description'
 
     / displaying table of users
-    / claiming the  drain conditionally
+    / claiming the  drain if the drain
+    / is adopted
   - unless @claims.empty?
     #people_list.users
     = render 'table'

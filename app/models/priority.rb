@@ -3,4 +3,5 @@ class Priority < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   has_many :set_priorities
   has_many :drains, through: :set_priorities
+  has_many :drain_histories
 end
