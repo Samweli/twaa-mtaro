@@ -1,4 +1,5 @@
 class DrainsController < ApplicationController
+  include DrainsHelper
   respond_to :json
   # added :update in except for testing only, TO BE REMOVED
   before_filter :authenticate_user!, :except => [:index, :find_closest, :update, :show]
@@ -89,18 +90,18 @@ class DrainsController < ApplicationController
     user = current_user
     street_leader = User.joins(:roles).where(roles: {id: 2})
                         .find_by_street_id(user.street_id)
-if (user.has_role(2) && street_leader.present?)
-    if params.has_key?(:shoveled)
-      status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      drain.update_cleared_attribute(shoveled)
-      reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
-      sms_service.send_sms(
-          reply_street_leader,
-          user.sms_number)
+    if updates_authentication(user, drain)
+      if params.has_key?(:shoveled)
+        status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
+        drain.update_cleared_attribute(shoveled)
+        reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
+        sms_service.send_sms(
+            reply_street_leader,
+            user.sms_number)
 
-    elsif params.has_key?(:need_help)
-      drain.update_attribute(:need_help, need_help)
-    end
+      elsif params.has_key?(:need_help)
+        drain.update_attribute(:need_help, need_help)
+      end
     end
 
     redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]

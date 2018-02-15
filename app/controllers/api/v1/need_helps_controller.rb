@@ -44,8 +44,10 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
         ])
   end
 
+
   # provides auto complete results
   # for the need help search
+  # GET /needhelps/autocomplete/?q=example_string
   def autocomplete
     @drain_results = Drain.ransack(address_cont: params[:q]).result(distinct: true).limit(5)
     @street_results = Street.ransack(street_name_cont: params[:q]).result(distinct: true).limit(5)
