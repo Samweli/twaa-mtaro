@@ -69,8 +69,9 @@ AdoptADrain::Application.routes.draw do
 
       post '/need_helps/status' => 'need_helps#update_status'
       post '/need_helps/filter' => 'need_helps#filter'
-      resources :need_helps, only: [:index, :create, :show, :update, :destroy, :search] do
+      resources :need_helps, only: [:index, :create, :show, :update, :destroy, :search, :autocomplete] do
         get 'search', :on => :collection
+        get 'autocomplete', :on => :collection
       end
 
       get 'municipals/:id/wards' => 'municipals#wards'
