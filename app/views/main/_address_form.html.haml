@@ -28,9 +28,9 @@
           %span.sign_links
             |
         - if I18n.try(:locale) == :en
-          %li.locale= link_to_unless_current "Swahili", :locale => "sw"
+          %li.locale= link_to "Swahili", '/?locale=sw'
         - elsif  I18n.try(:locale) == :sw
-          %li.locale= link_to_unless_current "English", :locale => "en"
+          %li.locale= link_to "English", '/?locale=en'
         %li.horizontal_items.item_separator.pen_lightgray
           - if user_signed_in?
             %span.signout_links

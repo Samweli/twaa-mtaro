@@ -25,16 +25,7 @@ script:
   - bundle exec rake db:migrate
   - psql -U postgres -d 'twaamtaro_test' -c 'alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);'
   - psql -U postgres -d 'twaamtaro_test' -c "INSERT INTO mitaro_dar (gid, the_geom) VALUES ('1', ST_SetSRID(ST_GeomFromText('MULTILINESTRING((-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932))'),4326));"
-  - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
-  # - bundle exec rake db:schema:load
-  # - bundle exec rake db:test:prepare
-  # - psql -U postgres -d 'twaamtaro_test' -c 'alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);'
-  # # - psql -U postgres -c 'INSERT INTO mitaro_dar (gid, the_geom)
-  # #   VALUES ('1', ST_SRID(ST_MakePoint(39.0653, -6.8344), 4326));'
-  # - bundle exec ruby -Itest test/functional/drains_controller_test.rb -n 'test_should_get_index'
-
-# after_failure:
-#   : psql -U postgres -c '\d public.mitaro_dar'
+  - bundle exec ruby -Itest test/functional/*_controller_test.rb
 
 cache: bundler
 

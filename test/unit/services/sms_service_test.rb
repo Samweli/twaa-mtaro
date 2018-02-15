@@ -3,7 +3,7 @@ require 'test_helper'
 class SmsServiceTest < ActiveSupport::TestCase
   setup do
     @user = users(:edward)
-    @drain = drains(:one)
+    # @drain = mitaro_dar(:one)
     # @drain_claim_1 = drain_claims(:one)
 
     # @drain_claim_1.gid = @drain_1.gid
@@ -13,7 +13,7 @@ class SmsServiceTest < ActiveSupport::TestCase
   end
 
   test 'should categorize message inputs' do
-    message = 'Msafi# 3'
+    message = 'Msafi #3'
     second_message = 'Msafi '
 
     sms_service = SmsService.new()
@@ -21,7 +21,7 @@ class SmsServiceTest < ActiveSupport::TestCase
     output = sms_service.categorize_sms_content(message)
     second_output = sms_service.categorize_sms_content(second_message)
 
-    expected_output = 'Msafi'
+    expected_output = ['Msafi', '3']
     second_expected_output = ['Msafi', '1']
 
     assert_equal output, expected_output
