@@ -84,16 +84,12 @@ class DrainsController < ApplicationController
   def update
     shoveled = (params.fetch(:shoveled, nil) == 'true' ? true : false)
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
-
-
     drain = Drain.find_by_gid(params[:id])
     sms_service = SmsService.new()
     user = current_user
-
-    claim = drain.claims.find_by_user_id(user.id)
     street_leader = User.joins(:roles).where(roles: {id: 2})
                         .find_by_street_id(user.street_id)
-
+if (user.has_role(2) && street_leader.present?)
     if params.has_key?(:shoveled)
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
       drain.update_cleared_attribute(shoveled)
@@ -105,7 +101,7 @@ class DrainsController < ApplicationController
     elsif params.has_key?(:need_help)
       drain.update_attribute(:need_help, need_help)
     end
-
+    end
 
     redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]
   end

@@ -11,7 +11,7 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     end
   end
 
-  def search
+  def filter
 
     if(params[:status])
       if(params[:municipal_name] or params[:ward_name] or params[:street_name])
@@ -32,6 +32,18 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
     render :json => results.to_json(:include => [:need_help_category,
                                                 :user =>{:include => :street}])
   end
+
+  # GET /needheleps/search/?column=example_column&&key=example_key
+  # searching needhelp
+  # using any field or association
+  def search_need_helps
+    search_results = NeedHelp.search(params[:column], params[:key])
+    render :json => search_results.to_json(
+        :include => [
+            :need_help_category, :user =>{:include => :street}
+        ])
+  end
+
 
   # GET /need_helps/1
   # GET /need_helps/1.json

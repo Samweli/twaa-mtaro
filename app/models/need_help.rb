@@ -19,4 +19,16 @@ class NeedHelp < ActiveRecord::Base
       need_help.update_attributes(:resolved => updatated_at, :resolved_description => description)
     end
   end
+
+  # searches need help requests
+  # using any field or assocition
+  # need help model has
+  def self.search(column, key)
+    results = NeedHelp.joins(
+        {user: [street: [{ward: :municipal}]]},
+        :need_help_category, :drain)
+                  .where(" #{column} = ? ", "#{key}")
+
+  end
+
 end
