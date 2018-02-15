@@ -27,7 +27,7 @@ class NeedHelp < ActiveRecord::Base
     results = NeedHelp.joins(
         {user: [street: [{ward: :municipal}]]},
         :need_help_category, :drain)
-                  .where(" #{column} = ? ", "#{key}")
+                  .where(" #{column} LIKE ? ", "%#{key}%")
 
   end
 

@@ -36,7 +36,7 @@ class Api::V1::NeedHelpsController < Api::V1::BaseController
   # GET /needheleps/search/?column=example_column&&key=example_key
   # searching needhelp
   # using any field or association
-  def search_need_helps
+  def search
     search_results = NeedHelp.search(params[:column], params[:key])
     render :json => search_results.to_json(
         :include => [
