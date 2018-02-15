@@ -32,14 +32,11 @@ class UsersController < Devise::RegistrationsController
     if resource.update_with_password(params[resource_name])
       sign_in(resource_name, resource, :bypass => true)
 
-
       sms_service = SmsService.new();
       msg = text_message('update');
       sms_service.send_sms(
         msg, 
         resource.sms_number);
-
-
     else
       clean_up_passwords(resource)
 

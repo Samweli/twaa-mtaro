@@ -78,7 +78,7 @@ $(function () {
 
     /* Creating map*/
 
-     map = new L.Map('map_canvas', mapOptions);
+    map = new L.Map('map_canvas', mapOptions);
 
     // Add basemaps and their menu
     var baseMaps = {
@@ -230,9 +230,12 @@ $(function () {
 
     /*
     *  Fetches and displays information associated with specified drain
+    *  action defines whether to create a new popup or update one.
     * */
 
     window.fetchDrainInfo = function (gid, pos, action) {
+
+        action = action || "create";
 
         if (gid == undefined) {
             // do nothing

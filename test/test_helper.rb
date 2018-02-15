@@ -10,6 +10,10 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
+
+  # create reference for drain to mitaro_dar
+  set_fixture_class :mitaro_dar => Drain
+
   fixtures :all
 
   # Add more helper methods to be used by all tests here...

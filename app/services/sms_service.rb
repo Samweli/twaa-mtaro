@@ -106,12 +106,20 @@ class SmsService
         drain_claim = DrainClaim.find_by_user_id_and_gid(user.id, drain_id)
       else
         drain_claim = DrainClaim.where(:user_id => user.id)
-        if (!drain_claim.instance_of?(DrainClaim))
-          #TODO function to determine user language
+        if (drain_claim)
+          if (!drain_claim.instance_of?(DrainClaim))
+            #TODO function to determine user language
+            I18n.locale = 'sw'
+            message = I18n.t('messages.many_drains')
+            I18n.locale = 'en'
+            message = message + "   " + I18n.t('messages.many_drains')
+            return message
+          end
+        else
           I18n.locale = 'sw'
-          message = I18n.t('messages.many_drains')
+          message = I18n.t('messages.drain_unknown')
           I18n.locale = 'en'
-          message = message + "   " + I18n.t('messages.many_drains')
+          message = message + "   " + I18n.t('messages.drain_unknown')
           return message
         end
       end
