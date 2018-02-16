@@ -92,7 +92,13 @@ class DrainsController < ApplicationController
                         .find_by_street_id(user.street_id)
     if updates_authentication(user, drain)
       if params.has_key?(:shoveled)
+
         status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
+        claim = drain.claims.find_by_user_id(user.id)
+        if claim
+          claim.update_attribute(:shoveled, shoveled)
+          claim.save(validate: false)
+        end
         drain.update_cleared_attribute(shoveled)
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(

@@ -146,6 +146,8 @@ class Drain < ActiveRecord::Base
     save_to_cleared_history
   end
 
+  
+
   def priority?(priority)
     priorities.any? {|p| p.name.underscore.to_sym == priority}
   end
