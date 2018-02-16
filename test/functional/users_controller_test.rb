@@ -4,7 +4,7 @@ class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   setup do
     request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = users(:erik)
+    @user = users(:edward)
   end
 
   test 'should render info window' do

@@ -17,3 +17,12 @@ sam:
   sms_number: 1234567895
   encrypted_password: "$2a$10$KF/JMZ494ZLhWLgHZeBTf.cSL4l0Wjij4gIZP7BzkueAC1p4nW0ma"
 
+test:
+  id: 4
+  first_name: Test
+  last_name: Test
+  organization: Dev
+  email: smwltwesa6@gmail.com
+  sms_number: 0765299266
+  encrypted_password: "$2a$10$KF/JMZ494ZLhWLgHZeBTf.cSL4l0Wjij4gIZP7BzkueAC1p4nW0ma"
+
