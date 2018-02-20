@@ -34,7 +34,7 @@ class ChangeDrains < ActiveRecord::Migration
   end
 
   def create_drain_table
-    create_table "mitaro_dar", :id => false, :force => true do |t|
+    create_table "mitaro_dar", :primary_key => "gid", :force => true do |t|
       t.integer "gid",                                                                        :null => false
       t.string  "the_geom",     :geometry
       t.string  "full_id",      :limit => 254
