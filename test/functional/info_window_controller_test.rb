@@ -64,7 +64,7 @@ class InfoWindowControllerTest < ActionController::TestCase
     assert_not_nil assigns :drain
     assert_response :success
     assert_template :adopt
-    assert_select 'h2', 'Adopt this Hydrant'
+    assert_select 'h2', 'Adopt this Drain'
     assert_select 'form#adoption_form' do
       assert_select '[action=?]', "/drains"
       assert_select '[method=?]', 'post'
@@ -104,7 +104,7 @@ class InfoWindowControllerTest < ActionController::TestCase
       assert_select '[action=?]', '/info_window'
       assert_select '[method=?]', 'post'
     end
-    assert_select 'h2', 'Adopt this Hydrant'
+    assert_select 'h2', 'Adopt this Drain'
     assert_select 'input', :count => 15
     assert_select 'label', :count => 10
     assert_select 'input[name="commit"]', :count => 3

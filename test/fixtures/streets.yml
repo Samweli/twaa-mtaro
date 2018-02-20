@@ -1,0 +1,7 @@
+---
+test_street:
+  id: 1 
+  street_name: test
+  ward_id: 1
+  lat: -6.79
+  lng: 39.15
