@@ -27,7 +27,7 @@ script:
   - psql -U postgres -d 'twaamtaro_test' -c 'alter table mitaro_dar alter column the_geom set data type geometry(MultiLineString,4326);'
   - psql -U postgres -d 'twaamtaro_test' -c "INSERT INTO mitaro_dar (gid, the_geom) VALUES ('1', ST_SetSRID(ST_GeomFromText('MULTILINESTRING((-71.160281 42.258729,-71.160837 42.259113,-71.161144 42.25932))'),4326));"
   - bundle exec ruby -W0 -Itest test/functional/drains_controller_test.rb --verbose
-  - bundle exec ruby -W0 Itest test/functional/drain_claims_controller_test.rb --verbose
+  - bundle exec ruby -W0 -Itest test/functional/drain_claims_controller_test.rb --verbose
 
 cache: bundler
 
