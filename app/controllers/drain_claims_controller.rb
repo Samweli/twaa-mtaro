@@ -11,12 +11,16 @@ class DrainClaimsController < ApplicationController
     # use id of drain as gid in drain claims table
     if (@claim = DrainClaim.find_or_initialize_by_gid_and_user_id_and_shoveled(@drain.gid, params[:user_id], @drain.try(:cleared))).new_record?
       if @drain.lat.nil?
-        gc = Address.geocode("#{@drain.address}, Dar es salaam")
-        if gc && gc.success
-          @drain.lat = gc.lat
-          @drain.lng = gc.lng
-          @drain.save
+        begin
+          gc = Address.geocode("#{@drain.address}, Dar es salaam")
+          if gc && gc.success
+            @drain.lat = gc.lat
+            @drain.lng = gc.lng
+            @drain.save
+          end  
+        rescue Error => e
         end
+        
       end
       render :json => {:errors => @claim.errors}, :status => 500 and return unless @claim.save
     end
