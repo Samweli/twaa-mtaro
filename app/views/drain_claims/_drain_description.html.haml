@@ -1,0 +1,34 @@
+%h4
+  = t("defaults.address") + ':'
+  - if @drain.try(:address)
+    = @drain.try(:address) +', '
+    = @drain.try(:gid)
+  - else
+    %span.font12
+      = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
+      = @drain.try(:gid)
+      = @drain.to_json
+  - if  @drain.try(:need_help) == true
+    - if  @drain.try(:cleared) == false
+      %p.font_14.color_warn.center
+      = t("defaults.need_help") + '. '
+      = t("defaults.dirty")
+      %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
+        = t("defaults.view_need_help")
+    - elsif @drain.try(:cleared) == true
+      %p.font_14.color_warn.center
+      = t("defaults.need_help") + '. '
+      = t("defaults.clean")
+      %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
+        = t("defaults.view_need_help")
+    - else
+      %p.font_14.center
+        = t("defaults.need_help") + ' '
+        %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
+          = t("defaults.need_help_details")
+  - elsif @claims.empty?
+    %p.font_14.color_warn.center
+      = t("defaults.notify")
+  - else
+    %h3
+      = t('captions.taken') + ':'

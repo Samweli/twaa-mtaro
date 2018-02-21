@@ -59,21 +59,26 @@ AdoptADrain::Application.routes.draw do
 
       get '/drains/data' => 'drains#data'
       get '/drains/ranking' => 'drains#ranking'
-      resources :drains,only: [:index, :create, :show, :update, :destroy]
+      resources :drains, only: [:index, :create, :show, :update, :history, :destroy] do
+        get 'history', :on => :collection
+      end
 
       get 'street_drains/:id' => 'drains#street_drains'
-      resources :streets,only: [:index, :create, :show, :update, :destroy]
+      resources :streets, only: [:index, :create, :show, :update, :destroy]
 
 
       post '/need_helps/status' => 'need_helps#update_status'
-      post '/need_helps/search' => 'need_helps#search'
-      resources :need_helps,only: [:index, :create, :show, :update, :destroy]
+      post '/need_helps/filter' => 'need_helps#filter'
+      resources :need_helps, only: [:index, :create, :show, :update, :destroy, :search, :autocomplete] do
+        get 'search', :on => :collection
+        get 'autocomplete', :on => :collection
+      end
 
       get 'municipals/:id/wards' => 'municipals#wards'
       resources :municipals,only: [:index, :create, :show, :update, :destroy]
 
       get 'wards/:id/streets' => 'wards#streets'
-      resources :wards,only: [:index, :create, :show, :update, :destroy]
+      resources :wards, only: [:index, :create, :show, :update, :destroy]
 
     end
   end

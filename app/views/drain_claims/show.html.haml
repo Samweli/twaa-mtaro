@@ -3,67 +3,34 @@
     %h3
       = t("titles.drain_details")
     %ul.horizontal_items.font_bold
-      / %li.needs_help= t("captions.need_help")
-      / %li.cleared= t("captions.clean")
-      / %li.unclear=  t("captions.unclean")
       %li.unclear.link_1{:data_gid => @drain.gid,  :id => 'refresh_link'}
         = t("links.refresh")
       - if not (@drain.cleared == nil and @drain.need_help == nil)
         %li.share{:data_gid => @drain.gid,  :class => 'share_link'}
           = t("messages.drain_share")
 
-
-    // Todo replace current_user.street.street_name with drain.street.street_name
     - if not (@drain.try(:cleared) == nil and @drain.try(:need_help) == nil )
       .drain_social_media
         = social_share_button_tag( t('titles.drain_share_message', :address => current_user.try(:street).try(:street_name) , :username => current_user.try(:first_name), :url => "http://twaamtaro.org/drain_claims/#{@drain.gid}?locale={I18n.locale}" ))
 
   .descriptions
-    %h4
-      = t("defaults.address") + ':'
-      - if @drain.try(:address)
-        = @drain.try(:address) +', '
-        = @drain.try(:gid)
-      - else
-        %span.font12
-          = t("defaults.drain_number", :thing => t("defaults.thing").titleize)
-          = @drain.try(:gid)
-    / TODO position well this element
-    / - if  @drain.try(:priority) == true
-    /   %p.font_14.center
-    /   = t("defaults.priority")
-    - if  @drain.try(:need_help) == true
-      - if  @drain.try(:cleared) == false
-        %p.font_14.color_warn.center
-        = t("defaults.need_help") + '. '
-        = t("defaults.dirty")
-        %a{:id => "need_help_details",:data => {:help_details_id=>@drain.id}}
-          = t("defaults.view_need_help")
-      - else
-        %p.font_14.center
-          = t("defaults.need_help") + ' '
-          %a{:id => "need_help_details", :data => {:help_details_id=>@drain.id}}
-            = t("defaults.need_help_details")
-    - elsif @claims.empty?
-      %p.font_14.color_warn.center
-        = t("defaults.notify")
-    - else
-      %h3
-        = t('captions.taken') + ':'
 
+    / the description text tells
+    / whether the drain needs help
+    / or is not adopted
+    = render 'drain_description'
+
+    / displaying table of users
+    / claiming the  drain if the drain
+    / is adopted
+  - unless @claims.empty?
     #people_list.users
-      = render 'table'
+    = render 'table'
 
+    / conditionally showing action buttons
+    / when the current user is a sub-ward leader
+    / else just status description buttons are shown
   - if user_signed_in? && current_user.has_role(2)
     = render :partial => 'drains/drain_actions'
   - else
-    - if @drain.cleared?
-      = button_tag t("captions.clean"), :class => "btn btn-success btn-block cat-btn", :title => t("titles.drain_is_clean")
-    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == nil
-      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn", :title => t("titles.drain_unknown")
-    - elsif @drain.try(:cleared) == nil and @drain.try(:need_help) == false
-      = button_tag t("captions.unknown"), :class => "btn btn-unknown btn-block cat-btn", :title => t("titles.drain_unknown")
-    - elsif @drain.need_help?
-      = button_tag t("captions.need_help"), :class => "btn btn-primary btn-block cat-btn"
-    - else
-      = button_tag t("captions.unclean"), :class  => "btn btn-unclean btn-block cat-btn", :title => t(" drain_is_dirty")
+    = render :partial => 'drain_buttons'

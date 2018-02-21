@@ -1,6 +1,7 @@
 class DrainClaim < ActiveRecord::Base
   belongs_to :user, :counter_cache => :claims_count
   belongs_to :drain, :counter_cache => :claims_count, :foreign_key => 'gid'
+  has_many :drain_histories
 
   validates_presence_of :user_id, :gid
 

@@ -58,7 +58,7 @@ class Api::V1::DrainsController < Api::V1::BaseController
     unknown_drains = Drain.where(:cleared => nil, :need_help => nil).size
     adopted_drains = Drain.where("claims_count > '0'").size
     notadopted_drains = Drain.where("claims_count = '0'").size
-
+    all_users_count = User.count
 
     render :json => {
         :all => all_drains,
@@ -67,7 +67,8 @@ class Api::V1::DrainsController < Api::V1::BaseController
         :need_help => need_help_drains,
         :unknown => unknown_drains,
         :adopted => adopted_drains,
-        :not_adopted => notadopted_drains
+        :not_adopted => notadopted_drains,
+        :total_users => all_users_count
     }
   end
 
@@ -81,6 +82,14 @@ class Api::V1::DrainsController < Api::V1::BaseController
     end
 
     render :json => {:ranking => ranking_data}
+  end
+
+  # Get /drains/history
+  # returns history of activities
+  # happened in drains
+  def history
+    historical_data = DrainHistory.all
+    render :json => {:history => historical_data}
   end
 
   private
@@ -100,4 +109,6 @@ class Api::V1::DrainsController < Api::V1::BaseController
                   :need_help => drains_need_help}
     }
   end
+
+
 end

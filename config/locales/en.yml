@@ -65,6 +65,7 @@ en:
     city: "Dar es salaam, TZ"
     change_status: "Change Status"
     dirty: "Also the drain is not clean"
+    clean: "Even though this drain is clean"
     thing: "Drain"
     this_thing: "This %{thing}"
     tagline: "Claim responsibility for cleaning drains before it floods."

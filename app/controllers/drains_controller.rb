@@ -1,4 +1,5 @@
 class DrainsController < ApplicationController
+  include DrainsHelper
   respond_to :json
   # added :update in except for testing only, TO BE REMOVED
   before_filter :authenticate_user!, :except => [:index, :update, :find_closest]
@@ -39,7 +40,7 @@ class DrainsController < ApplicationController
               select('*, ST_AsKML(the_geom) AS "kml"')
         elsif params[:type] == 'priority'
           @drains = Drain.where(:priority => true)
-          .select('*, ST_AsKML(the_geom) AS "kml"')
+                        .select('*, ST_AsKML(the_geom) AS "kml"')
         end
       end
 
@@ -66,60 +67,28 @@ class DrainsController < ApplicationController
   def update
     shoveled = (params.fetch(:shoveled, nil) == 'true' ? true : false)
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
-
     drain = Drain.find_by_gid(params[:id])
     sms_service = SmsService.new()
     user = current_user
-
-    claim = drain.claims.find_by_user_id(user.id)
     street_leader = User.joins(:roles).where(roles: {id: 2})
                         .find_by_street_id(user.street_id)
-
-    if params.has_key?(:shoveled)
-      status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
-      if !(user.has_role(2))
+    if updates_authentication(user, drain)
+      if params.has_key?(:shoveled)
+        status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
+        claim = drain.claims.find_by_user_id(user.id)
         if claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
-
-          reply_street_leader = t('messages.user_to_leader', :first_name => user.first_name,
-                                  :last_name => user.last_name, :id => drain.gid, :status => status)
-          notify_user = t('messages.user_notify', :id => drain.gid, :status => status)
-          sms_service.send_sms(
-              reply_street_leader,
-              street_leader.sms_number)
-          sms_service.send_sms(
-              notify_user,
-              user.sms_number)
         end
-
-      else
-        # check if it is street leader of the drains street
-        # who is updating drain status
-        if (updates_authentication(user, drain))
-          drain.cleared = shoveled
-          drain.need_help = false if shoveled
-          drain.save(validate: false)
-        end
-
-        if claim
-          claim.update_attribute(:shoveled, shoveled)
-          claim.save(validate: false)
-
-          normal_user = User.find_by_id(claim.user_id)
-          notify_user = t('messages.leader_to_user', :id => drain.gid, :status => status)
-          sms_service.send_sms(
-              notify_user,
-              normal_user.sms_number);
-        end
-        
+        drain.update_cleared_attribute(shoveled)
         reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
         sms_service.send_sms(
             reply_street_leader,
-            user.sms_number);
+            user.sms_number)
+
+      elsif params.has_key?(:need_help)
+        drain.update_attribute(:need_help, need_help)
       end
-    elsif params.has_key?(:need_help)
-      drain.update_attribute(:need_help, need_help)
     end
 
     redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]
@@ -146,10 +115,9 @@ class DrainsController < ApplicationController
     reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
 
     sms_service.send_sms(
-            reply_street_leader,
-            user.sms_number);
+        reply_street_leader,
+        user.sms_number);
 
     render :json => {:success => true}
   end
-
 end

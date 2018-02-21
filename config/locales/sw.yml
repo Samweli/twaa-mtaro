@@ -79,6 +79,7 @@ sw:
     claim: "Twaa mitaro utakayoweza kusafisha "
     drain_number: "Namba ya %{thing} ni"
     dirty: " Pia huu mtaro ni mchafu"
+    clean: " Ingawa huu mtaro ni msafi"
     help_question: "unaweza kusafisha hiyo mitaro?"
     missing: "Haujauona mtaro wako?"
     need_help: "Mtaro huu unahitaji Msaada "
