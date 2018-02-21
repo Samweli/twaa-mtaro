@@ -32,8 +32,6 @@ class MainController < ApplicationController
     @unknown = format_number(Drain.where('cleared is NULL and need_help is NULL').count)
     @all = format_number(Drain.count)
     @priorities = format_number(Priority.count)
-    puts "priorites"
-    puts @priorities
 
     @adopted = format_number(Drain.count(:conditions => 'claims_count > 0'))
     @not_adopted = format_number(Drain.count(:conditions => 'claims_count = 0'))

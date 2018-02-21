@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  ward_name: MyString
+  id: 1
+  ward_name: Ward one
   municipal: 
 
 two:
-  ward_name: MyString
+  id: 2
+  ward_name: Ward two
   municipal: 

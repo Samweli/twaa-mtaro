@@ -8,15 +8,19 @@ class DrainClaimsController < ApplicationController
     unless (@drain = Drain.find_by_gid(params[:gid]))
       render :json => {:errors => 'Drain not found'}, :status => 500 and return
     end
-            # use id of drain as gid in drain claims table
+    # use id of drain as gid in drain claims table
     if (@claim = DrainClaim.find_or_initialize_by_gid_and_user_id_and_shoveled(@drain.gid, params[:user_id], @drain.try(:cleared))).new_record?
       if @drain.lat.nil?
-        gc = Address.geocode("#{@drain.address}, Dar es salaam")
-        if gc && gc.success
-          @drain.lat = gc.lat
-          @drain.lng = gc.lng
-          @drain.save
+        begin
+          gc = Address.geocode("#{@drain.address}, Dar es salaam")
+          if gc && gc.success
+            @drain.lat = gc.lat
+            @drain.lng = gc.lng
+            @drain.save
+          end  
+        rescue Error => e
         end
+        
       end
       render :json => {:errors => @claim.errors}, :status => 500 and return unless @claim.save
     end
@@ -28,10 +32,11 @@ class DrainClaimsController < ApplicationController
       msg = "Umepewa mtaro wenye namba #{@drain.gid} unaopatikana #{@drain.address} kwa ajili ya usafi."
     end
     user = User.find_by_id(params[:user_id])
-
-    sms_service.send_sms(
+    if user
+      sms_service.send_sms(
       msg, 
-      user.sms_number);
+      user.try(:sms_number));
+    end
 
     redirect_to :action => :show, :id => @drain.gid
   end
@@ -43,7 +48,7 @@ class DrainClaimsController < ApplicationController
     sms_service = SmsService.new()
     user = current_user
 
-    claim = DrainClaim.find(params[:id])
+    claim = DrainClaim.find_by_id(params[:id])
     street_leader = User.joins(:roles).where(roles: {id: 2})
                         .find_by_street_id(user.street_id)
 
@@ -51,6 +56,7 @@ class DrainClaimsController < ApplicationController
 
       status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
       if !(user.has_role(2))
+        if claim
           claim.update_attribute(:shoveled, shoveled)
           claim.save(validate: false)
 
@@ -63,6 +69,7 @@ class DrainClaimsController < ApplicationController
           sms_service.send_sms(
               notify_user,
               user.sms_number)
+        end
       else
         if claim
           claim.update_attribute(:shoveled, shoveled)
@@ -85,31 +92,29 @@ class DrainClaimsController < ApplicationController
       drain.update_attribute(:need_help, need_help)
     end
 
-    redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]
+    redirect_to :action => :show, :id => params[:id]
   end
 
   def show
     @drain = Drain.find_by_gid(params[:id])
-      # treat drain id as gid in drain_claims table
+    # treat drain id as gid in drain_claims table
     claims = DrainClaim.where_custom(@drain.id)
     @my_drain =  DrainClaim.find_by_gid(@drain.id)
     @shoveled_by_me = true
     @claims = claims
-    if @drain.need_help == true
-    end
 
     if user_signed_in?
-      @claim_owner = DrainClaim.find_by_user_id_and_gid(current_user.id,params[:id])
+      @claim_owner = DrainClaim.find_by_user_id_and_gid(current_user.id, params[:id])
     else
-      @claim_owner =nil
+      @claim_owner = nil
     end
   end
 
   def adopt
-
     @street_users = Kaminari.paginate_array(
         User.find_all_by_street_id(current_user.street_id)
     ).page(params[:page]).per(2)
+
     render :adopt
   end
 

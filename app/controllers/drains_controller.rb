@@ -2,7 +2,7 @@ class DrainsController < ApplicationController
   include DrainsHelper
   respond_to :json
   # added :update in except for testing only, TO BE REMOVED
-  before_filter :authenticate_user!, :except => [:index, :find_closest, :update, :show]
+  before_filter :authenticate_user!, :except => [:index, :update, :find_closest]
 
   def index
     # check for the type of drains to query
@@ -64,24 +64,6 @@ class DrainsController < ApplicationController
     end
   end
 
-
-  def find_closest
-    gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
-
-    render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 unless (gc && gc.success && gc.street_address)
-
-    unless (drain = Drain.find_by_address(gc.street_address.upcase))
-      drain = Drain.find_closest(gc.lat, gc.lng, 1, 0.02).first
-    end
-    render :json => {:gid => drain ? drain.gid : nil, :lat => gc.lat, :lng => gc.lng}
-  end
-
-  def show
-    @drain = Drain.find(params[:id])
-
-    render(json: Api::V1::DrainSerializer.new(@drain).to_json)
-  end
-
   def update
     shoveled = (params.fetch(:shoveled, nil) == 'true' ? true : false)
     need_help = (params.fetch(:need_help, nil) == 'true' ? true : false)
@@ -92,7 +74,6 @@ class DrainsController < ApplicationController
                         .find_by_street_id(user.street_id)
     if updates_authentication(user, drain)
       if params.has_key?(:shoveled)
-
         status = (shoveled ? t("messages.clear_status") : t("messages.dirt_status"))
         claim = drain.claims.find_by_user_id(user.id)
         if claim
@@ -113,13 +94,25 @@ class DrainsController < ApplicationController
     redirect_to :controller => :drain_claims, :action => :show, :id => params[:id]
   end
 
+  def find_closest
+    gc = Address.geocode("#{params[:address]}, #{params[:city_state]}")
+    
+    unless (gc && gc.success && gc.street_address)
+      render :json => {:errors => {:address => [t("errors.not_found", :thing => t("defaults.thing"))]}}, :status => 404 
+    else
+      unless (drain = Drain.find_by_address(gc.street_address.upcase))
+        drain = Drain.find_closest(gc.lat, gc.lng, 1, 0.02).first
+      end
+      render :json => {:gid => drain ? drain.gid : nil, :lat => gc.lat, :lng => gc.lng}
+    end
+  end
 
   def set_flood_prone
     Drain.set_flood_prone(params[:drain_id])
     sms_service = SmsService.new()
     user = current_user
     status = t("messages.flood_prone_status")
-    reply_street_leader = t('messages.leader_notify', :id => drain.gid, :status => status)
+    reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
 
     sms_service.send_sms(
         reply_street_leader,
