@@ -5,6 +5,8 @@ one:
   need_help: False
   claims_count: 1
   address: "Sheki Road"
+  lat: -6.79
+  lng: 39.15
 
 kawe:
   gid: 2
@@ -12,3 +14,5 @@ kawe:
   need_help: False
   claims_count: 1
   address: "Kawe Road"
+  lat: -6.781
+  lng: 39.143
