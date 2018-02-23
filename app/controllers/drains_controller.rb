@@ -108,30 +108,42 @@ class DrainsController < ApplicationController
   end
 
   def set_flood_prone
-    Drain.set_flood_prone(params[:drain_id])
-    sms_service = SmsService.new()
-    user = current_user
-    status = t("messages.flood_prone_status")
-    reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
+    drain = Drain.find_by_gid(params[:drain_id])
 
-    sms_service.send_sms(
-        reply_street_leader,
-        user.sms_number);
+    if(updates_authentication(current_user, drain))
+      Drain.set_flood_prone(params[:drain_id])
+      sms_service = SmsService.new()
+      user = current_user
+      status = t("messages.flood_prone_status")
+      reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
 
-    render :json => {:success => true}
+      sms_service.send_sms(
+          reply_street_leader,
+          user.sms_number);
+
+      render :json => {:success => true}
+    else
+      render :json => {:errors => {:error => [t("errors.access")]}}, :status => 404
+    end
   end
 
   def reset_flood_prone
-    Drain.reset_flood_prone(params[:drain_id])
-    sms_service = SmsService.new()
-    user = current_user
-    status = t("messages.reset_flood_prone_status")
-    reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
+    drain = Drain.find_by_gid(params[:drain_id])
 
-    sms_service.send_sms(
-        reply_street_leader,
-        user.sms_number);
+    if(updates_authentication(current_user, drain))
+      Drain.reset_flood_prone(params[:drain_id])
+      sms_service = SmsService.new()
+      user = current_user
+      status = t("messages.reset_flood_prone_status")
+      reply_street_leader = t('messages.leader_notify', :id => params[:drain_id], :status => status)
 
-    render :json => {:success => true}
+      sms_service.send_sms(
+          reply_street_leader,
+          user.sms_number);
+
+      render :json => {:success => true}
+     else
+      render :json => {:errors => {:error => [t("errors.access")]}}, :status => 404
+    end
   end
 end

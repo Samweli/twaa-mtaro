@@ -109,6 +109,7 @@ sw:
     not_found: "Haijawezekana kupata %{thing} "
     adopted_error: " Je una %{thing} yakutosha kwa ajili ya kusafisha! Kama unapenda kuongeza %{thing} mingine, Tafadhali tuma omba lako kwenda www.twaamtaro.org"
     sms_not_sent: "Meseji haijaenda, namba ya mtumiaji inaweza kuwa imekosewa"
+    access: "Hauruhusiwi"
   forms:
     need_help: "tuambie ni msaada gani ungehitaji"
     need_help_category: "Aina ya Msaada:"

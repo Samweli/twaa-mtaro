@@ -98,6 +98,7 @@ en:
     drain_notfound: "%{error} not found"
     adopted_error: "You have adopted a lot of drains! If you would like to adopt more drains, please send your request to Twaa mtaro, Dar es salaam"
     sms_not_sent: "Problem sending sms, user phone number might be invalid"
+    access: "Access error"
   forms:
     need_help: "tell us what kind of help is needed"
     need_help_category: "Help type:"
