@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  user: sleader
-  role: two
+  id: 1
+  user_id: 1
+  role_id: 2
 
 two:
-  user: 
-  role: 
+  id: 2
+  user_id: 2
+  role_id: 2

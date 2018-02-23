@@ -23,15 +23,15 @@ class DrainsControllerTest < ActionController::TestCase
     # assert_select 'h3' ,'Drain details'
   end
 
-  test 'should test finding closest drains' do
+  test 'should find the closest drains' do
     get :find_closest , {:lat => -6.79, :lng => 39.15 , :limit => 2}
     assert_response :missing
   end
 
-  test 'should test setting flood prone to drain' do
-    sign_in @user
-    get :set_flood_prone , {:drain_id => 1}
-    assert_response :success
-  end
+  # test 'should set flood prone to drain' do
+  #   sign_in @user
+  #   get :set_flood_prone , {:drain_id => 1}
+  #   assert_response :success
+  # end
  
 end
