@@ -110,7 +110,7 @@ class DrainsController < ApplicationController
   def set_flood_prone
     drain = Drain.find_by_gid(params[:drain_id])
 
-    if(updates_authentication(current_user, drain))
+    if updates_authentication(current_user, drain)
       Drain.set_flood_prone(params[:drain_id])
       sms_service = SmsService.new()
       user = current_user
@@ -130,7 +130,7 @@ class DrainsController < ApplicationController
   def reset_flood_prone
     drain = Drain.find_by_gid(params[:drain_id])
 
-    if(updates_authentication(current_user, drain))
+    if updates_authentication(current_user, drain)
       Drain.reset_flood_prone(params[:drain_id])
       sms_service = SmsService.new()
       user = current_user

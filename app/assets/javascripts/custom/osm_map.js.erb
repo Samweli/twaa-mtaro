@@ -242,7 +242,6 @@ $(function () {
             map.closePopup();
             return false;
         }
-        showSpinner();
         var locale = urlParam('locale');
 
         $.ajax({
@@ -266,13 +265,11 @@ $(function () {
                 if ($('#abandon_link').attr('data-hide-column') == 'Hapana' || $('#abandon_link').attr('data-hide-column') == 'No') {
                     $('#abandon_link').find('.hide_column').hide();
                 }
-                hideSpinner();
             }
 
         });
 
     }
-
 
     /*
     refreshes kml layer of drains on the openstreetmap

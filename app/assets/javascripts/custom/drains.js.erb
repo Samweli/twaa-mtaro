@@ -199,7 +199,7 @@ $(function () {
         function (e) {
             activeObjectId = $(this).attr('data-gid');
             $('#address').val(activeObjectId);
-
+            //TODO remove this, check for side-effects
             $('#address_button')[0].click();
 
             var lat = $(this).attr('data-lat');
@@ -209,7 +209,7 @@ $(function () {
             fetchDrainInfo(activeObjectId,latlng);
 
             return false;
-        });
+    });
 
     $('body').on('click','#priority', function() {
         var drain_id = $(this).attr('data-moid');
