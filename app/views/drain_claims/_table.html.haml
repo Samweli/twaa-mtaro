@@ -31,20 +31,29 @@
       %tr
         %th
           = t("defaults.user")
-        %th
-          = t("labels.drain_cleanliness")
         - if user_signed_in?
+          %th
+            = t("labels.drain_cleanliness")
           %th.hide_column
             = t("defaults.change_status")
+        - else
+          %th
+            = t("defaults.status")
       - @claims.each do |c|
         %tr
           %td= c.try(:user).try(:fullname)
-          %td
-            = yesno(c.shoveled)
-            /- elsif c.shoveled == nil
-            /  = t("buttons.unknown_status")
           - if user_signed_in?
+            %td
+              = yesno(c.shoveled)
+              /- elsif c.shoveled == nil
+              /  = t("buttons.unknown_status")
             %td.hide_column
               - if user_signed_in? && current_user.try(:id) == c.user.try(:id)
                 %button{:class => "btn btn-default chng_link", :style => "font-size:8px;", :data => {:moid=>yesno(c.try(:shoveled)), :claim=>c.try(:id)}}
                   = t("buttons.change_status")
+          - else
+            %td
+              - if c.shoveled?
+                = t("buttons.clean")
+              - else
+                = t("buttons.dirty")
