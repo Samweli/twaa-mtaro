@@ -1,11 +1,12 @@
 class SmsService
+  include DrainsHelper
+
   def initialize()
   	@account_sid = ENV['SMS_ACCOUNT_SID']
 	  @auth_token = ENV['SMS_AUTH_TOKEN']
     @from_number = ENV['SMS_FROM_PHONE_NUMBER']
 	  @client = Twilio::REST::Client.new @account_sid, @auth_token
   end
-
 
   # Send sms to the specified number
   def send_sms(content, tonumber)
@@ -96,8 +97,6 @@ class SmsService
     dirt_keywords = ['mchafu', 'Mchafu', 'dirty', 'Dirty',
        'not clean', 'Not clean'].map(&:downcase)
     need_help_keywords = ['msaada','Msaada', 'need help', 'Need help'].map(&:downcase)
-    street_leader = User.joins(:roles).where(roles: {id: 2})
-                        .find_by_street_id(user.street_id)
 
     if user
       drain_status = categorize_sms_content(drain_status)
@@ -175,7 +174,6 @@ class SmsService
           message = I18n.t('messages.unknown')
         end
 
-
         if (need_help_keywords.include? drain_status)
           change_locale(need_help_keywords, drain_status)
           
@@ -201,7 +199,6 @@ class SmsService
           else
             message = I18n.t('messages.need_help_user_error')
           end
-          
         end
     else
       message = I18n.t('messages.user_not_found', :site => I18n.t('defaults.site'));

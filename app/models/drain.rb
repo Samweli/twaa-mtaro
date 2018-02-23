@@ -146,8 +146,6 @@ class Drain < ActiveRecord::Base
     save_to_cleared_history
   end
 
-  
-
   def priority?(priority)
     priorities.any? {|p| p.name.underscore.to_sym == priority}
   end
@@ -158,6 +156,16 @@ class Drain < ActiveRecord::Base
     drain.update_attribute(:priority, true)
     drain.save
     set_flood_prone.save
+  end
+
+  def self.reset_flood_prone(drain_id)
+    @priority = SetPriority.find_by_drain_id(drain_id)
+    @priority.destroy
+    drain = Drain.find_by_gid(drain_id)
+    if (drain.priorities.empty?)
+      drain.update_attribute(:priority, false)
+      drain.save
+    end
   end
 
   def has_street(street_id)

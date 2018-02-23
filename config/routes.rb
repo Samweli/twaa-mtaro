@@ -31,6 +31,7 @@ AdoptADrain::Application.routes.draw do
   get 'drain_claims/adopt' => 'drain_claims#adopt'
   get '/search' => 'streets#search'
   post 'drains/flood' => 'drains#set_flood_prone'
+  post '/drains/non-flood' => 'drains#reset_flood_prone'
   post '/streets/add_drain' => 'streets#add_drain'
 
   match '/auth/:provider/callback' => 'authentications#create'

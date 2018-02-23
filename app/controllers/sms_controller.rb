@@ -1,4 +1,7 @@
 class SmsController < ApplicationController
+	auth_token = ENV['SMS_AUTH_TOKEN']
+	# use Rack::TwilioWebhookAuthentication, auth_token, /\/new/
+
 	def new
 		from_number = params['From']
 		to_number = params['To']

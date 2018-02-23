@@ -1,1 +1,4 @@
-= button_tag t("captions.flood_prone"), :class => "btn btn-danger cat-btn" if @drain.priorities.empty?
+- if @drain.priorities.empty?
+  = button_tag t("captions.flood_prone"), :class => "btn btn-danger cat-btn", :id => "priority", :data => {:moid=>@drain.try(:gid)}
+- else
+  = button_tag t("captions.not_flood_prone"), :class => "btn btn-danger cat-btn", :id => "not-priority", :data => {:moid=>@drain.try(:gid)}

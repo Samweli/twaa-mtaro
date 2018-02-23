@@ -224,6 +224,25 @@ $(function () {
             },
             success: function (data) {
                 fetchDrainInfo(drain_id, drain_pos, "update");
+                updateCategories("flood_prone");
+            }
+        });
+    })
+
+    $('body').on('click','#not-priority', function() {
+        var drain_id = $(this).attr('data-moid');
+
+        $.ajax({
+            type: 'POST',
+            url: '/drains/non-flood',
+            data: {
+                'drain_id': drain_id
+            },
+            error: function (jqXHR) {
+            },
+            success: function (data) {
+                fetchDrainInfo(drain_id, drain_pos, "update");
+                updateCategories("not_flood_prone");
             }
         });
     })
