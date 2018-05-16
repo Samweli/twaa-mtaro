@@ -38,8 +38,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def verify_leader
-    User.assign_role(params[:user_id], params[:role_id])
-    render :json => { :success => true}
+    if User.verify_leader(params[:user_id], params[:role_id])
+      render :json => { :success => true}
+    else
+      render :json => { :error => 'error'}
+    end
   end
 
   def deny

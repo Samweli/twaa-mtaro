@@ -74,9 +74,17 @@ class User < ActiveRecord::Base
 
   def generate_authentication_token
     loop do
-      self.authentication_token = SecureRandom.urlsafe_base64
+      self.authentication_token = SecureRandom.base64(64)
       break unless User.find_by_authentication_token(authentication_token)
     end
   end
 
+  def verify_leader(user_id, role_id)
+    successful = false;
+    if(current_user.has_role(4))
+      User.assign_role(user_id, role_id)
+      successful = true
+    end
+
+    return successful
 end
